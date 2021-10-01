@@ -14,6 +14,6 @@ So we even made a website for it.
 ## Our latest projects:
 * Environmental Science
   + Project description: 
-  + [https://github.com/ucrdatacenter](View data files)
+  + [View data files](https://github.com/ucrdatacenter)
 * Other project
   + Description
