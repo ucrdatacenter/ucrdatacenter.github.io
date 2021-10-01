@@ -1,5 +1,19 @@
 ---
 title: "UCR Data Center"
-output: html_document
-theme: jekyll-theme-minimal
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
 ---
+
+## Welcome to the website of the UCR Data Center!
+
+We like to play with data and want to make others play with data too.
+
+So we even made a website for it.
+
+## Our latest projects:
+* Environmental Science
+  + Project description: 
+  + [https://github.com/ucrdatacenter](View data files)
+* Other project
+  + Description
