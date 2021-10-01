@@ -1,6 +1,6 @@
 # UCR Data Center website
 
-Website: [ucrdatacenter.github.io](ucrdatacenter.github.io)
+Website: [ucrdatacenter.github.io](https://ucrdatacenter.github.io)
 
 If you want to edit the website, you'll first need to clone this repo to your desktop.
 The easiest way to do that is via Github Desktop ([install from here](https://desktop.github.com/)).
