@@ -1,0 +1,70 @@
+---
+title: "SSCECON207<br>International Macroeconomics<br>Spring 2022"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# Introduction
+
+This page collects the workshop materials, data sources and supplementary materials for the data-driven assignments for the Spring 2022 edition of International Macroeconomics at UCR.
+You can also access all materials on [Github](https://github.com/ucrdatacenter/projects).
+
+# Working with R and RStudio
+
+## Installing R and RStudio
+
+R is the programming language that we'll use to teach students how to work with data.
+RStudio is a development environment that makes working with R much more convenient.
+Both are free to download and install.
+
+To download R, go to [cloud.r-project.org](https://cloud.r-project.org/) and follow the instructions on the page.
+To download RStudio, go to [rstudio.com/products/rstudio/download](https://www.rstudio.com/products/rstudio/download/), scroll down and download the file recommended for your operating system.
+
+When installing, unless you have different preferences, you can always stick to the default settings.
+
+In case you get stuck at any point, or would like more guidance in the installation process, feel free to check out any of the links below:
+
+* [Tutorial: Getting Started with R and RStudio](https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/)
+* [R Tutorial: How to install R and R studio (video)](https://www.youtube.com/watch?v=0Qu7Jg1Jw5A)
+
+## The basics of using R and ggplot
+
+_TBA_
+
+# Assignments
+
+## Timeline
+
+* The first Data Center workshop takes place in week 2: during this you will receive guidance on how to create figures in R to complete the IS-LM poster assignment. You should make sure to have R and RStudio installed before this workshop so you can follow along.
+* The IS-LM poster assignment is due in week 4 of the semester. The Data Center is available for office hours, individual consultations to help with the assignment.
+* The second Data Center workshop takes place in week 8. It will build on your existing R skills, with a focus on finding and cleaning data, which will help you in writing your final paper for the course.
+* The final empirical paper is due at the end of week 15. In the meantime, the Data Center is available for office hours, individual consultations.
+
+## IS-LM poster
+
+_TBA_
+
+### Guidelines
+
+_TBA_
+
+### Suppporting materials
+
+_TBA:_ workshop materials, useful links
+
+## Empirical paper on growth
+
+_TBA_
+
+### Guidelines
+
+_TBA_
+
+### Suppporting materials
+
+_TBA:_ workshop materials, useful links

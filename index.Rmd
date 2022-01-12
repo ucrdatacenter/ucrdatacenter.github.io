@@ -2,20 +2,18 @@
 title: "UCR Data Center"
 output: 
   prettydoc::html_pretty:
-    theme: tactile
+    theme: cayman
 ---
 
 ## Welcome to the website of the UCR Data Center!
 
-Below you can find information and supplementary materials for all of our ongoing projects.
+You can find information and supplementary materials for all of our ongoing projects by clicking the link of the project you are interested in.
 
 ## Our Projects:
 * Environmental Science
   + Project description: 
   + [View files](https://github.com/ucrdatacenter/projects/tree/main/Environmental%20Science)
-* SSCECON207 International Macroeconomics
-  + Project description:
-  + [View files](https://github.com/ucrdatacenter/projects)
+* [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON209)
 * SSCECON209 Money, Banking and Finance
   + Project description:
   + [View files](https://github.com/ucrdatacenter/projects)
