@@ -2,7 +2,7 @@
 title: "UCR Data Center"
 output: 
   prettydoc::html_pretty:
-    theme: cayman
+    theme: tactile
 ---
 
 ## Welcome to the website of the UCR Data Center!
@@ -13,7 +13,7 @@ You can find information and supplementary materials for all of our ongoing proj
 * Environmental Science
   + Project description: 
   + [View files](https://github.com/ucrdatacenter/projects/tree/main/Environmental%20Science)
-* [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON209)
+* [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207)
 * SSCECON209 Money, Banking and Finance
   + Project description:
   + [View files](https://github.com/ucrdatacenter/projects)
