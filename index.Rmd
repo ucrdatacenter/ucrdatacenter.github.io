@@ -7,13 +7,15 @@ output:
 
 ## Welcome to the website of the UCR Data Center!
 
-We like to play with data and want to make others play with data too.
+Below you can find information and supplementary materials for all of our ongoing projects.
 
-So we even made a website for it.
-
-## Our latest projects:
+## Our Projects:
 * Environmental Science
   + Project description: 
-  + [View data files](https://github.com/ucrdatacenter)
-* Other project
-  + Description
+  + [View files](https://github.com/ucrdatacenter/projects/tree/main/Environmental%20Science)
+* SSCECON207 International Macroeconomics
+  + Project description:
+  + [View files](https://github.com/ucrdatacenter/projects)
+* SSCECON209 Money, Banking and Finance
+  + Project description:
+  + [View files](https://github.com/ucrdatacenter/projects)

@@ -4,7 +4,6 @@ Website: [ucrdatacenter.github.io](https://ucrdatacenter.github.io)
 
 If you want to edit the website, you'll first need to clone this repo to your desktop.
 The easiest way to do that is via Github Desktop ([install from here](https://desktop.github.com/)).
-Tina can help with the initial setup.
 
 To edit the website, edit index.Rmd (easiest to do in RStudio on your desktop), and knit the file.
 That will update your local version of index.html.
