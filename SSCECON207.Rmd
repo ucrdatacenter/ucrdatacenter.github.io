@@ -1,5 +1,6 @@
 ---
 title: "SSCECON207<br>International Macroeconomics<br>Spring 2022"
+date: "Last updated: `r Sys.Date()`"
 output: 
   html_document:
     theme: cosmo
@@ -12,13 +13,13 @@ output:
 # Introduction
 
 This page collects the workshop materials, data sources and supplementary materials for the data-driven assignments for the Spring 2022 edition of International Macroeconomics at UCR.
-You can also access all materials on [Github](https://github.com/ucrdatacenter/projects).
+You can also access all materials on [Github](https://github.com/ucrdatacenter/projects/tree/main/SSCECON207/2022h1).
 
 # Working with R and RStudio
 
 ## Installing R and RStudio
 
-R is the programming language that we'll use to teach students how to work with data.
+R is the programming language that we'll when working with data.
 RStudio is a development environment that makes working with R much more convenient.
 Both are free to download and install.
 
@@ -32,39 +33,39 @@ In case you get stuck at any point, or would like more guidance in the installat
 * [Tutorial: Getting Started with R and RStudio](https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/)
 * [R Tutorial: How to install R and R studio (video)](https://www.youtube.com/watch?v=0Qu7Jg1Jw5A)
 
-## The basics of using R and ggplot
-
-_TBA_
-
 # Assignments
 
 ## Timeline
 
-* The first Data Center workshop takes place in week 2: during this you will receive guidance on how to create figures in R to complete the IS-LM poster assignment. You should make sure to have R and RStudio installed before this workshop so you can follow along.
+* The first Data Center workshop takes place in week 2: during this you will receive guidance on how to create figures in R to complete the IS-LM poster assignment. You should make sure to have R and RStudio installed before this workshop so you can follow along, and to read sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
 * The IS-LM poster assignment is due in week 4 of the semester. The Data Center is available for office hours, individual consultations to help with the assignment.
 * The second Data Center workshop takes place in week 8. It will build on your existing R skills, with a focus on finding and cleaning data, which will help you in writing your final paper for the course.
 * The final empirical paper is due at the end of week 15. In the meantime, the Data Center is available for office hours, individual consultations.
 
 ## IS-LM poster
 
-_TBA_
-
 ### Guidelines
 
-_TBA_
+The assignment guidelines and the grading rubric are on Moodle.
 
-### Suppporting materials
+### Workshop handout
+
+The materials covered in the first Data Center workshop, including both code and explanations, can be found [here](https://ucrdatacenter.github.io/SSCECON207/workshop1).
+
+### Supporting materials
 
 _TBA:_ workshop materials, useful links
 
 ## Empirical paper on growth
 
-_TBA_
-
 ### Guidelines
 
-_TBA_
+The assignment guidelines and the grading rubric are on Moodle.
 
-### Suppporting materials
+### Workshop handout
+
+The materials covered in the first Data Center workshop, including both code and explanations, can be found at link TBA.
+
+### Supporting materials
 
 _TBA:_ workshop materials, useful links
