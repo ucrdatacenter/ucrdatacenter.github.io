@@ -10,8 +10,6 @@ output:
 You can find information and supplementary materials for all of our ongoing projects by clicking the link of the project you are interested in.
 
 ## Our Projects:
-* Environmental Science
-  + Project description: 
-  + [View files](https://github.com/ucrdatacenter/projects/tree/main/Environmental%20Science)
+* [SCIENVI201 Ecology](https://github.com/ucrdatacenter/projects/tree/main/Environmental%20Science)
 * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207)
-* [SSCECON209 Money, Banking and Finance](https://github.com/ucrdatacenter/projects)
+* [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209)

@@ -1,0 +1,34 @@
+---
+title: "SSCECON209<br>Money, Banking and Finance<br>Spring 2022"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# Introduction
+
+This page collects helpful links for the banking dashboard assignment in the Spring 2022 edition of Money, Banking and Finance.
+
+# Example dashboard
+
+You can find a basic example of a banking dashboard by clicking "Download" on [this link](https://github.com/ucrdatacenter/projects/blob/main/SSCECON209/2022h1/example%20dashboard.xlsx).
+
+# Helpful links
+
+## Excel basics
+
+_TBA_
+
+## Using formulas in Excel
+
+_TBA_
+
+## Making figures in Excel
+
+_TBA_
+
