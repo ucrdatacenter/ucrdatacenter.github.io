@@ -13,7 +13,7 @@ output:
 # Introduction
 
 This page collects the workshop materials, data sources and supplementary materials for the data-driven assignments for the Spring 2022 edition of International Macroeconomics at UCR.
-You can also access all materials on [Github](https://github.com/ucrdatacenter/projects/tree/main/SSCECON207/2022h1).
+You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SSCECON207/2022h1).
 
 # Working with R and RStudio
 

@@ -16,7 +16,7 @@ This page collects helpful links for the banking dashboard assignment in the Spr
 
 # Example dashboard
 
-You can find a basic example of a banking dashboard by clicking "Download" on [this link](https://github.com/ucrdatacenter/projects/blob/main/SSCECON209/2022h1/example%20dashboard.xlsx).
+You can download a basic example of a banking dashboard by clicking [this link](https://github.com/ucrdatacenter/projects/raw/main/SSCECON209/2022h1/example%20dashboard.xlsx).
 
 # Helpful links
 
