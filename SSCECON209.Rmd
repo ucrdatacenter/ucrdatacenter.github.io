@@ -16,19 +16,23 @@ This page collects helpful links for the banking dashboard assignment in the Spr
 
 # Example dashboard
 
-You can download a basic example of a banking dashboard by clicking [this link](https://github.com/ucrdatacenter/projects/raw/main/SSCECON209/2022h1/example%20dashboard.xlsx).
+You can download a basic example of a banking dashboard by clicking [here](https://github.com/ucrdatacenter/projects/raw/main/SSCECON209/2022h1/example%20dashboard.xlsx).
 
 # Helpful links
 
 ## Excel basics
 
-_TBA_
-
-## Using formulas in Excel
-
-_TBA_
+* [Excel cheat sheet](https://www.customguide.com/cheat-sheet/excel-cheat-sheet.pdf)
+* [List of most important formulas](https://web.acd.ccac.edu/~ndowney/CIT140/Excel/Formulas.pdf)
+* [Full tutorial from opening Excel to making charts (video)](https://www.youtube.com/watch?v=e7xGuGqgp-Q)
+* [Cell referencing (video)](https://www.youtube.com/watch?v=Yx52CYvR5ao)
+* [Working with multiple sheets (video)](https://www.youtube.com/watch?v=4HdZx29SdoM)
+* [Excel Formulas and Functions Tutorial (video)](https://www.youtube.com/watch?v=Jl0Qk63z2ZY)
 
 ## Making figures in Excel
 
-_TBA_
-
+* [Creating a chart step-by-step](https://www.excel-easy.com/data-analysis/charts.html)
+* [Creating a simple line chart (video)](https://www.youtube.com/watch?v=3o11OlLgYDo)
+* [Plotting multiple lines on one chart (video)](https://www.youtube.com/watch?v=YhmVVRwj3p8)
+* [Creating a scatterplot (video)](https://www.youtube.com/watch?v=OVA2M7EIx80)
+* [Customizing charts (video)](https://www.youtube.com/watch?v=TfkNkrKMF5c)

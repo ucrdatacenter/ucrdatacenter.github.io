@@ -5,6 +5,7 @@ output:
   html_document:
     theme: cosmo
     toc: true
+    toc_depth: 3
     toc_float:
       collapsed: false
       smooth_scroll: true
@@ -54,7 +55,41 @@ The materials covered in the first Data Center workshop, including both code and
 
 ### Supporting materials
 
-_TBA:_ workshop materials, useful links
+<!-- _TBA:_ workshop materials, useful links-->
+
+#### The basics of R
+
+* [Cheat sheet for importing data](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+* [Cheat sheet for data manipulation](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf) (including `filter()`, `select()` and the pipe operator(`%>%`))
+* [Cheat sheet for data tidying](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) (including reshaping and pivoting)
+* [Getting started with Data in R](https://moderndive.netlify.app/1-getting-started.html#getting-started) (covers: using R and RStudio, basic terminology, introduction to packages)
+* [R objects](https://rstudio-education.github.io/hopr/r-objects.html)
+* [More explanation on the pipe operator](https://r4ds.had.co.nz/pipes.html)
+* [Advice on using projects](https://r4ds.had.co.nz/workflow-projects.html)
+* [Selecting and filtering data](https://mdsr-book.github.io/mdsr2e/ch-dataI.html#sec:pipe)
+* [Conversions between long and wide format](https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa)
+* [Creating a project in RStudio (video)](https://www.youtube.com/watch?v=WyrJmJWgPiU)
+* [Packages in R (video)](https://www.youtube.com/watch?v=v6VygIgvoZU&t=1s)
+* [Loading a data file (video)](https://www.youtube.com/watch?v=2MVolYETR5Q)
+* [Data manipulation (video)](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
+
+#### Help with `ggplot`
+
+* [Cheat sheet for `ggplot`](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+* [The R Graph Gallery (example plots, including full R scripts)](https://www.r-graph-gallery.com/)
+* [More details on data visualization](https://mdsr-book.github.io/mdsr2e/ch-vizII.html#a-grammar-for-data-graphics)
+* [Saving plots with `ggsave()`](https://www.tutorialgateway.org/save-r-ggplot-using-ggsave/)
+* [Basic `ggplot` tutorial (video)](https://www.youtube.com/watch?v=hr2X7rmkprM)
+* [Customizing plots (video)](https://www.youtube.com/watch?v=1GmQ5BdAhG4)
+
+#### Data sources used
+
+* GDP: [World Bank DataBank: GDP (constant LCU)](https://data.worldbank.org/indicator/NY.GDP.MKTP.KN)
+* Consumption: [World Bank DataBank: Final consumption expenditure (constant LCU)](https://data.worldbank.org/indicator/NE.CON.TOTL.KN)
+* Investment: [World Bank DataBank: Gross fixed capital formation (constant LCU)](https://data.worldbank.org/indicator/NE.GDI.FTOT.KN)
+* Government spending: [World Bank DataBank: General government final consumption expenditure (constant LCU)](https://data.worldbank.org/indicator/NE.CON.GOVT.KN)
+* Interest rate: [World Bank DataBank: Real interest rate (%)](https://data.worldbank.org/indicator/FR.INR.RINR)
+* Inflation rate: [World Bank DataBank: Inflation, consumer prices (annual %)](https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG)
 
 ## Empirical paper on growth
 
