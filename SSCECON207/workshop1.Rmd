@@ -27,35 +27,25 @@ This tutorial assumes that you have already installed R and RStudio, and have re
 
 ## Creating a project in RStudio
 
-<!-- Once you open RStudio, it is useful to set your working directory. -->
-<!-- This is the folder where you will save your datafiles, R scripts and figures. -->
-<!-- To set a folder as your working directors, copy the following code and change the file path to the folder that you would like to use. -->
-<!-- If you are using Windows, you need to manually change the backslashes (\\) to forward slashes (/) before you run the code. -->
-
-<!-- You can set the working directory with the following function: -->
-
-<!-- ```{r, eval = FALSE} -->
-<!-- setwd("C:/Users/Tina/Documents/SSCECON207") -->
-<!-- ``` -->
-
-It is convenient to create an R project for each assignment you are working on.
+It is convenient to create an R project for each assignment that you are working on.
 A project is basically a folder that stores all files related to the assignment.
 
-You can create a project by opening RStudio and clicking on the sign "Project: (None)" in the top right corner.
-Open the dropdown window and click on "New Project...."
-In the popup window select "New Directory", then "New Project."
-Choose a sensible name for your project and enter it as the Directory Name.
-You can either use the default file path or change it by clicking "Browse..." next to "Create project as a subdirectory of:."
-Finally, click on "Create project."
+You can create a project as follows:
+
+* Open RStudio and click on "Project: (None)" in the top right corner.
+* Open the dropdown window and click on "New Project...."
+* In the popup window select "New Directory", then "New Project."
+* Choose a sensible name for your project and enter it as the Directory Name. You can either use the default file path or change it by clicking "Browse..." next to "Create project as a subdirectory of:."
+* Finally, click on "Create project."
 
 After a project is created, there are two easy ways of accessing it. 
-You can either use the dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
+You can either use the same dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
 
 ## Installing `tidyverse`
 
 Next, you need to install and load the `tidyverse` package.
 This is a collection of packages that allow clean workflows in R.
-The `ggplot2` package that you will use to create figures is one of the included packages.
+The `ggplot2` package that you will use to create figures is one of these included packages.
 
 You need to install the package only once, but you need to load it every time you open and use R.
 It is good practice to load the package on the top of each script.
@@ -72,27 +62,27 @@ library(tidyverse) # load the package
 ## Importing a CSV file
 
 Next, you need to import your data, which is in the format of a CSV (comma-separated values) file.
-Normally you would download a file to your project folder.
+Normally you would download a file to your project folder and load it in R from there.
 In this case, the data is available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/2022h1/ISLM_data.csv), so you can link to it directly using the link below, without having to download it first. 
 
 You can import a file using the `read_csv()` function and by assigning the file to an object.
 
 ```{r}
-data <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2022h1/ISLM_data.csv")
+data <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2022h1/ISLM_data.csv") # import the data from Github
 ```
 
 ## Filtering the data
 
-For your project you'll only need to use part of the data.
+For your project you will only need to use part of the data.
 To see what the data frame looks like, you can view it by clicking on the name of the object in the Environment tab in the top right corner of RStudio.
 
-The file "available_data.csv" provides a list of the countries and time periods available in the dataset.
+The file "available_data.csv" (view [here](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/available_data.csv)) provides a list of the countries and time periods available in the dataset.
 You can use this file to select a policy intervention to study.
-You can view the file [here](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/available_data.csv).
+For each country in the list, data is available in the period between the years in the "first" and "last" columns.
 
-Once you decide which country and time period you would like to use in your project, you need to filter the data to remove the observations that you don't need.
+Once you decide which country and time period you would like to use in your project, you need to filter the data to remove the observations that you do not need.
 You can do that with the `filter()` function.
-For example if you are looking for US data between 2006-2013, you can do that as follows:
+For example, if you are looking for US data between 2006-2013, you can do that as follows:
 
 ```{r}
 data_US <- data %>%
@@ -101,12 +91,12 @@ data_US <- data %>%
 
 The pipe operator (` %>% `) means that the next function uses the previous result as an input: in this case, it takes the object `data` as the first argument of the `filter()` function.
 
-The double equal sign in `code == "USA"` means that instead of assigning the string `"USA"` to a variable named country (which is what the code `code == "USA"` would do), you are testing whether the contents of the object `code` and the string `"USA"` are equal to each other.
+The double equal sign in `code == "USA"` means that instead of assigning the string `"USA"` to a variable named code (which is what `code = "USA"` would do), you are testing whether the contents of the object `code` and the string `"USA"` are equal to each other.
 Similarly, the less-than-or-equal and more-than-or-equal signs test the relationship between the contents of the variable `year` and the specified year.
 If the result of the test is true, the function keeps the observation, and if the result is false, the observation is removed.
-You can filter for country using both the variable `country`, which has full country names, or using the variable `code` with country code.
+You can filter for country using both the variable `country`, which has full country names, or using the variable `code` with country codes.
 The results of the two operations will be equivalent.
-Make sure to remember that R is case-sensitive, so e.g. a filter set as `country == "usa"` will not work.
+Make sure to remember that R is case-sensitive, so e.g. a filter set as `code == "usa"` will not work.
 
 ## Other data manipulation
 
@@ -117,26 +107,28 @@ You can either list the variables that you want to keep as the arguments of the 
 For example, you can filter your data to only include the year and the components of GDP:
 ```{r}
 data_US %>% 
-  select(year, consumption, investment, govt_spending)
+  select(year, consumption, investment, govt_spending) # only keep these four variables
 ```
 
-If you want to plot these variables on one figure, it helps to turn the data into long format.
+If you want to plot these variables on a single figure, it helps to turn the data into long format.
 
-Now each row of the data corresponds to one year, and three columns show the values of three variables.
+Currently each row of the data corresponds to one year, and three columns show the values of three variables.
 This is called wide format.
-In long format you would have three rows corresponding to one year, a single column of variable values, and a column specifying which component of GDP that value is.
+In long format you would have three rows corresponding to one year, a single column of values, and a column specifying which component of GDP that value corresponds to.
 
 You can convert between these two forms using the `pivot_longer()` and `pivot_wider()` functions.
 Below is an example of using `pivot_longer()`.
 If you need more help on the function arguments, the help-files of the function provide a good explanation.
-You can access these files by running `?pivot_longer()` and `?pivot_wider()`.
+You can access these help-files by running `?pivot_longer()` and `?pivot_wider()`.
 
 ```{r}
 data_US %>% 
   select(year, consumption, investment, govt_spending) %>% 
-  pivot_longer(cols = -year, names_to = "component", values_to = "value") # cols = -year -> use all columns except year
+  pivot_longer(cols = -year, names_to = "component", values_to = "value") # convert to long format
 ```
 
+The code `cols = -year` means that you want to transform all columns of the data frame except for year to long format.
+This notation is equivalent to `cols = c(consumption, investment, govt_spending)`, but in this case `cols = -year` is shorter and more convenient.
 
 # First `ggplot` figures
 
@@ -144,7 +136,7 @@ Figures made with `ggplot` are built from several layers.
 You always use the same basic code structure to create a wide range of figures:
 
 1. The `ggplot()` function creates a blank canvas for you to work on.
-1. Geoms add the visual elements, such as points, lines, bars or other shapes.
+1. Geoms add the visual elements, such as points, lines, bars, or other shapes.
 1. Other specifications can include changing axis settings, setting the theme, adding labels, etc.
 1. You connect all these different specifications to each other using `+` signs.
 
@@ -153,19 +145,19 @@ This tells R to determine the value of the aesthetic (x and y axes, colors, grou
 `aes()` can be specified both in the main `ggplot()` function (in which case it will apply to all geoms) or within a `geom_...()` function (then it only applies to that geom).
 
 The following code creates a time-series plot of the interest rate in the US over time.
-Comments at the end of each line explain what is happening.
+Comments explain what each line of code does.
 
 ```{r}
 data_US %>% # feed the previously created data frame into the ggplot function call
   ggplot() + # create the ggplot "blank canvas"
-  geom_line(aes(x = year, y = rate)) + # set the variables to be displayed on the x and y axes
+  geom_line(aes(x = year, y = rate)) + # set the variables to be displayed on each axis
   labs(title = "Interest rate in the US", # add a title to the plot
        x = "Year", # set the x axis label
        y = "Interest rate (%)") + # set the y axis label
   theme_light() # change the color scheme and layout of the plot to a different theme
 ```
 
-If you are happy with how a figure looks, you can save it using the `ggsave()` function and specifying the file name you want to use:
+If you are happy with how a figure looks, you can save it using the `ggsave()` function. As the function argument you need to specify the file name that you want to use:
 
 ```{r, eval = FALSE}
 ggsave("interest_rate.jpg") # save the plot
@@ -178,9 +170,9 @@ Other settings are also possible within each geom, such as size, color, transpar
 
 ```{r}
 data_US %>% 
-  ggplot(aes(x = GDP, y = rate)) + # if the aesthetics are set in the main ggplot() function, they apply to all geoms
+  ggplot(aes(x = GDP, y = rate)) + # these aesthetics apply to all geoms
   geom_point() + # make a scatterplot
-  geom_text(aes(label = year), nudge_y = 0.25, size = 3) + # add the years as labels next to each point
+  geom_text(aes(label = year), nudge_y = 0.25, size = 3) + # add the years as labels next to each point; shift them slightly up using the nudge_y argument so they don't overlap
   labs(title = "Output and interest rate in the US (2006-2012)",
        x = "GDP growth (%)",
        y = "Interest rate (%)") +
@@ -190,7 +182,7 @@ data_US %>%
 ggsave("scatterplot.jpg") 
 ```
 
-You can also connect `ggplot` figures to data cleaning/manipulation processes using the `%>%` operator introduced previously.
+You can also connect `ggplot` figures to data cleaning/manipulation processes using the `%>%` operator.
 The code below connects the data manipulation shown previously to a time-series plot of the components of GDP:
 
 ```{r}
@@ -200,7 +192,7 @@ data_US %>%
   ggplot() +
   geom_line(aes(x = year, y = value, color = component)) +
   labs(title = "Components of GDP in the US",
-       x = "",
+       x = "", # an empty string means that no axis title will be added
        y = "Percentage change") +
   theme_light()
 ```
