@@ -1,6 +1,6 @@
 ---
 title: "SSCECON207 workshop I:<br>Introduction to R and ggplot"
-date: "Spring 2022"
+date: "Spring 2022<br>Last updated: `r Sys.Date()`"
 output: 
   html_document:
     theme: cosmo
@@ -16,14 +16,14 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 
 # Learning outcomes
 
-In this tutorial you will learn the steps needed to create basic figures in R.
+In this tutorial you learn the steps needed to create basic figures in R.
 You can use these skills to create a poster where you analyze empirical evidence on a policy intervention in the context of the IS-LM model.
 
-You will learn how to import data into R, how to filter and select the data that you need, and how to make basic figures using the `ggplot2` package.
+You learn how to import data into R, how to filter and select the data that you need, and how to make basic figures using the `ggplot2` package.
 
 # First steps
 
-This tutorial assumes that you have already installed R and RStudio, and have read sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
+This tutorial assumes that you have already installed R and RStudio, and have read sections 2, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
 
 ## Creating a project in RStudio
 
@@ -44,7 +44,7 @@ You can either use the same dropdown window in the top right corner of RStudio t
 ## Installing `tidyverse`
 
 Next, you need to install and load the `tidyverse` package.
-This is a collection of packages that allow clean workflows in R.
+`tidyverse` is a collection of packages that allow clean workflows in R.
 The `ggplot2` package that you will use to create figures is one of these included packages.
 
 You need to install the package only once, but you need to load it every time you open and use R.
@@ -112,8 +112,7 @@ data_US %>%
 
 If you want to plot these variables on a single figure, it helps to turn the data into long format.
 
-Currently each row of the data corresponds to one year, and three columns show the values of three variables.
-This is called wide format.
+Currently each row of the data corresponds to one year, and three columns show the values of three variables; the data is in wide format.
 In long format you would have three rows corresponding to one year, a single column of values, and a column specifying which component of GDP that value corresponds to.
 
 You can convert between these two forms using the `pivot_longer()` and `pivot_wider()` functions.
@@ -141,7 +140,7 @@ You always use the same basic code structure to create a wide range of figures:
 1. You connect all these different specifications to each other using `+` signs.
 
 The variables that you want to display on the graph must always be wrapped in an `aes()` function, which stands for aesthetics. 
-This tells R to determine the value of the aesthetic (x and y axes, colors, groups, line types, etc.) based on the value of the variable. 
+This specification tells R to determine the value of the aesthetic (x and y axes, colors, groups, line types, etc.) based on the value of the variable. 
 `aes()` can be specified both in the main `ggplot()` function (in which case it will apply to all geoms) or within a `geom_...()` function (then it only applies to that geom).
 
 The following code creates a time-series plot of the interest rate in the US over time.
@@ -165,7 +164,7 @@ ggsave("interest_rate.jpg") # save the plot
 
 If instead of a time series plot, you want to make a scatterplot, you would use `geom_point()` instead of `geom_line()`.
 Additionally, you can use `geom_text()` to display labels next to the points.
-This requires you to set an additional aesthetic: the label you want displayed.
+In that case, you need to set an additional aesthetic: the label you want displayed.
 Other settings are also possible within each geom, such as size, color, transparency, etc.
 
 ```{r}

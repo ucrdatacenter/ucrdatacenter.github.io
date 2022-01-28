@@ -20,7 +20,7 @@ You can also access the related files directly on [Github](https://github.com/uc
 
 ## Installing R and RStudio
 
-R is the programming language that you will use when working with data.
+R is the programming language that you use when working with data.
 RStudio is a development environment that makes working with R much more convenient.
 Both are free to download and install.
 
@@ -38,9 +38,9 @@ In case you get stuck at any point, or would like more guidance in the installat
 
 ## Timeline
 
-* The first Data Center workshop takes place in week 2. During this you will receive guidance on how to create figures in R to complete the IS-LM poster assignment. You should make sure to have R and RStudio installed before this workshop, and read sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
+* The first Data Center workshop takes place in week 2. It covers the basics of how to create figures in R. You should make sure to have R and RStudio installed before this workshop, and read sections 2, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
 * The IS-LM poster assignment is due in week 4 of the semester. The Data Center is available for office hours and individual consultations to help with the assignment.
-* The second Data Center workshop takes place in week 8. It will build on your existing R skills, with a focus on finding and cleaning data. These skills will help you write your final paper for the course.
+* The second Data Center workshop takes place in week 8. It builds on your existing R skills, with a focus on finding and cleaning data.
 * The final empirical paper is due at the end of week 15. In the meantime, the Data Center is available for office hours and individual consultations.
 
 ## IS-LM poster
@@ -54,8 +54,6 @@ The assignment guidelines and the grading rubric are on Moodle.
 The materials covered in the first Data Center workshop, including both code and explanations, can be found [here](https://ucrdatacenter.github.io/SSCECON207/workshop1).
 
 ### Supporting materials
-
-<!-- _TBA:_ workshop materials, useful links-->
 
 #### The basics of R
 
