@@ -1,0 +1,158 @@
+---
+title: "SCIENVI201<br>Ecology<br>Spring 2022"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# Introduction
+
+This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2022 edition of Ecology at UCR.
+You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1)
+
+# Working with R and RStudio
+
+## Recommended reading for introduction to R
+
+It is highly recommended that you read the sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)) before starting working with R. 
+
+## Installing R and RStudio
+
+R is the programming language that you use when working with data.
+RStudio is a development environment that makes working with R much more convenient.
+Both are free to download and install.
+
+To download R, go to [cloud.r-project.org](https://cloud.r-project.org/) and follow the instructions on the page.
+To download RStudio, go to [rstudio.com/products/rstudio/download](https://www.rstudio.com/products/rstudio/download/), scroll down and download the file recommended for your operating system.
+
+When installing, you can always stick to the default settings, unless you have different preferences.
+
+In case you get stuck at any point, or would like more guidance in the installation process, feel free to check out any of the following links:
+
+* [Tutorial: Getting Started with R and RStudio](https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/)
+* [R Tutorial: How to install R and R studio (video)](https://www.youtube.com/watch?v=0Qu7Jg1Jw5A)
+       
+## Creating a project in RStudio
+
+It is convenient to create an R project for an assignment that you are working on.
+A project is basically a folder that stores all files related to the assignment.
+
+You can create a project as follows:
+
+* Open RStudio and click on "Project: (None)" in the top right corner.
+* Open the dropdown window and click on "New Project...."
+* In the popup window select "New Directory", then "New Project."
+* Choose a sensible name for your project and enter it as the Directory Name. You can either use the default file path or change it by clicking "Browse..." next to "Create project as a subdirectory of:."
+* Finally, click on "Create project."
+
+After a project is created, there are two easy ways of accessing it. 
+You can either use the same dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
+
+## Installing `tidyverse`
+
+Next, you need to install and load the `tidyverse` package.
+This is a collection of packages that allow clean workflows in R.
+The `ggplot2` package that you will use to create figures is one of these included packages.
+
+You need to install the package only once, but you need to load it every time you open and use R.
+It is good practice to load the package on the top of each script.
+
+```{r, eval = FALSE}
+install.packages("tidyverse") # install the package
+```
+```{r}
+library(tidyverse) # load the package
+```
+ 
+# Assignment
+
+These assignment instructions serve you as a guide in completing your original assignment. Here, I will walk you step by step through an example of the assignment. Once you complete this, you can start with your own variation of the assignment. Creativity is very welcome. 
+In your version of the assignment you choose:
+  
+  - species of an interest
+  - year (of Nitrogen deposition and species ocurrences)
+
+### The correlation between Chaffinch, Fringilla coelebs, and Nitrogen deposition levels in the Netherlands
+
+![fringilla](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)  
+
+## LIBRARIES
+
+Before starting with the assignment, you always need to install the libraries you have not used before with the code install.packages(...). However, once you have installed them you do not need to do it again, but remember that you need to load them at the beginning of every session with the code library(...).
+
+```{r echo = TRUE, message = FALSE}
+
+
+No, after installing all the libraries you can load them in your R, so they are ready to be used. 
+This is the list of all the libraries that you need for completing the assignment. Every section has a comment which says which library you are using.
+
+```{r echo = TRUE, message = FALSE}
+library(tidyverse)
+library(tidymodels)
+library(sp)
+library(raster)
+library(rgdal)
+library(readr)
+```
+
+## DATA IMPORT
+
+#### Nitrogen data
+libraries needed: _library(sp)_ and _library(raster)_
+
+Go to the website: https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren, and download total Nitrogen deposition (Total stikstof (N)) from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Ecology Project file. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. In case something went wrong, the Nitrogen data can be found on github: projects/Environmental science/Nitrogen deposition effect on biodiveristy/Data/nitrogen. Now, we can importing the data on Nitrogen deposition levels
+
+```{r echo = TRUE, message = FALSE}
+Nitrogen_2018 <- raster("GitHub/projects/SCIENVI/Nitrogen deposition effect on biodiversity/Data/nitrogen/depo_ntot_2018.asc")
+```
+
+Lets see how does Nitrogen deposition map looks like.
+```{r echo = TRUE, message = FALSE}
+plot(Nitrogen_2018)
+```
+## DATA TIDYING
+
+## PLOTTING
+
+## STATISTICAL ANALYSIS
+
+You can also embed plots, for example:
+  
+  ```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Supporting materials
+
+## The basics of R
+
+* [Cheat sheet for importing data](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+* [Cheat sheet for data manipulation](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf) (including `filter()`, `select()` and the pipe operator(`%>%`))
+* [Cheat sheet for data tidying](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf) (including reshaping and pivoting)
+* [Getting started with Data in R](https://moderndive.netlify.app/1-getting-started.html#getting-started) (covers: using R and RStudio, basic terminology, introduction to packages)
+* [R objects](https://rstudio-education.github.io/hopr/r-objects.html)
+* [More explanation on the pipe operator](https://r4ds.had.co.nz/pipes.html)
+* [Advice on using projects](https://r4ds.had.co.nz/workflow-projects.html)
+* [Selecting and filtering data](https://mdsr-book.github.io/mdsr2e/ch-dataI.html#sec:pipe)
+* [Conversions between long and wide format](https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa)
+* [Creating a project in RStudio (video)](https://www.youtube.com/watch?v=WyrJmJWgPiU)
+* [Packages in R (video)](https://www.youtube.com/watch?v=v6VygIgvoZU&t=1s)
+* [Loading a data file (video)](https://www.youtube.com/watch?v=2MVolYETR5Q)
+* [Data manipulation (video)](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
+
+## Help with `ggplot`
+
+* [Cheat sheet for `ggplot`](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
+* [The R Graph Gallery (example plots, including full R scripts)](https://www.r-graph-gallery.com/)
+* [More details on data visualization](https://mdsr-book.github.io/mdsr2e/ch-vizII.html#a-grammar-for-data-graphics)
+* [Saving plots with `ggsave()`](https://www.tutorialgateway.org/save-r-ggplot-using-ggsave/)
+* [Basic `ggplot` tutorial (video)](https://www.youtube.com/watch?v=hr2X7rmkprM)
+* [Customizing plots (video)](https://www.youtube.com/watch?v=1GmQ5BdAhG4)
