@@ -54,25 +54,28 @@ You can create a project as follows:
 After a project is created, there are two easy ways of accessing it. 
 You can either use the same dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
 
+\
+
 # Assignment
 ## Nitrogen deposition effect on biodiversity
 
 Distribution of organisms in relation to Nitrogen deposition in the Netherlands
   
   
-  ![Eutrophication](https://user-images.githubusercontent.com/84587448/144092109-7298977c-a6af-4146-9dde-54d51b3741b4.jpg)
+  ![](https://user-images.githubusercontent.com/84587448/144092109-7298977c-a6af-4146-9dde-54d51b3741b4.jpg)
 
   
   
-  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intesified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyse and tackle this biodiversity decline due to Nitrogen. Which species are harmed and might some even benefit? As an ecologist, you need to know what is the species distribution and how it correlates with past, current and future Nitrogen deposition to be able to draw the right conclusion and action plans for species protection. In this assignment you will work with external source of species occurences, will correlate these to Nitrogen deposition in the Netherlands and perform statistical test to see what relationship there is between Nitrogen deposition and the occurences of a chosen species.
+  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intesified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyse and tackle this biodiversity decline due to Nitrogen. Which species are harmed and might some even benefit? As an ecologist, you need to know what is the species distribution and how it correlates with Nitrogen deposition levels to be able to draw the right conclusion and to suggest appropriate action plans for species protection. In this assignment you will work with external source of species occurences, will correlate these to Nitrogen deposition in the Netherlands and perform statistical test to see what relationship there is between Nitrogen deposition and the occurences of a chosen species.
   
   
 ## DATA
   
-  The organisms occurrences can be directly downloaded in a csv file from gbif.com.
-  The nitrogen deposition in the Netherlands can be downloaded from RIVM website: https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren. 
+  The organisms occurrences can be directly downloaded in a csv file from [gbif.com](gbif.com).\
+  The nitrogen deposition in the Netherlands can be downloaded from RIVM website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren).
   
-## SKILLS
+  
+## LEARNING OUTCOMES
   While completing this project a student can develop multiple R skills as well as practice performing research with previously gathered data from an external source.
   
   Skills practice:
@@ -86,9 +89,9 @@ Distribution of organisms in relation to Nitrogen deposition in the Netherlands
   
  
 ## RESEARCH FOCUS
-  What is the relationship between species occurences and Nitrogen deposition levels. 
+  What is the relationship between species occurrences and Nitrogen deposition levels?
   
-## Literature
+## LITERATURE
   WallisDeVries, M.F., Van Swaay, C.A.M., 2017. A Nitrogen Index to Track Changes in Butterfly Species Assemblages Under Nitrogen Deposition. Biol. Conserv. 212, 448–453
  
   Payne, R. J., Dise, N. B., Stevens, C. J., & Gowing, D. J. (2013). Impact of nitrogen deposition at the species level. Proceedings of the National Academy of Sciences, 110(3), 984-987. 
@@ -283,7 +286,7 @@ ggplot(complete_data) +
 
 library used: _library(tidyverse)_
 
-After visually observing the relationship, now we want to see the quantitative analysis.
+After visually observing the relationship, we want to see the quantitative analysis of the relationship.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
