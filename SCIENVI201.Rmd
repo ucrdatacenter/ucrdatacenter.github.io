@@ -14,11 +14,11 @@ output:
 # Introduction
 
 This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2022 edition of Ecology at UCR.
-You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1)
+You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1).
 
 # Working with R and RStudio
 
-## Recommended reading for introduction to R
+## Recommended reading
 
 It is highly recommended that you read the sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)) before starting working with R. 
 
@@ -62,13 +62,18 @@ In your version of the assignment you choose:
   - species of an interest
   - year (of Nitrogen deposition and species ocurrences)
 
-### The correlation between Chaffinch, Fringilla coelebs, and Nitrogen deposition levels in the Netherlands
+\
 
-![fringilla](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)  
+<center>
+<h1> **The correlation between Chaffinch, _Fringilla coelebs_, and Nitrogen deposition levels in the Netherlands** </h1>
+
+![](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)
+</center>
 
 ## LIBRARIES
 
-Before starting with the assignment, you always need to install the libraries you have not used before with the code install.packages(...). However, once you have installed them you do not need to do it again, but remember that you need to load them at the beginning of every session with the code library(...).
+Before starting with the assignment, you always need to install the libraries you have not used before with the code _install.packages(...)_. 
+However, once you have installed them you do not need to do it again, but you need to load them at the beginning of every R session with the code _library(...)_.
 
 ```{r echo = TRUE, message = FALSE, eval = FALSE}
 
@@ -84,14 +89,14 @@ install.packages("tidymodels")
 Now, after installing all the libraries you can load them in your Rstudio, so they are ready to be used. 
 This is the list of all the libraries that you need for completing the assignment. Every section has a comment which says which library you are using.
 
-```{r echo = TRUE, message = FALSE}
+```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-library(tidyverse)
 library(tabularaster)
 library(terra)
 library(sf)
 library(readr)
 library(tidymodels)
+library(tidyverse)
 
 ```
 
@@ -99,9 +104,9 @@ library(tidymodels)
 
 #### Nitrogen data
 
-libraries needed: _library(sp)_ and _library(raster)_
+libraries used: _library(sf)_, _library(terra)_ and _library(tidyverse)_
 
-Go to the website: https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren, and download total Nitrogen deposition (Total stikstof (N)) from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Project folder. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. But remember to update your code according to your files' names. Now, we can import the data on Nitrogen deposition levels to our Rstudio.
+Go to the website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren), and download **total Nitrogen deposition (Total stikstof (N))** from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Project folder. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. But remember to update your code according to your files' names. Now, we can import the data on Nitrogen deposition levels to our Rstudio.
 
 ```{r echo = TRUE, message = FALSE}
 
@@ -109,7 +114,8 @@ Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/D
 
 ```
 
-Lets see how does Nitrogen deposition map looks like.
+Let's see how does the Nitrogen deposition map looks like.
+
 ```{r echo = TRUE, message = FALSE}
 
 Nitrogen_2018 %>% 
@@ -119,11 +125,155 @@ Nitrogen_2018 %>%
   geom_raster()
 
 ```
+
+#### Species data
+
+libraries used: _library(readr)_ and _library(tidyverse)_
+
+Go to the website: [gbif.org](gbif.org), click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: **Fringilla coelebs**, in Year select: **2018**, and finally in Country or area select: **Netherlands**. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meantime create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click click _extract all_ and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, _Fringilla coelebs_, to our Rstudio.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+Chaffinch_2018 <- read_delim("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv", 
+                             delim = "\t", escape_double = FALSE, trim_ws = TRUE)
+
+```
+
+Let's see where does chaffinch occur on the map.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+ggplot(Chaffinch_2018) +
+  geom_point(aes(decimalLongitude, decimalLatitude))
+
+```
+
+Let's view the data set on chaffinch.
+
+```{r echo = TRUE, message = FALSE}
+
+Chaffinch_2018 %>% view()
+
+```
+
+It is a quiet big data set with 50 columns and over 60000 observations (rows). However, we do not need all the information. Therefore, in the next step we will clean our data set to our preferred size.
+
 ## DATA TIDYING
 
+library used: _library(tidyverse)_
+
+In this following code we select the variables with which we will be working: species names (species), longitude (decimalLongitude), and latitude (decimalLatitude)
+
+```{r echo = TRUE, message = FALSE}
+
+Chaffinch_2018 <- Chaffinch_2018 %>%
+  dplyr::select(species, decimalLongitude, decimalLatitude) %>% # in this case you can notice that we wrote down dplyr::select instead of just typing command select(). This is because the command select() is in two of our libraries. Therefore, we wanted to specify that this select is from dplyr package which is within tidyverse.
+  na.omit() %>%
+  st_as_sf(coords = c("decimalLongitude","decimalLatitude")) 
+  
+```
+
+libraries used: _library(sf)_ and _library(terra)_
+
+When working with geo-spatial data, we can come across various versions of coordinate systems. Therefore, our next step is to check whether our two geo-spatial data (Nitrogen and Chaffinch) is in the same coordinate system. The code _crs(data)_ tells us in which coordinate system the geo-spatial data is. Here, the Nitrogen deposition file does not have it defined, but reading the information on the data set we know that the data set is in Amersfoort coordinate system. Therefore, we can tell the Nitrogen_2018 that it is in this format with the following code:
+
+```{r echo = TRUE, message = FALSE}
+
+crs(Nitrogen_2018) <- "+init=epsg:28992"
+
+```
+
+Next we can adjust the chaffinch coordinate system into the same coordinate system.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+st_crs(Chaffinch_2018) <- "+init=epsg:4326"
+Chaffinch_2018 <- st_transform(Chaffinch_2018, 28992)
+
+```
+
+library used: _library(terra)_
+
+Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files and write it into a table complete_data.
+
+```{r echo = TRUE, message = FALSE}
+
+complete_data <- terra::extract(Nitrogen_2018, vect(Chaffinch_2018), cells = T, xy = T) %>% as_tibble() 
+
+complete_data <- complete_data %>% 
+  mutate(species = "Fringilla coelebs")
+
+```
+
+
 ## PLOTTING
+Once, we have our data sets available we would like to look at a graph which would show us whether there is some relationship between the level of Nitrogen and species occurrences. In the following lines of code, we have three various graphs and you need to justify yourself which one is the most informative.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# BOXPLOT
+boxplot(depo_ntot_2018 ~ species,
+        data = complete_data,
+        main = "Average Nitrogen deposition per species occurrence",
+        xlab = "Chaffinch, Fringilla coelebs",
+        ylab = "Nitrogen deposition (mol/(ha.year))",
+        col = "orange",
+        border = "brown")
+
+# BARCHART
+ggplot(complete_data) +
+  geom_bar(aes(depo_ntot_2018)) +
+  labs(x = "Nitrogen deposition (mol/(ha.year))",
+       y = "Chaffinch, Fringilla coelebs (n)")
+
+# FREQUENCY POLYGON
+ggplot(complete_data) +
+  geom_freqpoly(aes(depo_ntot_2018)) +
+  labs(title = "Species occurences per Nitrogen deposition",
+       x = "Nitrogen deposition (mol/(ha.year))",
+       y = "Chaffinch (Fringilla coelebs) (n)")
+
+```
 
 ## STATISTICAL ANALYSIS
+
+library used: _library(tidyverse)_
+
+After visually observing the relationship, now we want to see the quantitative analysis.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# calling our frequency polygon f
+f <- ggplot(complete_data) +
+  geom_freqpoly(aes(depo_ntot_2018)) +
+  labs(title = "Species occurences per Nitrogen deposition",
+       x = "Nitrogen deposition (mol/(ha.year))",
+       y = "Chaffinch (Fringilla coelebs) (n)")
+
+# writing a function which extracts values from frequency polygon
+get_fpoly <- function(p) {
+  d <- ggplot_build(p)$data[[1]]
+  data.frame(x = d$x, xmin = d$xmin, xmax = d$xmax, y = d$y)
+}
+
+# extracting x and y variables with the extracting function (get_fpoly) from frequency polygen (f).
+x <- get_fpoly(f)$x
+y <- get_fpoly(f)$y
+
+# writing a table with x and y variables and calling it t
+t <- tibble(x, y)
+
+# visualizing the relationship
+ggplot(t, aes(x, y)) +
+  geom_point() +
+  geom_smooth(method = lm, formula = y ~ poly(x, 2), se = FALSE)
+
+## library needed: library(tidymodels)
+## statistical resutls
+lm(y~poly(x, 2),t) %>%
+  tidy()
+
+```
 
 # Supporting materials
 
