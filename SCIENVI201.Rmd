@@ -284,7 +284,7 @@ ggplot(complete_data) +
 
 ## STATISTICAL ANALYSIS
 
-library used: _library(tidyverse)_
+library used: _library(tidyverse)_ and _library(tidymodels)_
 
 After visually observing the relationship, we want to see the quantitative analysis of the relationship.
 
@@ -315,7 +315,6 @@ ggplot(t, aes(x, y)) +
   geom_point() +
   geom_smooth(method = lm, formula = y ~ poly(x, 2), se = FALSE)
 
-## library needed: library(tidymodels)
 ## statistical resutls
 lm(y~poly(x, 2),t) %>%
   tidy()
