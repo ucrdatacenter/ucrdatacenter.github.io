@@ -54,22 +54,6 @@ You can create a project as follows:
 After a project is created, there are two easy ways of accessing it. 
 You can either use the same dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
 
-## Installing `tidyverse`
-
-Next, you need to install and load the `tidyverse` package.
-This is a collection of packages that allow clean workflows in R.
-The `ggplot2` package that you will use to create figures is one of these included packages.
-
-You need to install the package only once, but you need to load it every time you open and use R.
-It is good practice to load the package on the top of each script.
-
-```{r, eval = FALSE}
-install.packages("tidyverse") # install the package
-```
-```{r}
-library(tidyverse) # load the package
-```
- 
 # Assignment
 
 These assignment instructions serve you as a guide in completing your original assignment. Here, I will walk you step by step through an example of the assignment. Once you complete this, you can start with your own variation of the assignment. Creativity is very welcome. 
@@ -86,35 +70,54 @@ In your version of the assignment you choose:
 
 Before starting with the assignment, you always need to install the libraries you have not used before with the code install.packages(...). However, once you have installed them you do not need to do it again, but remember that you need to load them at the beginning of every session with the code library(...).
 
-```{r echo = TRUE, message = FALSE}
+```{r echo = TRUE, message = FALSE, eval = FALSE}
 
+install.packages("tidyverse")
+install.packages("tabularaster")
+install.packages("terra")
+install.packages("sf")
+install.packages("readr")
+install.packages("tidymodels")
 
-No, after installing all the libraries you can load them in your R, so they are ready to be used. 
+```
+
+Now, after installing all the libraries you can load them in your Rstudio, so they are ready to be used. 
 This is the list of all the libraries that you need for completing the assignment. Every section has a comment which says which library you are using.
 
 ```{r echo = TRUE, message = FALSE}
+
 library(tidyverse)
-library(tidymodels)
-library(sp)
-library(raster)
-library(rgdal)
+library(tabularaster)
+library(terra)
+library(sf)
 library(readr)
+library(tidymodels)
+
 ```
 
 ## DATA IMPORT
 
 #### Nitrogen data
+
 libraries needed: _library(sp)_ and _library(raster)_
 
-Go to the website: https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren, and download total Nitrogen deposition (Total stikstof (N)) from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Ecology Project file. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. In case something went wrong, the Nitrogen data can be found on github: projects/Environmental science/Nitrogen deposition effect on biodiveristy/Data/nitrogen. Now, we can importing the data on Nitrogen deposition levels
+Go to the website: https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren, and download total Nitrogen deposition (Total stikstof (N)) from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Project folder. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. But remember to update your code according to your files' names. Now, we can import the data on Nitrogen deposition levels to our Rstudio.
 
 ```{r echo = TRUE, message = FALSE}
-Nitrogen_2018 <- raster("GitHub/projects/SCIENVI/Nitrogen deposition effect on biodiversity/Data/nitrogen/depo_ntot_2018.asc")
+
+Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc")
+
 ```
 
 Lets see how does Nitrogen deposition map looks like.
 ```{r echo = TRUE, message = FALSE}
-plot(Nitrogen_2018)
+
+Nitrogen_2018 %>% 
+  as.data.frame(xy=T) %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = x, y = y, fill = depo_ntot_2018)) + 
+  geom_raster()
+
 ```
 ## DATA TIDYING
 
