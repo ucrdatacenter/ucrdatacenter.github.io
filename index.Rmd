@@ -9,7 +9,12 @@ output:
 
 You can find information and supplementary materials for all of our ongoing projects by clicking the link of the project you are interested in.
 
+## Office hours
+
+The Data Center student fellows hold office hours every Wednesday between 15:00-19:00 (15:00-17:00 with Tina, 17:00-19:00 with Bianka) on [Zoom](https://universitycollegeroosevelt.zoom.us/j/5393037767?pwd=d1FxZFN1UDVqZUsrU204R1gzQWF4Zz09) to answer questions and help with assignments related to the Data Center projects.
+
 ## Our Projects:
+
 * [SCIENVI201 Ecology](https://ucrdatacenter.github.io/SCIENVI201)
 * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207)
 * [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209)
