@@ -57,7 +57,10 @@ You can either use the same dropdown window in the top right corner of RStudio t
 \
 
 # Assignment
-## Nitrogen deposition effect on biodiversity
+
+<center>
+# **Nitrogen deposition effect on biodiversity** {.unlisted .unnumbered}
+</center>
 
 Distribution of organisms in relation to Nitrogen deposition in the Netherlands
   
@@ -112,7 +115,7 @@ In your version of the assignment you choose:
 \
 
 <center>
-<h1> **The correlation between Chaffinch, _Fringilla coelebs_, and Nitrogen deposition levels in the Netherlands** </h1>
+# **The correlation between Chaffinch, _Fringilla coelebs_, and Nitrogen deposition levels in the Netherlands** {.unlisted .unnumbered}
 
 ![](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)
 </center>
@@ -166,7 +169,7 @@ Let's see how does the Nitrogen deposition map looks like.
 ```{r echo = TRUE, message = FALSE}
 
 Nitrogen_2018 %>% 
-  as.data.frame(xy=T) %>% 
+  as.data.frame(xy = T) %>% 
   as_tibble() %>% 
   ggplot(aes(x = x, y = y, fill = depo_ntot_2018)) + 
   geom_raster()
@@ -190,8 +193,8 @@ Let's see where does chaffinch occur on the map.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-ggplot(Chaffinch_2018) +
-  geom_point(aes(decimalLongitude, decimalLatitude))
+ggplot(data = Chaffinch_2018) +
+  geom_point(aes(x = decimalLongitude, y = decimalLatitude))
 
 ```
 
@@ -259,26 +262,24 @@ Once, we have our data sets available we would like to look at a graph which wou
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
 # BOXPLOT
-boxplot(depo_ntot_2018 ~ species,
-        data = complete_data,
-        main = "Average Nitrogen deposition per species occurrence",
-        xlab = "Chaffinch, Fringilla coelebs",
-        ylab = "Nitrogen deposition (mol/(ha.year))",
-        col = "orange",
-        border = "brown")
+ggplot(data = complete_data) + 
+  geom_boxplot(aes(x = species, y = depo_ntot_2018)) +
+  labs(x = "Chaffinch, Fringilla coelebs (n)",
+      y = "Nitrogen deposition (mol/(ha.year))")
 
-# BARCHART
-ggplot(complete_data) +
-  geom_bar(aes(depo_ntot_2018)) +
+# HISTOGRAM
+ggplot(data = complete_data) +
+  geom_histogram(aes(x = depo_ntot_2018), binwidth = 100) +
   labs(x = "Nitrogen deposition (mol/(ha.year))",
-       y = "Chaffinch, Fringilla coelebs (n)")
+      y = "Chaffinch, Fringilla coelebs (n)")
 
 # FREQUENCY POLYGON
-ggplot(complete_data) +
-  geom_freqpoly(aes(depo_ntot_2018)) +
+ggplot(data = complete_data) +
+  geom_freqpoly(aes(x = depo_ntot_2018), binwidth = 100) +
   labs(title = "Species occurences per Nitrogen deposition",
        x = "Nitrogen deposition (mol/(ha.year))",
        y = "Chaffinch (Fringilla coelebs) (n)")
+
 
 ```
 
@@ -290,33 +291,30 @@ After visually observing the relationship, we want to see the quantitative analy
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-# calling our frequency polygon f
-f <- ggplot(complete_data) +
-  geom_freqpoly(aes(depo_ntot_2018)) +
+## writing a table t with x (nitrogen levels) and y (species frequency) variables
+t <- complete_data %>% 
+  mutate(bins = round(depo_ntot_2018, digits = -2)) %>% 
+  group_by(bins) %>% 
+  count() %>% 
+  rename(x = bins,
+         y = n) %>% 
+  na.omit()
+
+## visualizing the relationship
+ggplot(data = t, aes(x = x, y = y, group = 1)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE) +
   labs(title = "Species occurences per Nitrogen deposition",
        x = "Nitrogen deposition (mol/(ha.year))",
        y = "Chaffinch (Fringilla coelebs) (n)")
 
-# writing a function which extracts values from frequency polygon
-get_fpoly <- function(p) {
-  d <- ggplot_build(p)$data[[1]]
-  data.frame(x = d$x, xmin = d$xmin, xmax = d$xmax, y = d$y)
-}
+```
 
-# extracting x and y variables with the extracting function (get_fpoly) from frequency polygen (f).
-x <- get_fpoly(f)$x
-y <- get_fpoly(f)$y
+```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-# writing a table with x and y variables and calling it t
-t <- tibble(x, y)
-
-# visualizing the relationship
-ggplot(t, aes(x, y)) +
-  geom_point() +
-  geom_smooth(method = lm, formula = y ~ poly(x, 2), se = FALSE)
-
+## library needed: library(tidymodels)
 ## statistical resutls
-lm(y~poly(x, 2),t) %>%
+lm(y ~ poly(x, 2), t) %>%
   tidy()
 
 ```
