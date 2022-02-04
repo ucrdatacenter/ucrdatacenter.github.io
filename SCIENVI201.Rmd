@@ -18,7 +18,7 @@ output:
 This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2022 edition of Ecology at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1).
 
-If you have any questions related to the assignment do not hesitate to reach Bianka during Data Center office hours (held every Wednesday 17:00 - 19:00 on [Zoom](https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09)). No need to sign up in advance. If this time is inconvenient for you feel free to write Bianka an email (ucrdatacenter@ucr.nl) to schedule an individual meeting. 
+If you have any questions related to the assignment do not hesitate to reach Bianka during Data Center office hours (held every Wednesday 17:00 - 19:00 on [Zoom](https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09)). There is no need to sign up in advance to join office hours. If this time is inconvenient for you feel free to write Bianka an email (ucrdatacenter@ucr.nl) to schedule an individual meeting. 
 
 \
 
@@ -70,7 +70,7 @@ You can either use the same dropdown window in the top right corner of RStudio t
   
   ![](https://user-images.githubusercontent.com/84587448/144092109-7298977c-a6af-4146-9dde-54d51b3741b4.jpg)
   
-  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intensified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyze and tackle this biodiversity decline due to Nitrogen. What is the response of individual species to increasing Nitrogen levels? Which species are negatively impacted and might some even benefit? As an ecologist, you need to know what is the species distribution and how does it correlate with increasing Nitrogen deposition levels to be able to draw the right conclusion and to suggest appropriate action plans for species protection. In this assignment you will work with external source of species occurrences, will correlate these to Nitrogen deposition in the Netherlands and perform a statistical test to see what relationship there is between Nitrogen deposition and the occurrences of a chosen species.
+  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intensified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyze and tackle this biodiversity decline due to nitrogen. What is the response of individual species to increasing Nitrogen levels? Which species are negatively impacted and might some even benefit form this environmental change? As an ecologist, you need to know what is the species distribution and how does it correlate with increasing nitrogen deposition levels to be able to draw the right conclusion and to suggest appropriate action plans for species protection. In this assignment you will work with external source of species occurrences, will correlate these to nitrogen deposition in the Netherlands, and perform a statistical test to see what relationship there is between nitrogen deposition and the occurrences of a chosen species.
   
   
 ## DATA
@@ -90,7 +90,7 @@ You can either use the same dropdown window in the top right corner of RStudio t
   
   
 ## RESEARCH FOCUS
-  What is the relationship between species occurrences and Nitrogen deposition levels?
+  What is the relationship between species occurrences and nitrogen deposition levels?
   
 ## LITERATURE
 
