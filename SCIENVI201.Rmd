@@ -16,6 +16,8 @@ output:
 This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2022 edition of Ecology at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1).
 
+If you have any questions related to the assignment do not hesitate to reach Bianka during Data Center office hours (held every Wednesday 17:00 - 19:00 on [Zoom](https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09)). No need to sign up in advance. If this time is inconvenient for you feel free to write Bianka an email (ucrdatacenter@ucr.nl) to schedule an individual meeting. 
+
 # Working with R and RStudio
 
 ## Recommended reading
@@ -84,11 +86,11 @@ Distribution of organisms in relation to Nitrogen deposition in the Netherlands
   Skills practice:
   
   
-          -  Obtaining and importing data from an online source to R
-          -  Filtering and adjusting data to reach a set of desired information only
-          -  Visualization of species occurences and Nitrogen deposition levels
-          -  Visualization of graphs in R
-          -  Performing statistical test
+* Obtaining and importing data from an online source to R
+* Filtering and adjusting data to reach a set of desired information only
+* Visualization of species occurrences and Nitrogen deposition levels
+* Visualization of graphs in R
+* Performing statistical test
   
  
 ## RESEARCH FOCUS
@@ -120,7 +122,16 @@ In your version of the assignment you choose:
 ![](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)
 </center>
 
+At this step it is assumed that you have:
+* installed R, 
+* Rstudio (the working environment for R language), 
+* created an R project for this assignment, 
+* read the recommended reading.
+Now, open the R project you have created according to the instructions above. Rstudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script. 
+
 ## LIBRARIES
+
+
 
 Before starting with the assignment, you always need to install the libraries you have not used before with the code _install.packages(...)_. 
 However, once you have installed them you do not need to do it again, but you need to load them at the beginning of every R session with the code _library(...)_.
