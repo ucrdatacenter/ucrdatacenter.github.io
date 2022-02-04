@@ -480,9 +480,10 @@ ggplot(data = complete_data) +
 </div>
 <div id="statistical-analysis" class="section level2">
 <h2>STATISTICAL ANALYSIS</h2>
-<p>library used: <em>library(tidyverse)</em> and <em>library(tidymodels)</em></p>
 <p>After visually observing the relationship, we want to see the quantitative analysis of the relationship.</p>
-<pre class="r"><code>## writing a table t with x (nitrogen levels) and y (species frequency) variables
+<pre class="r"><code># library used: _library(tidyverse)_ and _library(tidymodels)_
+
+# writing a table t with x (nitrogen levels) and y (species frequency) variables
 t &lt;- complete_data %&gt;% 
   mutate(bins = round(depo_ntot_2018, digits = -2)) %&gt;% 
   group_by(bins) %&gt;% 
@@ -491,7 +492,7 @@ t &lt;- complete_data %&gt;%
          y = n) %&gt;% 
   na.omit()
 
-## visualizing the relationship
+# visualizing the relationship
 ggplot(data = t, aes(x = x, y = y, group = 1)) +
   geom_point() +
   geom_smooth(method = &quot;lm&quot;, formula = y ~ poly(x, 2), se = FALSE) +
