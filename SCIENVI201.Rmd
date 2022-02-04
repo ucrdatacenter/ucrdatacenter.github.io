@@ -11,12 +11,16 @@ output:
       smooth_scroll: true
 ---
 
+\
+
 # Introduction
 
 This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2022 edition of Ecology at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1).
 
 If you have any questions related to the assignment do not hesitate to reach Bianka during Data Center office hours (held every Wednesday 17:00 - 19:00 on [Zoom](https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09)). No need to sign up in advance. If this time is inconvenient for you feel free to write Bianka an email (ucrdatacenter@ucr.nl) to schedule an individual meeting. 
+
+\
 
 # Working with R and RStudio
 
@@ -63,48 +67,42 @@ You can either use the same dropdown window in the top right corner of RStudio t
 <center>
 # **Nitrogen deposition effect on biodiversity** {.unlisted .unnumbered}
 </center>
-
-Distribution of organisms in relation to Nitrogen deposition in the Netherlands
-  
   
   ![](https://user-images.githubusercontent.com/84587448/144092109-7298977c-a6af-4146-9dde-54d51b3741b4.jpg)
-
   
-  
-  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intesified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyse and tackle this biodiversity decline due to Nitrogen. Which species are harmed and might some even benefit? As an ecologist, you need to know what is the species distribution and how it correlates with Nitrogen deposition levels to be able to draw the right conclusion and to suggest appropriate action plans for species protection. In this assignment you will work with external source of species occurences, will correlate these to Nitrogen deposition in the Netherlands and perform statistical test to see what relationship there is between Nitrogen deposition and the occurences of a chosen species.
+  Nitrogen deposition is one of the main causes of current biodiversity decline (Payne, et a., 2013). This is mainly due to highly intensified agricultural practices which are very common, here, in the Netherlands. Therefore, environmentalists and ecologists have had numerous debates in recent years on how to analyze and tackle this biodiversity decline due to Nitrogen. What is the response of individual species to increasing Nitrogen levels? Which species are negatively impacted and might some even benefit? As an ecologist, you need to know what is the species distribution and how does it correlate with increasing Nitrogen deposition levels to be able to draw the right conclusion and to suggest appropriate action plans for species protection. In this assignment you will work with external source of species occurrences, will correlate these to Nitrogen deposition in the Netherlands and perform a statistical test to see what relationship there is between Nitrogen deposition and the occurrences of a chosen species.
   
   
 ## DATA
   
-  The organisms occurrences can be directly downloaded in a csv file from [gbif.com](gbif.com).\
-  The nitrogen deposition in the Netherlands can be downloaded from RIVM website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren).
+  Data on organism occurrences can be directly downloaded in a csv file from [gbif.com](gbif.com).\
+  Data on nitrogen deposition levels in the Netherlands can be downloaded from RIVM website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren).
   
   
 ## LEARNING OUTCOMES
-  While completing this project a student can develop multiple R skills as well as practice performing research with previously gathered data from an external source.
+  While completing this assignment, a student can gain practice in performing research with data from an external source as well as develop multiple R skills such as: 
   
-  Skills practice:
+* obtaining and importing data from an online source to R, 
+* filtering and adjusting data to reach a set of desired information only,
+* visualizing species occurrences and Nitrogen deposition levels,
+* visualizing graphs in R, 
+* performing statistical test.
   
   
-* Obtaining and importing data from an online source to R
-* Filtering and adjusting data to reach a set of desired information only
-* Visualization of species occurrences and Nitrogen deposition levels
-* Visualization of graphs in R
-* Performing statistical test
-  
- 
 ## RESEARCH FOCUS
   What is the relationship between species occurrences and Nitrogen deposition levels?
   
 ## LITERATURE
-  WallisDeVries, M.F., Van Swaay, C.A.M., 2017. A Nitrogen Index to Track Changes in Butterfly Species Assemblages Under Nitrogen Deposition. Biol. Conserv. 212, 448–453
- 
-  Payne, R. J., Dise, N. B., Stevens, C. J., & Gowing, D. J. (2013). Impact of nitrogen deposition at the species level. Proceedings of the National Academy of Sciences, 110(3), 984-987. 
- 
- de Vries, W., Erisman, J. W., Spranger, T., Stevens, C. J., & van den Berg, L. (2011). Nitrogen as a threat to European terrestrial biodiversity. The European nitrogen assessment: sources, effects and policy perspectives, 436-494.
- 
-  Stevens, C. J., David, T. I., & Storkey, J. (2018). Atmospheric nitrogen deposition in terrestrial ecosystems: Its impact on plant communities and consequences across trophic levels. Functional ecology, 32(7), 1757-1769.
 
+Suggested literature for further information:\
+
+ _de Vries, W., Erisman, J. W., Spranger, T., Stevens, C. J., & van den Berg, L. (2011). Nitrogen as a threat to European terrestrial biodiversity. The European nitrogen assessment: sources, effects and policy perspectives, 436-494._
+ 
+  _Payne, R. J., Dise, N. B., Stevens, C. J., & Gowing, D. J. (2013). Impact of nitrogen deposition at the species level. Proceedings of the National Academy of Sciences, 110(3), 984-987._
+ 
+  _Stevens, C. J., David, T. I., & Storkey, J. (2018). Atmospheric nitrogen deposition in terrestrial ecosystems: Its impact on plant communities and consequences across trophic levels. Functional ecology, 32(7), 1757-1769._
+
+\
 
 # Instructions
 
@@ -112,9 +110,7 @@ These assignment instructions serve you as a guide in completing your original a
 In your version of the assignment you choose:
   
   - species of an interest
-  - year (of Nitrogen deposition and species ocurrences)
-
-\
+  - year (of Nitrogen deposition and species ocurrences).
 
 <center>
 # **The correlation between Chaffinch, _Fringilla coelebs_, and Nitrogen deposition levels in the Netherlands** {.unlisted .unnumbered}
@@ -123,18 +119,20 @@ In your version of the assignment you choose:
 </center>
 
 At this step it is assumed that you have:
+
 * installed R, 
 * Rstudio (the working environment for R language), 
 * created an R project for this assignment, 
 * read the recommended reading.
-Now, open the R project you have created according to the instructions above. Rstudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script. 
+
+Now, open the R project you have created according to the instructions above. Rstudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script.\
+A note before we dive into the assignment: if you have troubles understanding a code, the easiest way how to learn more about it is typing ?codename into the console and pressing enter. For example ?library() or ?ggplot().
 
 ## LIBRARIES
 
+An R library or a R package is a collection of functions, data, and documentation that allows you for a clean workflow. To be able to access a package you first need to install it with the code _install.packages(...)_. You only need to install a package once. However, in order to be able to work with the packages in your RStudio environment you need to load them with the code _library(...)_. It is a good practice to have your libraries loaded on the top of your R Script so you can always come back to your code knowing which libraries you used. 
 
-
-Before starting with the assignment, you always need to install the libraries you have not used before with the code _install.packages(...)_. 
-However, once you have installed them you do not need to do it again, but you need to load them at the beginning of every R session with the code _library(...)_.
+In this assignment we will be using the following packages. 
 
 ```{r echo = TRUE, message = FALSE, eval = FALSE}
 
@@ -147,8 +145,8 @@ install.packages("tidymodels")
 
 ```
 
-Now, after installing all the libraries you can load them in your Rstudio, so they are ready to be used. 
-This is the list of all the libraries that you need for completing the assignment. Every section has a comment which says which library you are using.
+The next step is to load the libraries in your Rstudio, so they are ready to be used. 
+Every section has a comment which says which library you are using to keep an overview.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
@@ -165,20 +163,35 @@ library(tidyverse)
 
 #### Nitrogen data
 
-libraries used: _library(sf)_, _library(terra)_ and _library(tidyverse)_
-
-Go to the website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren), and download **total Nitrogen deposition (Total stikstof (N))** from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in R. Therefore, now you _extract all_ with the right click, and save the extracted data into a new folder called Data in your Project folder. I renamed the folder from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your preferences. But remember to update your code according to your files' names. Now, we can import the data on Nitrogen deposition levels to our Rstudio.
+Go to the website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren), and download **total Nitrogen deposition (Total stikstof (N))** from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in RStudio. Therefore, _extract all_ with the right click, and save the extracted data into a new created file called Data in your Project folder. I renamed the file from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your own preferences. However, remember to update your code according to your files' names. Now, we can import the data on nitrogen deposition levels to our RStudio. We will do so with the code _rast(...)_ which imports data from a raster file. Raster file stores image data in a matrix of cells organized in rows and columns. Next, we want to call this imported data Nitrogen_2018. We do so with the symbol _<-_. If the importing was successful we should see Nitrogen_2018 data in our global environment (top right window).
 
 ```{r echo = TRUE, message = FALSE}
 
+# library used: library(terra)
 Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc")
 
 ```
 
-Let's see how does the Nitrogen deposition map looks like.
+Let's see how does the Nitrogen deposition map looks like. At first, we tell R which data do we want to work with, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %>% sign. This symbol %>% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so [here](https://r4ds.had.co.nz/pipes.html). Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Now, we can see our tibble in the console. Specifically, we can see three variables:
+
+* x variable (longitude), 
+* y variable (latitude), 
+* depo_ntot_2018 variable (the level of deposition in mol/(ha.yea)).
+
+```{r echo = TRUE, message = TRUE}
+
+# library used: library(tidyverse)
+Nitrogen_2018 %>% 
+  as.data.frame(xy = T) %>% 
+  as_tibble() 
+
+```
+
+Now, having understood the structure of our data, we move forward with visualizing it. To previous lines of code we attach a ggplot. As you have read in your recommended reading, ggplot is a graphical framework for R. Our data set is only known and therefore we do not need to specify it anymore in the ggplot() line of code. However, we still need to specify the aesthetic mapping, the x and y coordinates of our graph. In our case, it is simple as our variables are called x (longitude) and y (latitude). Our third aesthetic is a fill argument which enables us to visualize a third variable, in our case, the level of nitrogen. Once we defined which variables we wanted to use we choose how do we want to visualize them. Since our data is in a raster format we will use geom_raster().
 
 ```{r echo = TRUE, message = FALSE}
-
+ 
+# library used: library(tidyverse)
 Nitrogen_2018 %>% 
   as.data.frame(xy = T) %>% 
   as_tibble() %>% 
@@ -189,27 +202,17 @@ Nitrogen_2018 %>%
 
 #### Species data
 
-libraries used: _library(readr)_ and _library(tidyverse)_
-
-Go to the website: [gbif.org](gbif.org), click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: **Fringilla coelebs**, in Year select: **2018**, and finally in Country or area select: **Netherlands**. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meantime create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click click _extract all_ and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, _Fringilla coelebs_, to our Rstudio.
+Go to the website: [gbif.org](gbif.org), click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: **Fringilla coelebs**, in Year select: **2018**, and finally in Country or area select: **Netherlands**. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meantime create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click select _extract all_ and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, _Fringilla coelebs_, to our Rstudio. There are two ways how to do this. One of them is selecting Files in your bottom right window in RStudio -> Data -> chaffinch_2018 -> Import Dataset... -> selecting Tab in the Delimeter options in the bottom toolbar -> import. Second option how to import the data is by using the code _read_delim("pathway", delim = "\t", escape_double = FALSE, trm_ws = TRUE)_ as indicated below. The argument delim = "\t" means that our data is separated by a tab. Similarly to how we named the nitrogen data, we now call our species occurrences data Chaffinch_2018 with the symbol <_.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
+# library used: library(readr)
 Chaffinch_2018 <- read_delim("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv", 
                              delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 
 ```
 
-Let's see where does chaffinch occur on the map.
-
-```{r echo = TRUE, message = FALSE, warning = FALSE}
-
-ggplot(data = Chaffinch_2018) +
-  geom_point(aes(x = decimalLongitude, y = decimalLatitude))
-
-```
-
-Let's view the data set on chaffinch.
+Let's view the data set on chaffinch. This can be simply done either by clicking on Chaffinch_2018 in the global environment or by using code _view()_.
 
 ```{r echo = TRUE, message = FALSE}
 
@@ -217,16 +220,27 @@ Chaffinch_2018 %>% view()
 
 ```
 
-It is a quiet big data set with 50 columns and over 60000 observations (rows). However, we do not need all the information. Therefore, in the next step we will clean our data set to our preferred size.
+Looking at the data set, we can see that it is quiet extensive having 50 columns and over 60000 observations (rows). We can also notice how are coordinate variables (longitude and latitude) called as we will need it in the next step. Now, we will visualize our species occurrences on a map so we have an idea of their distribution. This time, we need to specify the data we want to visualize in ggplot() as data = ... argument. We want to see occurrences points on a coordinate map, in other words, dots on a graph. Therefore, we will choose geom_point() as a layer how to visualize our plot. Our mapping aesthetics are for x coordinate longitude (decimalLongitude) and for y coordinate latitude (decimalLatitude)
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# library used: library(tidyverse)
+ggplot(data = Chaffinch_2018) +
+  geom_point(aes(x = decimalLongitude, y = decimalLatitude))
+
+```
+
+We could have seen that the data set is quiet big. However, we do not need all the information. Therefore, in the next step we will clean our data set to our preferred size.
 
 ## DATA TIDYING
 
-library used: _library(tidyverse)_
+For the following part of the assignment please read Introduction to [Spatial Data and Analysis in R](https://wec.wur.nl/r/spatial/introduction.html), sections 1.1 and 1.2.
 
-In this following code we select the variables with which we will be working: species names (species), longitude (decimalLongitude), and latitude (decimalLatitude)
+In this following code we select the variables with which we will be working: species names (species), longitude (decimalLongitude), and latitude (decimalLatitude) with the code _select()_. Furthermore, we omit all the unknown variables to avoid errors later on with the code _na.omit()_. As a last step, we convert our data frame Chaffinch_2018 into an sf object. This simply means that our spatial coordinate variables, the latitude and longitude, will be merged from two variable into one variable. 
 
 ```{r echo = TRUE, message = FALSE}
 
+# library used: library(tidyverse) and library(sf)
 Chaffinch_2018 <- Chaffinch_2018 %>%
   dplyr::select(species, decimalLongitude, decimalLatitude) %>% # in this case you can notice that we wrote down dplyr::select instead of just typing command select(). This is because the command select() is in two of our libraries. Therefore, we wanted to specify that this select is from dplyr package which is within tidyverse.
   na.omit() %>%
@@ -234,30 +248,29 @@ Chaffinch_2018 <- Chaffinch_2018 %>%
   
 ```
 
-libraries used: _library(sf)_ and _library(terra)_
-
-When working with geo-spatial data, we can come across various versions of coordinate systems. Therefore, our next step is to check whether our two geo-spatial data (Nitrogen and Chaffinch) is in the same coordinate system. The code _crs(data)_ tells us in which coordinate system the geo-spatial data is. Here, the Nitrogen deposition file does not have it defined, but reading the information on the data set we know that the data set is in Amersfoort coordinate system. Therefore, we can tell the Nitrogen_2018 that it is in this format with the following code:
+When working with geo-spatial data, we can come across various versions of coordinate systems. Therefore, our next step is to check whether our two geo-spatial data (Nitrogen and Chaffinch) is in the same coordinate system. The code _crs(data)_ tells us in which coordinate system the geo-spatial data is. Here, the Nitrogen deposition file does not have it defined, but reading the information on the data set we know that the data set is in Amersfoort coordinate system. Therefore, we can tell the Nitrogen_2018 that it is in this format. Similarly, all data occurrences from global biodiversity information facility (gbif) are recorded in gobal geographic coordinate system WGS84 (EPSG:4326). Therefore, we can also set the coordinate system to Chaffinch_2018. 
 
 ```{r echo = TRUE, message = FALSE}
 
+# libraries used: library(sf) and library(terra)
 crs(Nitrogen_2018) <- "+init=epsg:28992"
+st_crs(Chaffinch_2018) <- "+init=epsg:4326"
 
 ```
 
-Next we can adjust the chaffinch coordinate system into the same coordinate system.
+Next we can transform the chaffinch coordinate system into the same coordinate system as Nitrogen_2018 with the code _st_transform()_.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-st_crs(Chaffinch_2018) <- "+init=epsg:4326"
 Chaffinch_2018 <- st_transform(Chaffinch_2018, 28992)
 
 ```
 
-library used: _library(terra)_
-
-Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files and write it into a table complete_data.
+Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files (Nitrogen_2018 and Chaffinch_2018) and write it into a table complete_data. We can do this with the code _extract()_. How does that work? Imagine having two paper maps laying on top of each other on a table. Now, you take a pin and you pin it across both of the papers from top down. R takes the information from both of the maps on this exact place where the pin was pinned and stores it in a row. Once extracted it you store this information in a tibble. In the next step we want to add a variable to the complete_data table which an be done with the code _mutate()_.
 
 ```{r echo = TRUE, message = FALSE}
+
+#library used: library(terra)
 
 complete_data <- terra::extract(Nitrogen_2018, vect(Chaffinch_2018), cells = T, xy = T) %>% as_tibble() 
 
