@@ -118,10 +118,11 @@ In your version of the assignment you choose:
 ![](https://user-images.githubusercontent.com/84587448/148916498-2fb3d7c6-5d03-4c85-9a0f-68f5efff1efe.jpg)
 </center>
 
+\
+
 At this step it is assumed that you have:
 
-* installed R, 
-* Rstudio (the working environment for R language), 
+* installed R and Rstudio (the working environment for R language), 
 * created an R project for this assignment, 
 * read the recommended reading.
 
@@ -172,7 +173,7 @@ Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/D
 
 ```
 
-Let's see how does the Nitrogen deposition map looks like. At first, we tell R which data do we want to work with, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %>% sign. This symbol %>% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so [here](https://r4ds.had.co.nz/pipes.html). Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Now, we can see our tibble in the console. Specifically, we can see three variables:
+Let's see how does the Nitrogen deposition map looks like. At first, we want let R know which data do we want to work with by typing down its name, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %>% sign. This symbol %>% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so [here](https://r4ds.had.co.nz/pipes.html). Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Now, we can see our tibble in the console. Specifically, we can see three variables:
 
 * x variable (longitude), 
 * y variable (latitude), 
@@ -202,7 +203,7 @@ Nitrogen_2018 %>%
 
 #### Species data
 
-Go to the website: [gbif.org](gbif.org), click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: **Fringilla coelebs**, in Year select: **2018**, and finally in Country or area select: **Netherlands**. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meantime create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click select _extract all_ and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, _Fringilla coelebs_, to our Rstudio. There are two ways how to do this. One of them is selecting Files in your bottom right window in RStudio -> Data -> chaffinch_2018 -> Import Dataset... -> selecting Tab in the Delimeter options in the bottom toolbar -> import. Second option how to import the data is by using the code _read_delim("pathway", delim = "\t", escape_double = FALSE, trm_ws = TRUE)_ as indicated below. The argument delim = "\t" means that our data is separated by a tab. Similarly to how we named the nitrogen data, we now call our species occurrences data Chaffinch_2018 with the symbol <_.
+Go to the website: [gbif.org](gbif.org), click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: **Fringilla coelebs**, in Year select: **2018**, and finally in Country or area select: **Netherlands**. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meantime create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click select _extract all_ and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, _Fringilla coelebs_, to our Rstudio. There are two ways how to do this. One of them is selecting Files in your bottom right window in RStudio -> Data -> chaffinch_2018 -> Import Dataset... -> selecting Tab in the Delimeter options in the bottom toolbar -> import. Second option how to import the data is by using the code _read_delim("pathway", delim = "\t", escape_double = FALSE, trm_ws = TRUE)_ as indicated below. The argument delim = "\t" means that our data is separated by a tab. Similarly to how we named the nitrogen data, we now call our species occurrences data Chaffinch_2018 with the symbol _<-_.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
@@ -220,7 +221,7 @@ Chaffinch_2018 %>% view()
 
 ```
 
-Looking at the data set, we can see that it is quiet extensive having 50 columns and over 60000 observations (rows). We can also notice how are coordinate variables (longitude and latitude) called as we will need it in the next step. Now, we will visualize our species occurrences on a map so we have an idea of their distribution. This time, we need to specify the data we want to visualize in ggplot() as data = ... argument. We want to see occurrences points on a coordinate map, in other words, dots on a graph. Therefore, we will choose geom_point() as a layer how to visualize our plot. Our mapping aesthetics are for x coordinate longitude (decimalLongitude) and for y coordinate latitude (decimalLatitude)
+Looking at the data set, we can see that it is quiet extensive having 50 columns and over 60000 observations (rows). We can also notice how are coordinate variables (longitude and latitude) called as we will need it in the next step. Now, we will visualize our species occurrences on a map so we have an idea of their distribution. This time, we need to specify the data we want to visualize in ggplot() as data = ... argument. We want to see occurrences points on a coordinate map, in other words, dots on a graph. Therefore, we will choose geom_point() as a layer how to visualize our plot. Our mapping aesthetics are for x coordinate longitude (decimalLongitude) and for y coordinate latitude (decimalLatitude).
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
@@ -266,7 +267,7 @@ Chaffinch_2018 <- st_transform(Chaffinch_2018, 28992)
 
 ```
 
-Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files (Nitrogen_2018 and Chaffinch_2018) and write it into a table complete_data. We can do this with the code _extract()_. How does that work? Imagine having two paper maps laying on top of each other on a table. Now, you take a pin and you pin it across both of the papers from top down. R takes the information from both of the maps on this exact place where the pin was pinned and stores it in a row. Once extracted it you store this information in a tibble. In the next step we want to add a variable to the complete_data table which an be done with the code _mutate()_.
+Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files (Nitrogen_2018 and Chaffinch_2018) and write it into a table complete_data. We can do this with the code _extract()_. How does that work? Imagine having two paper maps laying on top of each other on a table. Now, you take a pin and you pin it across both of the papers from top down. R takes the information from both of the maps on this exact place where the pin was pinned and stores it in a row. Once extracted it you store this information in a tibble. In the next step we want to add a species variable to the complete_data table which can be done with the code _mutate()_. This will help us in visualization in the next step.
 
 ```{r echo = TRUE, message = FALSE}
 
@@ -281,7 +282,7 @@ complete_data <- complete_data %>%
 
 
 ## PLOTTING
-Once, we have our data sets available we would like to look at a graph which would show us whether there is some relationship between the level of Nitrogen and species occurrences. In the following lines of code, we have three various graphs and you need to justify yourself which one is the most informative.
+Once, we have our data sets in our desired format, we would like to look at a graph which would show us whether there is some relationship between the level of Nitrogen and species occurrences. In the following lines of code, we have three various graphs and you need to justify yourself which one is the most informative.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
