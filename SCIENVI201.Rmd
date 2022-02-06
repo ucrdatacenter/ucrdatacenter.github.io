@@ -122,16 +122,16 @@ In your version of the assignment you choose:
 
 At this step it is assumed that you have:
 
-* installed R and Rstudio (the working environment for R language), 
+* installed R and RStudio (the working environment for R language), 
 * created an R project for this assignment, 
 * read the recommended reading.
 
-Now, open the R project you have created according to the instructions above. Rstudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script.\
-A note before we dive into the assignment: if you have troubles understanding a code, the easiest way how to learn more about it is typing ?codename into the console and pressing enter. For example ?library() or ?ggplot().
+Now, open the R project you have created according to the instructions above. RStudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script.\
+A note before we dive into the assignment: if you have troubles understanding a code, the easiest way how to learn more about it is typing _?codename_ into the console and pressing enter. For example _?library()_ or _?ggplot()_.
 
 ## LIBRARIES
 
-An R library or a R package is a collection of functions, data, and documentation that allows you for a clean workflow. To be able to access a package you first need to install it with the code _install.packages(...)_. You only need to install a package once. However, in order to be able to work with the packages in your RStudio environment you need to load them with the code _library(...)_. It is a good practice to have your libraries loaded on the top of your R Script so you can always come back to your code knowing which libraries you used. 
+An R library or an R package is a collection of functions, data, and documentation that allows you for a clean workflow. To be able to access a package you first need to install it with the code _install.packages(...)_. You only need to install a package once. However, in order to be able to work with the packages in your RStudio environment you need to load them with the code _library(...)_. It is a good practice to have your libraries loaded on the top of your R Script so you can always come back to your code knowing which libraries you used. 
 
 In this assignment we will be using the following packages. 
 
@@ -146,8 +146,8 @@ install.packages("tidymodels")
 
 ```
 
-The next step is to load the libraries in your Rstudio, so they are ready to be used. 
-Every section has a comment which says which library you are using to keep an overview.
+The next step is to load the libraries in your RStudio, so they are ready to be used. To keep an overview, 
+Every section has a comment which says which library you are using.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
@@ -173,7 +173,7 @@ Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/D
 
 ```
 
-Let's see how does the Nitrogen deposition map looks like. At first, we want let R know which data do we want to work with by typing down its name, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %>% sign. This symbol %>% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so [here](https://r4ds.had.co.nz/pipes.html). Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Now, we can see our tibble in the console. Specifically, we can see three variables:
+Let's see how does the Nitrogen deposition map looks like. At first, we want let R know which data do we want to work with by typing down its name, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %>% sign. This symbol %>% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so [here](https://r4ds.had.co.nz/pipes.html). Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite it into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Now, we can see our tibble in the console. Specifically, we can see three variables:
 
 * x variable (longitude), 
 * y variable (latitude), 
@@ -188,7 +188,7 @@ Nitrogen_2018 %>%
 
 ```
 
-Now, having understood the structure of our data, we move forward with visualizing it. To previous lines of code we attach a ggplot. As you have read in your recommended reading, ggplot is a graphical framework for R. Our data set is only known and therefore we do not need to specify it anymore in the ggplot() line of code. However, we still need to specify the aesthetic mapping, the x and y coordinates of our graph. In our case, it is simple as our variables are called x (longitude) and y (latitude). Our third aesthetic is a fill argument which enables us to visualize a third variable, in our case, the level of nitrogen. Once we defined which variables we wanted to use we choose how do we want to visualize them. Since our data is in a raster format we will use geom_raster().
+Having understood the structure of our data, we move forward with visualizing it. To previous lines of code we attach a ggplot. As you have read in your recommended reading, ggplot is a graphical framework for R. Our data set is only known and therefore we do not need to specify it anymore in the ggplot() line of code. However, we still need to specify the aesthetic mapping, the x and y coordinates of our graph. In our case, it is simple as our variables are called x (longitude) and y (latitude). Our third aesthetic is a fill argument which enables us to visualize a third variable, in our case, the level of nitrogen. Once we defined which variables we wanted to use we choose how do we want to visualize them. Since our data is in a raster format we will use geom_raster().
 
 ```{r echo = TRUE, message = FALSE}
  
@@ -267,7 +267,7 @@ Chaffinch_2018 <- st_transform(Chaffinch_2018, 28992)
 
 ```
 
-Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files (Nitrogen_2018 and Chaffinch_2018) and write it into a table complete_data. We can do this with the code _extract()_. How does that work? Imagine having two paper maps laying on top of each other on a table. Now, you take a pin and you pin it across both of the papers from top down. R takes the information from both of the maps on this exact place where the pin was pinned and stores it in a row. Once extracted it you store this information in a tibble. In the next step we want to add a species variable to the complete_data table which can be done with the code _mutate()_. This will help us in visualization in the next step.
+Now, we do not only want to be able to see our data on a graph but also in a numeric data set. In another words, we want to see which geo-spatial point belongs to which Nitrogen level and the number of species occurring. Therefore, here we want to merge these two files (Nitrogen_2018 and Chaffinch_2018) and write it into a table complete_data. We can do this with the code _extract()_. How does that work? Imagine having two paper maps laying on top of each other on a table. Now, you take a pin and you pin it across both of the papers from top down. R takes the information from both of the maps on this exact place where the pin was pinned and stores it in a row. Once extracted, you store this information in a tibble with _as_tibble()_. In the next step we want to add a species variable to the complete_data table which can be done with the code _mutate()_. This will help us in visualization in the next step.
 
 ```{r echo = TRUE, message = FALSE}
 
@@ -282,22 +282,37 @@ complete_data <- complete_data %>%
 
 
 ## PLOTTING
-Once, we have our data sets in our desired format, we would like to look at a graph which would show us whether there is some relationship between the level of Nitrogen and species occurrences. In the following lines of code, we have three various graphs and you need to justify yourself which one is the most informative.
+Once, we have our data sets in our desired format, we would like to look at a graph which would show us whether there is some relationship between the level of Nitrogen and species occurrences. In the following lines of code, we have three various graphs. You need to justify yourself which one is the most informative. While building the graphs think of your dependent and independent variables. Which one of the two variable should be on the x axis and which one should be on the y axis? Why?
+
+From your statistics class you might remember that a boxplot shows the distribution of a numeric data and its skewness across quartiles with middle line displaying the median. In R, we can simply built boxplot with the ggplot. We need to specify the data, the x variable, and the y variable. The labs() code enables us to add additional description to our graph such as: name of axes, title, caption, etc..
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
+# library used: library(tidyverse)
 # BOXPLOT
 ggplot(data = complete_data) + 
   geom_boxplot(aes(x = species, y = depo_ntot_2018)) +
   labs(x = "Chaffinch, Fringilla coelebs (n)",
       y = "Nitrogen deposition (mol/(ha.year))")
+```
 
+Our next type of graph is a histogram. A histogram displays data distribution using rectangular bars. Just as we did with the boxplot, we need to specify the data, x and y variables using ggplot(). You might notice, that in the geom_histogram code we added an extra argument binwidth = ... . Binwidth groups observations that are very closely related together. Therefore, it is easier for us to see the general relationship. I believe that one picture sometimes shows more than a thousand words. Therefore, to understand what it binwidth does, try to set binwidth to 1, run the code, and then det it to 100 (be sure to notice the species frequency on y axis) and run it again. When binwidth is set to 1, we see a lots of little correlations, but it is hard to observe the general relationship.  
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# library used: library(tidyverse)
 # HISTOGRAM
 ggplot(data = complete_data) +
   geom_histogram(aes(x = depo_ntot_2018), binwidth = 100) +
   labs(x = "Nitrogen deposition (mol/(ha.year))",
       y = "Chaffinch, Fringilla coelebs (n)")
+```
 
+Lastly, we have a frequency polygon. Frequency polygon works similarly to a histogram with the exception that it uses a line instead of bars for the distribution display. The code is built in the very same way as the code for the histogram visualization. The only difference is the geom type. 
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# library  used: library(tidyverse)
 # FREQUENCY POLYGON
 ggplot(data = complete_data) +
   geom_freqpoly(aes(x = depo_ntot_2018), binwidth = 100) +
@@ -310,12 +325,11 @@ ggplot(data = complete_data) +
 
 ## STATISTICAL ANALYSIS
 
-After visually observing the relationship, we want to see the quantitative analysis of the relationship.
+After visually observing the relationship, we want to see the quantitative analysis. First, we would like to adjust our data set. As you might have noticed, in our complete_data data frame, there is always only one observation of a species per row. This means that we do not know how many birds there are at a specific level of nitrogen. However, we can do so with a few lines of code. We want to create a new variable with the code _mutate()_ called bins. Just as we did in the histogram and the frequency polygon, we want to group similar values of observations together. In other words, we want to round them up to 100. Therefore we want our new variable, bins, to have rounded up values of nitrogen deposition to 100. In the next step, we want to see how many species are observed at the same level of nitrogen. Since there is always just one species per row, we simply want to count the number of rows with the same nitrogen value. Lastly, we want to rename the variables according to our x and y axes, and omit the unknown variables with the _na.omit()_.
 
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
-# library used: _library(tidyverse)_ and _library(tidymodels)_
-
+# library used: library(tidyverse)
 # writing a table t with x (nitrogen levels) and y (species frequency) variables
 t <- complete_data %>% 
   mutate(bins = round(depo_ntot_2018, digits = -2)) %>% 
@@ -324,7 +338,11 @@ t <- complete_data %>%
   rename(x = bins,
          y = n) %>% 
   na.omit()
+```
 
+Now we want to visualize our newly made table t as a simple scatter plot using _geom_point()_. On the top of that we would like to add a parabola layer to see whether our data distribution could be quadratic.
+
+```{r echo = TRUE}
 # visualizing the relationship
 ggplot(data = t, aes(x = x, y = y, group = 1)) +
   geom_point() +
@@ -335,6 +353,8 @@ ggplot(data = t, aes(x = x, y = y, group = 1)) +
 
 ```
 
+Our last step is to demonstrate results quantitatively. This can be done with a linear model using code _lm()_. Do not worry, the aim of this assignment is not to learn linear modeling, but to get in touch with basic skills in R and apply it to ecology. All you need to know is that lm(y ~ poly(x, 2)) is a linear model of a quadratic order, using the data t. However, what you do need to know is the interpretation of statistics. In the table below you can see the result and the significance level of p.value. Is the quadratic relationship significant?
+
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
 ## library needed: library(tidymodels)
@@ -343,6 +363,19 @@ lm(y ~ poly(x, 2), t) %>%
   tidy()
 
 ```
+
+## CONCLUSION
+
+We learned that there is a significant quadratic relationship between occurrences of chaffinch and nitrogen deposition level. However, in ecology we can hardly find an exclusively isolated relationship. Therefore, in the next step of the assignment I would like you to reflect over how does this relationship fit into a bigger picture? What other elements, mechanisms or species have an impact on this outcome? To spark the thinking process, take a look at the figure Pathway of Nitrogen deposition by Nijssen, et. al. 
+
+![Pathways of N deposition with direct effects and indirect effects through soil and water, affecting vegetation and fauna. The different pathways (a to j) and basic effects (1 to 6) are
+further explained in themain text. Pathway aandb (blue arrows) occur exclusively in aquatic systems ormoist soil types; other pathways can occur in aquatic aswell as terrestrial habitats. (Nijssen, et. al, 2017)](https://ars.els-cdn.com/content/image/1-s2.0-S0006320717302471-gr1.jpg)
+
+Nijssen and the co-authors mapped in this figure 6 potential negative outcomes of extensive nitrogen deposition. As I said, one can hardly find an isolated relationship. Carry this in mind while completing your original project. In the last part of this assignment, I would like you to reflect over how does your species fit into a bigger picture. In other words, why is it influenced by nitrogen? What steps precede including what species and what mechanisms? 
+
+# LITERATURE
+
+_Nijssen, M. E., WallisDeVries, M. F., & Siepel, H. (2017). Pathways for the effects of increased nitrogen deposition on fauna. Biological Conservation, 212, 423-431._
 
 # Supporting materials
 
