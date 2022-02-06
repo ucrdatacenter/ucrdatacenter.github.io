@@ -373,7 +373,7 @@ further explained in themain text. Pathway aandb (blue arrows) occur exclusively
 
 Nijssen and the co-authors mapped in this figure 6 potential negative outcomes of extensive nitrogen deposition. As I said, one can hardly find an isolated relationship. Carry this in mind while completing your original project. In the last part of this assignment, I would like you to reflect over how does your species fit into a bigger picture. In other words, why is it influenced by nitrogen? What steps precede including what species and what mechanisms? 
 
-# LITERATURE
+## LITERATURE
 
 _Nijssen, M. E., WallisDeVries, M. F., & Siepel, H. (2017). Pathways for the effects of increased nitrogen deposition on fauna. Biological Conservation, 212, 423-431._
 
