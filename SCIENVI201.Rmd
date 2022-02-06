@@ -127,7 +127,9 @@ At this step it is assumed that you have:
 * read the recommended reading.
 
 Now, open the R project you have created according to the instructions above. RStudio interface consists of four windows. Top right is the environment window storing the data and values currently in R memory. Bottom right is the plots,  packages, and help window. Bottom left is the console window where you can type commands which R will execute without saving them. Top left is the script window which holds collections of commands which can be edited and saved. In this assignment we will write our code in the top left window, R Script file. If you cannot see this window click File on the top left -> New File -> R Script.\
-A note before we dive into the assignment: if you have troubles understanding a code, the easiest way how to learn more about it is typing _?codename_ into the console and pressing enter. For example _?library()_ or _?ggplot()_.
+Two notes before we dive into the assignment: 
+* if you have troubles understanding a code, the easiest way how to learn more about it is typing _?codename_ into the console and pressing enter. For example _?library()_ or _?ggplot()_.
+* to run a code in console (bottom left window) you press Enter, to run a code in script (top left window) you press Ctrl + Enter
 
 ## LIBRARIES
 
