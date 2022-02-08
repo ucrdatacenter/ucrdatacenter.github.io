@@ -101,8 +101,37 @@ The assignment guidelines and the grading rubric are on Moodle.
 
 ### Workshop handout
 
-The materials covered in the first Data Center workshop, including both code and explanations, can be found at link TBA.
+The materials covered in the second Data Center workshop, including both code and explanations, can be found at link TBA.
 
 ### Supporting materials
 
-_TBA:_ workshop materials, useful links
+#### Inspiration for your research question
+
+* [Growthecon](https://growthecon.com/topics/): collections of materials related to various themes related to growth
+* [Conversable Economist](https://conversableeconomist.wpcomstaging.com/): blog connecting current issues to economics
+* [The Economy textbook](https://www.core-econ.org/the-economy/book/text/0-3-contents.html): undergraduate textbook with a focus on growth from multiple aspects. Most relevant units:
+  + [Unit 1](https://www.core-econ.org/the-economy/book/text/01.html) _The capitalist revolution_: introduction to modern growth
+  + [Unit 2](https://www.core-econ.org/the-economy/book/text/02.html) _Technology, population, and growth_: historical perspective on growth
+  + [Unit 20](https://www.core-econ.org/the-economy/book/text/20.html) _Economics of the environment_: connections between growth and climate change; see e.g. figure [20.25](https://www.core-econ.org/the-economy/book/text/20.html#figure-20-25a)
+* [CORE Insight on inequality](https://www.core-econ.org/insights/a-world-of-differences/text/01.html)
+* [Doing economics: Measuring wellbeing](https://www.core-econ.org/doing-economics/book/text/04-01.html): practical instructions to an empirical project using R; other chapters might also be of interest
+* [Our World in Data on economic growth](https://ourworldindata.org/economic-growth)
+* [The World Bank Data Blog](https://www.worldbank.org/en/programs/icp/brief/data-blog)
+* [IMF blog](https://blogs.imf.org/)
+* [Econlife](https://econlife.com/): blog connecting current events, history, and economics
+* [The Economic Historian](https://economic-historian.com/): blog on economic history
+* [American Economic Association Research Highlights](https://www.aeaweb.org/research)
+
+#### Useful data sources
+
+* [Our World in Data](https://ourworldindata.org/): open-access data source for a wide range of indicators
+* [World Bank Open Data](https://data.worldbank.org/): open-access data source related to development and growth
+* [Gapminder](https://www.gapminder.org/data/): open-access data source related to development and growth; all World Development Indicators also available here
+* [OECD data](https://data.oecd.org/): open-access data source primarily on advanced economies
+* [Maddison Historical Statistics](https://www.rug.nl/ggdc/historicaldevelopment/maddison/?lang=en): GDP per capita and population data for 169 countries between 1000--2018
+* [Total Economy Database](https://www.conference-board.org/data/economydatabase/total-economy-database-productivity): data on GDP and labour statistics for 131 countries (available after creating a free account)
+* [FRED (US Federal Reserve)](https://fred.stlouisfed.org/tags/series): mostly US economic data
+* [Eurostat](https://ec.europa.eu/eurostat/web/main/home): European Union data
+
+#### Additional support with R
+_TBA_ 
