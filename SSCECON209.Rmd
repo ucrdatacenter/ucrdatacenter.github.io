@@ -22,6 +22,13 @@ Additionally, feel free to email Tina (datacenter@ucr.nl) to schedule an individ
 
 You can download a basic example of a banking dashboard by clicking [here](https://github.com/ucrdatacenter/projects/raw/main/SSCECON209/2022h1/example%20dashboard.xlsx).
 
+# Accessing Excel for free
+
+You can access Microsoft Excel in multiple ways via UCR and UU:
+
+1. _(preferred)_ Your UU student status grants you a free Office 365 license. To access it, go to [office.com](https://office.com) and log in with either your @ucr.nl or your @students.uu.nl email address and password. You can either use the online applications (Excel logo on the left sidebar) or install Office 365 on your desktop (“Install Office” button on the top right).
+1. You can also use UU’s MyWorkplace to access Excel and many other applications. Go to [solisworkspace.uu.nl](https://solisworkspace.uu.nl) and log in with your Solis-ID and password. Go to the “Apps” tab and look for “Excel 2019.” Click on the icon, and Excel will open on your desktop. If you are using this website for the first time, you will likely need to download Citrix receiver (if you need to, a the website will guide you through the process). When saving files, you should make sure to save your files on your local disc instead of the UU cloud - you can search for the approporiate folder by going to File -> Save -> Browse.
+
 # Helpful links
 
 ## Excel basics
