@@ -75,7 +75,7 @@ You can either use the same dropdown window in the top right corner of RStudio t
   
 ## DATA
   
-  Data on organism occurrences can be directly downloaded in a csv file from [gbif.com](gbif.com).\
+  Data on organism occurrences can be directly downloaded in a csv file from [gbif.org](gbif.org).\
   Data on nitrogen deposition levels in the Netherlands can be downloaded from RIVM website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren).
   
   
