@@ -246,7 +246,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">SCIENVI201<br>Ecology<br>Spring 2022</h1>
-<h4 class="date">Last updated: 2022-02-15</h4>
+<h4 class="date">Last updated: 2022-02-17</h4>
 
 </div>
 
@@ -380,7 +380,8 @@ library(tidyverse)</code></pre>
 <h4>Nitrogen data</h4>
 <p>Go to the website: <a href="https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarten/cijfers-achter-depositiekaarten/gdn-depositiebestanden-achterliggende-jaren">rivm.nl</a>, and download <strong>total Nitrogen deposition (Total stikstof (N))</strong> from the year 2018 (ndep 2018). Once downloaded, you can see that the data is in a zipped file which cannot be worked with in RStudio. Therefore, <em>extract all</em> with the right click, and save the extracted data into a new created file called Data in your Project folder. I renamed the file from depo_ntot_2018 to nitrogen for a simple overview, but you can order your files according to your own preferences. However, remember to update your code according to your files’ names. Now, we can import the data on nitrogen deposition levels to our RStudio. We will do so with the code <em>rast(…)</em> which imports data from a raster file. Raster file stores image data in a matrix of cells organized in rows and columns. Next, we want to call this imported data Nitrogen_2018. We do so with the symbol &lt;-. If the importing was successful we should see Nitrogen_2018 data in our global environment (top right window).</p>
 <pre class="r"><code># library used: library(terra)
-Nitrogen_2018 &lt;- rast(&quot;C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc&quot;)</code></pre>
+Nitrogen_2018 &lt;- 
+  rast(&quot;https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc&quot;)</code></pre>
 <p>Let’s see how does the Nitrogen deposition map looks like. At first, we want to let R know which data do we want to work with by typing down its name, Nitrogen_2018. Now, looking at the code, we can see that we connect multiple functions with this magical %&gt;% sign. This symbol %&gt;% is called a pipe. A pipe allows us to connect multiple operations in a simple format so it is easy to understand and read. If you are interested in reading more about pipes, you can do so <a href="https://r4ds.had.co.nz/pipes.html">here</a>. Next, we rewrite the Nitrogen_2018 data into a data frame, table structure of data. Followingly, we rewrite it into a tibble, a simple version of data frame which only shows first 10 rows of a data set. Run the code and look at the result, a tibble, in the console. Our tibble consists of three variables:</p>
 <ul>
 <li>x variable (longitude),</li>
@@ -418,8 +419,9 @@ Nitrogen_2018 %&gt;%
 <h4>Species data</h4>
 <p>Go to the website: <a href="https://www.gbif.org/">gbif.org</a>, click get data (toolbar on the top) and select occurrences. Now select, the occurrences of your species in your preferred region. Go to the toolbar on the left, under Scientific name type: <strong>Fringilla coelebs</strong>, in Year select: <strong>2018</strong>, and finally in Country or area select: <strong>Netherlands</strong>. Click DOWNLOAD, create an account, and select SIMPLE in download options. This step might take a little while, as the request needs to be processed. In the meanwhile, create a chaffinch folder in your Data folder where you will store all the information on your species. Once the file is ready, click download, and save the data. It is again a zipped file which needs to be extracted. With the right click select <em>extract all</em> and save the data into chaffinch file in the Data folder. As a last step, rename the extracted csv file to chaffinch_2018. Now, we can import the data on chaffinch, <em>Fringilla coelebs</em>, to our Rstudio. There are two ways how to do this. One of them is selecting Files in your bottom right window in RStudio -&gt; Data -&gt; chaffinch_2018 -&gt; Import Dataset… -&gt; selecting Tab in the Delimeter options in the bottom toolbar -&gt; import. Second option how to import the data is by using the code <em>read_delim(“pathway”, delim = &quot;, escape_double = FALSE, trm_ws = TRUE)</em> as indicated below. The argument delim defines how is the data separated. In our case it is a tab (\t). Similarly to how we named the nitrogen data, we now call our species occurrences data Chaffinch_2018 with the symbol &lt;-.</p>
 <pre class="r"><code># library used: library(readr)
-Chaffinch_2018 &lt;- read_delim(&quot;C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv&quot;, 
-                             delim = &quot;\t&quot;, escape_double = FALSE, trim_ws = TRUE)</code></pre>
+Chaffinch_2018 &lt;- 
+  read_delim(&quot;https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv&quot;,
+             delim = &quot;\t&quot;, escape_double = FALSE, trim_ws = TRUE)</code></pre>
 <p>Let’s view the data set on chaffinch. This can be simply done either by clicking on Chaffinch_2018 in the global environment or by using code <em>view()</em>.</p>
 <pre class="r"><code>Chaffinch_2018 %&gt;% view()</code></pre>
 <p>Looking at the data set, we can see that it is quiet extensive having 50 columns and over 60000 observations (rows). We can also notice how are coordinate variables (longitude and latitude) called as we will need it in the next step. Now, we will visualize our species occurrences on a map so we have an idea of their distribution. This time, we need to specify the data we want to visualize in ggplot() as data = … argument. We want to see occurrences points on a coordinate map, in other words, dots on a graph. Therefore, we will choose geom_point() as a layer how to visualize our plot. Our mapping aesthetics are for x coordinate longitude (decimalLongitude) and for y coordinate latitude (decimalLatitude).</p>
