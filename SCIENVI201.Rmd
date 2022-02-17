@@ -171,7 +171,8 @@ Go to the website: [rivm.nl](https://www.rivm.nl/gcn-gdn-kaarten/depositiekaarte
 ```{r echo = TRUE, message = FALSE}
 
 # library used: library(terra)
-Nitrogen_2018 <- rast("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc")
+Nitrogen_2018 <- 
+  rast("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI201/2022h1/Data/nitrogen/depo_ntot_2018.asc")
 
 ```
 
@@ -210,8 +211,9 @@ Go to the website: [gbif.org](https://www.gbif.org/), click get data (toolbar on
 ```{r echo = TRUE, message = FALSE, warning = FALSE}
 
 # library used: library(readr)
-Chaffinch_2018 <- read_delim("C:/Users/PC/Documents/GitHub/projects/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv", 
-                             delim = "\t", escape_double = FALSE, trim_ws = TRUE)
+Chaffinch_2018 <- 
+  read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv",
+             delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 
 ```
 
