@@ -16,8 +16,27 @@ The Data Center student fellows hold office hours every Wednesday between 15:00-
 If you would like to request an individual consultation, or would like to attend office hours in person in the Data Center's office (Anne 1.30 - first floor), feel free to send an email to datacenter@ucr.nl.
 In case you wish to attend office hours in person, please let us know at least two hours in advance.
 
-## Our Projects:
+## Our Projects
 
 * [SCIENVI201 Ecology](https://ucrdatacenter.github.io/SCIENVI201)
 * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207)
 * [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209)
+
+## Course combinations at UCR
+
+This chord diagram shows how UCR students combined tracks in the past. 
+Every chord means that there were students who completed both tracks during their time at UCR.
+
+If you hover over a track, it shows you all the other tracks that students took in combination with that track. 
+If you hover over a chord, it shows you the number of students who completed both tracks at the endpoints of the chord.
+
+```{r, echo=F,error=F,message=F,fig.align="center",warning=F,fig.width=8,fig.height=8}
+library(chorddiag)
+library(tidyverse)
+
+read.csv("concM.csv", row.names = 1) %>% 
+  as.matrix() %>% 
+  chorddiag(type = "directional", showTicks = FALSE, groupnameFontsize = 14, groupnamePadding = 2)
+
+```
+
