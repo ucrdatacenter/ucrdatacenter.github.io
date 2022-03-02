@@ -402,6 +402,7 @@ _Nijssen, M. E., WallisDeVries, M. F., & Siepel, H. (2017). Pathways for the eff
 * [Packages in R (video)](https://www.youtube.com/watch?v=v6VygIgvoZU&t=1s)
 * [Loading a data file (video)](https://www.youtube.com/watch?v=2MVolYETR5Q)
 * [Data manipulation (video)](https://www.youtube.com/watch?v=Zc_ufg4uW4U)
+* [Data Analysis and Visualization in R for Ecologists](https://datacarpentry.org/R-ecology-lesson/index.html)
 
 ## Help with `ggplot`
 
