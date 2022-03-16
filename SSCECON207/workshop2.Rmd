@@ -1,0 +1,393 @@
+---
+title: "SSCECON207 workshop II:<br>Workflow for data analysis in R"
+date: "Spring 2022<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+# Learning outcomes
+
+In this tutorial you learn some more advanced functions in R to build on the first Data Center workshop.
+The tutorial focuses on finding, importing and cleaning data: an example of the steps you might take in order to prepare your data for writing an empirical paper.
+You can use these skills to create figures that you can incorporate in your final paper for the course.
+
+# Suggested paper workflow
+
+Before you start working with data, you should make sure to develop a good research question that you think can be answered using a combination of academic literature and available data.
+Once you have your research question, you should think about how you could use data to complement your theory: e.g. if your hypothesis is a relationship between two variables, your data analysis can focus on creating visuals that display whether there actually is a relationship between the two variables in a given sample.
+Then you can interpret these visuals to reach conclusions about whether the relationships that you expect to be present in your data are actually there.
+
+Once you have an idea of what data you would need, you can start looking for it.
+Several useful data sources are listed [here](https://ucrdatacenter.github.io/SSCECON207#Supporting_materials13); additionally you can always simply Google the indicator that you are looking for.
+If you are looking for data from a single country, national statistical offices might be useful; if you are looking for data from multiple countries, international organizations such as the World Bank or OECD, or initiatives such as Our World in Data often have comprehensive global data.
+
+Once you find, import and visualize your data, you can incorporate the results in your paper.
+Your paper should start with an introduction and literature review where you present your research question, including your theoretical justification behind your hypothesis/hypotheses.
+Next, you should present your data and analysis process in your Methods section: make sure you properly cite your data sources and explain the steps of your data analysis.
+Your Methods should be concise, but contain enough information that a reader could replicate your analysis.
+Your results section should present not only the results of your data analysis, but also your interpretation of whether those results align with your theoretical expectations and why/why not.
+Finally, a concluding section should breifly summarize your results, and point out any limitations and recommendations for future research.
+
+To make the process of writing your paper easier, it is important to keep track of your files properly.
+You should create a new R project for your data analysis, and store all of your data files, scrips and results in that folder.
+If you don't remember how to create a new R project, please refer to the handout of the previous Data Center workshop.
+
+This tutorial focuses on the process of how to import datasets and clean them so they are ready for visualization.
+However, if you are struggling to find appropriate datasets or have questions regarding data visualization, feel free to reach out to the Data Center (or attend office hours) to get help with those components as well.
+
+In the following we will work with two data files:
+
+* GDP from the [OECD database](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm)
+* CO2 emissions from the [World Bank Database](https://data.worldbank.org/indicator/EN.ATM.CO2E.PC)
+
+The goal is to import both files, clean them, and combine them into a single dataset that can be used to analyze the relationship between the two indicators.
+Your data analysis process might differ from this demonstration depending on your research question, but you will nevertheless be able to adapt (parts of) this workflow for your own paper. 
+
+# Importing data
+
+For your paper you will draw data from a variety of online sources.
+Each source that you use has their own conventions of storing data, so you have to be able to import multiple kinds of data files into R.
+
+## Common data files
+
+### CSV
+
+CSV files are a convenient and simple way of storing data.
+CSV stands for "comma-separated values": the raw data is text file where each line of text is a row of data, and values within a row are separated by commas.
+In most cases your computer will automatically open CSV files in Excel, where they are displayed as a table.
+CSV files are the most common and also one of the easiest to import to R.
+
+### Other delimited text files
+
+If data is stored as text, the value separator (also known as delimiter) does not always a comma.
+Other common delimiters are semicolons (;) and tabs (whitespace).
+The most common file extensions for these files are .csv (for semicolon-delimited files), .tsv or .txt.
+These files often cannot be displayed as a table by simply opening the file, but you can observe their structure by opening them as text files.
+
+### Other data formats
+
+Sometimes data is provided in a way that uses the specific data formats of various statistical softwares.
+The most common formats are Excel files (.xlsx or .xls extensions), SPSS files (.sav extension), and Stata files (.dta estension).
+You can import these files and work with them in R even if you don't have e.g. SPSS or Stata installed.
+
+## Importing data files
+
+### Import dataset button
+
+You always import data by using various `read_...()` functions.
+The last Data Center workshop already showed you the simplest use of `read_csv("filename.csv")`.
+
+When working with other data sources (especially if you are unsure about the structure of the data), you can let R do most of the work instead of figuring out the right functions and arguments yourself.
+Of course, if you are more comfortable with R, you will find it much more convenient to write your own importing code, as it is very straightforward to do so.
+
+Before importing data to R, you need to download it to your computer.
+In most cases you will find clear instructions on how to do so on the website of the data source.
+
+You can find GDP data in the OECD database [here](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
+In order to download the data file, you need to find the blue "download" button directly above the displayed data, and choose the option "Full indicator data (.csv)".
+The file will most likely be saved to your Downloads folder.
+In order to import it to R, you should first move it to your project folder.
+
+Once done, you should repeat the process for the CO2 emissions data from the World Bank database.
+You can find the data [here](https://data.worldbank.org/indicator/EN.ATM.CO2E.PC); the "download" button on the right.
+Usually if CSV is available as a download option, you should use that, as CSV files are the most convenient to import.
+For the purposes of learning how to import other files, download the data as an Excel file.
+Again, the data will likely be saved in your Downloads folder.
+You should find it and move it to your project folder.
+
+In order to import both files to R, open your project in RStudio.
+Find File -> Import dataset in the top left of RStudio.
+
+The GDP data is in CSV format, which is a form of text file, so select the option "from text (readr)".
+`readr` is a tidyverse library, so it is preferred over `base` import functions.
+In the data import pop-up window click "Browse" and find the GDP data that you moved to your project folder.
+RStudio will try to automatically detect the format of your data: the result of that is shown in the Data preview window.
+If something looks wrong, try changing some of the settings below the data preview until the preview looks correct.
+Additionally, you should change the name of the data to something sensible, e.g. `GDP`.
+Once all the settings are ready, you can copy the contents of the "Code preview" window into your script, and use it to import your data.
+As long as you start your script by importing `tidyverse`, you don't need to copy `library(readr)`, as `readr` is a part of `tidyverse`.
+
+Importing the CO2 data is almost exactly the same, except you you should click File -> Import Dataset -> From Excel.
+Every following step is the same as with importing CSV files, except that you do need to load the `readxl` package separately, as it is not a part of `tidyverse`.
+
+The result of copying the code should be similar to the following:
+
+```{r, eval=F}
+library(tidyverse)
+library(readxl)
+
+GDP <- read_csv("DP_LIVE_14032022133237321.csv")
+CO2 <- read_excel("API_EN.ATM.CO2E.PC_DS2_en_excel_v2_3732111.xls", skip = 3)
+```
+```{r, echo=F}
+library(tidyverse)
+library(readxl)
+
+GDP <- read_csv("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202%20data/DP_LIVE_14032022133237321.csv")
+CO2 <- rio::import("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202%20data/API_EN.ATM.CO2E.PC_DS2_en_excel_v2_3732111.xls", skip = 3)
+```
+
+### Own import code
+
+Later on you might find it more convenient to write your own importing code.
+In that case, you should be familiar with the most common packages, functions, and function arguments for importing data.
+You should also make sure to remember to assign each data file to an object so that they are stored in the RStudio environment.
+
+CSV and other delimited text files can be imported using functions in the `tidyverse` package.
+CSV files can be easily imported using the `read_csv()` function; most of the time the only argument you need is the file path as a string.
+Other delimited files can be imported using the `read_delim()` function: there you need to specify both the file path to the data file and the delimiter as strings.
+The most common delimiters are semicolons (`delim = ";"`) and tabs (`delim = "\t"`).
+If your data has some special features, you might need to specify some additional arguments, such as `col_names = FALSE` if your data does not have column names, or `skip` if your data starts with non-data rows.
+You can find more information about these additional arguments in the help-files of `read_csv()` and `read_delim()`.
+
+You can import Excel files using the `read_excel()` function from the `readxl` package.
+The function arguments are very similar to those of `read_csv()`: often it is enough to only specify the file path as a string, otherwise you can make use of the additional arguments.
+If your spreadsheet has multiple sheets, you also need to specify which sheet to import using he `sheet` argument.
+
+If your data is a .sav or .dta file (SPSS or Stata data), you need the `haven` package to import data files.
+The functions you would need are `read_sav()` and `read_dta()`, and the main argument is still the file path as a string.
+Again, you can rely on the help-files of these functions for further explanation.
+
+As long as you work in a project, you only need to specify relative file paths.
+If your data files are saved to your main project folder, then the relative file path is simply the file name (including the file extension, e.g. "data.csv").
+If your data is in a subfolder within your project folder, then your relative file path must also include references to the subfolder(s), separated by slashes (/), e.g. as "data/data.csv".
+
+# Data cleaning
+
+## Establishing the data cleaning steps
+
+Data files downloaded from online sources are not always in a convenient format for analysis in R: variable names are not always intuitive or consistent, you might need to make some additional calculations, recode variables, or remove some variables/observations.
+You can make a list of steps you need to take by observing the structure of your data.
+
+To get a summary of the contents of your data file, you can use the `summary()` function as follows:
+
+```{r}
+summary(GDP)
+```
+
+This output shows you all the variables you have, including their type and some details about their content.
+In this case you can tell that the variable `TIME` specifies the year of the observation and `Value` contains the value of GDP for a given country and year.
+The other variables are all stored as character strings, so the `summary()` function is not particularly informative.
+To get more information about what data is stored in each column, you can view the data in RStudio's data viewer using the `View()` function:
+
+```{r,eval=F}
+View(GDP)
+```
+
+Looking at the data shows that the variable `LOCATION` shows 3-digit country codes.
+`INDICATOR` is always "GDP", `SUBJECT` is always "TOT", and `FREQUENCY` is always "A", so these variables do not contain useful information for data analysis.
+`MEASURE` has two options: "MLN_USD" and "USD_CAP".
+In order to find out what these abbreviations mean, you need to go back to the website of the website of the data source.
+Reading the data documentation tells you that "MLN_USD" shows GDP in million US dollars, while "USD_CAP" shows GDP in US dollars/capita.
+You need to make a decision of which values to use: in this case let's use GDP per capita.
+You will also discover that for your purposes the `FLAG` variable is not relevant.
+
+You can repeat a similar process with the CO2 data (results omitted for conciseness):
+
+```{r,eval=F}
+summary(CO2)
+View(CO2)
+```
+
+The data summary shows you that instead of having a variable for year, you have the data for each year in a separate column.
+Addionally, viewing the data will show you that the variable `Country Code` contains the same 3-digit country codes as the GDP data; keep this in mind as you will want to combine these datasets based on country matches.
+You will also find that you don't need the variables `Country Name`, `Indicator Name` and `Indicator Code`.
+
+In order to combine the datasets, you need to take some additional steps: you will need to turn the CO2 data from wide to long format so you have a single variable `year` and a single variable for the values for the values of CO2 emissions per country and year.
+Additionally, you want to rename your variables so they are consistent across datasets.
+
+## Wide and long format
+
+The previous workshop already touched on the `pivot_longer()` function to convert from wide to long format. 
+Remeber that the arguments that you need to specify are the columns you want to convert (in this case the years between 1960 and 2020), the variable name of the new column storing the years, and the variable name of the new column storing the values of CO2 emissions.
+
+Note that if a column name in R starts with a number or includes spaces, you need to wrap it in backticks (\`) when referring to them.
+Also note that a shortcut for referring to a range of columns is the format `first column of range:last column of range`.
+So in order to select the range of year columns you will need to specify the `pivot_longer()` function as follows:
+
+```{r}
+CO2_longer <- pivot_longer(CO2, cols = `1960`:`2020`, names_to = "year", values_to = "CO2")
+```
+
+Viewing the results shows that indeed you now have a variable `year` for year and a variable `CO2` for the value of CO2 emissions.
+
+## Renaming variables
+
+While now the datasets are in a similar format, the variable names are still not consistent across datasets or convenient to work with.
+This problem can be easily fixed using the `rename()` function, which has the format `rename(data, "new_name" = "old_name")`.
+Since the variables `year` and `CO2` were already renamed when creating the object `CO2_longer`, we can use that data and only rename the variable `Country Code`.
+
+```{r}
+GDP_renamed <- rename(GDP,
+                      "country" = "LOCATION",
+                      "year" = "TIME",
+                      "GDP" = "Value")
+CO2_renamed <- rename(CO2_longer,
+                      "country" = `Country Code`)
+```
+
+## Selecting and filtering data
+
+The previous workshop already covered the `select()` function to only keep certain variables, and the `filter()` function to filter only relevant observations.
+Remember that both datasets have unnecessary variables that should be removed, and that you want to only use GDP/capita and not GDP in million US dollars.
+
+```{r}
+GDP_final <- GDP_renamed %>% 
+  filter(MEASURE == "USD_CAP") %>% 
+  select(country, year, GDP)
+CO2_final <- CO2_renamed %>% 
+  select(country, year, CO2)
+```
+
+If you don't remember how to use the pipe (`%>%`), or how to specify the arguments of `select()` and `filter()`, refer back to the materials of the previous Data Center workshop.
+
+Sometimes you need to specify multiple arguments in a `filter()` function, connected using logical operators.
+Think e.g. if you want to specify to only keep observations from one of two countries and for a given time period.
+Then your argument could be stated as "country is USA or country is UK and year is more than 1990 and year is less than 2010".
+To turn this statement into a correct argument, you need to use the logical operators AND (in R `&`) and OR (in R `|`).
+Additonally, you will need the operators `==` (equal), `!=` (not equal), `>,>=,<=,<`, and `%in%` (is one of).
+For example, the statement above could be written as `(country == "USA" | country == "UK") & year > 1990 & year < 2010`.
+Parentheses make sure that the logical order of the arguments is correct and helps with readability.
+
+Instead of specifying every country from a list, you can use the `%in%` operator, followed by a vector as a shortcut.
+That statement would be evaluated as true if the value of the filtered variable matched with any of the elements of the vector.
+For example the argument `country %in% c("USA", "UK")` would keep every observation where the value of the variable `country` is either "USA" or "UK". 
+Remember that you can create vectors by listing the elements separated by commas within a `c()` function; remember that you need to wrap strings in quotation marks.
+
+## Modifying variables and creating new variables
+
+In some cases you might need to do additional calculations with your data. 
+For example, maybe your data has absolute values but you want to use growth rates, or you want to calculate the average values of a variable over time.
+Helpful functions in this case are the following:
+
+* `mutate()`: to create new variables (or modify existing variables) using functions or calculations - think of it as adding a new column to your data frame.
+* `summarize()`: to create new variables using functions, using all rows from your data frame (or from a part of your data frame) - think e.g. if you have a data frame of GDP data from 20 years, and you want to calculate the average value of GDP in this dataset.
+* `group_by()`: to specify grouping variables before using `mutate()` or `summarize()` - think e.g. if you have GDP data from 20 years from two countries, and you want to calculate average GDP over time separately for the two countries.
+
+An important use of `mutate()` is to make sure that all the variables in your two data frames ar compatible types with each other.
+For example, if both data frames have a variable called `year`, then you need to make sure that both variables are treated as numbers, otherwise you won't be able to match them.
+
+You can check the types of your variables by using the `summary()` function on your final two data frames:
+
+```{r}
+summary(GDP_final)
+summary(CO2_final)
+```
+
+When the summaries are displayed, you can immediately see that in `GDP_final` year is treated as a number, but in `CO2_final` it is treated as a character.
+Based on this result, you should reach the conclusion that you need to transform the variable `year` in `CO2_final` to be of type numberic.
+You can achieve that using the `as.numeric()` function within a `mutate()` function as follows:
+
+```{r}
+CO2_final <- mutate(CO2_final, year = as.numeric(year))
+```
+
+Notice that I assign the resulting object to an object with the same name as the input data frame.
+This way I am overwriting the data frame previously saved as `CO2_final`.
+As the argument of the mutate function I specify that I want to create a variable `year`, and I assign the results of the function `as.numeric(year)` to the variable `year`.
+`as.numeric(year)` simply converts the numbers currently stored as characters to be stored as numbers.
+Since the variable `year` already exists in the data frame, it will be overwritten.
+
+Now if you look at the summary of `CO2_final` again, you will see that `year` is treated as a number, which matches with the `year` variable of `GDP_final`, so the two datasets can be combined.
+
+In case you would like to know more about how to use the `mutate()`, `summarize()` and `group_by()` functions to modify your data, please read the help-files of the functions and look at the relevant supporting materials listed on the Data Center website.
+
+## Efficient pipe workflows
+
+Notice that you could have combined the entire data cleaning process into two clean pipe workflows.
+It is good practice to use pipe workflows when cleaning your data, as it will make it easier to keep track of your work and fix any issues.
+Remember that you can think of the pipe as an operator that takes the output of a function as the input of the following function.
+Don't forget to assign the resulting data frames to sensibly named objects.
+
+The following code produces the same final result as the code introduced previously, but without creating any intermediate objects (such as `GDP_renamed`):
+
+```{r}
+GDP_final <- GDP %>% 
+  rename("country" = "LOCATION", "year" = "TIME", "GDP" = "Value") %>% 
+  filter(MEASURE == "USD_CAP") %>% 
+  select(country, year, GDP)
+
+CO2_final <- CO2 %>% 
+  pivot_longer(cols = `1960`:`2020`, 
+               names_to = "year", values_to = "CO2") %>% 
+  rename("country" = `Country Code`) %>%
+  select(country, year, CO2) %>% 
+  mutate(year = as.numeric(year))
+```
+
+# Merging datasets
+
+Now that your two data frames follow the same structure, they can be combined into a single data frame that you can use to visualize the relationship between the two variables.
+
+There are multiple ways to combine data frames.
+The simplest is row-binding: there you take two data frames that have the same variables, and basically place one below the other.
+For example, if you have one data frame of GDP between 1990 and 2000, and another dataset of GDP between 2001-2020, you can row-bind them with the code `GPD_full <- bind_rows(GDP_1990_2000, GDP_2001_2020)`.
+Then your resulting data frame will have a row for year, where each row contains the value of GDP corresponding to that year.
+
+However, most of the time you need something more complicated than row-binding.
+Take the two datasets that we have been working with so far: your entities are defined by the country and the year; one of your data frames contains the values of GDP corresponding to an entity (a country-year pair; e.g. GDP in the US in 2015), and the other data frame has the values of CO2 emissions corresponding to an entity defined in the same way.
+To look at the relationship between these values, you need to match them based on entity (so e.g. GDP in the US in 2015 is in the same row as CO2 emissions in the US in 2015).
+
+The group of functions that accomplished these matches is the `..._join()` functions.
+There are four join functions: `full_join()`, `inner_join()`, `left_join()`, and `right_join()`.
+These functions all have the exact same structure and arguments; if the entities of your two data frames match perfectly (i.e. there are no entities that appear in one data frame but not in another), then the result of using any of the join functions is equivalent.
+
+If there are entities that appear in one data frame but not in another (which you will likely encounter), then there is a difference in which entities appear in your final data frame depending on the type of join you use:
+
+* `full_join()` keeps every entity that appears in at least one of the data frames
+* `inner_join()` keeps only entites that appear in both of your data frames
+* `left_join()` keeps all entities that appear in your first data frame, even if they don't appear in your second data frame
+* `right_join()` keeps all entities that appear in your second data frame, even if they don't appear in your first data frame
+
+For the most part, you can ignore these differences, and simply use `full_join()` to match your data frames.
+While doing so will likely create missing values, for your purposes that is not particularly relevant: when plotting the data, R will automatically exclude missing values.
+
+In order to use any join function, you need to specify two main arguments: the two data frames that you are combining (separated by commas), and the variable(s) defining each entity.
+In this case, we are combining the data frames `GDP_final` and `CO2_final`.
+The variables defining each entity are `country` and `year`.
+If your entity variables have the same name in both of your data frames, and there are no other matching variable names, then you don't need to specify the variables defining each entity; R will detect them automatically.
+
+```{r}
+full_data <- full_join(GDP_final, CO2_final) # if you named your entity variables well, this will work
+full_data <- full_join(GDP_final, CO2_final, 
+                       by = c("country" = "country", "year" = "year")) # is equivalent to the previous line, but explicitly specifies the matching variables
+```
+
+Now that you have your combined data frame, you should view it to make sure everything looks correct:
+
+```{r, eval=F}
+View(full_data)
+```
+
+# More plotting with `ggplot`
+
+<!-- -r graph gallery -->
+<!-- -example of how you'd go from having frequency data to having a finished histogram -->
+
+The previous Data Center workshop already showed you how to create scatterplots and time-series plots using the `ggplot()` function.
+Feel free to reuse (parts of) that code for your paper, as these two plot types are likely the ones most relevant for your paper as well.
+
+If you would like to make some different types of plots, you will benefit from familiarizing yourself with the [R Graph Gallery](https://www.r-graph-gallery.com/).
+This website shows you an extremely wide range of possible plots that you can make in R, guiding you through the process and providing code for each plot type.
+
+Let's say you want to plot the distribution of your data (e.g. you have a list of countries and their GDP, and want to see the distribution of values).
+Neither a scatterplot nor a line chart is appropriate for that purpose.
+However, if you go to [R Graph Gallery](https://www.r-graph-gallery.com/), and find the category "Distribution", you will see all the suitable plot types.
+Let's say that out of that list, you decide that a histogram is what you're looking for.
+If you click on its icon, you will see a wide range of histogram plots: usually it is a good option to start with the most basic option; if you want to change some additional features, do it after figuring out the basic setup.
+Once you click on a plot, you will find an explanation of how to make that plot, what settings you can change, and all the code necessary to create the plot.
+Feel free to copy as much of this code as you can, and edit it afterwards to fit with your data: e.g. change the names of the data frame and variables.
+If the original code assigns your figure to an object (e.g. `p <- ggplot()...`), remove that part (so remove `p <- `) and run the code without it in order to display your figure.
+
+If you receive errors, try to interpret what they suggest you change; try to read some supplementary materials or Google the error message and see if that helps you figure out what went wrong; if you still can't figure it out, please reach out to the Data Center to fix it together.
+
+Good luck with your paper!
