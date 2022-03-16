@@ -134,4 +134,32 @@ The materials covered in the second Data Center workshop, including both code an
 * [Eurostat](https://ec.europa.eu/eurostat/web/main/home): European Union data
 
 #### Additional support with R
-_TBA_ 
+
+Next to the links below, please check out the supporting materials provided for the first Data Center workshop.
+
+*Importing data*
+
+* [Cheat sheet for data import](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
+* [More on `read_csv()`](https://uomresearchit.github.io/r-tidyverse-intro/03-loading-data-into-R/)
+* [Import with `haven`](https://tutorials.methodsconsultants.com/posts/reading-sas-spss-or-stata-files-into-r-using-haven/)
+* [Import with `readr` and `readxl` (video)](https://www.youtube.com/watch?v=366N1K1ja8g)
+* [Import using `haven` (video)](https://www.youtube.com/watch?v=egFoDj6H9Ts)
+
+*Data cleaning*
+
+* [Filter, select, mutate and summarize data](https://rpubs.com/AnalystNyamu/507453)
+* [More on `mutate()`](https://www.sharpsightlabs.com/blog/mutate-in-r/)
+* [Summarizing data by groups](https://r-graphics.org/recipe-dataprep-summarize)
+* [List of common useful functions within `summarize()`](https://www.r-bloggers.com/2021/06/summarize-in-r-data-summarization-in-r/)
+* [More on `rename()`](https://www.datasciencemadesimple.com/rename-the-column-name-in-r-using-dplyr/)
+* [How to handle missing data](https://universeofdatascience.com/how-to-handle-missing-values-in-r/)
+* [Select, filter, mutate and summarize data (video)](https://www.youtube.com/watch?v=nRtp7wSEtJA)
+* [Summarizing by groups (video)](https://www.youtube.com/watch?v=zAlbrPozMHI)
+* [How to handle missing values (video)](https://www.youtube.com/watch?v=O_gPPrezk5o)
+
+*Merging data*
+
+* [`bind_rows()` and join functions visualized](https://www.r4epi.com/working-with-multiple-data-frames.html)
+* [More on join functions](https://www.datasciencemadesimple.com/join-in-r-merge-in-r/)
+* [Examples of using joins](https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)
+* [More on join functions (video)](https://www.youtube.com/watch?v=Yg-pNqzDuN4)

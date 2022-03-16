@@ -132,8 +132,8 @@ CO2 <- read_excel("API_EN.ATM.CO2E.PC_DS2_en_excel_v2_3732111.xls", skip = 3)
 library(tidyverse)
 library(readxl)
 
-GDP <- read_csv("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202%20data/DP_LIVE_14032022133237321.csv")
-CO2 <- rio::import("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202%20data/API_EN.ATM.CO2E.PC_DS2_en_excel_v2_3732111.xls", skip = 3)
+GDP <- read_csv("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202/DP_LIVE_14032022133237321.csv")
+CO2 <- rio::import("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202/API_EN.ATM.CO2E.PC_DS2_en_excel_v2_3732111.xls", skip = 3)
 ```
 
 ### Own import code
@@ -359,7 +359,7 @@ If your entity variables have the same name in both of your data frames, and the
 ```{r}
 full_data <- full_join(GDP_final, CO2_final) # if you named your entity variables well, this will work
 full_data <- full_join(GDP_final, CO2_final, 
-                       by = c("country" = "country", "year" = "year")) # is equivalent to the previous line, but explicitly specifies the matching variables
+                       by = c("country", "year")) # is equivalent to the previous line, but explicitly specifies the matching variables
 ```
 
 Now that you have your combined data frame, you should view it to make sure everything looks correct:

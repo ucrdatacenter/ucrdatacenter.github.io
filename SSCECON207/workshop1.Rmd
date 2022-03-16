@@ -68,7 +68,7 @@ In this case, the data is available on [Github](https://github.com/ucrdatacenter
 You can import a file using the `read_csv()` function and by assigning the file to an object.
 
 ```{r}
-data <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2022h1/ISLM_data.csv") # import the data from Github
+data <- read_csv("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%201/ISLM_data.csv") # import the data from Github
 ```
 
 ## Filtering the data

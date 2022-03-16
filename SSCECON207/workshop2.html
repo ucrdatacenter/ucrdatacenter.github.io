@@ -442,7 +442,7 @@ CO2_final &lt;- CO2 %&gt;%
 <p>In order to use any join function, you need to specify two main arguments: the two data frames that you are combining (separated by commas), and the variable(s) defining each entity. In this case, we are combining the data frames <code>GDP_final</code> and <code>CO2_final</code>. The variables defining each entity are <code>country</code> and <code>year</code>. If your entity variables have the same name in both of your data frames, and there are no other matching variable names, then you don’t need to specify the variables defining each entity; R will detect them automatically.</p>
 <pre class="r"><code>full_data &lt;- full_join(GDP_final, CO2_final) # if you named your entity variables well, this will work
 full_data &lt;- full_join(GDP_final, CO2_final, 
-                       by = c(&quot;country&quot; = &quot;country&quot;, &quot;year&quot; = &quot;year&quot;)) # is equivalent to the previous line, but explicitly specifies the matching variables</code></pre>
+                       by = c(&quot;country&quot;, &quot;year&quot;)) # is equivalent to the previous line, but explicitly specifies the matching variables</code></pre>
 <p>Now that you have your combined data frame, you should view it to make sure everything looks correct:</p>
 <pre class="r"><code>View(full_data)</code></pre>
 </div>
