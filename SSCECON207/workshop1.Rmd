@@ -71,6 +71,8 @@ You can import a file using the `read_csv()` function and by assigning the file 
 data <- read_csv("https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%201/ISLM_data.csv") # import the data from Github
 ```
 
+The IS-LM dataset contains the real interest rate, CPI-based inflation rate, and growth rates in GDP, consumption, investment, government spending.
+
 ## Filtering the data
 
 For your project you will only need to use part of the data.
