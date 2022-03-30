@@ -14,10 +14,8 @@ output:
 
 This page collects helpful links for the banking dashboard assignment in the Spring 2022 edition of Money, Banking and Finance.
 
-If you have questions related to the dashboard assignment or need some help, feel free to join Data Center office hours with Tina (held every Wednesday between 15:00-17:00 on [Zoom](https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09)). 
-You don't need to sign up in advance to attend office hours on Zoom.
-
-Additionally, feel free to email Tina (datacenter@ucr.nl) to schedule an individual consultation outside of office hours or to attend office hours in person in the Data Center's office (Anne 1.30 - first floor). In case you would like to make use of the in-person office hours, please email the Data Center at least two hours in advance.
+If you have questions related to the dashboard assignment or need some help, feel free to join Data Center office hours with Tina (held every Wednesday between 15:00-17:00 in the Data Center's office (Anne 1.30 - first floor). 
+Feel free to email Tina (datacenter@ucr.nl) to schedule an individual consultation outside of office hours or to attend office hours. In case you would like to make use of the in-person office hours, please email the Data Center at least two hours in advance.
 
 # Example dashboard
 
