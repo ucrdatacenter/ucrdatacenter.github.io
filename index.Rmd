@@ -39,15 +39,3 @@ If you would like to request an individual consultation or would like to attend 
 <!-- ``` -->
 
 [videos](https://ucrdatacenter.github.io/videos)
-
-<div class="embed-container">
-  <iframe
-      src="https://player.vimeo.com/video/730053253"
-      width="500"
-      height="281"
-      frameborder="0"
-      webkitallowfullscreen
-      mozallowfullscreen
-      allowfullscreen>
-  </iframe>
-</div>
