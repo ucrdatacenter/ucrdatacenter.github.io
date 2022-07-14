@@ -1,4 +1,5 @@
 ---
+title: "Videos"
 vimeoId: 730053253
 ---
 
