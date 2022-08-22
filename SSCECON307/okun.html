@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SSCECON307 Workshop I: Okun’s Law</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+<style>
+/* CSS for Markstat 2.0 using Pandoc 2.0 */
+body{padding:14px 28px; max-width:45em;}
+body, table {font-family: Helvetica, Arial, Sans-serif; font-size: 14px;}
+h1, h2, h3, h4 {font-weight: normal; color: #3366cc}
+h1 {font-size: 200%;}
+h2 {font-size: 150%;}
+h3 {font-size: 120%;}
+h4 {font-size: 100%; font-weight:bold}
+img.center {display:block; margin-left:auto; margin-right:auto}
+.small{font-size:8pt;}
+a {color: black;}
+a:visited {color: #808080;}
+a.plain {text-decoration:none;}
+a.plain:hover {text-decoration:underline;}
+.em {font-weight:bold;}
+pre, code {font-family: "lucida console", monospace;}
+pre.stata {font-size:13px; line-height:13px;}
+pre {padding:8px; border:1px solid #c0c0c0; border-radius:8px; background-color:#fdfdfd;}
+code {color:#3366cc; background-color:#fafafa;}
+pre code { color:black; background-color:white}
+/* Added for Pandoc */
+figure > img, div.figure > img {display:block; margin:auto}
+figcaption, p.caption {text-align:center; font-weight:bold; color:#3366cc;}
+h1.title {text-align:center; margin-bottom:0}
+p.author, h2.author {font-style:italic; text-align:center;margin-top:4px;margin-bottom:0}
+p.date, h3.date {text-align:center;margin-top:4px; margin-bottom:0}
+/* Tables*/
+table { margin:auto; border-collapse:collapse; }
+table caption { margin-bottom:1ex;}
+td {padding:0 0 0 0} /* override */
+table:not([class]) th { padding:4px 6px } 
+table:not([class]) td { padding:4px 6px } 
+table:not([class]) thead tr:first-child th {border-top:1px solid black; padding-top:6px}
+table:not([class]) thead tr:last-child  th {padding-bottom:6px}
+table:not([class]) tbody tr:first-child td {border-top:1px solid black; padding-top:6px}
+table:not([class]) tbody tr:last-child  td {padding-bottom:6px;}
+table:not([class]) tbody:last-child tr:last-child td {border-bottom:1px solid black;}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SSCECON307 Workshop I: Okun’s Law</h1>
+</header>
+<h1 id="introduction">Introduction</h1>
+<p>In 1962 Arthur Okun regressed quarterly changes in U.S. unemployment
+rate on output growth. The data over 1948q1-1960q4 revealed a strong
+negative relationship. The economic intuition behind this relationship
+is as follows: when output falls, firms lay off workers, and
+unemployment rises. This relationship has a high status in economics and
+is known as Okun’s law. In this exercise we replicate the original
+Okun’s findings and check whether they hold in other countries and time
+periods.</p>
+<h1 id="replicating-the-original-findings">Replicating the original
+findings</h1>
+<p>First, we replicate Okun’s original findings for U.S. data over
+1948q1-1960q4. In order to do that, we download data for GDP and
+unemployment into Stata, do some data cleaning, and fit a regression.
+For all your Stata work, it is strongly advised you make use of a
+do-file with a sensible name.</p>
+<h2 id="set-working-directory">Set working directory</h2>
+<p>Before you start working with data, it is important to know where any
+output files (including your do-files) get saved on your computer. Such
+a folder is called your working directory or current directory.</p>
+<p>If you use UU’s SolisWorkspace, you can go to File -&gt; Change
+working directory, and find your local disk (and a suitable folder on
+your local disk). Otherwise you’ll only need to find a suitable folder
+on your local disk. Make sure the folder you choose has been given a
+sensible name so you can easily find it at a later point. You can also
+change your current directory by using a cd command.</p>
+<pre class='stata'>. * cd C:\User\Location\FolderCourse\SubfolderCase
+</pre>
+<h2 id="install-freduse-to-download-data-from-fred">Install freduse to
+download data from FRED</h2>
+<p>If you use Stata with SolisWorkspace, you need to install freduse
+(and any other package) every time you open Stata. Otherwise you only
+need to install each package once.</p>
+<pre class='stata'>. * ssc install freduse
+</pre>
+<h2 id="download-data">Download data</h2>
+<p>Get the data codes of real GDP and unemployment by searching the
+FRED’s website: https://fred.stlouisfed.org/. We use the following
+datasets:</p>
+<ul>
+<li>Real Gross Domestic Product (DISCONTINUED) -
+https://fred.stlouisfed.org/series/GDPC96;</li>
+<li>Unemployment Rate - https://fred.stlouisfed.org/series/UNRATE.</li>
+</ul>
+<p>You can copy the series codes from the URL of the dataset (see the
+links above), and use them to specify which series to download using the
+freduse command. By specifying “clear”, you’re overwriting any data
+currently in Stata’s memory when you run this code.</p>
+<pre class='stata'>. freduse GDPC96 UNRATE, clear
+(282 observations read)
+(895 observations read)
+</pre>
+<h2 id="data-cleaning">Data cleaning</h2>
+<h3 id="find-the-appropriate-time-variable">Find the appropriate time
+variable</h3>
+<p>If we browse the data, first, we see two variables indicating time:
+date and daten. The former is a string, the latter is numeric. We use
+the latter.</p>
+<p>Second, we see that unemployment rate is recorded monthly while GDP
+quarterly. We should bring both variables to the same, lower frequency,
+that is, quarterly. For that we first need a variable that specifies
+time in quarters, as a numeric that Stata understands. Currently our
+time variable uses the first day of each month, so it is in daily format
+(even though the actual observations are monthly and quarterly). In
+order to get which quarter each date stands for, we can use the qofd
+function, which stands for “quarter of day”.</p>
+<pre class='stata'>. g qt=qofd(daten)
+</pre>
+<h3 id="transform-all-data-to-quarterly">Transform all data to
+quarterly</h3>
+<p>Now we have our quarterly dates, but the rows of the data still
+correspond to months (so every quarter spans 3 rows). We can make each
+row correspond to a single quarter using the collapse command,
+specifying the grouping variable, in this case the quarterly date we
+calculated earlier.</p>
+<p>Unemployment rate is currently a monthly variable. To calculate the
+quarterly unemployment, we take the average unemployment from the 3
+months in the quarter. So we can collapse the variable UNRATE to
+quarterly by taking the mean.</p>
+<p>GDP is a quarterly variable: the value for the quarter appears as the
+observation for the first month in the quarter, while the values for the
+other two months are missing. So we can collapse GDPC96 to quarterly by
+taking the first observation in each quarter.</p>
+<pre class='stata'>. collapse (mean) UNRATE (first) GDPC96, by(qt)
+</pre>
+<h3 id="specify-the-time-series-dimension">Specify the time-series
+dimension</h3>
+<p>Stata recognizes data as time-series data if you specify the time
+dimension using tsset. The optional q argument stands for “quarterly”
+and specifies the unit of the time variable.</p>
+<pre class='stata'>. tsset qt, q
+        time variable:  qt, 1947q1 to 2022q3
+                delta:  1 quarter
+</pre>
+<h3
+id="calculate-gdp-growth-rate-and-the-change-in-unemployment">Calculate
+GDP growth rate and the change in unemployment</h3>
+<p>Since Okun’s law describes a relationship between output growth and
+changes in unemployment rate we need to generate these variables. l.
+stands for lag - the observation of the previous time period. d. stands
+for difference - basically a shortcut for u-l.u.</p>
+<pre class='stata'>. g growth=(GDPC96/l.GDPC96 - 1)*100
+(22 missing values generated)
+
+. g du=d.UNRATE
+(5 missing values generated)
+</pre>
+<h2 id="model-fitting">Model fitting</h2>
+<p>Regress du on growth for 1948q1-1960q4:</p>
+<pre class='stata'>. reg du growth if qt&lt;tq(1961q1)
+
+      Source │       SS           df       MS      Number of obs   =        51
+─────────────┼──────────────────────────────────   F(1, 49)        =     72.86
+       Model │  10.2020311         1  10.2020311   Prob > F        =    0.0000
+    Residual │  6.86101944        49  .140020805   R-squared       =    0.5979
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.5897
+       Total │  17.0630505        50  .341261011   Root MSE        =    .37419
+
+─────────────┬────────────────────────────────────────────────────────────────
+          du │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+      growth │  -.3216277   .0376796    -8.54   0.000    -.3973478   -.2459077
+       _cons │   .3298173   .0618275     5.33   0.000     .2055703    .4540643
+─────────────┴────────────────────────────────────────────────────────────────
+</pre>
+<h1 id="extending-u.s.-data">Extending U.S. data</h1>
+<p>Second, we extend Okun’s original sample to 2011. We can use the same
+cleaned dataset as before, and only change the time period specified in
+the reg command as follows:</p>
+<pre class='stata'>. reg du growth if qt&lt;tq(2012q1)
+
+      Source │       SS           df       MS      Number of obs   =       255
+─────────────┼──────────────────────────────────   F(1, 253)       =    251.61
+       Model │  20.0689886         1  20.0689886   Prob > F        =    0.0000
+    Residual │  20.1801884       253   .07976359   R-squared       =    0.4986
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.4966
+       Total │   40.249177       254  .158461327   Root MSE        =    .28242
+
+─────────────┬────────────────────────────────────────────────────────────────
+          du │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+      growth │  -.2855234   .0180004   -15.86   0.000     -.320973   -.2500738
+       _cons │   .2491008   .0228656    10.89   0.000     .2040695     .294132
+─────────────┴────────────────────────────────────────────────────────────────
+</pre>
+<h1 id="estimations-for-other-countries">Estimations for other
+countries</h1>
+<p>Third, we check whether the law holds in other countries.</p>
+<p>For these models we use data from the World Bank databank, which we
+can access via the wbopendata package. Remember, if you use
+SolisWorkspace, you need to install the package every time you open
+Stata.</p>
+<pre class='stata'>. * ssc install wbopendata
+</pre>
+<h2 id="download-data-1">Download data</h2>
+<p>Get the data codes of real GDP and unemployment by searching the
+World Bank’s website: https://data.worldbank.org/.</p>
+<p>We use the following datasets:</p>
+<ul>
+<li>GDP (constant 2015 US$) -
+https://data.worldbank.org/indicator/NY.GDP.MKTP.KD;</li>
+<li>Unemployment, total (% of total labor force) (national estimate) -
+https://data.worldbank.org/indicator/SL.UEM.TOTL.NE.ZS.</li>
+</ul>
+<p>You can copy the indicator codes from the URL of the dataset (see the
+links above).</p>
+<p>wbopendata arguments:</p>
+<ul>
+<li>indicator(): the indicator(s) you would like to download</li>
+<li>clear: overwrite the data currently in Stata’s memory</li>
+<li>long: download the data in long format</li>
+</ul>
+<p>The World Bank’s default is wide format, where data for every year is
+a different column. Each row corresponds to one country-indicator
+combination. Long format has a variable “year”, and a separate variable
+per indicator. Then each row corresponds to one country-year
+combination. Long format is usually more convenient.</p>
+<pre class='stata'>. wbopendata, indicator(NY.GDP.MKTP.KD; SL.UEM.TOTL.NE.ZS) clear long
+
+    Metadata for indicator NY.GDP.MKTP.KD
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Name: GDP (constant 2015 US$)
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Collection: 2 World Development Indicators
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Description: GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and
+    minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets
+    or for depletion and degradation of natural resources. Data are in constant 2015 prices, expressed in U.S. dollars. Dollar figures for GDP are
+    converted from domestic currencies using 2015 official exchange rates. For a few countries where the official exchange rate does not reflect
+    the rate effectively applied to actual foreign exchange transactions, an alternative conversion factor is used.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Note: World Bank national accounts data, and OECD National Accounts data files.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Topic(s): 3 Economy and Growth
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+    Metadata for indicator SL.UEM.TOTL.NE.ZS
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Name: Unemployment, total (% of total labor force) (national estimate)
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Collection: 2 World Development Indicators
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Description: Unemployment refers to the share of the labor force that is without work but available for and seeking employment. Definitions of
+    labor force and unemployment differ by country.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Note: International Labour Organization, ILOSTAT database. Data as of June 2022.
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    Topic(s): 10 Social Protection and Labor
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</pre>
+<h2 id="data-cleaning-1">Data cleaning</h2>
+<h3 id="rename-the-variables">Rename the variables:</h3>
+<pre class='stata'>. rename (ny_gdp_mktp_kd sl_uem_totl_ne_zs) (gdp u)
+</pre>
+<h3 id="for-each-country-create-a-numeric-identifier">For each country
+create a numeric identifier</h3>
+<p>You need this numeric identifier to specify the cross-sectional
+dimension of your panel data. Strings (like countryname or countrycode)
+can’t be used as such an identifier.</p>
+<pre class='stata'>. encode countryname, g(id)
+</pre>
+<h3 id="specify-the-panel-dimensions-of-the-data">Specify the panel
+dimensions of the data</h3>
+<p>Stata recognizes data as time-series data if you specify the time
+dimension using tsset. If you have panel data, you first need to specify
+the cross-sectional dimension (in this case id, which differentiates
+between countries). The optional y argument stands for “yearly” and
+specifies the unit of the time variable.</p>
+<pre class='stata'>. tsset id year, y
+       panel variable:  id (strongly balanced)
+        time variable:  year, 1960 to 2021
+                delta:  1 year
+</pre>
+<h3
+id="calculate-gdp-growth-rate-and-the-change-in-unemployment-1">Calculate
+GDP growth rate and the change in unemployment</h3>
+<p>We create the same variables as with the FRED data.</p>
+<pre class='stata'>. g growth=(gdp/l.gdp - 1)*100
+(4,298 missing values generated)
+
+. g du=d.u
+(12,035 missing values generated)
+</pre>
+<h2 id="model-fitting-1">Model fitting</h2>
+<p>We regress du on growth per country, meaning we run a separate
+regression for every country in the sample.</p>
+<p>statsby runs the code specified after the colon separately for each
+sub-sample specified in by() and collects output specified after statsby
+in a new dataset. The new dataset replaces data in memory. We collect
+the following output:</p>
+<ul>
+<li>_b: the regression coefficients (both intercept and slope)</li>
+<li>e(N): sample size</li>
+</ul>
+<p>Each row in the new dataset shows results for a single country.</p>
+<pre class='stata'>. statsby _b e(N), clear by(id): reg du growth
+(running regress on estimation sample)
+
+      command:  regress du growth
+  _eq2_stat_1:  e(N)
+           by:  id
+
+Statsby groups
+────┼─── 1 ───┼─── 2 ───┼─── 3 ───┼─── 4 ───┼─── 5 
+xxx..xx.x..............x......x..xx..x...x.xx...xx    50
+x........xx........xx.xx.....x..x.xxx...x.....xxxx   100
+x.......xx....x........xxx....x.....xxxxxx.xx...xx   150
+.x..xx..x.....x...x..xx.x..x...x.x.xxx.x.x......x.   200
+....x......x.x..xxx...x..x.xxxxx........xxx...xxx.   250
+.......xx.x....x
+</pre>
+<p>Keep results from estimations with a sample size of at least 40.</p>
+<pre class='stata'>. drop if missing(_eq2_stat_1) | _eq2_stat_1&lt;40
+(235 observations deleted)
+</pre>
+<p>Plot coefficients per country:</p>
+<pre class='stata'>. graph hbar _b_growth, over(id, sort(1))    
+</pre>
+<p>Suggested reading:</p>
+<ul>
+<li>Laurence M Ball, Daniel Leigh, and Prakash Loungani. Okun’s Law: Fit
+at Fifty? NBER Working Paper, No. 18668, jan 2013</li>
+<li>Arthur M. Okun. Potential GNP: Its Measurement and Significance.
+Cowles Foundation Paper, 190, 1962</li>
+</ul>
+</body>
+</html>

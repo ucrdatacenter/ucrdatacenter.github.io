@@ -1,0 +1,157 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\okun.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Aug 2022, 16:51:11
+{txt}
+{com}. //_1
+. * cd C:\User\Location\FolderCourse\SubfolderCase
+. //_2
+. * ssc install freduse
+. //_3
+. freduse GDPC96 UNRATE, clear
+{res}{txt}(282 observations read)
+{res}{txt}(895 observations read)
+
+{com}. //_4
+. g qt=qofd(daten)
+{txt}
+{com}. //_5
+. collapse (mean) UNRATE (first) GDPC96, by(qt)
+{txt}
+{com}. //_6
+. tsset qt, q
+{res}{txt}{col 9}time variable:  {res}{col 25}qt, 1947q1 to 2022q3
+{txt}{col 17}delta:  {res}1 quarter
+{txt}
+{com}. //_7
+. g growth=(GDPC96/l.GDPC96 - 1)*100
+{txt}(22 missing values generated)
+
+{com}. g du=d.UNRATE
+{txt}(5 missing values generated)
+
+{com}. //_8
+. reg du growth if qt<tq(1961q1)
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        51
+{txt}{hline 13}{c +}{hline 34}   F(1, 49)        = {res}    72.86
+{txt}       Model {c |} {res} 10.2020311         1  10.2020311   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 6.86101944        49  .140020805   {txt}R-squared       ={res}    0.5979
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5897
+{txt}       Total {c |} {res} 17.0630505        50  .341261011   {txt}Root MSE        =   {res} .37419
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          du{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}growth {c |}{col 14}{res}{space 2}-.3216277{col 26}{space 2} .0376796{col 37}{space 1}   -8.54{col 46}{space 3}0.000{col 54}{space 4}-.3973478{col 67}{space 3}-.2459077
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .3298173{col 26}{space 2} .0618275{col 37}{space 1}    5.33{col 46}{space 3}0.000{col 54}{space 4} .2055703{col 67}{space 3} .4540643
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. //_9
+. reg du growth if qt<tq(2012q1)
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       255
+{txt}{hline 13}{c +}{hline 34}   F(1, 253)       = {res}   251.61
+{txt}       Model {c |} {res} 20.0689886         1  20.0689886   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 20.1801884       253   .07976359   {txt}R-squared       ={res}    0.4986
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.4966
+{txt}       Total {c |} {res}  40.249177       254  .158461327   {txt}Root MSE        =   {res} .28242
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          du{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}growth {c |}{col 14}{res}{space 2}-.2855234{col 26}{space 2} .0180004{col 37}{space 1}  -15.86{col 46}{space 3}0.000{col 54}{space 4} -.320973{col 67}{space 3}-.2500738
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .2491008{col 26}{space 2} .0228656{col 37}{space 1}   10.89{col 46}{space 3}0.000{col 54}{space 4} .2040695{col 67}{space 3}  .294132
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. //_10
+. * ssc install wbopendata
+. //_11
+. wbopendata, indicator(NY.GDP.MKTP.KD; SL.UEM.TOTL.NE.ZS) clear long
+
+{res}{p 4 4 4}{opt Metadata for indicator} NY.GDP.MKTP.KD{p_end}
+{hline}
+{p 4 4 4}{opt Name}: GDP (constant 2015 US$){p_end}
+{hline}
+{p 4 4 4}{opt Collection}: 2 World Development Indicators{p_end}
+{hline}
+{p 4 4 4}{opt Description}: GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources. Data are in constant 2015 prices, expressed in U.S. dollars. Dollar figures for GDP are converted from domestic currencies using 2015 official exchange rates. For a few countries where the official exchange rate does not reflect the rate effectively applied to actual foreign exchange transactions, an alternative conversion factor is used.{p_end}
+{hline}
+{p 4 4 4}{opt Note}: World Bank national accounts data, and OECD National Accounts data files.{p_end}
+{hline}
+{p 4 4 4}{opt Topic(s)}: 3 Economy and Growth  {p_end}
+{hline}
+
+
+
+{p 4 4 4}{opt Metadata for indicator} SL.UEM.TOTL.NE.ZS{p_end}
+{hline}
+{p 4 4 4}{opt Name}: Unemployment, total (% of total labor force) (national estimate){p_end}
+{hline}
+{p 4 4 4}{opt Collection}: 2 World Development Indicators{p_end}
+{hline}
+{p 4 4 4}{opt Description}: Unemployment refers to the share of the labor force that is without work but available for and seeking employment. Definitions of labor force and unemployment differ by country.{p_end}
+{hline}
+{p 4 4 4}{opt Note}: International Labour Organization, ILOSTAT database. Data as of June 2022.{p_end}
+{hline}
+{p 4 4 4}{opt Topic(s)}: 10 Social Protection and Labor  {p_end}
+{hline}
+
+
+{txt}
+{com}. //_12
+. rename (ny_gdp_mktp_kd sl_uem_totl_ne_zs) (gdp u)
+{res}{txt}
+{com}. //_13
+. encode countryname, g(id)
+{txt}
+{com}. //_14
+. tsset id year, y
+{res}{txt}{col 8}panel variable:  {res}id (strongly balanced)
+{txt}{col 9}time variable:  {res}{col 25}year, 1960 to 2021
+{txt}{col 17}delta:  {res}1 year
+{txt}
+{com}. //_15
+. g growth=(gdp/l.gdp - 1)*100
+{txt}(4,298 missing values generated)
+
+{com}. g du=d.u
+{txt}(12,035 missing values generated)
+
+{com}. //_16
+. statsby _b e(N), clear by(id): reg du growth
+{txt}(running regress on estimation sample)
+{p2colset 7 17 21 2}{...}
+
+{p2col :command:}regress du growth{p_end}
+{p2colset 3 17 21 2}{...}
+{p2col :_eq2_stat_1:}{res:e(N)}{p_end}
+           by:  id
+
+Statsby groups
+{hline 4}{c +}{hline 3} 1 {hline 3}{c +}{hline 3} 2 {hline 3}{c +}{hline 3} 3 {hline 3}{c +}{hline 3} 4 {hline 3}{c +}{hline 3} 5 
+{err}xxx{txt}..{err}xx{txt}.{err}x{txt}..............{err}x{txt}......{err}x{txt}..{err}xx{txt}..{err}x{txt}...{err}x{txt}.{err}xx{txt}...{err}xx{txt}    50
+{err}x{txt}........{err}xx{txt}........{err}xx{txt}.{err}xx{txt}.....{err}x{txt}..{err}x{txt}.{err}xxx{txt}...{err}x{txt}.....{err}xxxx{txt}   100
+{err}x{txt}.......{err}xx{txt}....{err}x{txt}........{err}xxx{txt}....{err}x{txt}.....{err}xxxxxx{txt}.{err}xx{txt}...{err}xx{txt}   150
+.{err}x{txt}..{err}xx{txt}..{err}x{txt}.....{err}x{txt}...{err}x{txt}..{err}xx{txt}.{err}x{txt}..{err}x{txt}...{err}x{txt}.{err}x{txt}.{err}xxx{txt}.{err}x{txt}.{err}x{txt}......{err}x{txt}.   200
+....{err}x{txt}......{err}x{txt}.{err}x{txt}..{err}xxx{txt}...{err}x{txt}..{err}x{txt}.{err}xxxxx{txt}........{err}xxx{txt}...{err}xxx{txt}.   250
+.......{err}xx{txt}.{err}x{txt}....{err}x
+{txt}
+{com}. //_17
+. drop if missing(_eq2_stat_1) | _eq2_stat_1<40
+{txt}(235 observations deleted)
+
+{com}. //_18
+. graph hbar _b_growth, over(id, sort(1))    
+{res}{txt}
+{com}. //_^
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\okun.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}22 Aug 2022, 16:51:23
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

@@ -1,0 +1,198 @@
+---
+title: "SSCECON307 Workshop I: Okun's Law"
+---
+
+# Introduction
+
+In 1962 Arthur Okun regressed quarterly changes in U.S. unemployment rate on output growth. 
+The data over 1948q1-1960q4 revealed a strong negative relationship.
+The economic intuition behind this relationship is as follows: when output falls, firms lay off workers, and unemployment rises.
+This relationship has a high status in economics and is known as Okun's law. 
+In this exercise we replicate the original Okun's findings and check whether they hold in other countries and time periods.
+
+# Replicating the original findings
+
+First, we replicate Okun's original findings for U.S. data over 1948q1-1960q4.
+In order to do that, we download data for GDP and unemployment into Stata, do some data cleaning, and fit a regression.
+For all your Stata work, it is strongly advised you make use of a do-file with a sensible name.
+
+## Set working directory
+
+Before you start working with data, it is important to know where any output files (including your do-files) get saved on your computer.
+Such a folder is called your working directory or current directory.
+
+If you use UU's SolisWorkspace, you can go to File -> Change working directory, and find your local disk (and a suitable folder on your local disk).
+Otherwise you'll only need to find a suitable folder on your local disk. 
+Make sure the folder you choose has been given a sensible name so you can easily find it at a later point.
+You can also change your current directory by using a cd command. 
+	
+	* cd C:\User\Location\FolderCourse\SubfolderCase
+
+## Install freduse to download data from FRED
+
+If you use Stata with SolisWorkspace, you need to install freduse (and any other package) every time you open Stata.
+Otherwise you only need to install each package once. 
+
+	* ssc install freduse
+
+## Download data
+
+Get the data codes of real GDP and unemployment by searching the FRED's website: https://fred.stlouisfed.org/.
+We use the following datasets:
+
++ Real Gross Domestic Product (DISCONTINUED) - https://fred.stlouisfed.org/series/GDPC96;
++ Unemployment Rate - https://fred.stlouisfed.org/series/UNRATE.
+
+You can copy the series codes from the URL of the dataset (see the links above), and use them to specify which series to download using the freduse command.
+By specifying "clear", you're overwriting any data currently in Stata's memory when you run this code.
+
+	freduse GDPC96 UNRATE, clear
+
+## Data cleaning
+
+### Find the appropriate time variable
+
+If we browse the data, first, we see two variables indicating time: date and daten.
+The former is a string, the latter is numeric.
+We use the latter.
+
+Second, we see that unemployment rate is recorded monthly while GDP quarterly.
+We should bring both variables to the same, lower frequency, that is, quarterly.
+For that we first need a variable that specifies time in quarters, as a numeric that Stata understands.
+Currently our time variable uses the first day of each month, so it is in daily format (even though the actual observations are monthly and quarterly).
+In order to get which quarter each date stands for, we can use the qofd function, which stands for "quarter of day".
+
+	g qt=qofd(daten)
+
+### Transform all data to quarterly
+
+Now we have our quarterly dates, but the rows of the data still correspond to months (so every quarter spans 3 rows).
+We can make each row correspond to a single quarter using the collapse command, specifying the grouping variable, in this case the quarterly date we calculated earlier.
+
+Unemployment rate is currently a monthly variable. 
+To calculate the quarterly unemployment, we take the average unemployment from the 3 months in the quarter.
+So we can collapse the variable UNRATE to quarterly by taking the mean.
+
+GDP is a quarterly variable: the value for the quarter appears as the observation for the first month in the quarter, while the values for the other two months are missing.
+So we can collapse GDPC96 to quarterly by taking the first observation in each quarter.
+
+	collapse (mean) UNRATE (first) GDPC96, by(qt)
+
+### Specify the time-series dimension
+
+Stata recognizes data as time-series data if you specify the time dimension using tsset.
+The optional q argument stands for "quarterly" and specifies the unit of the time variable.
+
+	tsset qt, q
+
+### Calculate GDP growth rate and the change in unemployment
+
+Since Okun's law describes a relationship between output growth and changes in unemployment rate we need to generate these variables.
+l. stands for lag - the observation of the previous time period.
+d. stands for difference - basically a shortcut for u-l.u.
+
+	g growth=(GDPC96/l.GDPC96 - 1)*100
+	g du=d.UNRATE
+
+## Model fitting
+
+Regress du on growth for 1948q1-1960q4:
+
+	reg du growth if qt<tq(1961q1)
+
+# Extending U.S. data
+
+Second, we extend Okun's original sample to 2011.
+We can use the same cleaned dataset as before, and only change the time period specified in the reg command as follows:
+
+	reg du growth if qt<tq(2012q1)
+
+# Estimations for other countries
+
+Third, we check whether the law holds in other countries.
+
+For these models we use data from the World Bank databank, which we can access via the wbopendata package.
+Remember, if you use SolisWorkspace, you need to install the package every time you open Stata.
+
+	* ssc install wbopendata
+
+## Download data
+
+Get the data codes of real GDP and unemployment by searching the World Bank's website: https://data.worldbank.org/.
+
+We use the following datasets:
+
++ GDP (constant 2015 US$) - https://data.worldbank.org/indicator/NY.GDP.MKTP.KD;
++ Unemployment, total (% of total labor force) (national estimate) - https://data.worldbank.org/indicator/SL.UEM.TOTL.NE.ZS.
+
+You can copy the indicator codes from the URL of the dataset (see the links above).
+
+wbopendata arguments:
+
++ indicator(): the indicator(s) you would like to download
++ clear: overwrite the data currently in Stata's memory
++ long: download the data in long format 
+
+The World Bank's default is wide format, where data for every year is a different column.
+Each row corresponds to one country-indicator combination.
+Long format has a variable "year", and a separate variable per indicator.
+Then each row corresponds to one country-year combination.
+Long format is usually more convenient.
+
+	wbopendata, indicator(NY.GDP.MKTP.KD; SL.UEM.TOTL.NE.ZS) clear long
+
+## Data cleaning
+
+### Rename the variables:
+
+	rename (ny_gdp_mktp_kd sl_uem_totl_ne_zs) (gdp u)
+
+### For each country create a numeric identifier 
+
+You need this numeric identifier to specify the cross-sectional dimension of your panel data.
+Strings (like countryname or countrycode) can't be used as such an identifier.
+
+	encode countryname, g(id)
+
+### Specify the panel dimensions of the data
+
+Stata recognizes data as time-series data if you specify the time dimension using tsset.
+If you have panel data, you first need to specify the cross-sectional dimension (in this case id, which differentiates between countries).
+The optional y argument stands for "yearly" and specifies the unit of the time variable.
+
+	tsset id year, y
+
+### Calculate GDP growth rate and the change in unemployment
+
+We create the same variables as with the FRED data.
+
+	g growth=(gdp/l.gdp - 1)*100
+	g du=d.u
+
+## Model fitting
+
+We regress du on growth per country, meaning we run a separate regression for every country in the sample.
+
+statsby runs the code specified after the colon separately for each sub-sample specified in by() and collects output specified after statsby in a new dataset.
+The new dataset replaces data in memory.
+We collect the following output:
+
++ _b: the regression coefficients (both intercept and slope)
++ e(N): sample size
+
+Each row in the new dataset shows results for a single country.
+
+	statsby _b e(N), clear by(id): reg du growth
+
+Keep results from estimations with a sample size of at least 40.
+
+	drop if missing(_eq2_stat_1) | _eq2_stat_1<40
+
+Plot coefficients per country:
+
+	graph hbar _b_growth, over(id, sort(1))	
+
+Suggested reading:
+
++ Laurence M Ball, Daniel Leigh, and Prakash Loungani. Okun's Law: Fit at Fifty? NBER Working Paper, No. 18668, jan 2013
++ Arthur M. Okun. Potential GNP: Its Measurement and Significance. Cowles Foundation Paper, 190, 1962

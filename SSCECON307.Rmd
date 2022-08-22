@@ -1,0 +1,28 @@
+---
+title: "SSCECON307<br>Econometrics<br>Fall 2022"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# Introduction
+
+This page collects helpful links for the Fall 2022 edition of Econometrics.
+
+<!-- add details about office hours? -->
+
+# Workshops
+
+## Workshop I: Okun's Law
+
+You can access the materials for the workshop on Okun's Law [here](https://ucrdatacenter.github.io/SSCECON307/okun).
+
+# Accessing Stata for free
+
+You can access Stata for free via UU's SolisWorkspace.
+Go to [solisworkspace.uu.nl](https://solisworkspace.uu.nl) and log in with your Solis-ID and password. Go to the “Apps” tab and look for “Stata.” Click on the icon, and Stata will open on your desktop. If you are using this website for the first time, you will likely need to download Citrix receiver (if you need to, a the website will guide you through the process). When saving files, you should make sure to save your files on your local disc instead of the UU cloud - you can set your working directory to the approporiate folder by going to File -> Change working directory.
