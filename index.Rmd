@@ -9,13 +9,14 @@ output:
 
 You can find information and supplementary materials for all of our ongoing projects by clicking the link of the project you are interested in.
 
-## Office hours
+<!-- ## Office hours -->
 
-The Data Center student fellows hold office hours every Wednesday between 15:00-19:00 (15:00-17:00 with Tina, 17:00-19:00 with Bianka) in the Data Center's office (Anne 1.30 - first floor) to answer questions and help with assignments related to the Data Center projects.
-If you would like to request an individual consultation or would like to attend office hours, feel free to send an email to datacenter@ucr.nl.
+<!-- The Data Center student fellows hold office hours every Wednesday between 15:00-19:00 (15:00-17:00 with Tina, 17:00-19:00 with Bianka) in the Data Center's office (Anne 1.30 - first floor) to answer questions and help with assignments related to the Data Center projects. -->
+<!-- If you would like to request an individual consultation or would like to attend office hours, feel free to send an email to datacenter@ucr.nl. -->
 
 ## Our Projects
 
 * [SCIENVI201 Ecology](https://ucrdatacenter.github.io/SCIENVI201)
 * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207)
 * [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209)
+* [SSCECON307 Econometrics](https://ucrdatacenter.github.io/SSCECON307)
