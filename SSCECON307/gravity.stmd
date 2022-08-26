@@ -1,0 +1,118 @@
+---
+title: "SSCECON307 Workshop II: Gravity Model"
+---
+
+# Introduction
+Since the 1960s economists have translated Newton’s universal law of gravitation to economic and social interactions including trade, 
+whereby the flow between two units is directly proportional to the product of their economic sizes and inversely proportional to the distance between them.
+Briefly: when supply and demand increase in locations A and B, respectively, the flow of goods from A to B increases. 
+Also, as the distance between A and B decreases the flow of traded goods from A to B increases.
+In this exercise we explore the gravity model of international trade, extend it to account for geopolitical and cultural parameters, and check the effects of distance over time.
+
+# Modeling gravity
+
+First, we build a simple gravity model.
+To do so, we download data for trade flow, GDP of and distance between origin and destination countries, do some data transformation, and fit a regression. 
+For all your Stata work, it is strongly advised you make use of a do-file with a sensible name.
+
+## Set working directory
+
+Before you start working with data, it is important to know where any output files (including your do-files) will be saved on your computer.
+Such a folder is called your working directory or current directory.
+
+If you use UU's SolisWorkspace, you can go to File -> Change working directory, and find your local disk (and a suitable folder on your local disk).
+Otherwise you'll only need to find a suitable folder on your local disk. 
+Make sure the folder you choose has been given a sensible name, so you can easily find it at a later point.
+	
+	* cd C:\User\Location\FolderCourse\SubfolderCase
+
+## Download data
+
+For this exercise you will need to download the data file from here:
+https://www.dropbox.com/s/6apelk086izbenc/col_regfile09.dta?dl=0.
+If you would like to explore an extended and updated dataset you will find one on the CEPII website following the link below:
+http://www.cepii.fr/cepii/en/bdd_modele/bdd_modele.asp.
+To import the data into Stata it will be necessary for it to be saved in a location Stata can access. 
+For this reason, download the suitable file to the folder you specified in your working directory above.
+
+	use col_regfile09, clear
+
+## Using loops
+
+Following Head (2003) we estimate the gravity equation in logarithmic form.
+To do that, we take a natural logarithm of the following variables:
+trade flow between countries (flow), GDP of origin (gdp_o) and destination (gdp_d) countries, and distance (dist).
+To automate the process of applying the same transformation to multiple variables we use a loop. 
+Loops allow Stata to execute one or more commands, specified in the braces, to each element listed before the braces. 
+In this case, for each variable listed a new variable will be generated calculating the natural logarithm of each observation.
+
+	foreach x in flow gdp_o gdp_d dist {
+               gen log`x'=log(`x')
+	}
+ 
+## Model fitting
+
+Previously, we have used simple regression models to illustrate Okun's law. 
+In this exercise, we will extend our methods to multiple regression by regressing flow on more than one explanatory variable (gdp_o, gdp_d, and dist).
+
+	reg log*
+
+The asterisk in log* signals to Sata to include all variables whose name begins with "log". 
+In this case, the model includes four variables:
+the dependent variable logflow and three independent variables loggdp_o, loggdp_d, and logdist.
+
+## Saving output
+
+## Install outreg2
+
+If you use Stata with SolisWorkspace, you need to install outreg2 (and any other package) every time you open Stata.
+Otherwise you only need to install each package once.
+
+	ssc install outreg2
+
+## Export output table
+
+Export the regression output to the folder specified in your working directory above.
+The optional argument "word" specifies the file type the output should be saved as, while replace overwrites existing text files with the same name.
+
+	outreg2 using gravity, word replace
+
+# Continuing to an advanced gravity model
+ 
+Second, we extend the model above by controlling for the presence of a shared border, a common official language, colonial history, regional trade agreements, 
+GATT/WTO membership, and a common currency.
+ 
+	reg log* contig comlang_off col_hist rta gatt_o gatt_d comcur
+	outreg2 using gravity, word
+
+Open the gravity.rtf file in Word to see what outreg2 does.
+
+# Check how the effect of distance evolves over time
+
+We now regress flow on GDP of and distance between origin and destination countries for each year separately.
+This means we need to run as many regressions as there are years in the sample.
+
+statsby runs the code specified after the colon separately for each sub-sample specified in by() and collects output specified after statsby in a new dataset. 
+The new dataset replaces data in memory. 
+We collect the following output:
+
++ _b: the regression coefficients (both intercept and slope)
+
+Each row in the new dataset shows results for a single year.
+
+	statsby _b, clear by(year): reg log*
+
+## Plot the effect of distance on flow over time
+
+We can visualise changes in the effect of distance on flow over time using a time series line graph.
+Stata recognizes data as time-series data if you specify the time dimension using tsset.
+
+	tsset year, yearly
+
+Now, we can plot a graph of the effect of distance between origin and destination countries on trade flow over time.
+
+	tsline _b_logdist
+ 
+Suggested reading:
+
++ Head, Keith. (2003). Gravity for Beginners. Working paper. University of British Columbia, pp 1-11.

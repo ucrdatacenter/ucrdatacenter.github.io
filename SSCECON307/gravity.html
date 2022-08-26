@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SSCECON307 Workshop II: Gravity Model</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+<style>
+/* CSS for Markstat 2.0 using Pandoc 2.0 */
+body{padding:14px 28px; max-width:45em;}
+body, table {font-family: Helvetica, Arial, Sans-serif; font-size: 14px;}
+h1, h2, h3, h4 {font-weight: normal; color: #3366cc}
+h1 {font-size: 200%;}
+h2 {font-size: 150%;}
+h3 {font-size: 120%;}
+h4 {font-size: 100%; font-weight:bold}
+img.center {display:block; margin-left:auto; margin-right:auto}
+.small{font-size:8pt;}
+a {color: black;}
+a:visited {color: #808080;}
+a.plain {text-decoration:none;}
+a.plain:hover {text-decoration:underline;}
+.em {font-weight:bold;}
+pre, code {font-family: "lucida console", monospace;}
+pre.stata {font-size:13px; line-height:13px;}
+pre {padding:8px; border:1px solid #c0c0c0; border-radius:8px; background-color:#fdfdfd;}
+code {color:#3366cc; background-color:#fafafa;}
+pre code { color:black; background-color:white}
+/* Added for Pandoc */
+figure > img, div.figure > img {display:block; margin:auto}
+figcaption, p.caption {text-align:center; font-weight:bold; color:#3366cc;}
+h1.title {text-align:center; margin-bottom:0}
+p.author, h2.author {font-style:italic; text-align:center;margin-top:4px;margin-bottom:0}
+p.date, h3.date {text-align:center;margin-top:4px; margin-bottom:0}
+/* Tables*/
+table { margin:auto; border-collapse:collapse; }
+table caption { margin-bottom:1ex;}
+td {padding:0 0 0 0} /* override */
+table:not([class]) th { padding:4px 6px } 
+table:not([class]) td { padding:4px 6px } 
+table:not([class]) thead tr:first-child th {border-top:1px solid black; padding-top:6px}
+table:not([class]) thead tr:last-child  th {padding-bottom:6px}
+table:not([class]) tbody tr:first-child td {border-top:1px solid black; padding-top:6px}
+table:not([class]) tbody tr:last-child  td {padding-bottom:6px;}
+table:not([class]) tbody:last-child tr:last-child td {border-bottom:1px solid black;}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SSCECON307 Workshop II: Gravity Model</h1>
+</header>
+<h1 id="introduction">Introduction</h1>
+<p>Since the 1960s economists have translated Newton’s universal law of
+gravitation to economic and social interactions including trade, whereby
+the flow between two units is directly proportional to the product of
+their economic sizes and inversely proportional to the distance between
+them. Briefly: when supply and demand increase in locations A and B,
+respectively, the flow of goods from A to B increases. Also, as the
+distance between A and B decreases the flow of traded goods from A to B
+increases. In this exercise we explore the gravity model of
+international trade, extend it to account for geopolitical and cultural
+parameters, and check the effects of distance over time.</p>
+<h1 id="modeling-gravity">Modeling gravity</h1>
+<p>First, we build a simple gravity model. To do so, we download data
+for trade flow, GDP of and distance between origin and destination
+countries, do some data transformation, and fit a regression. For all
+your Stata work, it is strongly advised you make use of a do-file with a
+sensible name.</p>
+<h2 id="set-working-directory">Set working directory</h2>
+<p>Before you start working with data, it is important to know where any
+output files (including your do-files) will be saved on your computer.
+Such a folder is called your working directory or current directory.</p>
+<p>If you use UU’s SolisWorkspace, you can go to File -&gt; Change
+working directory, and find your local disk (and a suitable folder on
+your local disk). Otherwise you’ll only need to find a suitable folder
+on your local disk. Make sure the folder you choose has been given a
+sensible name, so you can easily find it at a later point.</p>
+<pre class='stata'>. * cd C:\User\Location\FolderCourse\SubfolderCase
+</pre>
+<h2 id="download-data">Download data</h2>
+<p>For this exercise you will need to download the data file from here:
+https://www.dropbox.com/s/6apelk086izbenc/col_regfile09.dta?dl=0. If you
+would like to explore an extended and updated dataset you will find one
+on the CEPII website following the link below:
+http://www.cepii.fr/cepii/en/bdd_modele/bdd_modele.asp. To import the
+data into Stata it will be necessary for it to be saved in a location
+Stata can access. For this reason, download the suitable file to the
+folder you specified in your working directory above.</p>
+<pre class='stata'>. use col_regfile09, clear
+</pre>
+<h2 id="using-loops">Using loops</h2>
+<p>Following Head (2003) we estimate the gravity equation in logarithmic
+form. To do that, we take a natural logarithm of the following
+variables: trade flow between countries (flow), GDP of origin (gdp_o)
+and destination (gdp_d) countries, and distance (dist). To automate the
+process of applying the same transformation to multiple variables we use
+a loop. Loops allow Stata to execute one or more commands, specified in
+the braces, to each element listed before the braces. In this case, for
+each variable listed a new variable will be generated calculating the
+natural logarithm of each observation.</p>
+<pre class='stata'>. foreach x in flow gdp_o gdp_d dist {
+  2.            gen log`x'=log(`x')
+  3. }
+(495,098 missing values generated)
+(171,252 missing values generated)
+(119,822 missing values generated)
+</pre>
+<h2 id="model-fitting">Model fitting</h2>
+<p>Previously, we have used simple regression models to illustrate
+Okun’s law. In this exercise, we will extend our methods to multiple
+regression by regressing flow on more than one explanatory variable
+(gdp_o, gdp_d, and dist).</p>
+<pre class='stata'>. reg log*
+
+      Source │       SS           df       MS      Number of obs   =   624,145
+─────────────┼──────────────────────────────────   F(3, 624141)    >  99999.00
+       Model │  3855252.63         3  1285084.21   Prob > F        =    0.0000
+    Residual │   3713093.1   624,141  5.94912544   R-squared       =    0.5094
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.5094
+       Total │  7568345.73   624,144  12.1259609   Root MSE        =    2.4391
+
+─────────────┬────────────────────────────────────────────────────────────────
+     logflow │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+    loggdp_o │   .8713428   .0013879   627.80   0.000     .8686225    .8740631
+    loggdp_d │   .7062829   .0013229   533.88   0.000       .70369    .7088758
+     logdist │  -1.198455   .0037274  -321.52   0.000     -1.20576   -1.191149
+       _cons │  -4.172614    .035314  -118.16   0.000    -4.241828   -4.103399
+─────────────┴────────────────────────────────────────────────────────────────
+</pre>
+<p>The asterisk in log* signals to Sata to include all variables whose
+name begins with “log”. In this case, the model includes four variables:
+the dependent variable logflow and three independent variables loggdp_o,
+loggdp_d, and logdist.</p>
+<h2 id="saving-output">Saving output</h2>
+<h2 id="install-outreg2">Install outreg2</h2>
+<p>If you use Stata with SolisWorkspace, you need to install outreg2
+(and any other package) every time you open Stata. Otherwise you only
+need to install each package once.</p>
+<pre class='stata'>. ssc install outreg2
+checking outreg2 consistency and verifying not already installed...
+all files already exist and are up to date.
+</pre>
+<h2 id="export-output-table">Export output table</h2>
+<p>Export the regression output to the folder specified in your working
+directory above. The optional argument “word” specifies the file type
+the output should be saved as, while replace overwrites existing text
+files with the same name.</p>
+<pre class='stata'>. outreg2 using gravity, word replace
+gravity.rtf
+dir : seeout
+</pre>
+<h1 id="continuing-to-an-advanced-gravity-model">Continuing to an
+advanced gravity model</h1>
+<p>Second, we extend the model above by controlling for the presence of
+a shared border, a common official language, colonial history, regional
+trade agreements, GATT/WTO membership, and a common currency.</p>
+<pre class='stata'>. reg log* contig comlang_off col_hist rta gatt_o gatt_d comcur
+
+      Source │       SS           df       MS      Number of obs   =   624,145
+─────────────┼──────────────────────────────────   F(10, 624134)   =  68672.82
+       Model │  3964868.57        10  396486.857   Prob > F        =    0.0000
+    Residual │  3603477.16   624,134  5.77356331   R-squared       =    0.5239
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.5239
+       Total │  7568345.73   624,144  12.1259609   Root MSE        =    2.4028
+
+─────────────┬────────────────────────────────────────────────────────────────
+     logflow │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+    loggdp_o │   .8739599   .0014697   594.67   0.000     .8710794    .8768404
+    loggdp_d │   .7202029   .0014101   510.75   0.000     .7174392    .7229667
+     logdist │  -1.017497   .0043098  -236.09   0.000    -1.025945    -1.00905
+      contig │   .6663002    .019088    34.91   0.000     .6288885     .703712
+ comlang_off │   .4030361   .0085301    47.25   0.000     .3863174    .4197549
+    col_hist │   1.784972   .0198994    89.70   0.000      1.74597    1.823974
+         rta │   .6136453   .0155947    39.35   0.000     .5830801    .6442105
+      gatt_o │  -.0629879   .0071939    -8.76   0.000    -.0770877   -.0488882
+      gatt_d │  -.2496916   .0071023   -35.16   0.000    -.2636119   -.2357714
+      comcur │   .8100091   .0261462    30.98   0.000     .7587634    .8612548
+       _cons │  -5.847367   .0400869  -145.87   0.000    -5.925936   -5.768798
+─────────────┴────────────────────────────────────────────────────────────────
+
+. outreg2 using gravity, word
+gravity.rtf
+dir : seeout
+</pre>
+<p>Open the gravity.rtf file in Word to see what outreg2 does.</p>
+<h1 id="check-how-the-effect-of-distance-evolves-over-time">Check how
+the effect of distance evolves over time</h1>
+<p>We now regress flow on GDP of and distance between origin and
+destination countries for each year separately. This means we need to
+run as many regressions as there are years in the sample.</p>
+<p>statsby runs the code specified after the colon separately for each
+sub-sample specified in by() and collects output specified after statsby
+in a new dataset. The new dataset replaces data in memory. We collect
+the following output:</p>
+<ul>
+<li>_b: the regression coefficients (both intercept and slope)</li>
+</ul>
+<p>Each row in the new dataset shows results for a single year.</p>
+<pre class='stata'>. statsby _b, clear by(year): reg log*
+(running regress on estimation sample)
+
+      command:  regress log*
+           by:  year
+
+Statsby groups
+────┼─── 1 ───┼─── 2 ───┼─── 3 ───┼─── 4 ───┼─── 5 
+x.................................................    50
+.........
+</pre>
+<h2 id="plot-the-effect-of-distance-on-flow-over-time">Plot the effect
+of distance on flow over time</h2>
+<p>We can visualise changes in the effect of distance on flow over time
+using a time series line graph. Stata recognizes data as time-series
+data if you specify the time dimension using tsset.</p>
+<pre class='stata'>. tsset year, yearly
+        time variable:  year, 1948 to 2006
+                delta:  1 year
+</pre>
+<p>Now, we can plot a graph of the effect of distance between origin and
+destination countries on trade flow over time.</p>
+<pre class='stata'>. tsline _b_logdist
+</pre>
+<p>Suggested reading:</p>
+<ul>
+<li>Head, Keith. (2003). Gravity for Beginners. Working paper.
+University of British Columbia, pp 1-11.</li>
+</ul>
+</body>
+</html>

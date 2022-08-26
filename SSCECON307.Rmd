@@ -22,6 +22,10 @@ This page collects helpful links for the Fall 2022 edition of Econometrics.
 
 You can access the materials for the workshop on Okun's Law [here](https://ucrdatacenter.github.io/SSCECON307/okun).
 
+## Workshop II: Gravity
+
+You can access the materials for the workshop on Gravity [here](https://ucrdatacenter.github.io/SSCECON307/gravity).
+
 # Accessing Stata for free
 
 You can access Stata for free via UU's SolisWorkspace.

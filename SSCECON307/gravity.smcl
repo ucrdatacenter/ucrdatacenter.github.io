@@ -1,0 +1,109 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\gravity.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Aug 2022, 09:14:21
+{txt}
+{com}. //_1
+. * cd C:\User\Location\FolderCourse\SubfolderCase
+. //_2
+. use col_regfile09, clear
+{txt}
+{com}. //_3
+. foreach x in flow gdp_o gdp_d dist {c -(}
+{txt}  2{com}.            gen log`x'=log(`x')
+{txt}  3{com}. {c )-}
+{txt}(495,098 missing values generated)
+(171,252 missing values generated)
+(119,822 missing values generated)
+
+{com}. //_4
+. reg log*
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}   624,145
+{txt}{hline 13}{c +}{hline 34}   F(3, 624141)    > {res} 99999.00
+{txt}       Model {c |} {res} 3855252.63         3  1285084.21   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  3713093.1   624,141  5.94912544   {txt}R-squared       ={res}    0.5094
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5094
+{txt}       Total {c |} {res} 7568345.73   624,144  12.1259609   {txt}Root MSE        =   {res} 2.4391
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     logflow{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}loggdp_o {c |}{col 14}{res}{space 2} .8713428{col 26}{space 2} .0013879{col 37}{space 1}  627.80{col 46}{space 3}0.000{col 54}{space 4} .8686225{col 67}{space 3} .8740631
+{txt}{space 4}loggdp_d {c |}{col 14}{res}{space 2} .7062829{col 26}{space 2} .0013229{col 37}{space 1}  533.88{col 46}{space 3}0.000{col 54}{space 4}   .70369{col 67}{space 3} .7088758
+{txt}{space 5}logdist {c |}{col 14}{res}{space 2}-1.198455{col 26}{space 2} .0037274{col 37}{space 1} -321.52{col 46}{space 3}0.000{col 54}{space 4} -1.20576{col 67}{space 3}-1.191149
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-4.172614{col 26}{space 2}  .035314{col 37}{space 1} -118.16{col 46}{space 3}0.000{col 54}{space 4}-4.241828{col 67}{space 3}-4.103399
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. //_5
+. ssc install outreg2
+{txt}checking {hilite:outreg2} consistency and verifying not already installed...
+all files already exist and are up to date.
+
+{com}. //_6
+. outreg2 using gravity, word replace
+{txt}{stata `"shellout using `"gravity.rtf"'"':gravity.rtf}
+{browse `"C:\Github\private-files\SSCECON307\2022h2"' :dir}{com} : {txt}{stata `"seeout using "gravity.txt""':seeout}
+
+{com}. //_7
+. reg log* contig comlang_off col_hist rta gatt_o gatt_d comcur
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}   624,145
+{txt}{hline 13}{c +}{hline 34}   F(10, 624134)   = {res} 68672.82
+{txt}       Model {c |} {res} 3964868.57        10  396486.857   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3603477.16   624,134  5.77356331   {txt}R-squared       ={res}    0.5239
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5239
+{txt}       Total {c |} {res} 7568345.73   624,144  12.1259609   {txt}Root MSE        =   {res} 2.4028
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}     logflow{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}loggdp_o {c |}{col 14}{res}{space 2} .8739599{col 26}{space 2} .0014697{col 37}{space 1}  594.67{col 46}{space 3}0.000{col 54}{space 4} .8710794{col 67}{space 3} .8768404
+{txt}{space 4}loggdp_d {c |}{col 14}{res}{space 2} .7202029{col 26}{space 2} .0014101{col 37}{space 1}  510.75{col 46}{space 3}0.000{col 54}{space 4} .7174392{col 67}{space 3} .7229667
+{txt}{space 5}logdist {c |}{col 14}{res}{space 2}-1.017497{col 26}{space 2} .0043098{col 37}{space 1} -236.09{col 46}{space 3}0.000{col 54}{space 4}-1.025945{col 67}{space 3} -1.00905
+{txt}{space 6}contig {c |}{col 14}{res}{space 2} .6663002{col 26}{space 2}  .019088{col 37}{space 1}   34.91{col 46}{space 3}0.000{col 54}{space 4} .6288885{col 67}{space 3}  .703712
+{txt}{space 1}comlang_off {c |}{col 14}{res}{space 2} .4030361{col 26}{space 2} .0085301{col 37}{space 1}   47.25{col 46}{space 3}0.000{col 54}{space 4} .3863174{col 67}{space 3} .4197549
+{txt}{space 4}col_hist {c |}{col 14}{res}{space 2} 1.784972{col 26}{space 2} .0198994{col 37}{space 1}   89.70{col 46}{space 3}0.000{col 54}{space 4}  1.74597{col 67}{space 3} 1.823974
+{txt}{space 9}rta {c |}{col 14}{res}{space 2} .6136453{col 26}{space 2} .0155947{col 37}{space 1}   39.35{col 46}{space 3}0.000{col 54}{space 4} .5830801{col 67}{space 3} .6442105
+{txt}{space 6}gatt_o {c |}{col 14}{res}{space 2}-.0629879{col 26}{space 2} .0071939{col 37}{space 1}   -8.76{col 46}{space 3}0.000{col 54}{space 4}-.0770877{col 67}{space 3}-.0488882
+{txt}{space 6}gatt_d {c |}{col 14}{res}{space 2}-.2496916{col 26}{space 2} .0071023{col 37}{space 1}  -35.16{col 46}{space 3}0.000{col 54}{space 4}-.2636119{col 67}{space 3}-.2357714
+{txt}{space 6}comcur {c |}{col 14}{res}{space 2} .8100091{col 26}{space 2} .0261462{col 37}{space 1}   30.98{col 46}{space 3}0.000{col 54}{space 4} .7587634{col 67}{space 3} .8612548
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-5.847367{col 26}{space 2} .0400869{col 37}{space 1} -145.87{col 46}{space 3}0.000{col 54}{space 4}-5.925936{col 67}{space 3}-5.768798
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. outreg2 using gravity, word
+{txt}{stata `"shellout using `"gravity.rtf"'"':gravity.rtf}
+{browse `"C:\Github\private-files\SSCECON307\2022h2"' :dir}{com} : {txt}{stata `"seeout using "gravity.txt""':seeout}
+
+{com}. //_8
+. statsby _b, clear by(year): reg log*
+{txt}(running regress on estimation sample)
+{p2colset 7 17 21 2}{...}
+
+{p2col :command:}regress log*{p_end}
+           by:  year
+
+Statsby groups
+{hline 4}{c +}{hline 3} 1 {hline 3}{c +}{hline 3} 2 {hline 3}{c +}{hline 3} 3 {hline 3}{c +}{hline 3} 4 {hline 3}{c +}{hline 3} 5 
+{err}x{txt}.................................................    50
+.........
+
+{com}. //_9
+. tsset year, yearly
+{res}{txt}{col 9}time variable:  {res}{col 25}year, 1948 to 2006
+{txt}{col 17}delta:  {res}1 year
+{txt}
+{com}. //_10
+. tsline _b_logdist
+{res}{txt}
+{com}. //_^
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\gravity.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Aug 2022, 09:14:33
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
