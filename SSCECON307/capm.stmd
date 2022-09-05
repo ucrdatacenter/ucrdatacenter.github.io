@@ -1,0 +1,157 @@
+---
+title: "SSCECON307 Workshop III: The Capital Asset Pricing Model"
+---
+
+# Introduction
+
+The capital asset pricing model (CAPM) describes the relationship between risk and expected returns of investment. The following tutorial shows how to test whether the Capital Asset Pricing Model (CAPM) fits the data on stock returns. To test whether this model holds, we will run first and second pass regressions using two merged data sets.
+
+# Creating a dataset
+
+## Set working directory
+
+Before you start working with data, you should set your working directory to a sensible folder on your local disk.
+If you use UU’s SolisWorkspace, you can go to File -> Change working directory, and find your local disk (and a suitable folder on your local disk). Otherwise you’ll only need to find a suitable folder on your local disk. Make sure the folder you choose has been given a sensible name, so you can easily find it at a later point.
+
+	* cd C:\User\Location\FolderCourse\SubfolderCase
+
+## Download stock price data
+
+We can download stock market data from various sources using the getsymbols package.
+First, we need to install the package. 
+If you use Stata via UU's SolisWorkspace, don't forget to install the package every time you open Stata.
+Otherwise you only need to install the package once.
+
+	* ssc install getsymbols
+
+With the package installed, we can download stock market data.
+We are downloading data from Yahoo by listing the stocks for which we want to get data.
+After downloading this data once, it is important that you comment out the following code block (as seen below).
+We save the datafile and load it from the computer instead of downloading it every time we want to rerun the do-file to avoid hitting Yahoo's download limit.
+
+In the following code the first line specifies the stock codes for which we want to download data.
+Next to various stocks (listed from AA to XOM) we also download ^GSPC (code for the S&P 500 index) as our stock market portfolio proxy.
+In the second line we specify other characteristics of the data:
+
++ the time interval: we download data between August 2002 and August 2007 (chosen arbitrarily, defined by first month (fm), first year (fy), last month (lm), last year (ly))
++ the frequency of the data: we use monthly frequency, abbreviated as m
++ price(adjclose) means we want to download data on stock returns
++ clear: replaces data in memory
++ yahoo is the data source
+
+After downloading the data, we rename the variable "period" to "mt" so it is clear that the time variable is in months.
+Then we drop any variables that we don't need: we keep the time indicator and the simple monthly returns, which have variable names starting with "R".
+Finally, we save the resulting data to our local drive.
+
+	// getsymbols AA AXP BA BAC CAT CSCO CVX DD DIS GE HD HPQ IBM INTC JNJ JPM KO MCD MMM MRK MSFT PFE PG T TRV VZ WMT XOM ^GSPC, ///
+	// fm(8) fy(2002) lm(8) ly(2007) frequency(m) price(adjclose) clear yahoo 
+	// rename period mt 
+	// keep mt R*
+	// save stock, replace
+ 
+## Getting the risk-free rate
+
+The CAPM includes a measure of the returns from a risk-free investment, which we model by the returns on Treasury Bills.
+We can download this data from FRED using the freduse package.
+
+If needed, remember to install freduse:
+
+	* ssc install freduse
+
+The FRED code for a 3-month Treasury Bill rate is TB3MS; we need to use this code to download the data.
+
+	freduse TB3MS, clear 
+
+Then we need to do a few steps of data manipulation, as the current series presents an annual rate while we need it to be monthly, similar to stock returns.
+First we transfrom the date variable daten to monthly data, and set it as the time-series dimension with tsset.
+Then we calculate the monthly risk-free return RF as follows: 
+(1+i_a)=(1+i_m)^12, where i_a is the annual interest rate (as a decimal) and i_m is the monthly rate.
+Rearranging the equation, and referring to i_a as the variable TB3MS and to i_m as the new variable RF gives the formula used in the code below to generate RF.
+We only need the month indicator and RF that we just calculated, so we drop all other variables from the data.
+
+	g mt=mofd(daten)
+	tsset mt, m
+	g RF=(1+TB3MS/100)^(1/12)-1
+	keep mt RF
+
+## Combining the datasets
+
+In order to fit an OLS model on stock returns and the risk-free return we need to combine all variables into a single dataset.
+We can do that with the merge command, where we specify that we want to do a 1-on-1 merge on variable mt:
+that is, one monthly observation from the dataset currently in memory is matched with one monthly observation in the stock return data we saved previously as stock.dta.
+With nogen Stata won't add a variable that notes whether an observation was present in only one of the datasets or in both, 
+and keep(3) makes sure that the merged dataset only keeps observations from months in which both stock data and risk-free data is available.
+
+	merge 1:1 mt using stock, nogen keep(3) 
+
+Using our merged dataset we can calculate the excess return on the market, which we also need for the CAPM.
+The excess market return is calculated as the difference between the market return and the risk-free rate.
+Once we have the excess return data, we no longer need the simple return to market, so we drop that variable.
+ 
+	g EM = R__GSPC - RF 
+	drop R__GSPC
+
+If you now browse the data, you can see that we have a separate variable per stock to store the stock returns.
+Instead of this wide format, we need to transform the data to long format where we have one variable specifying which stock the return corresponds to, 
+and one variable storing all stock returns.
+
+We can accomplish this conversion using the reshape command:
+
++ long means we're converting to long format
++ R_ is the variable name for the new variable for all stock returns
++ i(mt RF EM) lists the variables to keep in columns
++ j(name) means that the new variable storing the stock names should be called name
++ the string argument is necessary because stock names are strings
+
+	reshape long R_, i(mt RF EM) j(name) string 
+
+Once we have the dataset in long format, we can calculate the excess return per stock by getting the difference between stock returns and the risk free rate.
+
+	g ES = R_ - RF
+
+As the last step before model fitting, we drop all cases where the excess return on stocks is missing.
+
+	drop if missing(ES)
+
+# Regressions
+
+## Sample regression
+
+Before fitting the first pass and second pass of the CAPM, we run a sample regression of the first pass estimation to make sure that the output makes sense.
+We run this test for Microsoft:
+
+	reg ES EM if name=="MSFT" 
+
+The slope coefficient of this regression shows the relationship between the excess return on Microsoft and the excess return on the market.
+The second pass regression would then use the slope coefficient from this regression to predict the average excess return on Microsoft.
+
+## Real test
+
+In order to fit CAPM on the full sample of stocks in our data, we need to get the average excess return per stock in our sample period.
+We can do that using bysort name; recall that name is the variable storing the names of the stocks.
+
+	bysort name: egen MES=mean(ES)
+
+We also calculate the average excess market return by summarizing the data, which we will need to test the results from the second pass regression.
+We don't store this data anywhere, only display it.
+
+	su EM
+
+### First pass
+
+MES is the dependent variable for the second pass regression.
+The first pass regression creates the independent variable: the slope coefficients of regressing excess return of each stock on the excess market return.
+
+We use statsby to fit separate regressions for each stock.
+We specify that we want Stata to store the beta coefficients by stating "_b", and specify the grouping variable as name and the previously calculated mean excess stock return MES. 
+We add MES as a grouping variable to make sure that Stata keeps that information in the dataset for running the second pass regression.
+
+	statsby _b, clear by(name MES): regress ES EM
+
+### Second pass
+
+Once we have the mean excess return per stock, and the slope coefficients per stock, we can use these variables for the second pass regression.
+
+	reg MES _b_EM
+
+If CAPM holds, the intercept should be 0 and the slope should be equal to the average excess market return displayed with "su EM" above.

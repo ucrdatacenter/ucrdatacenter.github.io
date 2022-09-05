@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SSCECON307 Workshop III: The Capital Asset Pricing Model</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+<style>
+/* CSS for Markstat 2.0 using Pandoc 2.0 */
+body{padding:14px 28px; max-width:45em;}
+body, table {font-family: Helvetica, Arial, Sans-serif; font-size: 14px;}
+h1, h2, h3, h4 {font-weight: normal; color: #3366cc}
+h1 {font-size: 200%;}
+h2 {font-size: 150%;}
+h3 {font-size: 120%;}
+h4 {font-size: 100%; font-weight:bold}
+img.center {display:block; margin-left:auto; margin-right:auto}
+.small{font-size:8pt;}
+a {color: black;}
+a:visited {color: #808080;}
+a.plain {text-decoration:none;}
+a.plain:hover {text-decoration:underline;}
+.em {font-weight:bold;}
+pre, code {font-family: "lucida console", monospace;}
+pre.stata {font-size:13px; line-height:13px;}
+pre {padding:8px; border:1px solid #c0c0c0; border-radius:8px; background-color:#fdfdfd;}
+code {color:#3366cc; background-color:#fafafa;}
+pre code { color:black; background-color:white}
+/* Added for Pandoc */
+figure > img, div.figure > img {display:block; margin:auto}
+figcaption, p.caption {text-align:center; font-weight:bold; color:#3366cc;}
+h1.title {text-align:center; margin-bottom:0}
+p.author, h2.author {font-style:italic; text-align:center;margin-top:4px;margin-bottom:0}
+p.date, h3.date {text-align:center;margin-top:4px; margin-bottom:0}
+/* Tables*/
+table { margin:auto; border-collapse:collapse; }
+table caption { margin-bottom:1ex;}
+td {padding:0 0 0 0} /* override */
+table:not([class]) th { padding:4px 6px } 
+table:not([class]) td { padding:4px 6px } 
+table:not([class]) thead tr:first-child th {border-top:1px solid black; padding-top:6px}
+table:not([class]) thead tr:last-child  th {padding-bottom:6px}
+table:not([class]) tbody tr:first-child td {border-top:1px solid black; padding-top:6px}
+table:not([class]) tbody tr:last-child  td {padding-bottom:6px;}
+table:not([class]) tbody:last-child tr:last-child td {border-bottom:1px solid black;}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SSCECON307 Workshop III: The Capital Asset Pricing
+Model</h1>
+</header>
+<h1 id="introduction">Introduction</h1>
+<p>The capital asset pricing model (CAPM) describes the relationship
+between risk and expected returns of investment. The following tutorial
+shows how to test whether the Capital Asset Pricing Model (CAPM) fits
+the data on stock returns. To test whether this model holds, we will run
+first and second pass regressions using two merged data sets.</p>
+<h1 id="creating-a-dataset">Creating a dataset</h1>
+<h2 id="set-working-directory">Set working directory</h2>
+<p>Before you start working with data, you should set your working
+directory to a sensible folder on your local disk. If you use UU’s
+SolisWorkspace, you can go to File -&gt; Change working directory, and
+find your local disk (and a suitable folder on your local disk).
+Otherwise you’ll only need to find a suitable folder on your local disk.
+Make sure the folder you choose has been given a sensible name, so you
+can easily find it at a later point.</p>
+<pre class='stata'>. * cd C:\User\Location\FolderCourse\SubfolderCase
+</pre>
+<h2 id="download-stock-price-data">Download stock price data</h2>
+<p>We can download stock market data from various sources using the
+getsymbols package. First, we need to install the package. If you use
+Stata via UU’s SolisWorkspace, don’t forget to install the package every
+time you open Stata. Otherwise you only need to install the package
+once.</p>
+<pre class='stata'>. * ssc install getsymbols
+</pre>
+<p>With the package installed, we can download stock market data. We are
+downloading data from Yahoo by listing the stocks for which we want to
+get data. After downloading this data once, it is important that you
+comment out the following code block (as seen below). We save the
+datafile and load it from the computer instead of downloading it every
+time we want to rerun the do-file to avoid hitting Yahoo’s download
+limit.</p>
+<p>In the following code the first line specifies the stock codes for
+which we want to download data. Next to various stocks (listed from AA
+to XOM) we also download ^GSPC (code for the S&amp;P 500 index) as our
+stock market portfolio proxy. In the second line we specify other
+characteristics of the data:</p>
+<ul>
+<li>the time interval: we download data between August 2002 and August
+2007 (chosen arbitrarily, defined by first month (fm), first year (fy),
+last month (lm), last year (ly))</li>
+<li>the frequency of the data: we use monthly frequency, abbreviated as
+m</li>
+<li>price(adjclose) means we want to download data on stock returns</li>
+<li>clear: replaces data in memory</li>
+<li>yahoo is the data source</li>
+</ul>
+<p>After downloading the data, we rename the variable “period” to “mt”
+so it is clear that the time variable is in months. Then we drop any
+variables that we don’t need: we keep the time indicator and the simple
+monthly returns, which have variable names starting with “R”. Finally,
+we save the resulting data to our local drive.</p>
+<pre class='stata'>. // getsymbols AA AXP BA BAC CAT CSCO CVX DD DIS GE HD HPQ IBM INTC JNJ JPM KO MCD MMM MRK MSFT PFE PG T TRV VZ WMT XOM ^GSPC, ///
+. // fm(8) fy(2002) lm(8) ly(2007) frequency(m) price(adjclose) clear yahoo 
+. // rename period mt 
+. // keep mt R*
+. // save stock, replace
+</pre>
+<h2 id="getting-the-risk-free-rate">Getting the risk-free rate</h2>
+<p>The CAPM includes a measure of the returns from a risk-free
+investment, which we model by the returns on Treasury Bills. We can
+download this data from FRED using the freduse package.</p>
+<p>If needed, remember to install freduse:</p>
+<pre class='stata'>. * ssc install freduse
+</pre>
+<p>The FRED code for a 3-month Treasury Bill rate is TB3MS; we need to
+use this code to download the data.</p>
+<pre class='stata'>. freduse TB3MS, clear 
+(1,064 observations read)
+</pre>
+<p>Then we need to do a few steps of data manipulation, as the current
+series presents an annual rate while we need it to be monthly, similar
+to stock returns. First we transfrom the date variable daten to monthly
+data, and set it as the time-series dimension with tsset. Then we
+calculate the monthly risk-free return RF as follows:
+(1+i_a)=(1+i_m)^12, where i_a is the annual interest rate (as a decimal)
+and i_m is the monthly rate. Rearranging the equation, and referring to
+i_a as the variable TB3MS and to i_m as the new variable RF gives the
+formula used in the code below to generate RF. We only need the month
+indicator and RF that we just calculated, so we drop all other variables
+from the data.</p>
+<pre class='stata'>. g mt=mofd(daten)
+
+. tsset mt, m
+        time variable:  mt, 1934m1 to 2022m8
+                delta:  1 month
+
+. g RF=(1+TB3MS/100)^(1/12)-1
+
+. keep mt RF
+</pre>
+<h2 id="combining-the-datasets">Combining the datasets</h2>
+<p>In order to fit an OLS model on stock returns and the risk-free
+return we need to combine all variables into a single dataset. We can do
+that with the merge command, where we specify that we want to do a
+1-on-1 merge on variable mt: that is, one monthly observation from the
+dataset currently in memory is matched with one monthly observation in
+the stock return data we saved previously as stock.dta. With nogen Stata
+won’t add a variable that notes whether an observation was present in
+only one of the datasets or in both, and keep(3) makes sure that the
+merged dataset only keeps observations from months in which both stock
+data and risk-free data is available.</p>
+<pre class='stata'>. merge 1:1 mt using stock, nogen keep(3) 
+
+    Result                           # of obs.
+    ─────────────────────────────────────────
+    not matched                             0
+    matched                                61  
+    ─────────────────────────────────────────
+</pre>
+<p>Using our merged dataset we can calculate the excess return on the
+market, which we also need for the CAPM. The excess market return is
+calculated as the difference between the market return and the risk-free
+rate. Once we have the excess return data, we no longer need the simple
+return to market, so we drop that variable.</p>
+<pre class='stata'>. g EM = R__GSPC - RF 
+(1 missing value generated)
+
+. drop R__GSPC
+</pre>
+<p>If you now browse the data, you can see that we have a separate
+variable per stock to store the stock returns. Instead of this wide
+format, we need to transform the data to long format where we have one
+variable specifying which stock the return corresponds to, and one
+variable storing all stock returns.</p>
+<p>We can accomplish this conversion using the reshape command:</p>
+<ul>
+<li>long means we’re converting to long format</li>
+<li>R_ is the variable name for the new variable for all stock
+returns</li>
+<li>i(mt RF EM) lists the variables to keep in columns</li>
+<li>j(name) means that the new variable storing the stock names should
+be called name</li>
+<li>the string argument is necessary because stock names are
+strings</li>
+</ul>
+<pre class='stata'>. reshape long R_, i(mt RF EM) j(name) string 
+(note: j = AA AXP BA BAC CAT CSCO CVX DD DIS GE HD HPQ IBM INTC JNJ JPM KO MCD MMM MRK MSFT PFE PG T TRV VZ WMT XOM)
+
+Data                               wide   ->   long
+─────────────────────────────────────────────────────────────────────────────
+Number of obs.                       61   ->    1708
+Number of variables                  31   ->       5
+j variable (28 values)                    ->   name
+xij variables:
+                   R_AA R_AXP ... R_XOM   ->   R_
+─────────────────────────────────────────────────────────────────────────────
+</pre>
+<p>Once we have the dataset in long format, we can calculate the excess
+return per stock by getting the difference between stock returns and the
+risk free rate.</p>
+<pre class='stata'>. g ES = R_ - RF
+(28 missing values generated)
+</pre>
+<p>As the last step before model fitting, we drop all cases where the
+excess return on stocks is missing.</p>
+<pre class='stata'>. drop if missing(ES)
+(28 observations deleted)
+</pre>
+<h1 id="regressions">Regressions</h1>
+<h2 id="sample-regression">Sample regression</h2>
+<p>Before fitting the first pass and second pass of the CAPM, we run a
+sample regression of the first pass estimation to make sure that the
+output makes sense. We run this test for Microsoft:</p>
+<pre class='stata'>. reg ES EM if name=="MSFT" 
+
+      Source │       SS           df       MS      Number of obs   =        60
+─────────────┼──────────────────────────────────   F(1, 58)        =     30.16
+       Model │  .072840193         1  .072840193   Prob > F        =    0.0000
+    Residual │  .140064187        58    .0024149   R-squared       =    0.3421
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.3308
+       Total │   .21290438        59  .003608549   Root MSE        =    .04914
+
+─────────────┬────────────────────────────────────────────────────────────────
+          ES │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+          EM │   1.102095   .2006702     5.49   0.000     .7004095     1.50378
+       _cons │  -.0021528   .0064642    -0.33   0.740    -.0150924    .0107867
+─────────────┴────────────────────────────────────────────────────────────────
+</pre>
+<p>The slope coefficient of this regression shows the relationship
+between the excess return on Microsoft and the excess return on the
+market. The second pass regression would then use the slope coefficient
+from this regression to predict the average excess return on
+Microsoft.</p>
+<h2 id="real-test">Real test</h2>
+<p>In order to fit CAPM on the full sample of stocks in our data, we
+need to get the average excess return per stock in our sample period. We
+can do that using bysort name; recall that name is the variable storing
+the names of the stocks.</p>
+<pre class='stata'>. bysort name: egen MES=mean(ES)
+</pre>
+<p>We also calculate the average excess market return by summarizing the
+data, which we will need to test the results from the second pass
+regression. We don’t store this data anywhere, only display it.</p>
+<pre class='stata'>. su EM
+
+    Variable │        Obs        Mean    Std. Dev.       Min        Max
+─────────────┼─────────────────────────────────────────────────────────
+          EM │      1,680    .0061797    .0316243  -.1113726   .0851416
+</pre>
+<h3 id="first-pass">First pass</h3>
+<p>MES is the dependent variable for the second pass regression. The
+first pass regression creates the independent variable: the slope
+coefficients of regressing excess return of each stock on the excess
+market return.</p>
+<p>We use statsby to fit separate regressions for each stock. We specify
+that we want Stata to store the beta coefficients by stating “_b”, and
+specify the grouping variable as name and the previously calculated mean
+excess stock return MES. We add MES as a grouping variable to make sure
+that Stata keeps that information in the dataset for running the second
+pass regression.</p>
+<pre class='stata'>. statsby _b, clear by(name MES): regress ES EM
+(running regress on estimation sample)
+
+      command:  regress ES EM
+           by:  name MES
+
+Statsby groups
+────┼─── 1 ───┼─── 2 ───┼─── 3 ───┼─── 4 ───┼─── 5 
+............................
+</pre>
+<h3 id="second-pass">Second pass</h3>
+<p>Once we have the mean excess return per stock, and the slope
+coefficients per stock, we can use these variables for the second pass
+regression.</p>
+<pre class='stata'>. reg MES _b_EM
+
+      Source │       SS           df       MS      Number of obs   =        28
+─────────────┼──────────────────────────────────   F(1, 26)        =      7.35
+       Model │   .00026494         1   .00026494   Prob > F        =    0.0117
+    Residual │  .000937077        26  .000036041   R-squared       =    0.2204
+─────────────┼──────────────────────────────────   Adj R-squared   =    0.1904
+       Total │  .001202017        27  .000044519   Root MSE        =      .006
+
+─────────────┬────────────────────────────────────────────────────────────────
+         MES │      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+─────────────┼────────────────────────────────────────────────────────────────
+       _b_EM │   .0060261   .0022226     2.71   0.012     .0014575    .0105948
+       _cons │   .0027025   .0027929     0.97   0.342    -.0030385    .0084434
+─────────────┴────────────────────────────────────────────────────────────────
+</pre>
+<p>If CAPM holds, the intercept should be 0 and the slope should be
+equal to the average excess market return displayed with “su EM”
+above.</p>
+</body>
+</html>

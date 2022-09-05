@@ -26,6 +26,10 @@ You can access the materials for the workshop on Okun's Law [here](https://ucrda
 
 You can access the materials for the workshop on Gravity [here](https://ucrdatacenter.github.io/SSCECON307/gravity).
 
+## Workshop III: CAPM
+
+You can access the materials for the workshop on CAPM [here](https://ucrdatacenter.github.io/SSCECON307/capm).
+
 # Accessing Stata for free
 
 You can access Stata for free via UU's SolisWorkspace.

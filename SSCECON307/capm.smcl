@@ -1,0 +1,135 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\capm.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Sep 2022, 08:10:32
+{txt}
+{com}. //_1
+. * cd C:\User\Location\FolderCourse\SubfolderCase
+. //_2
+. * ssc install getsymbols
+. //_3
+. // getsymbols AA AXP BA BAC CAT CSCO CVX DD DIS GE HD HPQ IBM INTC JNJ JPM KO MCD MMM MRK MSFT PFE PG T TRV VZ WMT XOM ^GSPC, ///
+. // fm(8) fy(2002) lm(8) ly(2007) frequency(m) price(adjclose) clear yahoo 
+. // rename period mt 
+. // keep mt R*
+. // save stock, replace
+. //_4
+. * ssc install freduse
+. //_5
+. freduse TB3MS, clear 
+{res}{txt}(1,064 observations read)
+
+{com}. //_6
+. g mt=mofd(daten)
+{txt}
+{com}. tsset mt, m
+{res}{txt}{col 9}time variable:  {res}{col 25}mt, 1934m1 to 2022m8
+{txt}{col 17}delta:  {res}1 month
+{txt}
+{com}. g RF=(1+TB3MS/100)^(1/12)-1
+{txt}
+{com}. keep mt RF
+{txt}
+{com}. //_7
+. merge 1:1 mt using stock, nogen keep(3) 
+{res}
+{txt}{col 5}Result{col 38}# of obs.
+{col 5}{hline 41}
+{col 5}not matched{col 30}{res}               0
+{txt}{col 5}matched{col 30}{res}              61{txt}  
+{col 5}{hline 41}
+
+{com}. //_8
+. g EM = R__GSPC - RF 
+{txt}(1 missing value generated)
+
+{com}. drop R__GSPC
+{txt}
+{com}. //_9
+. reshape long R_, i(mt RF EM) j(name) string 
+{txt}(note: j = AA AXP BA BAC CAT CSCO CVX DD DIS GE HD HPQ IBM INTC JNJ JPM KO MCD MMM MRK MSFT PFE PG T TRV VZ WMT XOM)
+
+Data{col 36}wide{col 43}->{col 48}long
+{hline 77}
+Number of obs.                 {res}      61   {txt}->{res}    1708
+{txt}Number of variables            {res}      31   {txt}->{res}       5
+{txt}j variable (28 values)                    ->   {res}name
+{txt}xij variables:
+                   {res}R_AA R_AXP ... R_XOM   {txt}->   {res}R_
+{txt}{hline 77}
+
+{com}. //_10
+. g ES = R_ - RF
+{txt}(28 missing values generated)
+
+{com}. //_11
+. drop if missing(ES)
+{txt}(28 observations deleted)
+
+{com}. //_12
+. reg ES EM if name=="MSFT" 
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        60
+{txt}{hline 13}{c +}{hline 34}   F(1, 58)        = {res}    30.16
+{txt}       Model {c |} {res} .072840193         1  .072840193   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} .140064187        58    .0024149   {txt}R-squared       ={res}    0.3421
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.3308
+{txt}       Total {c |} {res}  .21290438        59  .003608549   {txt}Root MSE        =   {res} .04914
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}          ES{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}EM {c |}{col 14}{res}{space 2} 1.102095{col 26}{space 2} .2006702{col 37}{space 1}    5.49{col 46}{space 3}0.000{col 54}{space 4} .7004095{col 67}{space 3}  1.50378
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.0021528{col 26}{space 2} .0064642{col 37}{space 1}   -0.33{col 46}{space 3}0.740{col 54}{space 4}-.0150924{col 67}{space 3} .0107867
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. //_13
+. bysort name: egen MES=mean(ES)
+{txt}
+{com}. //_14
+. su EM
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 10}EM {c |}{res}      1,680    .0061797    .0316243  -.1113726   .0851416
+{txt}
+{com}. //_15
+. statsby _b, clear by(name MES): regress ES EM
+{txt}(running regress on estimation sample)
+{p2colset 7 17 21 2}{...}
+
+{p2col :command:}regress ES EM{p_end}
+           by:  name MES
+
+Statsby groups
+{hline 4}{c +}{hline 3} 1 {hline 3}{c +}{hline 3} 2 {hline 3}{c +}{hline 3} 3 {hline 3}{c +}{hline 3} 4 {hline 3}{c +}{hline 3} 5 
+............................
+
+{com}. //_16
+. reg MES _b_EM
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}        28
+{txt}{hline 13}{c +}{hline 34}   F(1, 26)        = {res}     7.35
+{txt}       Model {c |} {res}  .00026494         1   .00026494   {txt}Prob > F        ={res}    0.0117
+{txt}    Residual {c |} {res} .000937077        26  .000036041   {txt}R-squared       ={res}    0.2204
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.1904
+{txt}       Total {c |} {res} .001202017        27  .000044519   {txt}Root MSE        =   {res}   .006
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         MES{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}_b_EM {c |}{col 14}{res}{space 2} .0060261{col 26}{space 2} .0022226{col 37}{space 1}    2.71{col 46}{space 3}0.012{col 54}{space 4} .0014575{col 67}{space 3} .0105948
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0027025{col 26}{space 2} .0027929{col 37}{space 1}    0.97{col 46}{space 3}0.342{col 54}{space 4}-.0030385{col 67}{space 3} .0084434
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. //_^
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Github\private-files\SSCECON307\2022h2\capm.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res} 5 Sep 2022, 08:10:34
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
