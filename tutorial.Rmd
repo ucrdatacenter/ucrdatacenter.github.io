@@ -1,0 +1,9 @@
+---
+title: "Tutorials"
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
+---
+
+* Installing R
+* R basics

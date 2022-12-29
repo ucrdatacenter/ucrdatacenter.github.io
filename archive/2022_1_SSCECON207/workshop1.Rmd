@@ -203,4 +203,4 @@ ggsave("GDP.jpg")
 
 # Useful links
 
-You can find additional materials, including useful data sources, and online materials for using R and `ggplot` on the [Data Center website](https://ucrdatacenter.github.io/SSCECON207#Supporting_materials).
+You can find additional materials, including useful data sources, and online materials for using R and `ggplot` on the [Data Center website](https://ucrdatacenter.github.io/archive/2022_1_SSCECON207#Supporting_materials).

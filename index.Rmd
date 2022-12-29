@@ -16,12 +16,12 @@ You can find information and supplementary materials for all data encounters in 
 
 ## General tutorials
 
-You can find some general tutorials on how to work with data [here](https://ucrdatacenter.github.io/tutorial).
+You can find some general tutorials on how to work with data [here](tutorial).
 
 ## Ongoing courses
 
-* [SCIENVI201 Ecology](https://ucrdatacenter.github.io/SCIENVI201)
-* [SCIENVI303 Topics in Ecology](https://ucrdatacenter.github.io/SCIENVI303)
+* [SCIENVI201 Ecology](SCIENVI201.html)
+* [SCIENVI303 Topics in Ecology](SCIENVI303.html)
 
 <!-- * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207) -->
 <!-- * [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209) -->

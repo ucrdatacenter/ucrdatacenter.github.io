@@ -20,15 +20,15 @@ This page collects helpful links for the Fall 2022 edition of Econometrics.
 
 ## Workshop I: Okun's Law
 
-You can access the materials for the workshop on Okun's Law [here](https://ucrdatacenter.github.io/SSCECON307/okun).
+You can access the materials for the workshop on Okun's Law [here](2022_2_SSCECON307/okun.html).
 
 ## Workshop II: Gravity
 
-You can access the materials for the workshop on Gravity [here](https://ucrdatacenter.github.io/SSCECON307/gravity).
+You can access the materials for the workshop on Gravity [here](2022_2_SSCECON307/gravity.html).
 
 ## Workshop III: CAPM
 
-You can access the materials for the workshop on CAPM [here](https://ucrdatacenter.github.io/SSCECON307/capm).
+You can access the materials for the workshop on CAPM [here](2022_2_SSCECON307/capm.html).
 
 # Accessing Stata for free
 

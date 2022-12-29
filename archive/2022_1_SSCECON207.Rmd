@@ -52,7 +52,7 @@ The assignment guidelines and the grading rubric are on Moodle.
 
 ### Workshop handout
 
-The materials covered in the first Data Center workshop, including both code and explanations, can be found [here](https://ucrdatacenter.github.io/SSCECON207/workshop1).
+The materials covered in the first Data Center workshop, including both code and explanations, can be found [here](2022_1_SSCECON207/workshop1.html).
 
 ### Supporting materials
 
@@ -102,7 +102,7 @@ You can find an example paper [here](https://github.com/ucrdatacenter/projects/r
 
 ### Workshop handout
 
-The materials covered in the second Data Center workshop, including both code and explanations, can be found  [here](https://ucrdatacenter.github.io/SSCECON207/workshop2).
+The materials covered in the second Data Center workshop, including both code and explanations, can be found  [here](2022_1_SSCECON207/workshop2.html).
 
 ### Supporting materials
 
