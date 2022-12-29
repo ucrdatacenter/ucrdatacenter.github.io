@@ -16,7 +16,7 @@ You can find information and supplementary materials for all data encounters in 
 
 ## General tutorials
 
-You can find some general tutorials on how to work with data [here](tutorial).
+You can find some general tutorials on how to work with data [here](tutorial.html).
 
 ## Ongoing courses
 
