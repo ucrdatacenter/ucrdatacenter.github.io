@@ -1,0 +1,16 @@
+---
+title: "Archive of past courses"
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
+---
+
+## Fall 2022
+
+* [SSCECON307 Econometrics](https://ucrdatacenter.github.io/2022_2_SSCECON307)
+
+## Spring 2022
+
+* [SCIENVI201 Ecology](https://ucrdatacenter.github.io/archive/2022_1_SCIENVI201)
+* [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/archive/2022_1_SSCECON207)
+* [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/archive/2022_1_SSCECON209)
