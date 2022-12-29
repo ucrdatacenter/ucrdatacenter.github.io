@@ -11,7 +11,7 @@
 
 
 
-<title>SSCECON307 Econometrics Fall 2022</title>
+<title>SSCECON207 International Macroeconomics Spring 2022</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1532,8 +1532,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">SSCECON307<br>Econometrics<br>Fall
-2022</h1>
+<h1 class="title toc-ignore">SSCECON207<br>International
+Macroeconomics<br>Spring 2022</h1>
 <h4 class="date">Last updated: 2022-12-29</h4>
 
 </div>
@@ -1541,36 +1541,277 @@ div.tocify {
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This page collects helpful links for the Fall 2022 edition of
-Econometrics.</p>
-<!-- add details about office hours? -->
+<p>This page collects workshop materials, data sources and supplementary
+materials for the data-driven assignments in the Spring 2022 edition of
+International Macroeconomics at UCR. You can also access the related
+files directly on <a href="https://github.com/ucrdatacenter/projects/tree/main/SSCECON207/2022h1">Github</a>.</p>
 </div>
-<div id="workshops" class="section level1">
-<h1>Workshops</h1>
-<div id="workshop-i-okuns-law" class="section level2">
-<h2>Workshop I: Okun’s Law</h2>
-<p>You can access the materials for the workshop on Okun’s Law <a href="2022_2_SSCECON307/okun.html">here</a>.</p>
+<div id="working-with-r-and-rstudio" class="section level1">
+<h1>Working with R and RStudio</h1>
+<div id="installing-r-and-rstudio" class="section level2">
+<h2>Installing R and RStudio</h2>
+<p>R is the programming language that you use when working with data.
+RStudio is a development environment that makes working with R much more
+convenient. Both are free to download and install.</p>
+<p>To download R, go to <a href="https://cloud.r-project.org/">cloud.r-project.org</a> and follow
+the instructions on the page. To download RStudio, go to <a href="https://www.rstudio.com/products/rstudio/download/">rstudio.com/products/rstudio/download</a>,
+scroll down and download the file recommended for your operating
+system.</p>
+<p>When installing, you can always stick to the default settings, unless
+you have different preferences.</p>
+<p>In case you get stuck at any point, or would like more guidance in
+the installation process, feel free to check out any of the following
+links:</p>
+<ul>
+<li><a href="https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/">Tutorial:
+Getting Started with R and RStudio</a></li>
+<li><a href="https://www.youtube.com/watch?v=0Qu7Jg1Jw5A">R Tutorial:
+How to install R and R studio (video)</a></li>
+</ul>
 </div>
-<div id="workshop-ii-gravity" class="section level2">
-<h2>Workshop II: Gravity</h2>
-<p>You can access the materials for the workshop on Gravity <a href="2022_2_SSCECON307/gravity.html">here</a>.</p>
 </div>
-<div id="workshop-iii-capm" class="section level2">
-<h2>Workshop III: CAPM</h2>
-<p>You can access the materials for the workshop on CAPM <a href="2022_2_SSCECON307/capm.html">here</a>.</p>
+<div id="assignments" class="section level1">
+<h1>Assignments</h1>
+<div id="timeline" class="section level2">
+<h2>Timeline</h2>
+<ul>
+<li>The first Data Center workshop takes place in week 2. It covers the
+basics of how to create figures in R. You should make sure to have R and
+RStudio installed before this workshop, and read sections 2, 3.1-3.4,
+and 4-6 of <a href="https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf">A
+(very) short introduction to R</a> and sections 1-4 of <a href="http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1%20Make%20a%20time%20series%20plot%20(using%20ggfortify)">How
+to make any plot in ggplot2?</a>.</li>
+<li>The IS-LM poster assignment is due in week 4 of the semester.</li>
+<li>The second Data Center workshop takes place in week 7. It builds on
+your existing R skills, with a focus on finding and cleaning data.</li>
+<li>The final empirical paper is due at the end of week 15.</li>
+<li>The Data Center student fellows hold office hours every Wednesday
+between 15:00-19:00 (15:00-17:00 with Tina, 17:00-19:00 with Bianka) in
+the Data Center’s office (Anne 1.30 - first floor) to answer questions
+and help with the poster and paper assignments. Feel free to email Tina
+(<a href="mailto:datacenter@ucr.nl" class="email">datacenter@ucr.nl</a>)
+to schedule an individual consultation outside of office hours or to
+attend office hours. In case you would like to make use of the in-person
+office hours, please email the Data Center at least two hours in
+advance.</li>
+</ul>
+</div>
+<div id="is-lm-poster" class="section level2">
+<h2>IS-LM poster</h2>
+<div id="guidelines" class="section level3">
+<h3>Guidelines</h3>
+<p>The assignment guidelines and the grading rubric are on Moodle.</p>
+</div>
+<div id="workshop-handout" class="section level3">
+<h3>Workshop handout</h3>
+<p>The materials covered in the first Data Center workshop, including
+both code and explanations, can be found <a href="SSCECON207_2022h1/workshop1.html">here</a>.</p>
+</div>
+<div id="supporting-materials" class="section level3">
+<h3>Supporting materials</h3>
+<div id="the-basics-of-r" class="section level4">
+<h4>The basics of R</h4>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf">Cheat
+sheet for importing data</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf">Cheat
+sheet for data manipulation</a> (including <code>filter()</code>,
+<code>select()</code> and the pipe operator(<code>%&gt;%</code>))</li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf">Cheat
+sheet for data tidying</a> (including reshaping and pivoting)</li>
+<li><a href="https://moderndive.netlify.app/1-getting-started.html#getting-started">Getting
+started with Data in R</a> (covers: using R and RStudio, basic
+terminology, introduction to packages)</li>
+<li><a href="https://rstudio-education.github.io/hopr/r-objects.html">R
+objects</a></li>
+<li><a href="https://r4ds.had.co.nz/workflow-projects.html">Advice on
+using projects</a></li>
+<li><a href="https://raw.githack.com/uo-ec607/lectures/master/04-rlang/04-rlang.html#1">Full
+tutorial on R language basics (slides)</a></li>
+<li><a href="https://raw.githack.com/uo-ec607/lectures/master/05-tidyverse/05-tidyverse.html#1">Full
+tutorial on data cleaning and wrangling (slides)</a></li>
+<li><a href="https://r4ds.had.co.nz/pipes.html">More explanation on the
+pipe operator</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-dataI.html#sec:pipe">Selecting
+and filtering data</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa">Conversions
+between long and wide format</a></li>
+<li><a href="https://www.youtube.com/watch?v=WyrJmJWgPiU">Creating a
+project in RStudio (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=v6VygIgvoZU&amp;t=1s">Packages in
+R (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=2MVolYETR5Q">Loading a data
+file (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=Zc_ufg4uW4U">Data
+manipulation (video)</a></li>
+</ul>
+</div>
+<div id="help-with-ggplot" class="section level4">
+<h4>Help with <code>ggplot</code></h4>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf">Cheat
+sheet for <code>ggplot</code></a></li>
+<li><a href="https://www.r-graph-gallery.com/">The R Graph Gallery
+(example plots, including full R scripts)</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-vizII.html#a-grammar-for-data-graphics">More
+details on data visualization</a></li>
+<li><a href="https://www.tutorialgateway.org/save-r-ggplot-using-ggsave/">Saving
+plots with <code>ggsave()</code></a></li>
+<li><a href="https://www.youtube.com/watch?v=hr2X7rmkprM">Basic
+<code>ggplot</code> tutorial (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=1GmQ5BdAhG4">Customizing
+plots (video)</a></li>
+</ul>
+</div>
+<div id="data-sources-used" class="section level4">
+<h4>Data sources used</h4>
+<ul>
+<li>GDP: <a href="https://data.worldbank.org/indicator/NY.GDP.MKTP.KN">World Bank
+DataBank: GDP (constant LCU)</a></li>
+<li>Consumption: <a href="https://data.worldbank.org/indicator/NE.CON.TOTL.KN">World Bank
+DataBank: Final consumption expenditure (constant LCU)</a></li>
+<li>Investment: <a href="https://data.worldbank.org/indicator/NE.GDI.FTOT.KN">World Bank
+DataBank: Gross fixed capital formation (constant LCU)</a></li>
+<li>Government spending: <a href="https://data.worldbank.org/indicator/NE.CON.GOVT.KN">World Bank
+DataBank: General government final consumption expenditure (constant
+LCU)</a></li>
+<li>Interest rate: <a href="https://data.worldbank.org/indicator/FR.INR.RINR">World Bank
+DataBank: Real interest rate (%)</a></li>
+<li>Inflation rate: <a href="https://data.worldbank.org/indicator/FP.CPI.TOTL.ZG">World Bank
+DataBank: Inflation, consumer prices (annual %)</a></li>
+</ul>
 </div>
 </div>
-<div id="accessing-stata-for-free" class="section level1">
-<h1>Accessing Stata for free</h1>
-<p>You can access Stata for free via UU’s SolisWorkspace. Go to <a href="https://solisworkspace.uu.nl">solisworkspace.uu.nl</a> and log in
-with your Solis-ID and password. Go to the “Apps” tab and look for
-“Stata.” Click on the icon, and Stata will open on your desktop. If you
-are using this website for the first time, you will likely need to
-download Citrix receiver (if you need to, a the website will guide you
-through the process). When saving files, you should make sure to save
-your files on your local disc instead of the UU cloud - you can set your
-working directory to the approporiate folder by going to File -&gt;
-Change working directory.</p>
+</div>
+<div id="empirical-paper-on-growth" class="section level2">
+<h2>Empirical paper on growth</h2>
+<div id="guidelines-1" class="section level3">
+<h3>Guidelines</h3>
+<p>The assignment guidelines and the grading rubric are on Moodle.</p>
+<p>You can find an example paper <a href="https://github.com/ucrdatacenter/projects/raw/main/SSCECON207/2022h1/workshop%202/example%20paper.pdf">here</a>.</p>
+</div>
+<div id="workshop-handout-1" class="section level3">
+<h3>Workshop handout</h3>
+<p>The materials covered in the second Data Center workshop, including
+both code and explanations, can be found <a href="SSCECON207_2022h1/workshop2.html">here</a>.</p>
+</div>
+<div id="supporting-materials-1" class="section level3">
+<h3>Supporting materials</h3>
+<div id="inspiration-for-your-research-question" class="section level4">
+<h4>Inspiration for your research question</h4>
+<ul>
+<li><a href="https://growthecon.com/topics/">Growthecon</a>: collections
+of materials related to various themes related to growth</li>
+<li><a href="https://conversableeconomist.wpcomstaging.com/">Conversable
+Economist</a>: blog connecting current issues to economics</li>
+<li><a href="https://www.core-econ.org/the-economy/book/text/0-3-contents.html">The
+Economy textbook</a>: undergraduate textbook with a focus on growth from
+multiple aspects. Most relevant units:
+<ul>
+<li><a href="https://www.core-econ.org/the-economy/book/text/01.html">Unit
+1</a> <em>The capitalist revolution</em>: introduction to modern
+growth</li>
+<li><a href="https://www.core-econ.org/the-economy/book/text/02.html">Unit
+2</a> <em>Technology, population, and growth</em>: historical
+perspective on growth</li>
+<li><a href="https://www.core-econ.org/the-economy/book/text/20.html">Unit
+20</a> <em>Economics of the environment</em>: connections between growth
+and climate change; see e.g. figure <a href="https://www.core-econ.org/the-economy/book/text/20.html#figure-20-25a">20.25</a></li>
+</ul></li>
+<li><a href="https://www.core-econ.org/insights/a-world-of-differences/text/01.html">CORE
+Insight on inequality</a></li>
+<li><a href="https://www.core-econ.org/doing-economics/book/text/04-01.html">Doing
+economics: Measuring wellbeing</a>: practical instructions to an
+empirical project using R; other chapters might also be of interest</li>
+<li><a href="https://ourworldindata.org/economic-growth">Our World in
+Data on economic growth</a></li>
+<li><a href="https://www.worldbank.org/en/programs/icp/brief/data-blog">The
+World Bank Data Blog</a></li>
+<li><a href="https://blogs.imf.org/">IMF blog</a></li>
+<li><a href="https://econlife.com/">Econlife</a>: blog connecting
+current events, history, and economics</li>
+<li><a href="https://economic-historian.com/">The Economic
+Historian</a>: blog on economic history</li>
+<li><a href="https://www.aeaweb.org/research">American Economic
+Association Research Highlights</a></li>
+</ul>
+</div>
+<div id="useful-data-sources" class="section level4">
+<h4>Useful data sources</h4>
+<ul>
+<li><a href="https://ourworldindata.org/">Our World in Data</a>:
+open-access data source for a wide range of indicators</li>
+<li><a href="https://data.worldbank.org/">World Bank Open Data</a>:
+open-access data source related to development and growth</li>
+<li><a href="https://www.gapminder.org/data/">Gapminder</a>: open-access
+data source related to development and growth; all World Development
+Indicators also available here</li>
+<li><a href="https://data.oecd.org/">OECD data</a>: open-access data
+source primarily on advanced economies</li>
+<li><a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/?lang=en">Maddison
+Historical Statistics</a>: GDP per capita and population data for 169
+countries between 1000–2018</li>
+<li><a href="https://www.conference-board.org/data/economydatabase/total-economy-database-productivity">Total
+Economy Database</a>: data on GDP and labour statistics for 131
+countries (available after creating a free account)</li>
+<li><a href="https://fred.stlouisfed.org/tags/series">FRED (US Federal
+Reserve)</a>: mostly US economic data</li>
+<li><a href="https://ec.europa.eu/eurostat/web/main/home">Eurostat</a>:
+European Union data</li>
+</ul>
+</div>
+<div id="additional-support-with-r" class="section level4">
+<h4>Additional support with R</h4>
+<p>Next to the links below, please check out the supporting materials
+provided for the first Data Center workshop.</p>
+<p><em>Importing data</em></p>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf">Cheat
+sheet for data import</a></li>
+<li><a href="https://uomresearchit.github.io/r-tidyverse-intro/03-loading-data-into-R/">More
+on <code>read_csv()</code></a></li>
+<li><a href="https://tutorials.methodsconsultants.com/posts/reading-sas-spss-or-stata-files-into-r-using-haven/">Import
+with <code>haven</code></a></li>
+<li><a href="https://www.youtube.com/watch?v=366N1K1ja8g">Import with
+<code>readr</code> and <code>readxl</code> (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=egFoDj6H9Ts">Import using
+<code>haven</code> (video)</a></li>
+</ul>
+<p><em>Data cleaning</em></p>
+<ul>
+<li><a href="https://rpubs.com/AnalystNyamu/507453">Filter, select,
+mutate and summarize data</a></li>
+<li><a href="https://www.sharpsightlabs.com/blog/mutate-in-r/">More on
+<code>mutate()</code></a></li>
+<li><a href="https://r-graphics.org/recipe-dataprep-summarize">Summarizing data
+by groups</a></li>
+<li><a href="https://www.r-bloggers.com/2021/06/summarize-in-r-data-summarization-in-r/">List
+of common useful functions within <code>summarize()</code></a></li>
+<li><a href="https://www.datasciencemadesimple.com/rename-the-column-name-in-r-using-dplyr/">More
+on <code>rename()</code></a></li>
+<li><a href="https://universeofdatascience.com/how-to-handle-missing-values-in-r/">How
+to handle missing data</a></li>
+<li><a href="https://www.youtube.com/watch?v=nRtp7wSEtJA">Select,
+filter, mutate and summarize data (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=zAlbrPozMHI">Summarizing by
+groups (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=O_gPPrezk5o">How to handle
+missing values (video)</a></li>
+</ul>
+<p><em>Merging data</em></p>
+<ul>
+<li><a href="https://www.r4epi.com/working-with-multiple-data-frames.html"><code>bind_rows()</code>
+and join functions visualized</a></li>
+<li><a href="https://www.datasciencemadesimple.com/join-in-r-merge-in-r/">More
+on join functions</a></li>
+<li><a href="https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti">Examples
+of using joins</a></li>
+<li><a href="https://www.youtube.com/watch?v=Yg-pNqzDuN4">More on join
+functions (video)</a></li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 
 

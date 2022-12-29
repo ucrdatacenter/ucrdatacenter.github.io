@@ -27,7 +27,7 @@ Once you have your research question, you should think about how you could use d
 Then you can interpret these visuals to reach conclusions about whether the relationships that you expect to be present in your data are actually there.
 
 Once you have an idea of what data you would need, you can start looking for it.
-Several useful data sources are listed [here](https://ucrdatacenter.github.io/archive/2022_1_SSCECON207#Supporting_materials13); additionally you can always simply Google the indicator that you are looking for.
+Several useful data sources are listed [here](https://ucrdatacenter.github.io/archive/SSCECON207_2022h1#Supporting_materials13); additionally you can always simply Google the indicator that you are looking for.
 If you are looking for data from a single country, national statistical offices might be useful; if you are looking for data from multiple countries, international organizations such as the World Bank or OECD, or initiatives such as Our World in Data often have comprehensive global data.
 
 Once you find, import and visualize your data, you can incorporate the results in your paper.
