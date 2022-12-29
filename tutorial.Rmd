@@ -5,5 +5,5 @@ output:
     theme: tactile
 ---
 
-* Installing R
-* R basics
+* [Installing R](tutorial/r_install.html)
+* [R basics](tutorial/r_basics.html)

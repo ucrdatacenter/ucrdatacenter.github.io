@@ -23,10 +23,6 @@ You can find some general tutorials on how to work with data [here](tutorial).
 * [SCIENVI201 Ecology](SCIENVI201.html)
 * [SCIENVI303 Topics in Ecology](SCIENVI303.html)
 
-<!-- * [SSCECON207 International Macroeconomics](https://ucrdatacenter.github.io/SSCECON207) -->
-<!-- * [SSCECON209 Money, Banking and Finance](https://ucrdatacenter.github.io/SSCECON209) -->
-<!-- * [SSCECON307 Econometrics](https://ucrdatacenter.github.io/SSCECON307) -->
-
 ## Past courses
 
 You can view the archived pages of all previous Data Center projects [here](archive.html).
