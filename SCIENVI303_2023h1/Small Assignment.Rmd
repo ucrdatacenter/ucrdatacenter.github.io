@@ -1,0 +1,151 @@
+---
+title: "Small Assignment"
+output: html_document
+date: "2023-01-23"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **The Thermal Optimum of Photosynthesis** {.unlisted .unnumbered}
+
+This page will guide you through your compulsory simple assignment conducted in Rstudio. 
+
+<img src="https://c.pxhere.com/photos/9e/79/bark_forest_leaves_nature_outdoors_trees_woods-1365535.jpg!d" width="910" height="350" />
+
+During the process of tree photosynthesis, atmospheric CO2 is assimilated into a leaf where it is reduced into chloroplasts while producing O2. However, the amount of CO2 assimilation differs with changing temperature of the leaf. Usually, the optimal temperature conditions for CO2 assimilation are between 10 and 34 degrees Celsius. The maximum value of this range is called the **thermal optimum**. This means that if the temperature of the leaf is below 10 degrees Celsius or above 34 degrees Celsius the leaf enters a stress state at which the uptake of CO2 can be reduced or terminated. 
+
+Now let's see whether we can visualize this on a real life data. 
+
+### STEP I - RStudio
+
+Open Rstudio and start a new script. To start a new script, click on the File drop down menu on the top left and select New File > R Script. To prevent lost work save the script right away. Again, click on the File drop down menu and select save as.
+
+Now, we can install and load our libraries in our fresh R Script. An R library or an R package is a collection of functions, data, and documentation that allows you a smooth workflow. To be able to access a package you first need to install it with the code _install.packages(...)_. You only need to install a package once. However, in order to be able to work with the packages in your RStudio environment you need to load them with the code _library(...)_. It is a good practice to have your libraries loaded on the top of your R Script so you can always come back to your code knowing which libraries you used.
+
+In this simple assignment we will be using the following packages. 
+
+```{r echo = TRUE, message = FALSE, eval = FALSE}
+
+# install packages
+install.packages("tidyverse")
+install.packages("readr")
+
+```
+
+The next step is to load the libraries in your RStudio, so they are ready to be used. 
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+# load packages
+library(tidyverse)
+library(readr)
+
+```
+
+### STEP II - Data Import
+
+Now, we need to import our data in our Rstudio. Usually, you would download data into your computer first and as a next step, you would load it in RStudio. In this case, our data is readily available on GitHub and can be imported into our RStudio directly from there.
+
+A dataset can be imported into RStudio with the function read_csv(), where in parentheses and quotation marks there is the directory to our data set location. Additionally, in order to save this file in our Rstudio environment (upper right window), we need to assign the file to an object with the assign operator <-.
+
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+data <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI301/2023h1/ass1/TreeProperties.csv")
+
+```
+
+This data set contains information collected by a group of researchers who were analyzing the tree physiological response to different light exposure (Kothair, et al., 2021). In this extraction of their data we can find the species name, the treatment that was applied, measure of net carbon assimilation measured in μmol/m2/s and the leaf temperature measure in °C. To view the data set, simply click on it in your environment or use the function View().
+
+### STEP III - Data Manipulation
+
+In order to select only part of data for further purposes sometimes we want to filter in certain part of the dataset. We can do this with the filter() function. In our case, we can filter only one tree species instead of all 4 which are present in the data set. 
+
+```{r echo = T, message = FALSE, warning = FALSE}
+BP <- data %>% 
+  filter(Species == "Betula papyrifera")
+```
+
+We connect the data table called data and the filter funciton with the pipe operator ( %>% ). The pipe operator uses the previous result as an input. In the case above it takes the object data as the first argument of the filter() function. 
+
+### STEP III - Visualization
+
+Now, that we filtered a single species lets see whether we can visualize a graph. 
+
+Figures made with ggplot are built from several layers. You always use the same basic code structure to create a wide range of figures: \
+
+1. The ggplot() function creates a blank canvas for you to work on.
+2. Geoms add the visual elements, such as points, lines, bars, or other shapes. \
+3. Other specifications can include changing axis settings, setting the theme, adding labels, etc. \
+4. You connect all these different specifications to each other using + signs. \
+
+The variables that you want to display on the graph must always be wrapped in an aes() function, which stands for aesthetics. This specification tells R to determine the value of the aesthetic (x and y axes, colors, groups, line types, etc.) based on the value of the variable. aes() can be specified both in the main ggplot() function (in which case it will apply to all geoms) or within a geom_...() function (then it only applies to that geom).
+
+The following code creates a scatter plot of net carbon assimilation as a function of leaf temeprature. 
+
+```{r echo = T,  message = FALSE, warning = FALSE}
+BP %>% # using previously created data table for ggplot graph visualization
+  ggplot() + # creates a ggplot "blank canvas"
+  geom_point(mapping = aes(x = LeafT, y = NetCarbonAssimilation)) # describes the variables which are to be displayed on x and y axes
+```
+
+Alright, but this scatter plot does not really inform us much. Therefore, lets connect the dots into a line to see the more continuous relationship. The only thing we need to change in our code is the geom. This time, it will be geom_line(). 
+
+```{r echo = T,  message = FALSE, warning = FALSE}
+BP %>%
+  ggplot() +
+  geom_line(mapping = aes(x = LeafT, y = NetCarbonAssimilation))
+```
+
+Now, lets think for a second. What are we seeing on the following graph? Why is the plot line oscillating?
+
+Okay, now lets look at the general trend of this graph which is possible with geom_smooth(), enabling us to see the general pattern. 
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+BP %>%
+  ggplot() +
+  geom_smooth(mapping = aes(x = LeafT, y = NetCarbonAssimilation))
+
+```
+
+The gray area around our trend line displays the confidence interval. It can be disabled by adding argument se = FALSE.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+BP %>%
+  ggplot() +
+  geom_smooth(mapping = aes(x = LeafT, y = NetCarbonAssimilation), se = FALSE)
+
+```
+
+In our second to last graph we would like to look at the each treatment of the tree seperately in one graph. In other words we would like to create a trend line of the relationship between net carbon assimilation and leaf temperature for each treatment. We can do this with adding one extra argument to the aesthetics, color = Treatment.
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+
+BP %>%
+  ggplot() +
+  geom_smooth(mapping = aes(x = LeafT, y = NetCarbonAssimilation, color = Treatment), se = F)
+
+```
+
+The last graph of this assignment is to visualize all four tree species present in our original data set called data. If you still remember, at the beginning of the exercise we filtered only one single species. Now, we are going to go back to our original data set, data, and use the function facet_wrap() to visualize all four species on separated graphs. 
+
+```{r echo = TRUE, message = FALSE, warning = FALSE}
+data %>% 
+  ggplot(mapping = aes(x = LeafT, y = NetCarbonAssimilation, color = Treatment)) +
+  geom_smooth(se = F) +
+  facet_wrap(~Species) # defining the variable name
+```
+
+
+### STEP IV - Recap
+
+Congrats! You finished your simple assignment! Now, please, go to moodle and answer a few questions to conclude on this assignment. 
+
+## Literature
+
+Kothari, S., Montgomery, R. A., & Cavender‐Bares, J. (2021). Physiological responses to light explain competition and facilitation in a tree diversity experiment. Journal of Ecology, 109(5), 2000-2018.
+

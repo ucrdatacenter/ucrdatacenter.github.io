@@ -1,5 +1,5 @@
 ---
-title: "SCIENVI201<br>Ecology<br>Spring 2022"
+title: "SCIENVI201<br>Ecology<br>Spring<br>2022"
 date: 'Last updated: `r Sys.Date()`'
 output:
   pdf_document:
