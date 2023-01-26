@@ -1,0 +1,180 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={SCIENVI301 Ecology Spring 2023},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{SCIENVI301EcologySpring 2023}
+\author{}
+\date{\vspace{-2.5em}Last updated: 2023-01-26}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\hfill\break
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+This page collects workshop materials, data sources and supplementary
+materials for the data-driven assignments in the Spring 2023 edition of
+Ecology at UCR. You can also access the related files directly on
+\href{https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1}{Github}.
+
+If you have any questions related to the assignment do not hesitate to
+reach Bianka during Data Center office hours (held every Wednesday 17:00
+- 19:00 on
+\href{https://universitycollegeroosevelt.zoom.us/j/2831128718?pwd=UmRuSzVqSTZyMndDbDRGSkV5VWFVQT09}{Zoom}).
+There is no need to sign up in advance to join office hours. If this
+time is inconvenient for you feel free to write Bianka an email
+(\href{mailto:ucrdatacenter@ucr.nl}{\nolinkurl{ucrdatacenter@ucr.nl}})
+to schedule an individual meeting.
+
+\hfill\break
+
+\hypertarget{working-with-r-and-rstudio}{%
+\section{Working with R and RStudio}\label{working-with-r-and-rstudio}}
+
+\hypertarget{recommended-reading}{%
+\subsection{Recommended reading}\label{recommended-reading}}
+
+It is highly recommended that you read the sections 2, 3.1-3.4 and 4-6
+of
+\href{https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf}{A
+(very) short introduction to R} and sections 1-4 of
+\href{http://r-statistics.co/ggplot2-Tutorial-With-R.html\#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)}{How
+to make any plot in ggplot2?} before starting working with R.
+
+\hypertarget{installing-r-and-rstudio}{%
+\subsection{Installing R and RStudio}\label{installing-r-and-rstudio}}
+
+R is the programming language that you use when working with data.
+RStudio is a development environment that makes working with R much more
+convenient. Both are free to download and install.
+
+To download R, go to
+\href{https://cloud.r-project.org/}{cloud.r-project.org} and follow the
+instructions on the page. To download RStudio, go to
+\href{https://www.rstudio.com/products/rstudio/download/}{rstudio.com/products/rstudio/download},
+scroll down and download the file recommended for your operating system.
+
+When installing, you can always stick to the default settings, unless
+you have different preferences.
+
+In case you get stuck at any point, or would like more guidance in the
+installation process, feel free to check out any of the following links:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/}{Tutorial:
+  Getting Started with R and RStudio}
+\item
+  \href{https://www.youtube.com/watch?v=0Qu7Jg1Jw5A}{R Tutorial: How to
+  install R and R studio (video)}
+\end{itemize}
+
+\hypertarget{creating-a-project-in-rstudio}{%
+\subsection{Creating a project in
+RStudio}\label{creating-a-project-in-rstudio}}
+
+It is convenient to create an R project for an assignment that you are
+working on. A project is basically a folder that stores all files
+related to the assignment.
+
+You can create a project as follows:
+
+\begin{itemize}
+\tightlist
+\item
+  Open RStudio and click on ``Project: (None)'' in the top right corner.
+\item
+  Open the dropdown window and click on ``New Project\ldots.''
+\item
+  In the popup window select ``New Directory'', then ``New Project.''
+\item
+  Choose a sensible name for your project and enter it as the Directory
+  Name. You can either use the default file path or change it by
+  clicking ``Browse\ldots{}'' next to ``Create project as a subdirectory
+  of:.''
+\item
+  Finally, click on ``Create project.''
+\end{itemize}
+
+After a project is created, there are two easy ways of accessing it. You
+can either use the same dropdown window in the top right corner of
+RStudio that you used to create the project, and click on the name of
+the project there, or you can find the project folder within your files
+and click on the file with the .Rproj extension.
+
+\hfill\break
+
+\hypertarget{simple-assignment}{%
+\section{Simple Assignment}\label{simple-assignment}}
+
+\hypertarget{research-assignment}{%
+\section{Research Assignment}\label{research-assignment}}
+
+\end{document}
