@@ -15,7 +15,7 @@ output:
 
 # Introduction
 
-This page collects workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2023 edition of Ecology at UCR.
+This page collects blabla workshop materials, data sources and supplementary materials for the data-driven assignments in the Spring 2023 edition of Ecology at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects/tree/main/SCIENVI201/2022h1).
 
 If you have any questions related to the assignment do not hesitate to reach Jennifer or Bianka during Data Center office hours (tbh). There is no need to sign up in advance to join office hours. If this time is inconvenient for you feel free to write Jennifer or Bianka an email (ucrdatacenter@ucr.nl) to schedule an individual meeting. 
