@@ -1,0 +1,237 @@
+---
+title: "The Correlation between the Procellariidae Family and the Strength of the Wind in Canterbury, New Zealand"
+author: "Jennifer Lee"
+date: "2023-01-21"
+output: html_document
+---
+
+## Instructions
+
+These instructions are to be used as a guide for you to complete your own original assignment. Follow the steps of this example assignment to gain a better understanding of the functions needed to complete your own variation. You can be as creative as you want. In your variation choose:
+
+-   One of the 17 regions of New Zealand
+
+-   One of five weather variables (some weather variables may be unavailable in certain regions of New Zealand)
+
+-   One of the following three options to find a correlation between the previously chosen variables:
+
+    -   A specific bird family
+
+    -   Bird weight
+
+    -   Bird size
+
+## Libraries and Packages
+
+In this assignment we will be using functions that belong to certain libraries. Before we can load the libraries we must first use the function *install.packages("...")* to install the libraries. After that we can load in the libraries with the code *library(...)*. Libraries need to be loaded at the start of every session but only need to be installed once.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, message=FALSE, warning=FALSE}
+#install.packages("tidyverse")
+#install.packages("mapproj")
+#install.packages("tidymodels")
+```
+
+Now we load the libraries
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(mapproj)
+library(tidymodels)
+```
+
+## Data Import
+
+### Bird data
+
+Now we will import the data needed to do the assignment: the weather data, the bird occurrence data, and the bird information data. We will use the *read_delim(..)* function to access the data. To access the bird occurrence data, read in the comma-separated-value file titled Region_Birds.csv with Region being your selected region; Canterbury in this case. To access the bird information data, read in the text file titled Bird_details_nz.txt, this file is tab-separated so be sure to use the right delimiter when you read in the file.
+
+```{r birds, message=FALSE, warning=FALSE}
+#library used: tidyverse
+
+region_birds <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI303/2023h1/ass2/Birds/Canterbury/Canterbury_Birds.csv", delim=",")
+
+bird_info <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI303/2023h1/ass2/Bird_details_NZ.txt", delim="\t")
+
+```
+
+You can view the two datasets by using the *view(..)* function. We see that the bird_info dataframe contains information about the family the bird species belong to, their average weight, and their average size. We see that the region_birds dataframe contains occurrence data: when, where, which, and how many birds were observed.
+
+```{r bird view, message=FALSE, warning=FALSE}
+#library used: tidyverse
+view(region_birds)
+view(bird_info)
+```
+
+It would be best for us to combine these two datasets into one dataframe. You can do this by using the *left_join(.., by="..")* function which joins two dataframes together by a key, in this case common_name Both datasets have common_name as a variable so it makes sense that the information assigned to common_name in the information dataset will also apply to the bird of the same common_name in the occurrence dataset.
+
+```{r combining dataframes, messages=FALSE, warning=FALSE}
+#library used: tidyverse
+canterbury_birds <- region_birds %>%
+  left_join(bird_info, by="common_name")
+```
+
+Now we can use this new dataframe to find how out many occurrences there are of your chosen bird variable. In this case we will use the *summarise(...)* function to retrieve information regarding bird family occurrences. Now we can see how often each family occurs in the dataset.
+
+```{r bird family occurrences, messages=FALSE, warning=FALSE}
+#libraries used: tidyverse
+variable_list <- canterbury_birds %>%
+  group_by(Family) %>%
+  summarise(count = n())
+view(variable_list)
+```
+
+### A Geospatial Look
+
+Another way to look at the data is with a map. Geospatial data can be a bit tricky so we're only going to use it to get an impression of our variable. In this case we're only looking at the South Island because that's where Canterbury is, filter by North or South depending on the location of your data. We use the *mutate(...)* function to take the absolute value of all the longitudes because a few occurrences were not filled in correctly and have negative longitudes. The mutate function fixes this issue as New Zealand only has positive longitudes.
+
+```{r map, messages=FALSE, warning=FALSE}
+#libraries used: mapproj, tidyverse
+nz_map <- map_data("nz", region = "South.Island")
+
+canterbury_birds <- canterbury_birds %>%
+  mutate(longitude = abs(longitude))
+
+ggplot(data=nz_map) +
+  geom_polygon(mapping=aes(x=long, y=lat, group=group)) +
+  coord_map() +
+  geom_point(data=canterbury_birds, mapping=aes(x=longitude, y=latitude, colour=Family), alpha=0.5, size=0.5) +
+  facet_wrap(~Year) +
+  xlab("Longitude") +
+  ylab("Latitude")
+
+```
+
+### Weather Data
+
+Now we import the weather data, do this by reading in the csv file titled weather_data_all.
+
+```{r weather, messages=FALSE, warning=FALSE}
+#libraries used: tidyverse
+weather <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI303/2023h1/ass2/weather_data_all.csv", delim=",")
+```
+
+## Data tidying
+
+Our weather data requires a fair bit of tidying before we can combine it with our bird data. If you view the weather dataframe you'll notice that it contains the data for all regions in New Zealand, not just your selected one, so that needs to be filtered. We also need to select a weather variable and filter the dataset accordingly. In this case we filter Canterbury and wind.
+
+```{r weather tidying 1, messages=FALSE, warning=FALSE}
+#library used: tidyverse
+weather_tidy <- weather %>%
+  filter(Stats_Code == "wind" & State == "Canterbury")
+```
+
+The dataset has a weird quirk in which a few of the months are numerical rather than characters, we want to change those so all our months are of the same type.
+
+```{r weather tidying 2, messages=FALSE, warning=FALSE}
+#library used: tidyverse
+weather_tidy <- weather_tidy %>% 
+ mutate(Jul = as.character(Jul),
+         Aug = as.character(Aug),
+         Sep = as.character(Sep))
+```
+
+Once we've done that we can use a *pivot_longer(..., names_to = "..", values_to = "..")* function to change the structure of the dataset to match that of the bird dataset, making our months one column instead of twelve. We then use *pivot_wider(names_from = "..", values_from = "..")* to make the weather data nicer to read. We will also change the names of the months into numbers by using the mutate and *ifelse(..)* functions. Lastly we need to make sure that our month values and weather variable are numerical.
+
+```{r weather tidying 3, messages=FALSE, warning=FALSE}
+#libraries used: tidyverse
+weather_tidy <- weather_tidy %>%
+  pivot_longer(c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), names_to = "month", values_to = "x") %>%
+  pivot_wider(names_from = Stats_Code, values_from = x) %>%
+  mutate(month = ifelse(month == "Jan", 1, month), 
+         month = ifelse(month == "Feb", 2, month),
+         month = ifelse(month == "Mar", 3, month),
+         month = ifelse(month == "Apr", 4, month),
+         month = ifelse(month == "May", 5, month),
+         month = ifelse(month == "Jun", 6, month),
+         month = ifelse(month == "Jul", 7, month),
+         month = ifelse(month == "Aug", 8, month),
+         month = ifelse(month == "Sep", 9, month),
+         month = ifelse(month == "Oct", 10, month),
+         month = ifelse(month == "Nov", 11, month),
+         month = ifelse(month == "Dec", 12, month)) %>%
+  mutate(month = as.numeric(month)) %>%
+  mutate(
+         wind = as.numeric(wind))
+
+view(weather_tidy)
+
+```
+
+The bird dataframe doesn't need any tidying, but we do want to filter it by our chosen variable, in this case the Procellariidae family.
+
+```{r bird filter, messages=FALSE, warning=FALSE}
+#libraries used: tidyverse
+canterbury_filtered <- canterbury_birds %>%
+  filter(Family == "Procellariidae")
+```
+
+Now the two dataframes are ready to be combined. We do this by using the left_join function, we will join by year and month.
+
+```{r dataframes combined, messages=FALSE, warning=FALSE}
+#libraries used: tidyverse
+weather_birds <- canterbury_filtered %>%
+  left_join(weather_tidy, by=c("Year", "month"))
+view(weather_birds)
+```
+
+## Plotting the Data
+
+Now we can plot the data to see if there's a correlation between our bird and weather variables. This can be done multiple ways, I will present 3 examples.
+
+### The histogram
+
+The histogram shows frequency distributions, in this case the frequency of birds sighted at different wind levels.
+
+```{r histogram}
+#library used: tidyverse
+ggplot(data=weather_birds) +
+  geom_histogram(mapping=aes(x=wind)) +
+  labs(title = "Distribution of Procellariidae accross different wind strengths",
+       x = "Wind strength",
+       y = "Number of birds")
+```
+
+### The counts plot
+
+The counts plot plots the individual data points as dots, the dots grow bigger every time a data point overlaps. A good way to see a correlation despite overlapping data points. We use the log10 value due to large differences between bird occurrences (ranging from 1 to 5000). It makes the visualisation more readable.
+
+```{r counts plot}
+#libraries used: tidyverse
+ggplot(data=weather_birds) +
+  geom_count(mapping=aes(x=wind, y=log10(birds_spotted_month))) +
+    labs(title = "Procellariidae accross different wind strengths, counts plot",
+       x = "Wind strength",
+       y = "Number of birds in log10")
+```
+
+### Line chart scatterplot
+
+Lastly there's the combination of a line chart and scatterplot. The line chart makes it easy to read any correlations and the scatterplot helps us see how accurate the line chart is.
+
+```{r line chart and scatterplot}
+#library used: tidyverse
+ggplot(data=weather_birds) +
+  geom_point(mapping = aes(x=wind, y=log10(birds_spotted_month), colour=Family), alpha=0.5) +
+  geom_smooth(mapping=aes(x=wind, y=log10(birds_spotted_month), colour=Family), alpha=0.5, se=FALSE) +
+    labs(title = "Procellariidae accross different wind strengths, scatter/smooth plot",
+       x = "Wind strength",
+       y = "Number of birds in log10")
+```
+
+## Statistical Analysis
+
+Aside from observing a visual relationship, we can also look for a quantitative connection. We use a linear model for this using the code *lm()*
+
+```{r statistics}
+#library used: tidymodels
+lm(log10(birds_spotted_month) ~ poly(wind, 3), weather_birds) %>%
+  tidy()
+```
+
+## Conclusion
+
+With all this analysis combined we can draw a conclusion regarding the correlation between our bird and weather variables. In this case we can say that there is a positive correlation between bird occurrences from the family Procellariidae and wind strength.
