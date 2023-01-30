@@ -24,7 +24,7 @@ If you have any questions related to the assignment do not hesitate to reach Jen
 
 # Simple Assignment
 
-The simple assignment is an initial workshop in R where you follow the instructions and codes given to you on the website to get yourself familiar with R. This assignment is compulsory, therefore, everyone has to complete it. The instructions for the simple assignment can be found [here](SCIENVI303/SmallAssignment.html).
+The simple assignment is an initial workshop in R where you follow the instructions and codes given to you on the website to get yourself familiar with R. This assignment is compulsory, therefore, everyone has to complete it. The instructions for the simple assignment can be found [here](SCIENVI303/Small_Assignment.html).
 
 # Research Assignment
 
