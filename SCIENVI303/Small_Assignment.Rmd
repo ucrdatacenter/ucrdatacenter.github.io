@@ -22,7 +22,7 @@ Now let's see whether we can visualize this on a real life data.
 
 Open Rstudio and start a new script. To start a new script, click on the File drop down menu on the top left and select New File > R Script. To prevent lost work save the script right away. Again, click on the File drop down menu and select save as.
 
-Now, we can install and load our libraries in our fresh R Script. An R library or an R package is a collection of functions, data, and documentation that allows you a smooth workflow. To be able to access a package you first need to install it with the code _install.packages(...)_. You only need to install a package once. However, in order to be able to work with the packages in your RStudio environment you need to load them with the code _library(...)_. It is a good practice to have your libraries loaded on the top of your R Script so you can always come back to your code knowing which libraries you used.
+Now, we can install and load our libraries in our fresh R Script. 
 
 In this simple assignment we will be using the following packages. 
 
