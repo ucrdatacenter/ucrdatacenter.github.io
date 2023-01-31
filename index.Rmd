@@ -20,8 +20,8 @@ You can find some general tutorials on how to work with data [here](tutorial.htm
 
 ## Ongoing courses
 
-* [SCIENVI201 Ecology](SCIENVI201.html)
-* [SCIENVI303 Topics in Ecology](SCIENVI303.html)
+* [SCIENVI](SCIENVI.html)
+
 
 ## Past courses
 
