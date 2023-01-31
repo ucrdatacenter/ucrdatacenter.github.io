@@ -151,5 +151,4 @@ Congrats! You finished your simple assignment! Now, please, go to moodle and ans
 
 ## Literature
 
-Kothari, S., Montgomery, R. A., & Cavender‐Bares, J. (2021). Physiological responses to light explain competition and facilitation in a tree diversity experiment. Journal of Ecology, 109(5), 2000-2018.
-
+GBIF.org (30 January 2023) GBIF Occurrence Download  https://doi.org/10.15468/dl.kpyjbh
