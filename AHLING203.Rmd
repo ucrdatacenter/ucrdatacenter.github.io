@@ -1,0 +1,188 @@
+---
+title: "AH-LING203<br>Corpus Linguistics<br>Spring 2023"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, results = 'hide')
+```
+
+# Introduction
+
+R is a programming language created for statistical computing and data visualization. To work with R, we tend to use a environment called RStudio. If you have not installed RStudio yet, follow the instructions that you can find on the [data center website](tutorial/r_install.html). It is important to work in projects to keep your work organized. Create a new project and open a new R Script in there to run the examples from this workshop. If you need help creating a project, you can find some extra info [here](tutorial/r_basics.html).
+
+First we'll go through some of the basics of R before we start making our frequency plot. If you would like some extra information, you can always find some nice tutorials [here](tutorial/r_basics.html#Supporting_materials). We highly recommend you read through sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1%20Make%20a%20time%20series%20plot%20(using%20ggfortify)) before starting with R. Don't worry if you don't understand anything right away. Most things will become clear when you start working on it.
+
+Everything that is not a comment will be seen as executable code. If we place a single hashtag before anything, it will turn green and become a comment. You can run a piece of code by selecting it and pressing Control+Enter for Windows or Command+Enter for Mac. We strongly suggest you type out the commands in this workshop in your script yourself rather than copy-pasting them.
+
+# Workshop 1: Simple Frequency Plot
+
+```{r out.width = "90%", fig.align = "center", echo=FALSE, results = 'markup'}
+knitr::include_graphics("images/corpusling.png")
+```
+
+## Packages
+
+Open a new notebook inside your project. Right now, you don't have any loaded packages in your script. This means that all the functions and data frames you can use are restricted to those available in base R. However, base R is pretty limited. So you definitely need some help.
+
+Packages in R consist of functions, compiled code, and sample data. These packages are stored under a directory called a "library" within the R environment. Before you can use a package, you must first install it. You can do this by running the following code or by going to Tools \> Install Packages. For this assignment, you will need tidyverse and tidytext.
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+install.packages("tidytext")
+```
+
+Now that you have installed the packages, you must first load them in by running the following code for every package that you would like to use.
+
+```{r}
+library(tidyverse)
+library(tidytext)
+```
+
+If you want to learn more about a package or read up on a specific function, you can use "?" followed by the function, package, or dataset. Do this with the tidyverse package and the read_csv function. What does the read_csv function do? What do some of the arguments do?
+
+```{r}
+?tidyverse
+?read_csv
+```
+
+Let's now load a data frame into your R Environment. You can do this by using the assignment operator \<- (Alt+- for Windows and Option+- for Mac). Variables can be anything from characters, to numbers, to whole data frames. Always choose an appropriate name for the variables you are creating. Try to avoid obscure names like x or y, and use descriptive names like word_list or wikipedia_texts. Using descriptive names will make it a lot easier to keep track of what you are doing.
+
+## DATA
+
+In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv). The variables are separated by semicolons.
+
+```{r}
+wikipedia_texts <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv", delim = ";")
+```
+
+As you can see, a new variable with your data frame has been added to your Environment section (top right) in RStudio. You can see that it has 5 observations of 2 variables. To view your data frame you can open it by double clicking it there or you can use the view() function.
+
+```{r}
+view(wikipedia_texts)
+```
+
+As you can see, it does not look pretty right now because the data frame only consists of five artist names and then a large string object. (A string variable has values that are treated like text.) Since we want to see each word individually we'll use the function; unnest_tokens(). Find out what this function does with "?".
+
+```{r}
+?unnest_tokens
+```
+
+We are now making a new object "wikipedia_words" that splits the text under the "entry_text" column from "wikipedia_texts" into separate words. We are calling that column in the new data frame "word".
+
+```{r}
+wikipedia_words <- unnest_tokens(wikipedia_texts, word, entry_text)
+```
+
+Let's examine the new data frame we created. What do these functions do?
+
+```{r}
+head(wikipedia_words)
+tail(wikipedia_words)
+```
+
+Now let's count how often each word occurs. Again we are making a new object called "word_freq" by using the \<- operator. The "%\>%" thing is called the pipe operator. It is used to perform some function on an object and then passing the result through the next function, creating a "pipeline". The count function is used here to count each word per artist ("Name") and to sort the outcome.
+
+```{r}
+word_freq <- wikipedia_words %>%
+  count(Name, word, sort= T)
+```
+
+Take a look:
+
+```{r}
+head(word_freq)
+```
+
+As you can see, the words that occur the most often are not very informative. Luckily, the tidytext package has a build in data frame that contains English stop words from three lexicons.
+
+```{r}
+?stop_words
+head(stop_words)
+```
+
+Since we do not want to include these stop words in our final visualization, we have to filter them out. To do this, we use the filter() function. Try to figure out in one sentence what the following code does.
+
+```{r}
+word_freq <- filter(word_freq, !word %in% stop_words$word)
+```
+
+The "!" operator means "not". The "\$" operator is used to extract or subset a specific part of a data frame in R. The %in% operator can be used to identify if an element is "in" an object. We are therefore excluding stop words in the "word" column of the data frame "word_freq". You can read this as: make a new object that includes all the words that are not in the column "word" of "stop_word".
+
+Take a look at how the data frame changed.
+
+```{r}
+head(word_freq)
+```
+
+The data frame still contains some numbers such as years and Wikipedia referencing. Depending on your research, you have to decide whether or not you would like to include these (just like with the stop words). For this project we want to filter those out as well. Again we use the "!" and now also use the function str_detect() function.
+
+str_detect() can be used to detect the presence (or absence) of a pattern in a string. In this case we are filtering out any string that has a number from 0 to 9 in it.
+
+```{r}
+words_final <- filter(word_freq, !str_detect(word, "[0-9]"))
+```
+
+## Visualization
+
+Finally we have come to the fun part: data visualization!
+
+The first visualization will contain the top 20 most frequently used words from the Wikipedia page of Miles Davis. Again we use the filter function to extract the Miles Davis text. We then apply the top_n() function to get the top 20 most frequently used words.
+
+```{r}
+Miles_20 <- words_final %>%
+  filter(Name == "Miles_Davis") %>%
+  top_n(20)
+```
+
+Let's make a graph displaying the top 20 most used words. To make a plot we use ggplot. ggplot is *the* package for making visualizations in R. It is therefore important to make sure you have some experience with this package. You can find many tutorials online, but the data center has created a small selection for you [here](tutorial/r_basics.html#Help_with_ggplot).
+
+(aes(word, n)) constructs aesthetic mappings taking the column "word" as the x-axis and the number of times the word occurs "n" as the y-axis. We then add a bar graph by using + geom_col(). xlab(NULL) means that the x-axis label will take no value, it will be empty. coord_flip flips the whole graph 90 degrees so it's easier to read (note that n is now on the x-axis and word on the y-axis).
+
+```{r}
+Miles_20 %>% 
+  ggplot(aes(word, n)) + 
+  geom_col() + xlab(NULL) + coord_flip()
+```
+
+As you can see the words "davis" and "miles" are part of the top 20. Can you figure out what the code below does?
+
+```{r}
+Miles_20 <- words_final %>%
+  filter(Name == "Miles_Davis") %>%
+  filter(!word %in% c("davis", "miles")) %>%
+  top_n(20)
+```
+
+To make the graph easier to read, we would like to have the words in descending order, rather than in alphabetic. We do this using the mutate() function. Use ? to figure out what this function does. What has changed after running this code?
+
+```{r}
+Miles_20 %>% 
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(word, n)) + geom_col() + xlab(NULL) + coord_flip()
+```
+
+Before you go to work on the assignment, try to create a similar plot with one of the other musicians in the file. See if you can get rid of the stop words and, if you have time left, try to customize the plot with some additional ggplot functions. You can find resources on how to work with ggplot on the [data center website](tutorial/r_basics.html#Help_with_ggplot). As always, you can also use the ? operator to learn more about the functions. See if you can change the theme, colors, or fonts. Perhaps you want to add a title or use the wesanderson package to use a color palette from one of his movies!
+
+## Extra: Word Cloud
+
+For an additional data visualization we want to make a word cloud. Even though it's not very informative, it does look quite nice. Load the package "wordcloud" and install it first if needed. If you are up for a challenge, see if you can create one from scratch! Otherwise, you can just copy the code below and have some fun with changing the parameters. Maybe you can create a word cloud for one of the other musicians!
+
+```{r}
+library(wordcloud)
+words_final %>%
+  filter(Name == "Miles_Davis") %>% 
+  filter(!word %in% c("davis", "miles")) %>%
+  with(wordcloud(word, n, max.words = 50, random.order = FALSE, rot.per = 0.35, 
+                             colors = brewer.pal(8, "Dark2")))
+```
+
+# Workshop 2: Webscraping
