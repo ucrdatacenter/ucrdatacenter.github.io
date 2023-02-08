@@ -47,18 +47,18 @@ library(tidyverse)
 library(tidytext)
 ```
 
-If you want to learn more about a package or read up on a specific function, you can use "?" followed by the function, package, or dataset. Do this with the tidyverse package and the read_csv function. What does the read_csv function do? What do some of the arguments do?
+If you want to learn more about a package or read up on a specific function, you can use "?" followed by the function, package, or dataset. Do this with the tidyverse package and the read_csv function. What does the read_delim function do? What do some of the arguments do?
 
 ```{r}
 ?tidyverse
-?read_csv
+?read_delim
 ```
 
 Let's now load a data frame into your R Environment. You can do this by using the assignment operator \<- (Alt+- for Windows and Option+- for Mac). Variables can be anything from characters, to numbers, to whole data frames. Always choose an appropriate name for the variables you are creating. Try to avoid obscure names like x or y, and use descriptive names like word_list or wikipedia_texts. Using descriptive names will make it a lot easier to keep track of what you are doing.
 
 ## DATA
 
-In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv). The variables are separated by semicolons.
+In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" from github and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv). The variables are separated by semicolons. That's why we specify the delim to be ";".
 
 ```{r}
 wikipedia_texts <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv", delim = ";")
@@ -70,7 +70,7 @@ As you can see, a new variable with your data frame has been added to your Envir
 view(wikipedia_texts)
 ```
 
-As you can see, it does not look pretty right now because the data frame only consists of five artist names and then a large string object. (A string variable has values that are treated like text.) Since we want to see each word individually we'll use the function; unnest_tokens(). Find out what this function does with "?".
+As you can see, it does not look pretty right now because the data frame only consists of five artist names and then a large string object. (A string variable has values that are treated like text.) Since we want to see each word individually we'll use the function unnest_tokens(). Find out what this function does with "?".
 
 ```{r}
 ?unnest_tokens
@@ -170,7 +170,7 @@ Miles_20 %>%
   ggplot(aes(word, n)) + geom_col() + xlab(NULL) + coord_flip()
 ```
 
-Before you go to work on the assignment, try to create a similar plot with one of the other musicians in the file. See if you can get rid of the stop words and, if you have time left, try to customize the plot with some additional ggplot functions. You can find resources on how to work with ggplot on the [data center website](tutorial/r_basics.html#Help_with_ggplot). As always, you can also use the ? operator to learn more about the functions. See if you can change the theme, colors, or fonts. Perhaps you want to add a title or use the wesanderson package to use a color palette from one of his movies!
+Before you go to work on the assignment, try to create a similar plot with one of the other musicians in the file. See if you can get rid of the stop words and, if you have time left, try to customize the plot with some additional ggplot functions. You can find resources on how to work with ggplot on the [data center website](tutorial/r_basics.html#Help_with_ggplot). As always, you can also use the ? operator to learn more about the functions. See if you can change the theme, colors, or fonts. Perhaps you want to add a title or use the wesanderson package to use a color palette from one of his movies! 
 
 ## Extra: Word Cloud
 
