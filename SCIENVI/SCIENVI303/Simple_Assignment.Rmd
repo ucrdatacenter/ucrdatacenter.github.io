@@ -1,7 +1,8 @@
 ---
 title: "Simple Assignment SCIENVI303"
-output: html_document
-date: "2023-01-23"
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
 ---
 
 ```{r setup, include=FALSE}

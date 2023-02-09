@@ -1,14 +1,8 @@
 ---
-title: "SCIENVI<br>Spring 2023"
-date: 'Last updated: `r Sys.Date()`'
-output:
-  html_document:
-    theme: cosmo
-    toc: yes
-    toc_depth: 3
-    toc_float:
-      collapsed: no
-      smooth_scroll: yes
+title: "SCIENVI<br>Spring<br>2023"
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
 ---
 
 \

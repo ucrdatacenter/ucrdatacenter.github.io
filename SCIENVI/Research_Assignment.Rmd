@@ -1,8 +1,8 @@
 ---
 title: "The Correlation between the Procellariidae Family and the Strength of the Wind in Canterbury, New Zealand"
-author: "Jennifer Lee"
-date: "2023-01-21"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
 ---
 
 ## Instructions
