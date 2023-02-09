@@ -1,8 +1,13 @@
 ---
 title: "Simple Assignment SCIENVI303"
+date: "Spring 2023<br>Last updated: `r Sys.Date()`"
 output: 
-  prettydoc::html_pretty:
-    theme: tactile
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +24,7 @@ During the process of tree photosynthesis, atmospheric CO2 is assimilated into a
 
 Now let's see whether we can visualize this on a real life data. 
 
-### STEP I - RStudio
+## STEP I - RStudio
 
 Open Rstudio and start a new script. To start a new script, click on the File drop down menu on the top left and select New File > R Script. To prevent lost work save the script right away. Again, click on the File drop down menu and select save as.
 
@@ -45,7 +50,7 @@ library(readr)
 
 ```
 
-### STEP II - Data Import
+## STEP II - Data Import
 
 Now, we need to import our data in our Rstudio. Usually, you would download data into your computer first and as a next step, you would load it in RStudio. In this case, our data is readily available on GitHub and can be imported into our RStudio directly from there.
 
@@ -60,7 +65,7 @@ data <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/
 
 This data set contains information collected by a group of researchers who were analyzing the tree physiological response to different light exposure (Kothair, et al., 2021). In this extraction of their data we can find the species name, the treatment that was applied, measure of net carbon assimilation measured in μmol/m2/s and the leaf temperature measure in °C. To view the data set, simply click on it in your environment or use the function View(), where in the parantheses you type the name of the data set.
 
-### STEP III - Data Manipulation
+## STEP III - Data Manipulation
 
 In order to select only part of data for further purposes sometimes we want to filter in certain part of the dataset. We can do this with the filter() function. In our case, we can filter only one tree species instead of all 4 which are present in the data set. 
 
@@ -71,7 +76,7 @@ BP <- data %>%
 
 We connect the data table called data and the filter funciton with the pipe operator ( %>% ). The pipe operator uses the previous result as an input. In the case above it takes the object data as the first argument of the filter() function. 
 
-### STEP III - Visualization
+## STEP III - Visualization
 
 Now, that we filtered a single species lets see whether we can visualize a graph. 
 
@@ -142,7 +147,7 @@ data %>%
 ```
 
 
-### STEP IV - Recap
+## STEP IV - Recap
 
 Congrats! You finished your simple assignment! Now, please, go to moodle and answer a few questions to conclude on this assignment. 
 

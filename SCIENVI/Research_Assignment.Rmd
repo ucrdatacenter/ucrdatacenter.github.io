@@ -1,9 +1,15 @@
 ---
 title: "The Correlation between the Procellariidae Family and the Strength of the Wind in Canterbury, New Zealand"
+date: "Spring 2023<br>Last updated: `r Sys.Date()`"
 output: 
-  prettydoc::html_pretty:
-    theme: tactile
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
 ---
+
 
 ## Instructions
 
