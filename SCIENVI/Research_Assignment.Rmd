@@ -1,5 +1,5 @@
 ---
-title: "The Correlation between the Procellariidae Family and the Strength of the Wind in Canterbury, New Zealand"
+title: "The Correlation between the Procellariidae Family and the Strength of the Wind in Canterbury, New Zealand SCIENVI"
 date: "Spring 2023<br>Last updated: `r Sys.Date()`"
 output: 
   html_document:
