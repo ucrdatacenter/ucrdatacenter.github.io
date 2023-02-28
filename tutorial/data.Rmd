@@ -1,0 +1,32 @@
+---
+title: "Useful data sources"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# General data sources
+
+* [Our World in Data](https://ourworldindata.org/): open-access data source for a wide range of indicators
+* [World Bank Open Data](https://data.worldbank.org/): open-access data source related to development
+* [OECD data](https://data.oecd.org/): open-access data source primarily on advanced economies
+* [Eurostat](https://ec.europa.eu/eurostat/web/main/home): European Union data
+* [Gapminder](https://www.gapminder.org/data/): open-access data source related to development; all World Development Indicators also available here
+
+# Field-specific data sources
+
+## Ecology
+
+* 
+
+## Economics
+
+* [Total Economy Database](https://www.conference-board.org/data/economydatabase/total-economy-database-productivity): data on GDP and labour statistics for 131 countries (available after creating a free account)
+* [FRED (US Federal Reserve)](https://fred.stlouisfed.org/tags/series): mostly US economic data
+* [Maddison Historical Statistics](https://www.rug.nl/ggdc/historicaldevelopment/maddison/?lang=en): GDP per capita and population data for 169 countries between 1000--2018

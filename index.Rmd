@@ -14,12 +14,12 @@ You can find information and supplementary materials for all data encounters in 
 The Data Center student fellows hold office hours in the Data Center's office (pre-med space) to answer questions and help with assignments related to the Data Center projects.
 If you would like to request an individual consultation, feel free to send an email to datacenter@ucr.nl.
 
-* AH-LING203 - Corpus Linguistics: Wednesdays 13:00-15:00 (Jochem)
+<!-- * AH-LING203 - Corpus Linguistics: Wednesdays 13:00-15:00 (Jochem) -->
 * SCIENVI - Ecology & Topics in Ecology: Tuesdays 11:30-13:30 (Jennifer and Bianka)
 
-## General tutorials
+## General support
 
-You can find some general tutorials on how to work with data [here](tutorial.html).
+You can find some general tutorials on working with data and a collection of useful data sources [here](tutorial.html).
 
 ## Ongoing courses
 
