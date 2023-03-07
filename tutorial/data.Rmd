@@ -31,6 +31,7 @@ output:
 * [DRYAD](https://datadryad.org/search): open-access research data
 * [eBird](https://ebird.org/explore): data collection on bird distribution, abundance, habitat use, and trends
 * [waterinfo](https://waterinfo.rws.nl/#!/nav/themakaarten/): physical and chemical data on water in the Netherlands
+* [British Antarctic Survey](https://data.bas.ac.uk/): database on agriculture, atmosphere, biosphere, climate indicators, cryosphere, human dimension, hydrosphere, land surface, oceans, paleoclimate, solid earth and sun-earth interactions in the antarctic region
 * [WorldClim](https://www.worldclim.org/data/index.html): database of high resolution global weather and climate data including future predictions (spatial data)
 * [Land-Use Harmonization](https://luh.umd.edu/index.shtml): database of high resolution land use information (spatial data)
 
