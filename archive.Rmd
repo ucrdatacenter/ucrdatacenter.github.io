@@ -13,3 +13,5 @@ output:
   + [Spring 2022](archive/SSCECON209_2022h1.html)
 * SSCECON307 Econometrics:
   + [Fall 2022](archive/SSCECON307_2022h2.html)
+* AHLING203 Corpus Linguistics:
+  + [Spring 2023](archive/AHLING203_2023h1.html)
