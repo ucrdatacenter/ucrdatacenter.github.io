@@ -5,6 +5,15 @@ output:
     theme: tactile
 ---
 
+# The basics of R
+
 * [Installing R](tutorial/r_install.html)
 * [R basics](tutorial/r_basics.html)
+
+# More R
+
+* [Importing data](tutorial/r_data.html)
+
+# Other
+
 * [Useful data sources](tutorial/data.html)
