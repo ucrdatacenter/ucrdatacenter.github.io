@@ -12,6 +12,7 @@ output:
 
 # More R
 
+* [Useful links](tutorial/links.html)
 * [Importing data](tutorial/r_data.html)
 
 # Other

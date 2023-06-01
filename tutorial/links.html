@@ -11,7 +11,7 @@
 
 
 
-<title>R basics</title>
+<title>Useful links</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1532,58 +1532,121 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">R basics</h1>
+<h1 class="title toc-ignore">Useful links</h1>
 <h4 class="date">Last updated: 2023-06-01</h4>
 
 </div>
 
 
-<div id="first-steps" class="section level2">
-<h2>First steps</h2>
-<p>This tutorial assumes that you have already installed R and RStudio.
-Some good resources to get a basic familiarity with the setup of R and
-some key definitions are <a href="https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf">A
-(very) short introduction to R</a> and sections 1-4 of <a href="http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1%20Make%20a%20time%20series%20plot%20(using%20ggfortify)">How
-to make any plot in ggplot2?</a>.</p>
-</div>
-<div id="creating-a-project-in-rstudio" class="section level2">
-<h2>Creating a project in RStudio</h2>
-<p>It is convenient to create an R project for each assignment that you
-are working on. A project is basically a folder that stores all files
-related to the assignment.</p>
-<p>You can create a project as follows:</p>
+<p>You’ll work on different assignments in different courses, but some
+general resources for working with R can be helpful in a wide range of
+assignments. Below are some helpful links in case you would like to
+complement the Data Center workshops and tutorials (which you can find
+on the Tutorials page and the individual course pages).</p>
+<div id="the-basics-of-r" class="section level1">
+<h1>The basics of R</h1>
 <ul>
-<li>Open RStudio and click on “Project: (None)” in the top right
-corner.</li>
-<li>Open the dropdown window and click on “New Project….”</li>
-<li>In the popup window select “New Directory”, then “New Project.”</li>
-<li>Choose a sensible name for your project and enter it as the
-Directory Name. You can either use the default file path or change it by
-clicking “Browse…” next to “Create project as a subdirectory of:.”</li>
-<li>Finally, click on “Create project.”</li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf">Cheat
+sheet for importing data</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf">Cheat
+sheet for data manipulation</a> (including <code>filter()</code>,
+<code>select()</code> and the pipe operator(<code>%&gt;%</code>))</li>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf">Cheat
+sheet for data tidying</a> (including reshaping and pivoting)</li>
+<li><a href="https://moderndive.netlify.app/1-getting-started.html#getting-started">Getting
+started with Data in R</a> (covers: using R and RStudio, basic
+terminology, introduction to packages)</li>
+<li><a href="https://rstudio-education.github.io/hopr/r-objects.html">R
+objects</a></li>
+<li><a href="https://r4ds.had.co.nz/workflow-projects.html">Advice on
+using projects</a></li>
+<li><a href="https://raw.githack.com/uo-ec607/lectures/master/04-rlang/04-rlang.html#1">Full
+tutorial on R language basics (slides)</a></li>
+<li><a href="https://raw.githack.com/uo-ec607/lectures/master/05-tidyverse/05-tidyverse.html#1">Full
+tutorial on data cleaning and wrangling (slides)</a></li>
+<li><a href="https://r4ds.had.co.nz/pipes.html">More explanation on the
+pipe operator</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-dataI.html#sec:pipe">Selecting
+and filtering data</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa">Conversions
+between long and wide format</a></li>
+<li><a href="https://www.youtube.com/watch?v=WyrJmJWgPiU">Creating a
+project in RStudio (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=v6VygIgvoZU&amp;t=1s">Packages in
+R (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=2MVolYETR5Q">Loading a data
+file (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=Zc_ufg4uW4U">Data
+manipulation (video)</a></li>
 </ul>
-<p>After a project is created, there are two easy ways of accessing it.
-You can either use the same dropdown window in the top right corner of
-RStudio that you used to create the project, and click on the name of
-the project there, or you can find the project folder within your files
-and click on the file with the .Rproj extension.</p>
 </div>
-<div id="installing-packages" class="section level2">
-<h2>Installing packages</h2>
-<p>Most of the time when you work with R, you’ll need to use functions
-or data from packages next to the base R functions that are
-automatically loaded when you open R.</p>
-<p>One such package that you should almost always load when working with
-R is <code>tidyverse</code>, which is a collection of packages that
-allow clean workflows of data import, cleaning and manipulation in R.
-The <code>ggplot2</code> package that you can use to create figures is
-one of these included packages.</p>
-<p>You need to install each package only once, but you need to load them
-every time you open and use R. It is good practice to load the package
-on the top of each script. This is how you would install and load
-<code>tidyverse</code> (and any other package).</p>
-<pre class="r"><code>install.packages(&quot;tidyverse&quot;) # install the package</code></pre>
-<pre class="r"><code>library(tidyverse) # load the package</code></pre>
+<div id="help-with-ggplot" class="section level1">
+<h1>Help with <code>ggplot</code></h1>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf">Cheat
+sheet for <code>ggplot</code></a></li>
+<li><a href="https://www.r-graph-gallery.com/">The R Graph Gallery
+(example plots, including full R scripts)</a></li>
+<li><a href="https://mdsr-book.github.io/mdsr2e/ch-vizII.html#a-grammar-for-data-graphics">More
+details on data visualization</a></li>
+<li><a href="https://www.tutorialgateway.org/save-r-ggplot-using-ggsave/">Saving
+plots with <code>ggsave()</code></a></li>
+<li><a href="https://www.youtube.com/watch?v=hr2X7rmkprM">Basic
+<code>ggplot</code> tutorial (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=1GmQ5BdAhG4">Customizing
+plots (video)</a></li>
+</ul>
+</div>
+<div id="importing-data" class="section level1">
+<h1>Importing data</h1>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf">Cheat
+sheet for data import</a></li>
+<li><a href="https://uomresearchit.github.io/r-tidyverse-intro/03-loading-data-into-R/">More
+on <code>read_csv()</code></a></li>
+<li><a href="https://tutorials.methodsconsultants.com/posts/reading-sas-spss-or-stata-files-into-r-using-haven/">Import
+with <code>haven</code></a></li>
+<li><a href="https://www.youtube.com/watch?v=366N1K1ja8g">Import with
+<code>readr</code> and <code>readxl</code> (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=egFoDj6H9Ts">Import using
+<code>haven</code> (video)</a></li>
+</ul>
+</div>
+<div id="data-cleaning" class="section level1">
+<h1>Data cleaning</h1>
+<ul>
+<li><a href="https://rpubs.com/AnalystNyamu/507453">Filter, select,
+mutate and summarize data</a></li>
+<li><a href="https://www.sharpsightlabs.com/blog/mutate-in-r/">More on
+<code>mutate()</code></a></li>
+<li><a href="https://r-graphics.org/recipe-dataprep-summarize">Summarizing data
+by groups</a></li>
+<li><a href="https://www.r-bloggers.com/2021/06/summarize-in-r-data-summarization-in-r/">List
+of common useful functions within <code>summarize()</code></a></li>
+<li><a href="https://www.datasciencemadesimple.com/rename-the-column-name-in-r-using-dplyr/">More
+on <code>rename()</code></a></li>
+<li><a href="https://universeofdatascience.com/how-to-handle-missing-values-in-r/">How
+to handle missing data</a></li>
+<li><a href="https://www.youtube.com/watch?v=nRtp7wSEtJA">Select,
+filter, mutate and summarize data (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=zAlbrPozMHI">Summarizing by
+groups (video)</a></li>
+<li><a href="https://www.youtube.com/watch?v=O_gPPrezk5o">How to handle
+missing values (video)</a></li>
+</ul>
+</div>
+<div id="merging-data" class="section level1">
+<h1>Merging data</h1>
+<ul>
+<li><a href="https://www.r4epi.com/working-with-multiple-data-frames.html"><code>bind_rows()</code>
+and join functions visualized</a></li>
+<li><a href="https://www.datasciencemadesimple.com/join-in-r-merge-in-r/">More
+on join functions</a></li>
+<li><a href="https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti">Examples
+of using joins</a></li>
+<li><a href="https://www.youtube.com/watch?v=Yg-pNqzDuN4">More on join
+functions (video)</a></li>
+</ul>
 </div>
 
 
