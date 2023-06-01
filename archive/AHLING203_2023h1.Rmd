@@ -31,7 +31,7 @@ knitr::include_graphics("images/corpusling.png")
 
 ## Packages
 
-Open a new notebook inside your project. Right now, you don't have any loaded packages in your script. This means that all the functions and data frames you can use are restricted to those available in base R. However, base R is pretty limited. So you definitely need some help.
+Open a new script inside your project. Right now, you don't have any loaded packages in your script. This means that all the functions and data frames you can use are restricted to those available in base R. However, base R is pretty limited. So you definitely need some help.
 
 Packages in R consist of functions, compiled code, and sample data. These packages are stored under a directory called a "library" within the R environment. Before you can use a package, you must first install it. You can do this by running the following code or by going to Tools \> Install Packages. For this assignment, you will need tidyverse and tidytext.
 
@@ -56,7 +56,7 @@ If you want to learn more about a package or read up on a specific function, you
 
 Let's now load a data frame into your R Environment. You can do this by using the assignment operator \<- (Alt+- for Windows and Option+- for Mac). Variables can be anything from characters, to numbers, to whole data frames. Always choose an appropriate name for the variables you are creating. Try to avoid obscure names like x or y, and use descriptive names like word_list or wikipedia_texts. Using descriptive names will make it a lot easier to keep track of what you are doing.
 
-## DATA
+## Data
 
 In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" from github and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv). The variables are separated by semicolons. That's why we specify the delim to be ";".
 
@@ -185,4 +185,113 @@ words_final %>%
                              colors = brewer.pal(8, "Dark2")))
 ```
 
-# Workshop 2: Webscraping
+# Workshop 2: Web scraping
+
+Imagine you want to create your own corpus from texts from the internet. Then, manually copy-pasting every text would be a lot of work. Web scraping is the process of automatically gathering data from websites. Web pages are made in a markup language like HTML or XHTML. Web scraping takes advantage from the structure of these languages to extract data from web pages. In this workshop, we will create text files ready for corpus analysis by scraping the scripts of a full season of NCIS from [subslikescript.com](https://subslikescript.com/series/NCIS-364845).
+
+## Packages
+
+Just like in the former workshop, we will need the help of some packages. Besides tidyverse and tidytext, we will also use the rvest package. Remember to install the packages if you haven't worked with them before. 
+```{r}
+library(tidyverse)
+library(tidytext)
+library(rvest)
+library(polite)
+```
+The rvest package will allow us to scrape data from web pages and extract the necessary information. The polite package has two main functions: bow() and scrape(). Bow will introduce us to the host of the web page to ask for permission. The scrape function will then automatically follow the specifications of the web page: e.g., which parts of the page can be accessed by web scrapers or how frequently can we access the page in a row? However, before we will use these functions, let's first take a look at what we want to scrape and what the web page looks like. 
+
+## HTML
+Go to [this website](https://subslikescript.com/series/NCIS-364845/season-1/episode-1-Yankee_White) for the script of the very first episode of NCIS. To inspect what this page looks like in HTML, you can right click on the information you want to see and select "inspect". This will open a screen that might look slightly intimidating. However with some further investigation, you see that it shows the web page and how it is formatted. If you hover over some of the code, you can see that this will highlight some parts of the web page. You can expand and collapse parts by clicking on the small triangles. Try to find the piece of HTML that concerns the text of the script. 
+
+```{r out.width = "90%", fig.align = "center", echo=FALSE, results = 'markup'}
+knitr::include_graphics("images/inspectpage.png")
+```
+
+If you take a good look, you'll find that every part of the page starts with <> and </>. For example, all the way at the top, you'll find the header (\<head> ... \</head>). You can also find the start of the body with <body>. Moreover, \<h> ... \</h> indicate headings, \<p> ... \</p> paragraphs, \<a> ... \</a> links, \<img> ... \</img> images, etc.
+
+## Scraping a Single Page
+
+Before automatically scraping an entire season, let's first start with one episode. First, create a url object in R with the link of the web page you want to scrape. Then, use the bow() function from the polite package to introduce us to the host. If you look at the url_bow object, you'll see that the path is scrapable, but that there are a couple rules we need to adhere to. For example, there is a 5 sec delay between every request in order to not overload the page. 
+```{r echo=TRUE}
+url <- "https://subslikescript.com/series/NCIS-364845/season-1/episode-1-Yankee_White"
+url_bow <- bow(url)
+url_bow
+```
+Now, we can use the scrape() function to get the data we're interested in.
+```{r}
+text <- scrape(url_bow) %>%
+  html_element("div.full-script") %>%
+  html_text2()
+```
+First, we're scraping the entire page. The function html_element() will select the HTML element. If we look at our web page, we see that the script is present in a \<div> element, indicating a section or division. Conveniently, this \<div> section has a class name "full-script". To ensure we only get the script, we will use the element "div.full-script". Lastly, the html_text2() function retrieves the text from the selected HTML element and also simulates what it looks like on the page.
+
+## Cleaning & RegEx
+If you take a look at the text, you'll find that there are still some parts that will create some problems in the corpus. For example, the script includes some actions like "(CHUCKLES LIGHTLY)". Furthermore, it displays a speaking character with, e.g., "TONY:". We can remove these quite easily using regular expressions. 
+
+Regular expressions are patterns that you can use to remove, replace, or select parts of a string. I recommend you take a look at this [cheat sheet](https://cheatography.com/davechild/cheat-sheets/regular-expressions/) and the [online tester](https://regex101.com/) and try to figure out how to select these patterns. The following code will also do the job
+```{r}
+clean_text <- text %>%
+  str_remove_all("\\([A-Z\\s\\.]+\\)") %>%
+  str_remove_all("[A-Z\\s\\.]+\\:")
+```
+The first part removes all the capitalized words and abbreviations in parentheses and the second part all the capitalized words and abbreviations before a colon. Now the script is ready and can be exported into a txt file. 
+
+```{r eval=FALSE}
+writeLines(clean_text, "script.txt")
+```
+
+## Multiple Scrapes
+We probably could have copied the text and manually cleaned the text in a lot less time. However, what if we wanted to do this for the entire season, or the entire show. We can do this by first scraping all the urls for every episode and then scraping the script from all these urls. Let's go back to the [subslikescript.com NCIS page](https://subslikescript.com/series/NCIS-364845). You'll find links to a similar page of every single episode in every season. We'll focus on the first season. Let's scrape these urls.
+
+```{r}
+episode_links <- scrape(bow("https://subslikescript.com/series/NCIS-364845")) %>%
+  html_elements("div.season > ul > li > a") %>%
+  html_attr("href")
+```
+The links are a little bit more nested, so we'll have to go through a couple layers before we get to the HTML element that contains the links. If we do not follow this path and just take the "a" (links) elements, we'll scrape all the links on the page and we're only interested in those that lead to the episodes. We also take the attribute href. Let's see what it obtains.
+```{r echo=TRUE}
+head(episode_links)
+```
+As you can see, it is not a full url yet. Therefore, we need to paste the url of the home page in front.
+
+```{r}
+episode_links_full <- paste0("https://subslikescript.com", episode_links)
+```
+
+Now, we can use the links to scrape the individual episodes. First we create an empty tibble (tidyverse table) with a column for the title of the episodes (scraped in the same way) and the scripts. We also only take the first 23 episodes from the first season. 
+
+```{r}
+titles <- scrape(bow("https://subslikescript.com/series/NCIS-364845")) %>%
+  html_elements("div.season > ul > li > a") %>%
+  html_text2()
+
+scripts <- tibble(
+  title = titles[1:23],
+  entry_text = NA
+)
+```
+
+To scrape all the scripts one by one, we'll use a for-loop. For-loops can be used to iterate over a block of code. Here, we iterate over the pipeline 23 times. Every iteration, "i" will be increased by one, up to 23. We can use "i" as a value inside the for-loop as well. We start with i = 1. We scrape the script from the "i-th" episode (episode_links_full[i]). Then we take the full script from this page, extract the text, and clean the actions and characters as described before. This texts gets added to the second column in the "i-th" row. You can imagine how this goes through every single episode.
+```{r}
+for (i in 1:23) {
+  scripts[i,2] <- scrape(bow(episode_links_full[i])) %>%
+    html_elements("div.full-script") %>%
+    html_text2() %>%
+    str_remove_all("\\([A-Z\\s\\.]+\\)") %>%
+    str_remove_all("[A-Z\\s\\.]+\\:")
+}
+```
+Now with only a couple lines of code, we have scraped and cleaned the entire first season of NCIS. Much faster than by hand! Let's export it as text files which can be used inside corpus software. 
+```{r eval=FALSE}
+filename <- paste0(unlist(scripts[1,1]), ".txt")
+write_lines(scripts[1,2], filename)
+```
+This writes the script of the first episode as a .txt file into your directory.
+
+## Conclusion
+This workshop looked at web scraping and cleaning data with regular expressions. This process takes a lot of practice and highly depends on what websites you are using. Cleaning texts can also be extremely challenging already if it becomes a bit more messy. However, I have hoped to show you some of the basics in R and that with some practice, this can become a lot less tedious than manual work! 
+
+
+
+
+
