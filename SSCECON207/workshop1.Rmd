@@ -34,9 +34,9 @@ In each section of this tutorial you will find videos guiding you through the pr
 You should first read the relevant section as an introduction to the contents, then watch and follow along with the video presenting the steps in more detail.
 
 If you have any questions after watching a video, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](https://ucrdatacenter.github.io/tutorial), try googling your question, or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl) to attend office hours.
-The code shown in the videos is available on [Github ADD LINK](link).
+The code shown in the videos is available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/2023h1/workshop1code.R).
 
-### [**---Introduction to R video TBA---**](link) {.unlisted .unnumbered}
+### [**---Introduction to R video (4:29)---**](https://vimeo.com/832925882/bd8a522005?share=copy) {.unlisted .unnumbered}
 
 # Finding and importing data
 
@@ -76,8 +76,6 @@ Every following step is the same, except that you do need to load the `readxl` p
 ## Other data formats
 
 If you are interested, more information on importing files with other data formats, and writing your own import code are shown in [this tutorial](https://ucrdatacenter.github.io/tutorial/r_data.html).
-
-### [**---Data import video TBA---**](link) {.unlisted .unnumbered}
 
 # Data cleaning and manipulation
 
@@ -135,7 +133,7 @@ Helpful functions in this case are the following:
 * `summarize()`: to create new variables using functions, using all rows from your data frame (or from a part of your data frame) - think e.g. if you have a data frame of GDP data from 20 years, and you want to calculate the average value of GDP in this dataset.
 * `group_by()`: to specify grouping variables before using `mutate()` or `summarize()` - think e.g. if you have GDP data from 20 years from two countries, and you want to calculate average GDP over time separately for the two countries.
 
-### [**---Data cleaning video part 1 TBA---**](link) {.unlisted .unnumbered}
+### [**---Data import and cleaning video part 1 (21:58)---**](https://vimeo.com/832931622/b07190e1d9?share=copy) {.unlisted .unnumbered}
 
 ## Long and wide format
 
@@ -182,7 +180,7 @@ However, most of the time you need something more complicated than row-binding.
 E.g. if in both dataframes your entities are defined by the country and the year, you want to match up the observations so that each row contains data from only one country-year combination.
 If your identifying variables have the same names in both datasets, you can replace the `bind_rows()` function with `full_join()` and specify the dataframes to combine as the argument in the same way.
 
-### [**---Data cleaning video part 2 TBA---**](link) {.unlisted .unnumbered}
+### [**---Data cleaning video part 2 (12:22)---**](https://vimeo.com/832934116/051234174c?share=copy) {.unlisted .unnumbered}
 
 # First `ggplot` figures
 
@@ -214,4 +212,4 @@ This function saves the last plot you created, and you can also use other file f
 If you would like to see more ways of plotting with `ggplot`, check out the [R Graph Gallery](https://r-graph-gallery.com/) or some of the other useful links [here](https://ucrdatacenter.github.io/tutorial/r_basics.html#Help_with_ggplot).
 Sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)) give particularly good explanations for beginners.
 
-### [**---`ggplot` video TBA---**](link) {.unlisted .unnumbered}
+### [**---`ggplot` video (8:39)---**](https://vimeo.com/832937336/c1b17157d7?share=copy) {.unlisted .unnumbered}
