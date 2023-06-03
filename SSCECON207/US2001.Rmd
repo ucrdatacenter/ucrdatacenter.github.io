@@ -1,0 +1,166 @@
+---
+title: "SSCECON207:<br>The 2001 US crisis"
+date: "Spring 2023 (June)<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+```{r import}
+library(tidyverse)
+library(patchwork)
+
+d <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2023h1/US2001data.csv") %>% mutate(across(-DATE, as.numeric))
+```
+
+```{r plot_function}
+plot_ts <- function(variable, name) {
+  d %>% 
+    rename("y" = variable) %>% 
+    drop_na(y) %>% 
+    filter(DATE >= as.Date("1993-01-01"), 
+           DATE <= as.Date("2003-01-01")) %>%
+    ggplot(aes(DATE, y)) +
+    geom_line() +
+    xlab("") + ylab(name) +
+    scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+    theme_light()
+}
+```
+
+# Introduction
+
+This case looks at the causes of the 2001 US recession.
+It explains how to find these causes, how to evaluate their relative importance, and how to measure their effects.
+This case is fairly straightforward: 
+the economy largely follows the predictions of the IS-LM model; 
+the causes, in hindsight, are clear.
+Still, we hope this case gives you a useful primer on how to understand more complex crises.
+
+***Note:***  
+*The code used to create the figures used in this case study is available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/2023h1/US2001code.R).*
+
+# Causes
+
+We study two potential causes: declining business confidence and declining consumer confidence.
+The former originates from the burst of the so called dotcom bubble:
+the IS-LM model predicts that a fall in business confidence shifts the IS curve to the left and leads to lower investment and lower output.
+The latter originates from the fear and uncertainty caused by the September 11 terrorist attacks:
+the IS-LM model predicts that a fall in consumer confidence, shifts the IS curve to the left and leads to lower consumption and lower output.
+Let's evaluate the importance of the two effects by studying the data.
+
+## The IS curve
+
+### Investment
+
+Stock market indices provide a proxy for business confidence.
+If investors are optimistic about a firm's future they are willing to pay a higher price for its shares.
+As a result, rising stock prices tend to indicate investor optimism.
+Since in this case we are particularly interested in stocks related to technology, we look at the NASDAQ composite stock index, which heavily features companies in information technology.
+
+The evolution of the NASDAQ index shows that business confidence was growing in the '90s but fell sharply in 2000-2001.
+
+The IS-LM model predicts that this drop in business confidence should lead to a drop in investment.
+This is indeed what we see in 2000-2001.
+While the drop in personal investment is less drastic than the drop in business confidence, it is abrupt and substantial. 
+It contrasts sharply with the period of continuous investment growth observed in the 90s.
+Thus, the data agrees with the theory.
+
+```{r}
+b0 <- plot_ts("NASDAQCOM", "b0: NASDAQ index")
+I  <- plot_ts("GPDI", "I: Gross personal\ndomestic investment")
+b0 + I + plot_layout(ncol = 1)
+```
+
+### Consumption
+
+We plot the evolution of consumer confidence (measured by the Consumer sentiment indicator).
+This measure grew through the '90s, stayed at high levels in 1998-2000, and dropped afterwards.
+In part, this drop was likely caused by the burst of the dotcom bubble and the emerging recession.
+In part, however, it was exogenous, caused by the September 11 terrorist attacks:
+at the time, experts expected the resulting fear and uncertainty to affect consumer behavior and to make the recession worse.
+
+However, when we look at how consumption changed before and during the recession, we see only minor effects: 
+in some quarters of 2001 consumption growth was close to zero but never negative;
+in other quarters it was positive and comparable to earlier years.
+Therefore, the drop in consumer confidence does not appear to have led to a drop in consumption, unlike what the IS-LM model predicts.
+
+```{r}
+c0 <- plot_ts("UMCSENT", "c0: Consumer sentiment")
+C  <- plot_ts("PCE", "C: Private consumption")
+c0 + C + plot_layout(ncol = 1)
+```
+
+Overall, the IS curve appears to have shifted down during the recession, leading to a fall in output.
+The data suggests that this shift was mainly caused by the reduction in business confidence and the resulting fall in investment.
+
+# Policy responses
+
+During a recession policy-makers generally aim to return output back to its original level.
+Since in this case we have established that the recession was caused by a leftward shift of the IS-curve, the IS-LM model suggests that there are two potential policy responses:
+policy-makers can either shift the IS curve back to the right, or they can shift the LM curve down.
+
+In the following we look at the data to determine what policy choices have been made.
+
+## The IS curve
+
+A government can shift the IS curve to the right by either increasing government expenditures or decreasing taxes.
+In this case the government appears to have done both.
+We see that government expenses decrease throughout the '90s but start increasing from 2000 onward.
+This increase largely reflects extra defense and homeland security spending triggered by the terrorist attacks.
+Taxes (government receipts) increase at a steady pace in the '90s, but drop sharply during the recession.
+In part, this drop is caused by the recession itself;
+in part, however, it reflects tax cuts introduced by the Bush administration as a measure to stimulate economic activity.
+You can also see how the two measures combine to transform budget surpluses of the late '90s into deficits.
+So, the government appears to have actively used fiscal policy to fight the recession.
+
+```{r}
+G1 <- plot_ts("FYFSGDA188S", "Federal government\nsurplus/deficit\n(% of GDP)")
+G2 <- d %>% 
+  mutate(t = FGRECPT/GDPC1*100, g = FGEXPND/GDPC1*100) %>% 
+  select(DATE, t, g) %>% 
+  setNames(c("DATE", "T: Federal government receipts", "G: Federal government expenditures")) %>% 
+  pivot_longer(-DATE) %>% 
+  filter(DATE >= as.Date("1993-01-01"), DATE <= as.Date("2003-01-01")) %>%
+  ggplot(aes(DATE, value, color = name)) +
+  geom_line() +
+  xlab("") + ylab("% of GDP") +
+  scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
+  theme_light() +
+  theme(legend.position = "bottom", legend.title = element_blank())
+G1 + G2 + plot_layout(ncol = 1)
+```
+
+## The LM curve
+
+Next to fiscal policy, policy-makers can also use monetary policy to increase output: 
+the central bank (in this case the FED) can decrease interest rates thus shifting the LM curve down.
+The economy then moves along the IS curve to a higher level of output.
+
+Plotting the U.S. federal funds rate shows that the FED indeed used this policy tool: 
+they quickly lowered the interest rate from over 6% to around 2%.
+
+```{r}
+plot_ts("FEDFUNDS", "i: Federal funds rate")
+```
+
+# Results
+
+The previous section showed that once the recession started policy-makers used both monetary and fiscal policy to return output to its original level.
+This active intervention proved to be effective judging by the empirical evidence.
+Looking at the growth of output before and during the recession, we can see that the 2001 recession was a relatively small and short one: 
+there were only minor drops in output in two non-consecutive quarters.
+From the second half of 2001 output growth was again positive.
+
+```{r}
+plot_ts("GDPC1", "Real GDP")
+```
+

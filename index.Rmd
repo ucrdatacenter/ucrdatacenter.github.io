@@ -11,10 +11,10 @@ You can find information and supplementary materials for all data encounters in 
 
 ## Office hours
 
-The Data Center student fellows hold office hours in the Data Center's office (pre-med space) to answer questions and help with assignments related to the Data Center projects.
-If you would like to request an individual consultation, feel free to send an email to datacenter@ucr.nl.
+The Data Center student fellows hold office hours in the Data Center's office (pre-med space) or online to answer questions and help with assignments related to the Data Center projects.
+If you would like to request an individual consultation, feel free to send an email to [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
-* SCIENVI - Ecology & Topics in Ecology: Tuesdays 11:30-13:30 (Jennifer and Bianka)
+* SSCECON207 - International Macroeconomics: announced on Moodle or make an appointment via email.
 
 ## General support
 
@@ -22,7 +22,7 @@ You can find some general tutorials on working with data and a collection of use
 
 ## Ongoing courses
 
-* [SCIENVI - Ecology & Topics in Ecology](SCIENVI.html)
+* [SSCECON207 - International Macroeconomics](SSCECON207.html)
 
 ## Past courses
 

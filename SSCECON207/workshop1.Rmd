@@ -1,0 +1,217 @@
+---
+title: "SSCECON207 workshop I:<br>Introduction to R and ggplot"
+date: "Spring 2023 (June)<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# Learning outcomes
+
+In this tutorial you learn the steps needed to create basic figures in R.
+You will need these skills in the poster and presentation assignments in the course.
+
+You learn how to find and import data into R, how to clean the data that you need, and how to make basic figures using the `ggplot2` package.
+
+# First steps
+
+This tutorial assumes that you have already installed R and RStudio.
+If you have not done so yet, please follow [this installation tutorial](https://ucrdatacenter.github.io/tutorial/r_basics.html).
+
+Before you proceed, read and follow along sections 2.3-2.5, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf).
+
+In addition, create a new project for the Macroeconomics course, and install the `tidyverse` package, as explained in [here](https://ucrdatacenter.github.io/tutorial/r_basics.html).
+
+In each section of this tutorial you will find videos guiding you through the processes explained in the text.
+You should first read the relevant section as an introduction to the contents, then watch and follow along with the video presenting the steps in more detail.
+
+If you have any questions after watching a video, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](https://ucrdatacenter.github.io/tutorial), try googling your question, or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl) to attend office hours.
+The code shown in the videos is available on [Github ADD LINK](link).
+
+### [**---Introduction to R video TBA---**](link) {.unlisted .unnumbered}
+
+# Finding and importing data
+
+## Finding the right data
+
+Once you have a research question or topic you would like to look into, you need to determine what data you need: establish a list of the indicators and countries, and the time period.
+Once you know what you're looking for, you can search for a source.
+
+For macroeconomic indicators reliable data sources are the [World Bank Databank](https://data.worldbank.org/) and the [OECD database](https://data.oecd.org/).
+In addition, you can find a more extensive list of data sources [here](https://ucrdatacenter.github.io/tutorial/data.html).
+
+In the following we will work with GDP data from OECD ([link](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm)) and CO2 emissions data from the World Bank ([link](https://data.worldbank.org/indicator/EN.ATM.CO2E.PC)).
+
+Before importing data to R, you need to download it to your computer and save it in your project folder.
+
+## Importing a CSV file
+
+CSV files are a convenient and simple way of storing data.
+CSV stands for "comma-separated values": the raw data is text file where each line of text is a row of data, and values within a row are separated by commas.
+In most cases your computer will automatically open CSV files in Excel, where they are displayed as a table.
+CSV files are the most common and also one of the easiest to import to R.
+
+In order to import a CSV file to R, open your project in RStudio.
+In the top left corner of RStudio find and click *File*$\to$*Import dataset*$\to$*From Text (readr)*. 
+In the data import pop-up window click "Browse" and find the GDP data that you moved to your project folder.
+RStudio will try to automatically detect the format of your data: the result of that is shown in the Data preview window.
+If something looks wrong, try changing some of the settings below the data preview until the preview looks correct.
+Additionally, you should change the name of the data to something sensible, e.g. `GDP`.
+Once all the settings are ready, you can copy the contents of the "Code preview" window into your script, and use it to import your data.
+As long as you start your script by loading the `tidyverse` library, you don't need to copy `library(readr)`, as `readr` is a part of `tidyverse`.
+
+## Importing an Excel file
+
+Importing an Excel file follows the same process as a CSV file, but you should choose *From Excel* instead of *From Text (readr)* when importing the dataset.
+Every following step is the same, except that you do need to load the `readxl` package separately, as it is not a part of `tidyverse`.
+
+## Other data formats
+
+If you are interested, more information on importing files with other data formats, and writing your own import code are shown in [this tutorial](https://ucrdatacenter.github.io/tutorial/r_data.html).
+
+### [**---Data import video TBA---**](link) {.unlisted .unnumbered}
+
+# Data cleaning and manipulation
+
+## Establishing the data cleaning steps
+
+Data files downloaded from online sources are not always in a convenient format for analysis in R: variable names are not always intuitive or consistent, you might need to make some additional calculations, recode variables, or remove some variables/observations.
+You can make a list of steps you need to take by observing the structure of your data.
+
+You can view your data with the function `View(dataname)`, while the output of  `summary(dataname)` shows you all the variables you have, including their type and some details about their content.
+In case you need more information about what your variables mean, you can look at the documentation on website of your data source.
+
+A useful tool to keep in mind when planning your data cleaning is the pipe operator `%>%` (keyboard shortcut: Ctrl/Command+Shift+M).
+Using it in a workflow means that the next function uses the previous result as an input, and helps you work in a linear fashion.
+E.g. "first I need to filter observations for the Netherlands, then I need to use the resulting dataset to calculate GDP growth rates".
+
+## Selecting and renaming variables
+
+Often you don't need all variables included in your downloaded dataset.
+Then you can select the subset of variables you need (or the subset you would like to remove).
+The function for doing so is `select()`, and the arguments of the function are your dataset, followed by the names of the variables you would like to keep (or remove, if the variable names are preceded by `-`).
+The following examples show how to use the function with and without the pipe operator.
+
+```{r}
+# keep only variables x and y
+select(data, x, y)
+
+# remove variables x and y
+data %>% 
+  select(-x, -y)
+```
+
+Especially if you want to combine datasets from different sources, you may want variable names to be consistent across datasets or convenient to work with.
+This problem can be easily fixed using the `rename()` function, which has the format `rename(data, "new_name" = "old_name")`
+
+## Filtering observations
+
+Often you only need a subset of your data, e.g. observations from a particular country or after a given year.
+You can filter your dataset using the `filter()` function and logical expressions (e.g. keep if the value for the variable year is greater than 2000, or keep if the value for the variable country is "Netherlands").
+You need to use the logical operators: `==` means equal to, `!=` means not equal to, `>=,<=,>,<` define comparisons, `%in%` means "is one of", and you can combine multiple expressions with AND `&` and OR `|`.
+If the result of the test is true, the `filter()` function keeps the observation, and if the result is false, the observation is removed.
+For instance, to filter for Dutch or Belgian observations between the years 2000 and 2020:
+
+```{r}
+data %>% 
+  filter((country == "Netherlands" | country == "Belgium") & year >= 2000 & year <= 2020)
+```
+
+## Creating new variables
+
+In some cases you might need to do additional calculations with your data.
+For example you may want to calculate GDP growth rates from annual GDP observations, calculate averages over time, or treat a number as a character string.
+Helpful functions in this case are the following:
+
+* `mutate()`: to create new variables (or modify existing variables) using functions or calculations - think of it as adding a new column to your data frame.
+* `summarize()`: to create new variables using functions, using all rows from your data frame (or from a part of your data frame) - think e.g. if you have a data frame of GDP data from 20 years, and you want to calculate the average value of GDP in this dataset.
+* `group_by()`: to specify grouping variables before using `mutate()` or `summarize()` - think e.g. if you have GDP data from 20 years from two countries, and you want to calculate average GDP over time separately for the two countries.
+
+### [**---Data cleaning video part 1 TBA---**](link) {.unlisted .unnumbered}
+
+## Long and wide format
+
+Compare the following two simple datasets:
+
+Data A:
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE}
+library(tidyverse)
+test <- tibble(
+  year = rep(c(2022, 2023), each = 2),
+  country = rep(c("countryA", "countryB"), times = 2),
+  value = c(10, 12, 14, 15)
+)
+knitr::kable(test) %>% 
+  kableExtra::kable_styling(full_width = F, position = "left")
+```
+
+Data B:
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE}
+test %>% 
+  pivot_wider(names_from = country, values_from = value) %>% 
+  knitr::kable() %>% 
+  kableExtra::kable_styling(full_width = F, position = "left")
+```
+
+Data A is in long format, and Data B is in wide format.
+The tables contain the same information, but sometimes one format is more convenient than the other.
+
+You can convert between these two forms using the `pivot_longer()` (wide to long) and `pivot_wider()` (long to wide) functions.
+To use `pivot_longer()` you need to specify which columns you'd like to turn into a single column: e.g. to go from Data B to Data A, you'd use the argument `cols = c(countryA, countryB)` (or equivalently, `cols = -year`).
+To use `pivot_wider()`, you need to specify which column to use for variable names, and which column for variable values: going from Data A to Data B would use the arguments `names_from = country, values_from = value`. 
+
+## Merging datasets
+
+If you want to work with variables from multiple dataframes (e.g. plotting them on the same plot), you need to combine those dataframes.
+
+There are multiple ways to combine data frames.
+The simplest is row-binding: there you take two data frames that have the same variables, and basically place one below the other.
+You can then use the `bind_rows()` function, with the argument listing the dataframes to combine.
+
+However, most of the time you need something more complicated than row-binding.
+E.g. if in both dataframes your entities are defined by the country and the year, you want to match up the observations so that each row contains data from only one country-year combination.
+If your identifying variables have the same names in both datasets, you can replace the `bind_rows()` function with `full_join()` and specify the dataframes to combine as the argument in the same way.
+
+### [**---Data cleaning video part 2 TBA---**](link) {.unlisted .unnumbered}
+
+# First `ggplot` figures
+
+`ggplot` is a powerful R package for creating figures.
+Figures made with `ggplot` are built from several layers.
+You always use the same basic code structure to create a wide range of figures:
+
+1. The `ggplot()` function creates a blank canvas for you to work on.
+1. Geoms add the visual elements, such as points, lines, bars, or other shapes.
+1. Other specifications can include changing axis settings, setting the theme, adding labels, etc.
+1. You connect all these different specifications to each other using `+` signs.
+
+The variables that you want to display on the graph must always be wrapped in an `aes()` function, which stands for aesthetics. 
+This specification tells R to determine the value of the aesthetic (x and y axes, colors, groups, line types, etc.) based on the value of the variable. 
+`aes()` can be specified both in the main `ggplot()` function (in which case it will apply to all geoms) or within a `geom_...()` function (then it only applies to that geom).
+
+For line charts you use `geom_line()`, and for scatterplots `geom_point()`.
+You can fit a line on your scatterplot with `geom_smooth()`.
+If you want to fit a straight line, add `method = "lm"` as an argument inside `geom_smooth()`.
+
+If you want to change the color of a point/line based on the value of a variable, specify `color = variable` **inside** the `aes()` function.
+If you would like all points/lines to be a particular color, specify `color = "blue"` **outside** the `aes()` function but still inside the geom you'd like to modify.
+Each geom's help file lists all characteristics that you can modify.
+
+Once you have a base plot, you can change the title and axis labels (always make sure to use clear labels!).
+Once you're happy with your plot, you can save it in your project folder by using `ggsave("filename.jpg")`.
+This function saves the last plot you created, and you can also use other file formats such as .png or .pdf.
+
+If you would like to see more ways of plotting with `ggplot`, check out the [R Graph Gallery](https://r-graph-gallery.com/) or some of the other useful links [here](https://ucrdatacenter.github.io/tutorial/r_basics.html#Help_with_ggplot).
+Sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)) give particularly good explanations for beginners.
+
+### [**---`ggplot` video TBA---**](link) {.unlisted .unnumbered}
