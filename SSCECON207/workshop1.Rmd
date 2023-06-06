@@ -24,11 +24,11 @@ You learn how to find and import data into R, how to clean the data that you nee
 # First steps
 
 This tutorial assumes that you have already installed R and RStudio.
-If you have not done so yet, please follow [this installation tutorial](https://ucrdatacenter.github.io/tutorial/r_basics.html).
+If you have not done so yet, please follow [this installation tutorial](https://ucrdatacenter.github.io/tutorial/r_install.html).
 
 Before you proceed, read and follow along sections 2.3-2.5, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A\%20(very)\%20short\%20introduction\%20to\%20R.pdf).
 
-In addition, create a new project for the Macroeconomics course, and install the `tidyverse` package, as explained in [here](https://ucrdatacenter.github.io/tutorial/r_basics.html).
+In addition, create a new project for the Macroeconomics course, and install the `tidyverse` package, as explained [here](https://ucrdatacenter.github.io/tutorial/r_basics.html).
 
 In each section of this tutorial you will find videos guiding you through the processes explained in the text.
 You should first read the relevant section as an introduction to the contents, then watch and follow along with the video presenting the steps in more detail.
