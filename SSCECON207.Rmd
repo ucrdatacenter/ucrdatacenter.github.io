@@ -26,3 +26,5 @@ Data Center office hours will be announced on Moodle; to schedule an individual 
 # Case studies
 
 ## [US 2001 crisis](SSCECON207/US2001.html)
+
+## [European Debt Crisis](SSCECON207/EU2009.html)
