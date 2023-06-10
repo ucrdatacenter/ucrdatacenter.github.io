@@ -146,7 +146,7 @@ bind_rows(budg, debt) %>%
   ggplot(aes(LOCATION, Value)) +
   geom_col() +
   facet_grid(~INDICATOR~TIME, scales = "free_y") +
-  xlab(NULL) + ylab("% of GDP in 2008") +
+  xlab(NULL) + ylab("% of GDP") +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90))
 ```
