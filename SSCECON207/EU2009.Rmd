@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, error = FA
 ```{r}
 library(tidyverse)
 library(patchwork)
+library(lubridate)
 
 gdp <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2023h1/EU2009data/gdp_oecd.csv") %>% 
   filter(MEASURE == "USD_CAP")
@@ -26,6 +27,14 @@ unem <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/
 infl <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2023h1/EU2009data/infl_oecd.csv") %>% 
   filter(FREQUENCY == "A", MEASURE == "AGRWTH", SUBJECT == "TOT") %>% 
   mutate(TIME = as.numeric(TIME))
+infl_EA <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2023h1/EU2009data/infl_EA.csv", skip = 4) %>% 
+  filter(Country == "Euro area") %>% 
+  select(-1) %>% 
+  pivot_longer(-1, names_to = "TIME", values_to = "Value") %>% 
+  mutate(TIME = lubridate::ym(TIME)) # %>% 
+  # mutate(TIME = year(TIME)) %>% 
+  # group_by(TIME) %>%
+  # summarize(Value = mean(Value)) 
 irate <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SSCECON207/2023h1/EU2009data/i_oecd.csv") %>% 
   filter(FREQUENCY == "A") %>% 
   mutate(TIME = as.numeric(TIME))
@@ -45,8 +54,8 @@ In addition, the EU faced a unique situation due to its high levels of real and 
 Therefore many European countries -- Greece being the most well-known -- ended up with unmanageable levels of government budget deficit and government debt.
 Policy interventions helped somewhat, but the EU nevertheless suffered the consequences of the crisis for several years.
 
-In the following we examine why the debt crisis unfolded, the effectiveness of policy interventions by looking at the evolution of macroeconomic indicators.
-At the end of the case study we estimate the Phillips curve for the Euro Area between 2000-2015 to see how well the theoretical relationship between inflation and unemployment held in the period of the debt crisis.
+In the following we examine why the debt crisis unfolded and the effectiveness of policy interventions by looking at the evolution of macroeconomic indicators.
+At the end of the case study we estimate the Phillips curve for the Euro Area between 2000-2016 to see how well the theoretical relationship between inflation and unemployment held in the period of the debt crisis.
 
 ***Note:***  
 *The code used to create the figures used in this case study is available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/2023h1/EU2009code.R).*
@@ -55,7 +64,7 @@ At the end of the case study we estimate the Phillips curve for the Euro Area be
 
 ## Macro indicators before the crisis
 
-In the years before the crisis, the economies of the European Union (EU) were doing quite well.
+In the years before the crisis, the economies of the European Union were doing quite well.
 
 As the figure below shows, the average GDP growth between 2000-2007 was above 3% in all EU economies, and some countries (e.g. the Baltics, Southern countries, Ireland) showed particularly strong growth in the period.
 The time-series plot showing the annual growth of the Euro Area since 2000 also shows strong annual growth rates between 2-8%.
@@ -86,8 +95,8 @@ p2 <- gdp %>%
 p1 + p2 + plot_layout(ncol = 1)
 ```
 
-While the European unemployment rate is generally higher than the US unemployment rate, average unemployment in the years before the crisis was also not a major issue: it went above 10% only in some of the former Eastern Block countries, as a consequence of their still relatively recent transition.
-The Euro Area in particular was doing well in terms of reducing unemployment: in the years before the crisis, unemployment was falling slowly but consistently, reaching below 8% by 2007.
+While the European unemployment rate is generally higher than the US unemployment rate, unemployment in the years before the crisis was also not a major issue: it went above 10% only in some of the former Eastern Block countries, as a consequence of their still relatively recent transition.
+The Euro Area in particular was doing well in terms of reducing unemployment: in the years before the crisis, unemployment was falling slowly but consistently, going below 8% by 2007.
 
 ```{r, fig.height=7}
 p1 <- unem %>% 
@@ -112,10 +121,10 @@ p2 <- unem %>%
 p1 + p2 + plot_layout(ncol = 1)
 ```
 
-When it comes to inflation, most countries in the Euro Area had average inflation rates around 2%, and inflation in the Euro Area was quite stable in the early 2000s.
+When it comes to inflation, most countries in the Euro Area had average inflation rates around 2%, and inflation in the Euro Area was very stable in the early 2000s.
 However, there were some countries with high inflation rates, which based on the Phillips curve relationship may suggest that those economies are operating above potential.
 Next to some of the Eastern European transition economies, Greece, Ireland, Portugal and Spain also have average inflation rates above 3%.
-Later you will see that thee countries were all badly hit by the debt crisis, so it is possible that having output above potential made these countries more vulnerable to shocks.
+Later you will see that these countries were all badly hit by the debt crisis, so it is possible that having output above potential made these countries more vulnerable to shocks.
 The following sections elaborate on these differences further.
 
 ```{r}
@@ -125,16 +134,16 @@ p1 <- infl %>%
   summarize(Value = mean(Value, na.rm = TRUE)) %>% 
   ggplot(aes(LOCATION, Value)) +
   geom_col() +
-  xlab(NULL) + ylab("Average inflation rate 2000-2007 (%)") +
+  xlab(NULL) + ylab("Average inflation rate\n2000-2007 (%)") +
   theme_light() +
   theme(axis.text.x = element_text(angle = 90))
 
-p2 <- infl %>% 
-  filter(TIME %in% 2000:2007, LOCATION == "EA19") %>% 
+p2 <- infl_EA %>% 
+  filter(TIME > ym("1999-12"), TIME < ym("2008-01"), Country == "Euro area") %>%
   ggplot(aes(TIME, Value)) +
-  geom_point() +
+  # geom_point() +
   geom_line() +
-  scale_x_continuous(limits = c(2000, 2007)) +
+  # scale_x_continuous(limits = c(2000, 2007)) +
   xlab("Year") + ylab("Euro Area inflation rate (%)") +
   theme_light()
 
@@ -144,31 +153,40 @@ p1 + p2 + plot_layout(ncol = 1)
 
 ## European integration
 
-Euro Area needs to coordinate economic policy, which means that the European Central Bank (ECB) sets the same interest rate for all Euro Area countries.
-Therefore, in the case of a crisis, the available monetary policy tools are limited, because different Euro Area countries may be impacted differently, requiring different policy interventions, but the ECB can only choose one interest rate.
+The Euro Area needs to coordinate economic policy, which means that the European Central Bank (ECB) sets the same interest rate for all Euro Area countries.
+Therefore, in the case of a crisis -- in which different countries may be impacted differently and may require different policy interventions -- the available monetary policy tools are limited.
 
 In addition, all EU countries are part of the Stability & Growth Pact (SGP), which limits government deficit to 3% of GDP and public debt to 60% of GDP.
 While this pact allows for temporary deviations in a crisis, it still places some limits on fiscal policy, especially in the recovery stage after a crisis.
 Other than the SGP, fiscal policy is largely in the hands of national governments, uncoordinated between EU countries.
 
 These limitations on monetary policy and coordination issues in fiscal policy were not very problematic in the stable economic conditions before the crisis, but you will see that they affected the policy choices during and after the crisis.
-Already in the patterns in GDP and unemployment above, you can see that even within the Euro Area, countries had different growth and unemployment rates.
-Recall that faster growing countries would like higher interest rates to keep inflation low, while slower growing countries prefer lower interest rates and expansionary fiscal policy to stimulate growth.
 
 ## Differences between countries
 
-Despite the high levels of economic integration, there were significant differences in how Euro Area countries developed in the early 2000s, affecting how badly each country was hit by the crisis.
-You already saw that most Euro Area economies seemed to operate around the natural level of output, but some peripheral economies exhibited high inflation rates, suggesting output above the natural level.
-These economies were also affected by some other ongoing trends: 
+In the figures above you could see that Euro Area countries had different growth and unemployment rates.
+Recall that faster growing countries would like higher interest rates to keep inflation low, while slower growing countries prefer lower interest rates and expansionary fiscal policy to stimulate growth.
 
-- changes in the competitiveness of economies, as reflected by labor costs;
-- growth in consumption and investment fuelled by housing market booms;
-- growth in borrowing driven by interest rate convergence.
+Following the introduction of the euro, high interest rates in the fast-growing, peripheral economies started to fall in order to converge to the lower interest rates in Germany and other central economies.
+These low interest rates encouraged public and private borrowing in these countries.
+The resulting lending boom increased output, and put pressure on prices and wages: peripheral economies were operating above the natural level of output, and the consequences of doing so made them more vulnerable to a crisis.
+
+Next to having a single policy rate in the Euro Area, the risk premium in peripheral economies also fell as the common currency eliminated exchange rate risk, and trust in the ECB removed much of the default risk.
+The falling risk premium shifted the IS curve to the right.
+Governments, most notably in Greece and Italy, borrowed a lot at these low interest rates, increasing their budget deficits and debt levels.
+
+In countries like the UK, Ireland and Spain the low interest rates primarily affected private borrowing, increasing private consumption and investment, and leading to the emergence of housing bubbles.
+The theory behind the effect of housing bubbles comes down to a shift in the IS curve: as the value of houses goes up, house owners' wealth increased, making them want to consume (and invest) more in the present.
+They financed this additional consumption from borrowing, which they were able to do since the value of their collateral (the houses) went up, so banks were willing to lend them more.
+To fit this pattern into the IS-LM framework, you can consider the housing bubbles to increase consumer confidence, prompting consumers to consume more, and therefore shifting the IS curve to the right.
+
+These increases in public and private spending contributed to pushing output above potential, therefore increasing inflation rates and wages.
+This pressure on prices and wages contributed to a loss of competitiveness in these peripheral economies, increasing their vulnerability to shocks.
 
 The competitiveness of an economy determines how well it is able to participate in the global economy: to simplify it, if wages in a country are high, then producing goods in the country is relatively expensive, making it harder to compete in the export market with countries with lower labor costs.
 This competitiveness level is particularly important for small open economies that rely heavily on export: a decrease in competitiveness may have very large effects on output if exports form a large fraction of output.
 
-The following figure shows that Ireland and Greece both had major increases in labor costs before the crisis compared to e.g. Germany, corresponding to a loss in competitiveness in these countries.
+The following figure shows that indeed Ireland and Greece both had major increases in labor costs before the crisis compared to e.g. Germany, corresponding to a loss in competitiveness in these countries.
 
 ```{r}
 wages %>% 
@@ -186,47 +204,15 @@ wages %>%
   theme_bw()
 ```
 
-In addition, the UK, Ireland and Spain had housing bubbles similar to the US, while the governments Greece and Italy were accumulating a lot of debt to finance their budget deficits already in the years prior to the crisis.
-The main reason for these patterns was the ECB's monetary policy: 
-since the ECB could only set one interest rate in the Euro Area, the faster-growing, mostly Southern countries had lower than optimal interest rates, which incentivized them to borrow money. 
-In countries like Ireland and Spain these interest rates primarily affected private borrowing, while in Italy and Greece the rise in government borrowing was notable, leading to increasing budget deficits and government debt levels.
-
-The theory behind the effect of housing bubbles comes down to a shift in the IS curve: as the value of houses goes up, house owners' wealth increased, making them want to consume (and invest) more in the present.
-They financed this additional consumption from borrowing, which they were able to do since the value of their collateral (the houses) went up, so banks were willing to lend them more.
-To fit this pattern into the IS-LM framework, you can consider the housing bubbles to increase consumer confidence, prompting consumers to consume more, and therefore shifting the IS curve to the right, and output above potential.
-
-A similar story applies to the low interest rates, but there output increased due to a downward shift in the LM curve: the introduction of the Euro eliminated exchange rate risk in peripheral economies, while trust in the ECB to bail countries out if necessary removed much of the default risk.
-So next to having a single policy rate in the Euro Area, the risk premia in peripheral economies fell, leading to further convergence in interest rates.
-That is how peripheral economies experienced falling interest rates that made it more attractive to them to borrow money from abroad.
-Governments that borrowed at these low interest rates increased their budget deficits, while the private investment boom from the lower interest rates can be described as a movement along the IS curve driven by a downward shift of the LM curve.
-Both public and private spending contributed to pushing output above potential, therefore increasing inflation rates and making countries more vulnerable to shocks.
-
 # The debt crisis
 
 When the US housing bubble burst, the effects quickly spread over to Europe.
 The European housing bubbles also burst, and lending became more risky, leading to higher risk premia and therefore more expensive borrowing.
-The increasing costs of borrowing made the high debt levels of countries like Greece unsustainable.
 These shocks had immediate effects on the peripheral European economies operating above their natural level of output.
 
-The following figure presents the disparity between EU countries in their government budget deficits and government debts (both as percentage of GDP) in 2008 and 2009.
-Clearly, both the overall levels of the indicators and the differences between countries only got worse as the Great Recession unfolded.
-
-```{r}
-bind_rows(budg, debt) %>% 
-  filter(TIME %in% 2008:2009, LOCATION %in% eu) %>% 
-  mutate(INDICATOR = ifelse(INDICATOR == "GGDEBT", "Government debt", "Budget deficit")) %>% 
-  ggplot(aes(LOCATION, Value)) +
-  geom_col() +
-  facet_grid(~INDICATOR~TIME, scales = "free_y") +
-  xlab(NULL) + ylab("% of GDP") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90))
-```
-
-Greece had the highest government debt to GDP ratio (over 100%) and the largest budget deficit (10% of Greek GDP) out of all EU countries in both years.
-Therefore it is not surprising that Greece's debt became the most closely associated with the debt crisis: it was the first country to be unable to pay back its debt.
-
-Ireland, Portugal, Italy and Spain were also at risk of defaulting on their debt, thereby risking the financial stability of the entire Euro Area.
+The increasing costs of borrowing made the high debt levels of countries like Greece unsustainable.
+Greece became the most closely associated with the debt crisis: it was the first country to be unable to pay back its debt.
+In addition, Ireland, Portugal, Italy and Spain were also at risk of defaulting on their debt, thereby risking the financial stability of the entire Euro Area.
 There was a need for effective policy interventions from the ECB, the EU, and national governments.
 
 # Policy responses
@@ -257,9 +243,25 @@ irate %>%
 Before the crisis, coordinating fiscal policy could have alleviated many of the issues the EU faced.
 Since monetary policy was centralized, so countries could not use the interest rate (LM curve) to bring output to potential, fast-growing countries could have used fiscal contraction, and slow-growing countries fiscal expansion.
 In theory, doing so would over time bring all outputs to potential, therefore eliminating the discrepancy within the Euro Area.
+However, as we have seen, many faster-growing countries were actually engaged in fiscal expansion driven by relatively low interest rates.
 
-Once the Great Recession's effects reached Europe, such policy coordination was no longer feasible, as all countries needed fiscal expansion to combat the recession.
-On the other hand, countries receiving bailout packages from the EU or the IMF were forced to adopt austerity measures (i.e. fiscal contraction) to reduce the budget deficit -- the exact opposite to what the countries needed to recover from the recession.
+Once the Great Recession's effects reached Europe, such policy coordination to converge to the natural level of output was no longer feasible, as all countries needed fiscal expansion to combat the recession.
+On the other hand, countries receiving bailout packages from the EU or the IMF were forced to adopt austerity measures (i.e. fiscal contraction) to reduce their budget deficits -- the exact opposite to what they needed to recover from the recession.
+
+The following figure presents the disparity between EU countries in their government budget deficits and government debts (both as percentage of GDP) in 2008 and 2009.
+Clearly, both the overall levels of the indicators and the differences between countries only got worse as the Great Recession unfolded, and even the countries with forced austerity measures initially increased their deficits.
+
+```{r}
+bind_rows(budg, debt) %>% 
+  filter(TIME %in% 2008:2009, LOCATION %in% eu) %>% 
+  mutate(INDICATOR = ifelse(INDICATOR == "GGDEBT", "Government debt", "Budget deficit")) %>% 
+  ggplot(aes(LOCATION, Value)) +
+  geom_col() +
+  facet_grid(~INDICATOR~TIME, scales = "free_y") +
+  xlab(NULL) + ylab("% of GDP") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90))
+```
 
 # Recovery and results
 
@@ -320,8 +322,7 @@ Once the crisis hit, Germany benefited from the expansionary monetary policy of 
 The Great Recession caused a leftward shift of the German IS curve, but the swift downward shift of the LM curve via the low interest rate and the rightward shift of the IS curve via fiscal expansion quickly returned output growth to its pre-crisis level.
 As the unemployment rate takes time to adjust to a recession, a quick recovery can prevent a sustained increase in the unemployment rate.
 
-On the other hand, countries that had to adopt fiscal contraction due to IMF-imposed austerity measures recovered slowly, as the fiscal policy shifted the IS curve even further left.
-The resulting shift of the IS curve was so large that the ECB's monetary expansion did not push the LM curve down sufficiently: output growth did not return to its pre-crisis level for years.
+On the other hand, countries that had to adopt fiscal contraction due to IMF-imposed austerity measures recovered slowly, as they couldn't shift the IS curve back to the right, and the ECB's monetary expansion did not push the LM curve down sufficiently: output growth did not return to its pre-crisis level for years.
 The fall in output also impacted the unemployment rate for several years after the start of the recession: these countries had a long and painful recovery.
 
 ## Returning to the natural level of output
