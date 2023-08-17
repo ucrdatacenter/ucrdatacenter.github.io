@@ -1,0 +1,19 @@
+---
+title: "SSCPOLI302<br>European Union Politics<br>Fall 2023"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+# Introduction
+
+This page collects materials for the data-driven assignments in the Fall 2023 edition of European Union Politics at UCR.
+You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects).
+
+Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
+

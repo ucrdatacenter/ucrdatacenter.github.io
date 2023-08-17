@@ -19,12 +19,12 @@ Data Center office hours will be announced on Moodle; to schedule an individual 
 
 # Data Center workshops
 
-## [Workshop I](SSCECON207/workshop1.html)
+## [Workshop I](SSCECON207_2023h1/workshop1.html)
 
 ## Workshop II (TBA)
 
 # Case studies
 
-## [US 2001 crisis](SSCECON207/US2001.html)
+## [US 2001 crisis](SSCECON207_2023h1/US2001.html)
 
-## [European Debt Crisis](SSCECON207/EU2009.html)
+## [European Debt Crisis](SSCECON207_2023h1/EU2009.html)

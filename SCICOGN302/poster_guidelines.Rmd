@@ -1,0 +1,62 @@
+---
+title: "SCICOGN302 Final poster assignment guidelines"
+date: "Spring 2023 (June)<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+This assignment can be used to replace the experiment assignment, and is worth 30% of the final course grade.
+
+# Products to be handed in (moodle)
+
+* Working document containing the outline, motivated research question, plan for analysis, and sources consulted
+* A log of the hours contributed by each group member on each task
+* R code including data cleaning and all visuals
+* Poster in ppt or prezi
+
+# Introduction
+
+Within a group of 5-6 people, you will conduct a small research project. 
+You will visualize and analyze data on language development from the CHILDES database in order to answer a research question that is within the field of psycholinguistics. 
+Below you will find some examples of questions you could study.
+Workshops by the UCR Data Center will introduce you to data analysis techniques you could use.
+
+# Planning
+
+## Week 1: Making groups for the final assignment
+
+We will make groups in the first class, at which point you will need to decide whether to do an experiment or a data analysis project.
+
+## Week 2-6: Submit a motivated research question and testable hypotheses
+
+* Research some areas of child language development and select a topic.
+* State your main research question.
+* Provide a short introduction to your research question (200 words).
+* Formulate one or more testable hypotheses that follows naturally from your research question. A scientific hypothesis is essentially the relation between an independent variable and a dependent variable. When phrasing the hypothesis, you already have an idea of how you could visualize your hypothesized relationship. Make sure the CHILDES database has sufficient data to test your hypotheses.
+
+## Week 7-14: Data analysis and poster
+
+* Make a plan of the data cleaning, analysis and visualization steps that you will need to undertake. This plan may change over time as you learn more about the datasets. Consult the instructor and/or the Data Center on your proposal for your analysis before you proceed.
+* Create a set of visualizations using R that answer your hypotheses.
+* Include on the poster: Introduction, Methods, and Results, Discussion/Conclusions, and suggestions for future research. You do not have to print the poster; a digital version will do. Instructions on how to prepare an effective poster can be found on Moodle.
+
+## Week 15: Presenting your poster
+
+You will present your poster in class in a PowerPoint/Prezi presentation of your poster. 
+In 30 minutes, introduce the research including the research question, key methodological decisions, results, and your conclusions. 
+Reserve 20 minutes for the actual presentation and 10 minutes for questions from and discussion with the audience.
+
+# Example topics
+
+Your research question can explore particular aspects of one of the following questions, or you can come up with different topics on child langage development that you can answer using data from the CHILDES database.
+
+*	Are there differences in the language development of bilingual and monolingual children? 
+* What are the determinants of the achieved level of child language development?
+* Are different measures of language development comparable?
+
+For further inspiration, a list of academic publication using the CHILDES database (up to 2008) can be found [here](https://talkbank.org/info/usage/childesbib.pdf).

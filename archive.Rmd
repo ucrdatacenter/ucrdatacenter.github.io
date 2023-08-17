@@ -12,6 +12,7 @@ output:
   + [Spring 2023](archive/SCIENVI_2023h1.html)
 * SSCECON207 International Macroeconomics:
   + [Spring 2022](archive/SSCECON207_2022h1.html)
+  + [Spring 2023 (June)](archive/SSCECON207_2023h1.html)
 * SSCECON209 Money, Banking and Finance:
   + [Spring 2022](archive/SSCECON209_2022h1.html)
 * SSCECON307 Econometrics:

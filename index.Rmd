@@ -14,7 +14,8 @@ You can find information and supplementary materials for all data encounters in 
 The Data Center student fellows hold office hours in the Data Center's office (pre-med space) or online to answer questions and help with assignments related to the Data Center projects.
 If you would like to request an individual consultation, feel free to send an email to [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
-* SSCECON207 - International Macroeconomics: announced on Moodle or make an appointment via email.
+* SCICOGN302 - Psycholinguistics: TBA
+* SSCPOLI302 - European Union Politics: TBA
 
 ## General support
 
@@ -22,7 +23,8 @@ You can find some general tutorials on working with data and a collection of use
 
 ## Ongoing courses
 
-* [SSCECON207 - International Macroeconomics](SSCECON207.html)
+* [SCICOGN302 - Psycholinguistics](SCICOGN302.html)
+* [SSCPOLI302 - European Union Politics](SSCPOLI302.html)
 
 ## Past courses
 
