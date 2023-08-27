@@ -15,5 +15,5 @@ output:
 This page collects materials for the data-driven assignments in the Fall 2023 edition of European Union Politics at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects).
 
-Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
+Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
 
