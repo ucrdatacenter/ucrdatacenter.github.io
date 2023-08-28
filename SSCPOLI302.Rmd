@@ -12,14 +12,14 @@ output:
 
 # Introduction
 
-This page collects materials for the data-driven Poster assignment in the **Fall 2023 edition of European Union Politics** at UCR.You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects). 
+This page collects materials for the data-driven Poster assignment in the **Fall 2023 edition of European Union Politics** at UCR. You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects). 
 
-Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
+Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
 # Course Schedule 
 
 ```{r, echo=FALSE}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/Hours .png")
+knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/hours.png")
 ```
 
 # Assignment Instructions for the Poster
