@@ -17,3 +17,11 @@ You can also access the related files directly on [Github](https://github.com/uc
 
 Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
 
+# Assignment Instructions for the Poster
+The goal of this assignment is to learn to describe, compare, and explain trends in voter turnout in EP and national parliamentary elections in two EU member states and explore the relation between turn-out and another variable that you can select yourself.
+
+## Plot Details
+1.	Plot 1: Select an EU member state and plot voter turnout in both the EP and national parliamentary over time. Gather data for your selected country from the data file provided on GitHub. To help you select a country, view the map provided on GitHub showing voter turnout across the EU. Visualize your findings using R. Compare your findings to the discussion on turn-out in the textbook (p.111-p.114) and interpret them in the light of the explanations given there.
+
+
+
