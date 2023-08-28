@@ -17,8 +17,7 @@ This page collects materials for the data-driven Poster assignment in the **Fall
 Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
 # Installing R
-Before you attend the workshop, please download RStudio.Rstudio is free to download and install. 
-To download R, go to cloud.r-project.org and follow the instructions on the page. To download RStudio, go to rstudio.com/products/rstudio/download, scroll down and download the file recommended for your operating system.
+Before you attend the workshop, please download RStudio.Rstudio is free to download and install. To download R, go to [cloud.r-project.org]() and follow the instructions on the page. To download RStudio, go to [rstudio.com/products/rstudio/download](), scroll down and download the file recommended for your operating system.
 
 In case you get stuck at any point, or would like more guidance in the installation process, feel free to check out any of the following links:
 
@@ -102,10 +101,10 @@ Watch these videos for guidance on getting to know RStudio and coding the plots 
 
 * [Video 1 - R Basics](https://vimeo.com/user203952526/video1?share=copy)
 * [Video 2 - Line Graph, Plot 1](https://vimeo.com/858588316?share=copy)
-* [Video 3 - Line Graph, Plot 2](https://vimeo.com/858723897?share=copy)
-* [Video 4 - Bar Graph, Plot 2](https://vimeo.com/858725464?share=copy)
-* [Video 5 - Navigating Data Websites](https://vimeo.com/858726335?share=copy)
-* [Video 6 - Scatterplot, Plot 3](https://vimeo.com/858726791?share=copy)
+* [Video 3A - Line Graph, Plot 2](https://vimeo.com/858723897?share=copy)
+* [Video 3B - Bar Graph, Plot 2](https://vimeo.com/858725464?share=copy)
+* [Video 4A - Navigating Data Websites](https://vimeo.com/858726335?share=copy)
+* [Video 4B - Scatterplot, Plot 3](https://vimeo.com/858726791?share=copy)
 
 # Rubric 
 
