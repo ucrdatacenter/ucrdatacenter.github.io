@@ -12,88 +12,96 @@ output:
 
 # Introduction
 
-This page collects materials for the data-driven assignments in the Fall 2023 edition of European Union Politics at UCR.
-You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects).
+This page collects materials for the data-driven Poster assignment in the **Fall 2023 edition of European Union Politics** at UCR.You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects). 
 
 Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
 
+# Course Schedule 
+
+```{r, echo=FALSE}
+knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/Hours .png")
+```
+
 # Assignment Instructions for the Poster
-The goal of this assignment is to learn to describe, compare, and explain trends in voter turnout in EP and national parliamentary elections in two EU member states and explore the relation between turn-out and another variable that you can select yourself.
+
+The **goal** of this assignment is to learn to *describe, compare, and explain trends in voter turnout in EP and national parliamentary elections* in two EU member states and explore the relation between turn-out and another variable that you can select yourself.
 
 You will create the following three plots. 
 
-Plot 1: Select an EU member state and plot voter turnout in both the EP and national parliamentary over time. Gather data for your selected country from the data file provided on GitHub. To help you select a country, view this [map](dossiers-bibliotheque.sciencespo.fr/une-vie-politique-europeenne-european-political-life/participation-eu-elections-decreasing) provided on GitHub showing voter turnout across the EU. Visualize your findings using R. Compare your findings to the discussion on turn-out in the textbook (p.111-p.114) and interpret them in the light of the explanations given there.
+**Plot 1**: Select an EU member state and plot voter turnout in both the EP and national parliamentary over time. Gather data for your selected country from the data file provided on GitHub. To help you select a country, view this [map (SciencesPo, 2019)] provided on GitHub showing voter turnout across the EU. Visualize your findings using R. Compare your findings to the discussion on turn-out in the textbook (p.111-p.114) and interpret them in the light of the explanations given there.
 
-```{r}
+
+```{r, echo=FALSE, fig.cap="*dossiers-bibliotheque.sciencespo.fr/une-vie-politique-europeenne-european-political-life/participation-eu-elections-decreasing*"}
 knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/heatmap.png")
 ```
 
-Plot 2: Select an additional member state and make a line graph or bar chart that depicts the evolution of turn-out for these two countries over time. Discuss the patterns that you observe and provide possible explanations based upon the discussion in the textbook (p.111-p.114).
+**Plot 2**: Select an additional member state and make a line graph or bar chart that depicts the evolution of turn-out for these two countries over time. Discuss the patterns that you observe and provide possible explanations based upon the discussion in the textbook (p.111-p.114).
 
-Plot 3 : Make a scatterplot in which you depict the turn-out against a second variable of your own choosing that you can pick from World Bank, OECD or Our World in Data. Plot the voter turn-out on the y-axis and the explanatory variable on the x-axis. Label the data points by year and use different distinct colors for the two member states. Explain your choice for the explanatory variable and discuss the patterns you see as well as provide possible explanations.
+**Plot 3**: Make a scatterplot in which you depict the turn-out against a second variable of your own choosing that you can pick from World Bank, OECD or Our World in Data. Plot the voter turn-out on the y-axis and the explanatory variable on the x-axis. Label the data points by year and use different distinct colors for the two member states. Explain your choice for the explanatory variable and discuss the patterns you see as well as provide possible explanations.
 
 Organize your findings into a poster. Examples of the graphs and supporting materials are available on the Data Science website. The Data Center is available for individual consultations about the assignment.
-
-## Rubric 
-
-Posters will be graded on four aspects: correct execution of the tasks, analysis of your results, correct use of R and script, and exposition/layout.  
-
-```{r}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/rubric.png")
-```
 
 # Data Websites 
 
 Use these three websites to find your data. Potential explanatory variables should be found through three websites: OECD, World Bank, and Our World in Data. 
-•	OECD: https://data.oecd.org/
-•	Our World in Data: https://ourworldindata.org/
-•	The World Bank: https://data.worldbank.org/
 
-## Voter Turnout Dataset 
+* **OECD**: https://data.oecd.org/
+* **Our World in Data**: https://ourworldindata.org/
+* **The World Bank**: https://data.worldbank.org/
 
-Download this dataset from Github which includes voter turnout from national and EU parliamentary elections. The dataset contains data from the [Dataset National Elections: International Institute for Democracy and Electoral Assistance (International IDEA)](https://www.idea.int/data-tools/data/voter-turnout) and [Dataset EU Parliamentary Elections (Hosli et al., 2022)](https://doi.org/10.1080/23745118.2022.2137918)
+## *Voter Turnout Dataset*
 
-## Examples of explanatory variables include:
+Download this [dataset](https://github.com/ucrdatacenter/projects/tree/main/SSCPOLI302/2023h2) from Github which includes voter turnout from national and EU parliamentary elections. The dataset contains data from the [Dataset National Elections: International Institute for Democracy and Electoral Assistance (International IDEA)](https://www.idea.int/data-tools/data/voter-turnout) and [Dataset EU Parliamentary Elections (Hosli et al., 2022)](https://doi.org/10.1080/23745118.2022.2137918)
 
-1.	How did the influx of refugees affect voter turnout in Italy compared to Greece between 2010-2021?
-2.	How has GDP growth affected voter turnout in Germany compared to the Netherlands between […-….]?
-3.	How does literacy rate affect voter turnout in…?
+## *Examples of Explanatory Variables*
 
-# Course Schedule 
-
-```{r}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/Hours .png")
-```
+1.	*How did the influx of refugees affect voter turnout in Italy compared to Greece between 2010-2021?*
+1.	*How has GDP growth affected voter turnout in Germany compared to the Netherlands between […-….]?*
+1.	*How does literacy rate affect voter turnout in…?*
 
 # EU Resources
 
-## Scholarly Articles and Sources
+## *Scholarly Articles and Sources*
 
 Feel free to explore these resources to find inspiration for your plots. By clicking on “Research” or “Publications”, you can see publications related to voting in EU governing bodies. 
-•	[The Centre for European Policy Studies (CEPR)](https://www.ceps.eu/)
-•	[European Consortium for Political Research (ECPR)](https://ejpr.onlinelibrary.wiley.com/journal/14756765)
-•	[European Union Politics](https://journals.sagepub.com/home/eup/)
 
-## EU News 
+* [The Centre for European Policy Studies (CEPR)](https://www.ceps.eu/)
+* [European Consortium for Political Research (ECPR)](https://ejpr.onlinelibrary.wiley.com/journal/14756765)
+* [European Union Politics](https://journals.sagepub.com/home/eup/)
 
-•	[Human Rights Watch EU 2022 Report (overview of issues facing the EU)](https://www.hrw.org/world-report/2022/country-chapters/european-union)
-•	[Five Charts on EU Politics](https://blogs.lse.ac.uk/europpblog/2018/12/28/five-charts-on-european-politics-in-2018/)
-•	EU News Sources 
-1.	DW
-2.	France24
-3.	Euronews
-4.	Al Jazeera
-5.	AP 
-6.	Reuters
-7.	BBC
-8.	Politico Europe 
-9.	Vox EU CEPR (Center for Policy Research) 
-10.	The Economist  
+## *EU News* 
 
-## RStudio Resources 
+1. [Human Rights Watch EU 2022 Report (overview of issues facing the EU)](https://www.hrw.org/world-report/2022/country-chapters/european-union)
+1. DW
+1. [LSE, Five Charts on EU Politics](https://blogs.lse.ac.uk/europpblog/2018/12/28/five-charts-on-european-politics-in-2018/)
+1. France24
+1. Euronews
+1. Al Jazeera
+1. AP 
+1. Reuters 
+1. BBC
+1. Politico Europe 
+1. Vox EU CEPR (Center for Policy Research) 
+1. The Economist   
+
+## *RStudio Resources* 
 
 •	[RGallery](https://r-graph-gallery.com/)
 •	[R Colors Guide](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) 
 
 # Coding Videos 
+Watch these videos for guidance on getting to know RStudio and coding the plots necessary for the poster. 
 
+[Click Here](https://drive.google.com/drive/folders/16j3d0lf--GGVL4BWhkLv3TcPnsaA0cx5?usp=sharing)
+
+# Rubric 
+
+Posters will be graded on four aspects: correct execution of the tasks, analysis of your results, correct use of R and script, and exposition/layout.  
+
+```{r, echo=FALSE, out.width="70%", fig.cap="Rubric SSCPOLI302 Poster Assignment"}
+knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/rubric.png")
+```
+
+*Course:* SSCPOLI302 
+*Professor:* Dr. Herman Lelieveldt 
+*Duration:* August-December 2023 
