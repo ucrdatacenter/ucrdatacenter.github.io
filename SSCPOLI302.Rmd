@@ -17,7 +17,7 @@ This page collects materials for the data-driven Poster assignment in the **Fall
 Data Center office hours take place with Sophie on Mondays 17:00-19:00 in the Data Center office in Anne (ground floor); to schedule an individual meeting, please email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
 # Installing R
-Before you attend the workshop, please download RStudio.Rstudio is free to download and install. To download R, go to [cloud.r-project.org]() and follow the instructions on the page. To download RStudio, go to [rstudio.com/products/rstudio/download](), scroll down and download the file recommended for your operating system.
+Before you attend the workshop, please download RStudio.Rstudio is free to download and install. To download R, go to [cloud.r-project.org](https://cloud.r-project.org/) and follow the instructions on the page. To download RStudio, go to [rstudio.com/products/rstudio/download](https://rstudio.com/products/rstudio/download), scroll down and download the file recommended for your operating system.
 
 In case you get stuck at any point, or would like more guidance in the installation process, feel free to check out any of the following links:
 
