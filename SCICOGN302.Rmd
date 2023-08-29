@@ -17,4 +17,15 @@ You can also access the related files directly on [Github](https://github.com/uc
 
 Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
 
-# [Final poster assignment guidelines](SCICOGN302/poster_guidelines)
+# Assignment guidelines
+
+## Week 5 homework: TBA
+
+## [Final poster](SCICOGN302/poster_guidelines)
+
+# Data Center workshops
+
+## First workshop
+
+The first Data Center workshop will take place in week 5.
+You can find all relevant materials [here](SCICOGN302/workshop1).

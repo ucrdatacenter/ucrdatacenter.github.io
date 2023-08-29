@@ -1,0 +1,39 @@
+---
+title: "SCICOGN302 workshop I:<br>Introduction to R and the CHILDES database"
+date: "Fall 2023<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# Learning outcomes
+
+In this tutorial you learn the steps needed to conduct basic text analysis in R using thr CHILDES database of child language development.
+You will need these skills in the small homework assignment following this workshop, and in case you choose to complete a data assignment instead of an experiment for your final poster.
+
+You learn how to import data into R with the `childesr` package, how to use basic text analysis tools, and how to visualize your results using the `ggplot2` package.
+
+# First steps
+
+This tutorial assumes that you have already installed R and RStudio.
+If you have not done so yet, please follow [this installation tutorial](https://ucrdatacenter.github.io/tutorial/r_install.html).
+
+Before you proceed, read and follow along sections 2.3-2.5, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf).
+
+In addition, create a new project for the Psycholinguistics course, and install the `tidyverse`, `tidytext` and `childesr` packages, as explained [here](https://ucrdatacenter.github.io/tutorial/r_basics.html).
+
+In each section of this tutorial you will find videos guiding you through the processes explained in the text.
+You should first read the relevant section as an introduction to the contents, then watch and follow along with the video presenting the steps in more detail.
+
+If you have any questions after watching a video, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](https://ucrdatacenter.github.io/tutorial), try googling your question, or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl) to attend office hours.
+The code shown in the videos is available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SSCECON207/2023h1/workshop1code.R).
+
+### [**---Introduction to R video (4:29)---**](https://vimeo.com/832925882/bd8a522005?share=copy) {.unlisted .unnumbered}
