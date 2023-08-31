@@ -52,7 +52,7 @@ If you use the `childesr` package to load the data, then the transcripts will al
 You have two options for how your data should look like:
 
 * If you only conduct analysis on the word level, you should use the `get_tokens()` function. One row in your dataframe will correspond to one token (a token is generally a single word).
-* If you want to analyse longer expressions (up to full sentences), you should use the `get_utterances()` function. One row in your dataframe will correspond to one token (an utterance is a phrase/expression/sentence (fragment))
+* If you want to analyse longer expressions (up to full sentences), you should use the `get_utterances()` function. One row in your dataframe will correspond to one utterance (an utterance is a phrase/expression/sentence (fragment))
 
 In this tutorial we show examples of how to work with both data types.
 For the case of studying the transcripts of Amy, you can load the token-based and utterance-based datasets as follows:
@@ -96,34 +96,39 @@ The key variables of `utt` (utterance-based dataframe) are
 Let's say you want to know what words Amy uses most frequently.
 To count how many times each word occurs, you can use the `count()` function.
 You need to specify the data and the variable that you'd like to count as the function arguments, and assign the result to a new object to store it in R's memory.
-I use the "stem" variable instead of "gloss" to ignore suffixes, conjugation, etc. and set `sort = TRUE` to display the results from most to least frequent.
-Then I print the top 10 most common words.
+We use the "stem" variable instead of "gloss" to ignore suffixes, conjugation, etc. and set `sort = TRUE` to display the results from most to least frequent.
+Then we can print the top 10 most common words.
 
 ```{r}
 n <- count(tok, stem, sort = TRUE)
 head(n, 10)
 ```
 
-You can see that this calculation wasn't very effective.
-All of these words are very common and generic, and they don't hold much meaning -- they are called stopwords.
+You can see that these results do not tell us much.
+All of these words are very common and generic, and most don't hold much meaning -- they are so-called stopwords.
 In addition, the second most common token is blank (i.e. no intelligible word).
 
 ## Filtering the data
 
-To make our results more useful, we should filter the dataset first with the `filter()` function, that takes logical statements about the criteria that the data should meet in order to remain in the filtered dataset.
-For text analysis the most important logical operators are `==` to mean an exact match (e.g. `gloss == "apple"` would only keep observations where Amy said "apple"), `%in%` to mean that the value matches one of multiple options (e.g. `gloss %in% c("apple", "orange")` would keep observations where Amy said "apple" OR "orange"), and `!` which negates whatever statement it precedes (for exact matches the negated operator becomes `!=`).
+To make our results more useful, we should filter the dataset first with the `filter()` function, which specifies the criteria that the data should meet in order to remain in the filtered dataset using logical expressions.
+For text analysis the most important logical operators are 
+
+* `==` to mean an exact match (e.g. `gloss == "apple"` would only keep observations where Amy said "apple")
+* `%in%` to mean that the value matches one of multiple options (e.g. `gloss %in% c("apple", "orange")` would keep observations where Amy said "apple" OR "orange")
+* `!` which negates whatever statement it precedes (for exact matches the negated operator becomes `!=`).
+
 You can also combine logical statements with `&` (and) and `|` (or) connectors.
 For instance, `gloss %in% c("apple", "orange")` is equivalent to `gloss == "apple" | gloss == "orange"`.
 
-In addition, we use the `get_stopwords()` function from the `tidytext` package to get a pre-defined list of stopwords.
-Then we can filter for words that are not in the stopword list and are not blanks.
+In this case, we also use the `get_stopwords()` function from the `tidytext` package to get a pre-defined list of stopwords.
+This function creates a dataframe which has a variable `word` that serves as a list of stopwords, so we can filter for words that are not in the stopword list and are not blanks.
 
 ```{r}
 stopwords <- get_stopwords()
 tok_filtered <- filter(tok, !(stem %in% stopwords$word) & stem != "")
 ```
 
-Now we can use the `count()` function on our filtered data, and the results are very different.
+Now we can use the `count()` function on our filtered data, and the results are very different than before.
 
 ```{r}
 n_filtered <- count(tok_filtered, stem, sort = TRUE)
@@ -148,10 +153,11 @@ n_filtered <- tok %>%
 ## Regular expressions (regex)
 
 When working with text data, looking for direct matches with logical operators is often not sufficient.
-For example if you want to find all utterances that include the phrase "he is", `filter(gloss == "he is")` will not keep "he is tall", because it only looks for exact matches, no more, no less.
+For example if you want to find all utterances that include the phrase "he is", `filter(gloss == "he is")` will not keep "he is tall", because it only looks for exact matches.
+No more, no less.
 
 To get results that match a certain pattern (e.g. starting in a specific way or containing a particular sequence), we can use regular expressions.
-These expressions practically have a language of their own, and their advanced use can get very complex, but the basics are straightforward.
+These expressions practically form a language of their own, and their advanced use can get very complex, but the basics are straightforward.
 You specify the pattern (e.g. contains "he is"), and specify the string in which you want to find that pattern (e.g. the gloss variable of the utt dataframe).
 Then you can use the `grepl()` function to find matches: `grepl()` returns a logical vector that you can use in the `filter()` function.
 
@@ -162,7 +168,7 @@ utt %>%
 
 As you can see, Amy said the phrase "he is" four times, of which one time she said "she is".
 We can use regular expressions to further narrow down our results.
-Some of the most useful patterns are
+Some of the most useful regex patterns are
 
 * `^x` starts with x
 * `x$` ends with x
@@ -170,7 +176,7 @@ Some of the most useful patterns are
 * `.` any character
 * `x*` x any number of times
 
-So if we wanted to exclude "she is" from the previous results, the regular expression `"(^| )he is"` would do that: we look for "he is" either at the beginning of the phrase or preceded by whitespace.
+So if we wanted to exclude "she is" from the previous results, the regular expression `"(^| )he is"` would do that: we look for the phrase "he is" either at the beginning of the phrase or preceded by whitespace.
 
 For other regex patterns, see the second page of [this cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf).
 
@@ -193,7 +199,7 @@ Common plot types include
 * scatterplots (`geom_point()`)
 * line charts (`geom_line()`)
 * bar charts (`geom_col()` and `geom_bar()`)
-* histograms (`geom_histogram`)
+* histograms (`geom_histogram()`)
 * fitted curves (`geom_smooth()`)
 
 For instance you can create a bar chart of the frequencies of the 10 most common words Amy uses.
@@ -211,7 +217,7 @@ To observe language development, it is interesting to look at how various measur
 Since we only observe Amy at one age, we can't plot that here, but as an alternative we can use the `utterance_order` variable to see whether Amy's speech patterns change over the course of one conversation.
 
 For example, we can plot the mean utterance length (equivalent to mean length of utterance (MLU), a common measure of language development) as a scatterplot with a fitted curve.
-Note that if you specify aesthetics in the `ggplot()` function, it applies to all geoms.
+Note that if you specify aesthetics in the `ggplot()` function, they apply to all geoms.
 
 ```{r}
 utt %>% 
@@ -222,11 +228,25 @@ utt %>%
   theme_light()
 ```
 
-From this plot we can see that while there are some particularly long utterances Amy made during the conversations, there os no clear pattern of increasing or decreasing utterance length during the conversation.
+From this plot we can see that while there are some particularly long utterances Amy made during the conversations, there is no clear pattern of increasing or decreasing utterance length during the conversation.
+
+Since we have two transcripts from Amy, we can compare language development measures in the two transcripts (for your assignment yo can compare multiple children in a similar way).
+This figure is the same as the previous one, except that it specifies `transcript_id` as the grouping variable that should affect the color of the points, and therefore fits separate lines per transcript.
+
+```{r}
+utt %>% 
+  ggplot(aes(x = utterance_order, y = num_tokens, 
+             color = as.character(transcript_id))) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Time in conversation", y = "Mean length of utterance") +
+  theme_light()
+```
+
+This plot tells us that the second transcript seems to have a slightly larger MLU, mainly because most of the particularly long utterances occurred in the second conversation.
 
 We can also use regular expressions to look for particular patterns.
 For instance, we can check which types of pronouns (denoted pro:type) Amy uses the most.
-
 
 ```{r}
 tok %>% 
