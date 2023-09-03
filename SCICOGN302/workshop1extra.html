@@ -11,7 +11,7 @@
 
 
 
-<title>SCICOGN302 Psycholinguistics Fall 2023</title>
+<title>SCICOGN302 workshop I: Additional material</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1501,69 +1501,129 @@ font-size: 0.95em;
 
 
 
-<h1 class="title toc-ignore">SCICOGN302<br>Psycholinguistics<br>Fall
-2023</h1>
-<h4 class="date">Last updated: 2023-09-03</h4>
+<h1 class="title toc-ignore">SCICOGN302 workshop I:<br>Additional
+material</h1>
+<h4 class="date">Fall 2023<br>Last updated: 2023-09-03</h4>
 
 </div>
 
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This page collects materials for the data-driven assignments in the
-Fall 2023 edition of Psycholinguistics at UCR. You can also access the
-related files directly on <a href="https://github.com/ucrdatacenter/projects">Github</a>.</p>
-<p>Data Center office hours will be announced soon; to schedule an
-individual meeting, please email <a href="mailto:ucrdatacenter@ucr.nl">ucrdatacenter@ucr.nl</a>.</p>
+<p>This tutorial shows you how you can use the <code>mutate()</code>,
+<code>group_by()</code> and <code>summarize()</code> functions to
+compute more complex measures of linguistic development than what was
+shown in the Data Center workshop.</p>
+<p>If you have not done so yet, load the three packages we used in the
+workshop, and load Amy’s transcript data in the token-based format.</p>
+<pre class="r"><code>library(tidyverse)
+library(tidytext)
+library(childesr)
+
+tok &lt;- get_tokens(token = &quot;*&quot;, collection = &quot;Eng-NA&quot;, target_child = &quot;Amy&quot;,
+                  corpus = &quot;VanKleeck&quot;, role = &quot;target_child&quot;)</code></pre>
 </div>
-<div id="assignment-guidelines" class="section level1">
-<h1>Assignment guidelines</h1>
-<div id="small-homework-assignment" class="section level2">
-<h2>Small homework assignment</h2>
-<p>Use what you learned in the <a href="SCICOGN302/workshop1">first Data
-Center workshop</a> to complete the following assignment.</p>
-<p><em>The CHILDES database provides data on the use of (mostly spoken)
-language of a large number of young children. Use parts of the dataset
-to explore how the spoken language (word choice or number of words, for
-instance) of children changes over time . Keep you question simple,
-focus on a small part of the dataset (one or a few children). The chosen
-variable and/or sample should be different than what is shown in the
-Data Center workshop. Make one clear visualization of your result and
-briefly report on (max 200 words) , the research question and your
-outcome. Also briefly discuss your result in the context of scientific
-literature. Cite at least two papers (the latter are not part of 200
-words).</em></p>
+<div id="computing-new-variables" class="section level1">
+<h1>Computing new variables</h1>
+<div id="mutate" class="section level2">
+<h2><code>mutate()</code></h2>
+<p>The <code>mutate()</code> function is useful when you want to create
+new variables or overwrite existing ones. For instance, you can
+calculate the length of each word Amy used by using the
+<code>str_length()</code> function, and assign the result to a new
+variable called <code>length</code>. I use the <code>select()</code>
+function to display only a subset of the variables, and the
+<code>head()</code> function to display only the first 10
+observations.</p>
+<pre class="r"><code>tok_length &lt;- tok %&gt;% 
+  mutate(length = str_length(gloss)) 
+
+tok_length %&gt;% 
+  select(id, gloss, stem, length) %&gt;% 
+  head(10)</code></pre>
+<pre><code>## # A tibble: 10 × 4
+##         id gloss  stem    length
+##      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;int&gt;
+##  1 3499800 white  &quot;white&quot;      5
+##  2 3499804 xxx    &quot;&quot;           3
+##  3 3499886 hi     &quot;hi&quot;         2
+##  4 3499906 xxx    &quot;&quot;           3
+##  5 3499911 okay   &quot;okay&quot;       4
+##  6 3499912 bye    &quot;bye&quot;        3
+##  7 3499938 the    &quot;the&quot;        3
+##  8 3499939 farmer &quot;farm&quot;       6
+##  9 3499961 okay   &quot;okay&quot;       4
+## 10 3499976 yeah   &quot;yeah&quot;       4</code></pre>
+<p>You can also use mutate to create indicator variables: the next
+example uses a logical expression that is true if the word is a
+noun.</p>
+<pre class="r"><code>tok %&gt;% 
+  mutate(noun = part_of_speech == &quot;n&quot;) %&gt;% 
+  select(id, gloss, stem, noun) %&gt;% 
+  head(10)</code></pre>
+<pre><code>## # A tibble: 10 × 4
+##         id gloss  stem    noun 
+##      &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;lgl&gt;
+##  1 3499800 white  &quot;white&quot; FALSE
+##  2 3499804 xxx    &quot;&quot;      FALSE
+##  3 3499886 hi     &quot;hi&quot;    FALSE
+##  4 3499906 xxx    &quot;&quot;      FALSE
+##  5 3499911 okay   &quot;okay&quot;  FALSE
+##  6 3499912 bye    &quot;bye&quot;   FALSE
+##  7 3499938 the    &quot;the&quot;   FALSE
+##  8 3499939 farmer &quot;farm&quot;  TRUE 
+##  9 3499961 okay   &quot;okay&quot;  FALSE
+## 10 3499976 yeah   &quot;yeah&quot;  FALSE</code></pre>
 </div>
-<div id="final-poster" class="section level2">
-<h2>Final poster</h2>
-<p>If you choose to use the CHILDES database for your final poster, you
-can find the poster guidelines <a href="SCICOGN302/poster_guidelines">here</a>.</p>
+<div id="group_by-and-summarize" class="section level2">
+<h2><code>group_by()</code> and <code>summarize()</code></h2>
+<p>While <code>mutate()</code> creates a new variable for each row of
+the data, <code>summarize()</code> collapses the data to a smaller
+dimension by applying a function (e.g. <code>sum()</code> or
+<code>mean()</code>) to the data.</p>
+<p>For instance, if you use <code>mutate()</code> to get the length of
+each word, you can use <code>summarize()</code> to find the mean word
+length of all observations:</p>
+<pre class="r"><code>tok_length %&gt;% 
+  summarize(length = mean(length))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   length
+##    &lt;dbl&gt;
+## 1   3.76</code></pre>
+<p>Amy’s average word in this data is almost 4 letters long.</p>
+<p>You can also do more complex operations rather than averages. The
+following example uses the indicator variable for nouns to calculate the
+total fraction of nouns in Amy’s speech: we can use the
+<code>sum()</code> function to get the total number of nouns (the
+TRUE/FALSE indicator is treated as 1/0), and divide that by the total
+number of observations <code>n()</code>.</p>
+<pre class="r"><code>tok %&gt;% 
+  mutate(noun = part_of_speech == &quot;n&quot;) %&gt;% 
+  summarize(noun_prop = sum(noun)/n())</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   noun_prop
+##       &lt;dbl&gt;
+## 1     0.123</code></pre>
+<p>So approximately 12% of Amy’s words were nouns.</p>
+<p>Sometimes you don’t want to aggregate the full dataset, but get
+summaries per group, e.g. the average word length per transcript. You
+can accomplish that by specifying one or more grouping variables with
+the <code>group_by()</code> function before calling
+<code>summarize()</code>.</p>
+<pre class="r"><code>tok_length %&gt;% 
+  group_by(transcript_id) %&gt;% 
+  summarize(length = mean(length))</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   transcript_id length
+##           &lt;int&gt;  &lt;dbl&gt;
+## 1          4258   3.66
+## 2          4259   3.81</code></pre>
 </div>
 </div>
-<div id="data-center-workshops" class="section level1">
-<h1>Data Center workshops</h1>
-<div id="first-workshop" class="section level2">
-<h2>First workshop</h2>
-<p>The first Data Center workshop takes place on the Tuesday class of
-week 5. To prepare for the class, please complete the following:</p>
-<ul>
-<li>install R and RStudio (<a href="https://ucrdatacenter.github.io/tutorial/r_install.html">installation
-tutorial</a>)</li>
-<li>read sections 2.3-2.5, 3.1-3.4, and 4-6 of <a href="https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf">A
-(very) short introduction to R</a></li>
-<li>create a new R project for the Psycholinguistics course</li>
-<li>install the <code>tidyverse</code>, <code>tidytext</code> and
-<code>childesr</code> packages</li>
-</ul>
-<p><a href="https://vimeo.com/860596815/4a202dd077?share=copy">This
-video (6:18)</a> and <a href="https://ucrdatacenter.github.io/tutorial/r_basics.html">this
-tutorial</a> explain the layout of RStudio, how to create a project, and
-how to install and load packages. If you have any questions after
-watching the video and reading the tutorial, please email <a href="mailto:datacenter@ucr.nl">datacenter@ucr.nl</a> or attend office
-hours before the workshop.</p>
-<p>You can find the workshop handout <a href="SCICOGN302/workshop1">here</a>, and additional workshop materials
-<a href="SCICOGN302/workshop1extra">here</a>.</p>
-</div>
+<div id="more-materials" class="section level1">
+<h1>More materials</h1>
+<p>You can find a list of helpful links for data manipulation and
+visualization <a href="https://ucrdatacenter.github.io/tutorial/links.html">here</a>.</p>
 </div>
 
 

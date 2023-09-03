@@ -258,3 +258,5 @@ tok %>%
 ```
 
 Subjective and personal pronouns (I, you, etc.) are clearly dominating Amy's speech, however, she uses a wide range of different pronouns.
+
+If you would like a brief introduction to some more useful functions in calculating measures of linguistic development, have a look at the workshop [additional materials](workshop1extra).
