@@ -41,7 +41,7 @@ To prepare for the class, please complete the following:
 * create a new R project for the Psycholinguistics course 
 * install the `tidyverse`, `tidytext` and `childesr` packages
 
-[This video](link TBA) and [this tutorial](https://ucrdatacenter.github.io/tutorial/r_basics.html) explain the layout of RStudio, how to create a project, and how to install and load packages.
+[This video (6:18)](https://vimeo.com/860596815/4a202dd077?share=copy) and [this tutorial](https://ucrdatacenter.github.io/tutorial/r_basics.html) explain the layout of RStudio, how to create a project, and how to install and load packages.
 If you have any questions after watching the video and reading the tutorial, please email [datacenter@ucr.nl](mailto:datacenter@ucr.nl) or attend office hours before the workshop.
 
 You can find the workshop handout [here](SCICOGN302/workshop1).

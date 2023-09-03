@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 
 # Learning outcomes
 
-In this tutorial you learn the steps needed to conduct basic text analysis in R using thr CHILDES database of child language development.
+In this tutorial you learn the steps needed to conduct basic text analysis in R using the CHILDES database of child language development.
 You will need these skills in the small homework assignment following this workshop, and in case you choose to complete a data assignment instead of an experiment for your final poster.
 
 You learn how to import data into R with the `childesr` package, how to use basic text analysis tools, and how to visualize your results using the `ggplot2` package.
@@ -120,12 +120,11 @@ For text analysis the most important logical operators are
 You can also combine logical statements with `&` (and) and `|` (or) connectors.
 For instance, `gloss %in% c("apple", "orange")` is equivalent to `gloss == "apple" | gloss == "orange"`.
 
-In this case, we also use the `get_stopwords()` function from the `tidytext` package to get a pre-defined list of stopwords.
+In this case, we also use the pre-defined dataset `stop_words` from the `stopwords` package to get a list of stopwords.
 This function creates a dataframe which has a variable `word` that serves as a list of stopwords, so we can filter for words that are not in the stopword list and are not blanks.
 
 ```{r}
-stopwords <- get_stopwords()
-tok_filtered <- filter(tok, !(stem %in% stopwords$word) & stem != "")
+tok_filtered <- filter(tok, !(stem %in% stop_words$word) & stem != "")
 ```
 
 Now we can use the `count()` function on our filtered data, and the results are very different than before.
@@ -146,7 +145,7 @@ In the following case, it takes the object `tok` as the first argument of the `f
 
 ```{r}
 n_filtered <- tok %>% 
-  filter(!(stem %in% stopwords$word) & stem != "") %>% 
+  filter(!(stem %in% stop_words$word) & stem != "") %>% 
   count(stem, sort = TRUE)
 ```
 
