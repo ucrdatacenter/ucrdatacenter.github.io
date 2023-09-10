@@ -158,11 +158,11 @@ No more, no less.
 To get results that match a certain pattern (e.g. starting in a specific way or containing a particular sequence), we can use regular expressions.
 These expressions practically form a language of their own, and their advanced use can get very complex, but the basics are straightforward.
 You specify the pattern (e.g. contains "he is"), and specify the string in which you want to find that pattern (e.g. the gloss variable of the utt dataframe).
-Then you can use the `grepl()` function to find matches: `grepl()` returns a logical vector that you can use in the `filter()` function.
+Then you can use the `str_detect()` function to find matches: `str_detect()` returns a logical vector that you can use in the `filter()` function.
 
 ```{r}
 utt %>% 
-  filter(grepl("he is", gloss))
+  filter(str_detect(gloss, "he is"))
 ```
 
 As you can see, Amy said the phrase "he is" four times, of which one time she said "she is".
@@ -249,7 +249,7 @@ For instance, we can check which types of pronouns (denoted pro:type) Amy uses t
 
 ```{r}
 tok %>% 
-  filter(grepl("pro:", part_of_speech)) %>% 
+  filter(str_detect(part_of_speech, "pro:")) %>% 
   count(part_of_speech) %>% 
   ggplot() +
   geom_col(aes(x = part_of_speech, y = n)) +
