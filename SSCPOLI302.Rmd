@@ -91,10 +91,15 @@ Feel free to explore these resources to find inspiration for your plots. By clic
 1. Vox EU CEPR (Center for Policy Research) 
 1. The Economist   
 
+•	[Chart of the Day (Economist)](https://www.economist.com/graphic-detail)
+•	[Chart of the Week (IMF)](https://www.imf.org/en/Blogs/chart-of-the-week)
+
 ## *RStudio Resources* 
 
 •	[RGallery](https://r-graph-gallery.com/)
 •	[R Colors Guide](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf) 
+•	[Themes](https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/)
+
 
 # Coding Videos 
 Watch these videos for guidance on getting to know RStudio and coding the plots necessary for the poster. 
