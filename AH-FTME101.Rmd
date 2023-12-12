@@ -1,0 +1,15 @@
+---
+title: "AH-FTME101<br>Introduction to Film, Theatre, and Media<br>Spring 2024"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```

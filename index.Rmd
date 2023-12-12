@@ -23,6 +23,7 @@ You can find some general tutorials on working with data and a collection of use
 
 ## Ongoing courses
 
+* [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101.html)
 * [SCICOGN302 - Psycholinguistics](SCICOGN302.html)
 * [SSCPOLI302 - European Union Politics](SSCPOLI302.html)
 
