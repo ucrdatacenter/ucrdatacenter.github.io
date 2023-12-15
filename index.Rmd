@@ -9,6 +9,10 @@ output:
 
 You can find information and supplementary materials for all data encounters in UCR courses by clicking the link of the project you are interested in.
 
+## DC Apprenticeship 2024
+
+You can find all materials related to the apprenticeship workshops and projects [here](apprenticeship.html).
+
 ## Office hours
 
 The Data Center student fellows hold office hours in the Data Center's office (Anne ground floor) or online to answer questions and help with assignments related to the Data Center projects.

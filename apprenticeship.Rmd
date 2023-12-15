@@ -1,0 +1,13 @@
+---
+title: "Data Center Apprenticeship program<br>Spring 2024 (January)"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+To be added
