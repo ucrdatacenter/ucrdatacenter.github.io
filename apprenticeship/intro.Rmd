@@ -1,0 +1,94 @@
+---
+title: "Data Center Apprenticeship:<br>Introduction"
+date: "Spring 2024<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+# Introduction to the Apprenticeship program *~30 min*
+
+## Workshops
+
+* where to find schedule; timing, location
+* updates via Moodle
+* mandatory attendance
+* bring laptop, active participation
+
+## Projects
+
+* work on them in the afternoons - ideally in A24
+* communicate with supervisors regularly
+* DC available in afternoons for support
+* not expected to finish by 26 jan, but have some progress; finish during the semester
+
+## Presentation
+
+* 26 jan: poster session; practical details to be announced later
+* present work in progress - i.e. doesn't have to be finished but want to see where it's going
+
+# Introduction to R *~30 min*
+
+## Installation and setup: prepare in advance
+
+* install R, RStudio: https://ucrdatacenter.github.io/tutorial/r_install.html
+* tour of RStudio panes, how to create and save a new script (add to R basics tutorial)
+* creating a project, installing and loading packages (https://ucrdatacenter.github.io/tutorial/r_basics.html)
+
+## Objects in R
+
+* define vectors with examples
+* combine vectors into dataframe
+* subset vectors
+* find defined objects in the environment
+
+## Functions in R
+
+* define functions with examples
+* apply basic functions (sum, mean, length, unique) to vectors
+* look up functions and function arguments in help files
+
+# Data wrangling in R *~1.5 hours*
+
+## Importing data
+
+* load data from csv file (data carpentry data uploaded to github)
+* view data from environment
+* summary()
+
+## Data wrangling
+
+source: https://datacarpentry.org/R-ecology-lesson/
+
+*When we can directly use resources, would we just say "from now on follow this section of this resource" instead of actually writing the material based on the resource?*
+
+Covered in the carpentry workshop:
+
+* select
+* filter
+* pipes (mention base vs magrittr)
+* mutate
+* group_by
+* summarize
+* arrange
+* count
+* is.na
+* pivot_longer, pivot_wider
+
+Notes on the workshop:
+
+* you can also load this data from github with this link
+* the tutorial uses the magrittr pipe but now there's also a base pipe
+* filter out missing variables also with drop_na
+
+## Exporting tidy data
+
+* write_csv

@@ -10,4 +10,42 @@ output:
       smooth_scroll: true
 ---
 
-To be added
+# Introduction
+
+This page collects all materials related to the 2024 Data Center Apprenticeship program, including workshop materials and other resources that may be helpful for the projects.
+More information on the program is available on the Data Center Moodle page, including the timing and location of the workshops and requirements for apprentices.
+
+Any interested member of the UCR community may attend the workshops or make use of the materials below; if interested in attending any of the workshops, please self-enroll in the UCR Data Center Moodle course with the enrollment key “Data-Center-1”.
+We will share any updates to the schedule via Moodle announcements.
+
+# Workshop schedule
+
+Below you can find the schedule of the apprenticeship workshops between 8-26 January.
+Click on a topic to access the workshop materials.
+Note that the pages are still a work in progress and subject to frequent updates.
+
+Week|Topic                                                                      
+----|---------------------------------------------------------------------------
+1.1 |[Apprenticeship introduction; introduction to R; data wrangling in R](apprenticeship/intro)
+1.2 |Start on apprenticeship projects (no workshop)                             
+1.3 |Working with external data: importing, exporting and merging files with R  
+1.4 |Data visualization with ggplot2                                            
+1.5 |Data visualization with ggplot2 and other packages                         
+2.1 |Character strings and regular expressions                                  
+2.2 |Introduction to GitHub; good practices in code style and structure         
+2.3 |Data scraping from the web and pdf documents in R                          
+2.4 |Wrangling and visualizing spatial data in R                                
+2.5 |Interactive applications with Shiny                                        
+3.1 |Statistics in R: descriptive statistics, regression, classification methods
+3.2 |Text analysis in R                                                         
+3.3 |Advanced treatment of data types and functions in R                        
+3.4 |Applications of data science and AI in finance                             
+3.5 |Apprenticeship presentations   
+
+# Projects
+
+Below you can find a list of external resources compiled by the Data Center that you may find helpful when working on your project:
+
+* [Basic data wrangling and visualization in R](https://ucrdatacenter.github.io/tutorial/links.html)
+* [Useful data sources by discipline](https://ucrdatacenter.github.io/tutorial/data.html)
+* Project-specific resources (TBA)
