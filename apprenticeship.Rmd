@@ -27,18 +27,18 @@ Note that the pages are still a work in progress and subject to frequent updates
 Week|Topic                                                                      
 ----|---------------------------------------------------------------------------
 1.1 |[Apprenticeship introduction; introduction to R; data wrangling in R](apprenticeship/intro)
-1.2 |Start on apprenticeship projects (no workshop)                             
-1.3 |Working with external data: importing, exporting and merging files with R  
-1.4 |Data visualization with ggplot2                                            
-1.5 |Data visualization with ggplot2 and other packages                         
-2.1 |Character strings and regular expressions                                  
+1.2 |Start on apprenticeship projects (no workshop)
+1.3 |[Working with external data: importing, exporting and merging files with R](apprenticeship/data)
+1.4 |[Data visualization with ggplot2](apprenticeship/visualization-1)
+1.5 |[Data visualization with ggplot2 and other packages](apprenticeship/visualization-2)
+2.1 |[Character strings and regular expressions](apprenticeship/strings)
 2.2 |Introduction to GitHub; good practices in code style and structure         
-2.3 |Data scraping from the web and pdf documents in R                          
-2.4 |Wrangling and visualizing spatial data in R                                
-2.5 |Interactive applications with Shiny                                        
-3.1 |Statistics in R: descriptive statistics, regression, classification methods
-3.2 |Text analysis in R                                                         
-3.3 |Advanced treatment of data types and functions in R                        
+2.3 |[Data scraping from the web and pdf documents in R](apprenticeship/scraping)
+2.4 |[Wrangling and visualizing spatial data in R](apprenticeship/spatial)
+2.5 |[Interactive applications with Shiny](apprenticeship/shiny)
+3.1 |[Statistics in R: descriptive statistics, regression, classification methods](apprenticeship/statistics)
+3.2 |[Text analysis in R](apprenticeship/text)
+3.3 |[Advanced treatment of data types and functions in R](apprenticeship/data-types)
 3.4 |Applications of data science and AI in finance                             
 3.5 |Apprenticeship presentations   
 

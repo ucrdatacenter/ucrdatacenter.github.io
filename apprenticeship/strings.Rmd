@@ -1,0 +1,17 @@
+---
+title: "Data Center Apprenticeship:<br>Character strings and regular expressions"
+date: "Spring 2024<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+TBA
