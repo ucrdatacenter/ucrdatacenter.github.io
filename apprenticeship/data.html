@@ -1534,70 +1534,108 @@ but in the long run it is easier to be aware of the available import
 functions and use them directly.</p>
 <p>The following gives more information and examples of importing data
 from different file formats and different levels of tidiness.</p>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<p>We will use the following packages for importing different file
+formats:</p>
 <pre class="r"><code>library(tidyverse)
-library(readxl)
-library(haven)
-library(rio)
-library(jsonlite)
-library(arrow)</code></pre>
+library(readxl) # for Excel
+library(haven) # for SPSS, Stata, SAS
+library(jsonlite) # for JSON
+library(arrow) # for parquet, big data</code></pre>
+<p>The <code>rio</code> package provides a generic import function,
+however, it is simply a wrapper for many of the other import functions
+shown below. While it may be easier to use the same import function for
+many file formats, <code>rio</code> redirects you to the original
+functions if you look for the possible function arguments. In some
+cases, <code>rio</code> can read URL file paths that <code>readr</code>
+(the <code>tidyverse</code> package for data import) can’t.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
 <p>First, download <a href="https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2_data">this</a>
 zip-file from GitHub, and extract it into a data folder within your
 apprenticeship project directory. We now import each file, explaining
 the packages, functions, and function arguments used.</p>
+<p><code>student_male.csv</code> is a comma-separated text file. Opening
+it in a notepad or Excel shows that the column separators are semicolons
+(;). The <code>read_csv()</code> function from the previous workshop
+expects commas as a separator, while <code>read_csv()</code> expects
+semicolons. Since CSV files are a form of delimited text files, we can
+also use the more versatile <code>read_delim()</code> function
+specifying the delimiter as the argument.</p>
 <pre class="r"><code>student_male &lt;- read_csv2(&quot;data/student_male.csv&quot;)
-student_male &lt;- read_delim(&quot;data/student_male.csv&quot;, delim = &quot;;&quot;)
-student_male &lt;- import(&quot;data/student_male.csv&quot;)</code></pre>
+student_male &lt;- read_delim(&quot;data/student_male.csv&quot;, delim = &quot;;&quot;)</code></pre>
+<p><code>student_female.tab</code> is also a delimited text file.
+Opening it in a notepad shows that the delimiter is a tab. The notation
+for tab whitespace is <code>\t</code>, which we can specify in the
+<code>delim</code> argument. Like the “.tab” file extension, “.tsv” is
+also a tab-separated text file, so the more specialized
+<code>read_tsv()</code> function also works.</p>
 <pre class="r"><code>student_female &lt;- read_delim(&quot;data/student_female.tab&quot;, delim = &quot;\t&quot;)
 student_female &lt;- read_tsv(&quot;data/student_female.tab&quot;)</code></pre>
-<pre class="r"><code>student_char_sports &lt;- read_excel(&quot;data/student_char_sports.xlsx&quot;)
-student_char_sports &lt;- import(&quot;data/student_char_sports.xlsx&quot;)</code></pre>
+<p>To import Excel file we need the <code>read_excel()</code> function
+from the <code>read_excel()</code> package. With this function you can
+specify which sheet to use in addition to similar arguments as for
+delimited text files.</p>
+<pre class="r"><code>student_char_sports &lt;- read_excel(&quot;data/student_char_sports.xlsx&quot;)</code></pre>
+<p>The <code>haven</code> package reads files in the data formats of
+Stata (.dta) and SPSS (.sav).</p>
 <pre class="r"><code>student_char1_A &lt;- read_dta(&quot;data/student_char1_A.dta&quot;)</code></pre>
 <pre class="r"><code>student_char2_A &lt;- read_sav(&quot;data/student_char2_A.sav&quot;)</code></pre>
+<p>RDS is an R-specific file format that saves all attributes of the
+dataframe as well (e.g. grouping, factor levels). It is particularly
+useful for saving intermediate data files, e.g. saving the cleaned data
+before analysis to avoid needing to run the data cleaning script
+repeatedly.</p>
 <pre class="r"><code>student_age_grades_working &lt;- read_rds(&quot;data/student_age_grades_working.rds&quot;)</code></pre>
+<p>JSON</p>
 <pre class="r"><code>student_grades &lt;- fromJSON(&quot;data/student_grades.json&quot;)</code></pre>
+<p>parquet</p>
 <pre class="r"><code>student_more_id_age &lt;- open_dataset(&quot;data/student_more_id_age&quot;)</code></pre>
-<p>encourage writing own import functions</p>
+</div>
+<div id="exporting-data" class="section level2">
+<h2>Exporting data</h2>
+<p>To export data from R, you can almost always use the
+<code>write_...()</code> function corresponding to the desired file
+format, e.g. <code>write_csv()</code> or <code>write_dta</code>. For
+Excel files the preferred export function is <code>read_xlsx()</code>.
+For other file format the generic <code>write()</code> function is
+useful; you can specify any file format, and if your input data is
+readable in the chosen format, the file will export properly. In all
+these <code>write_()</code> functions you need to specify the data you’d
+like to save (often in a pipe workflow) and the output file path
+including chosen file extension, with the exception of
+<code>write_dataset()</code> from <code>arrow</code>, where you specify
+the path to be a (new) folder, and you add a separate
+<code>format = &quot;parquet&quot;</code> argument. For example:</p>
+<pre class="r"><code>write_xlsx(student_male, &quot;data/new_csv_data.csv&quot;)
+
+student_female |&gt; 
+  write_dataset(&quot;data/new_parquet_data&quot;, format = &quot;parquet&quot;)</code></pre>
+<p>A few notes regarding importing and exporting data:</p>
+<ul>
+<li>Always make sure you know your current working directory and the
+relative path to your data directory. It is better to use relative
+rather than absolute file paths (i.e. <code>data/data.csv</code> instead
+of <code>C:/User/Project/data/data.csv</code>).</li>
+<li>Note that if you are using Windows, you may need to replace the
+backslashes (\) in the file path with forward slashes (/) to avoid
+errors.</li>
+<li>You can import files directly from URLs, although you often need the
+URL of a raw file. On Github you can access the URL of raw CSV files by
+clicking on the “Raw” button on the data preview page (see e.g. <a href="https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/1_intro/surveys.csv">here</a>).
+If a file downloads immediately instead of opening in a raw format, you
+can try to copy that download link by right-clicking and selecting “Copy
+link address”; the <code>import()</code> function from <code>rio</code>
+might be successful with those links.</li>
+</ul>
 <p>add info on:</p>
 <ul>
-<li><p>available options: file formats, delimiters, skip, column types,
-column names<br />
-</p></li>
-<li><p>windows file path  to /</p></li>
-<li><p>loading data from URLs, especially from Github</p></li>
-<li><p>more on available packages (readxl, haven, rio)</p></li>
-<li><p>export with write functions to csv, excel, rds, rdata?</p></li>
-<li><p>big data with arrow?</p></li>
+<li>available options: file formats, delimiters, skip, column types,
+column names</li>
 </ul>
-<!-- One of the most important skills for data science students is importing and exporting data in R. There are many options and packages available for this task, depending on the type and source of the data. In this text, we will cover some of the most common and useful ones. -->
-<!-- The first option is to use the base R functions, such as read.table, read.csv, read.delim, write.table, write.csv, and write.delim. These functions allow you to read and write data from different file formats, such as text files, comma-separated values (CSV) files, and tab-delimited files. You can also specify various arguments to control how the data is imported or exported, such as the delimiter character, the number of lines to skip, the column types, and the column names. For example, to read a CSV file with a header row and a semicolon as the delimiter, you can use: -->
-<!-- data <- read.csv("data.csv", sep = ";", header = TRUE) -->
-<!-- To write a data frame to a CSV file with a comma as the delimiter, you can use: -->
-<!-- write.csv(data, "data.csv", row.names = FALSE) -->
-<!-- Note that if you are using Windows, you may need to replace the backslashes (\) in the file path with forward slashes (/), or use double backslashes (\\), to avoid errors. For example: -->
-<!-- data <- read.csv("C:/Users/Name/Documents/data.csv") -->
-<!-- or -->
-<!-- data <- read.csv("C:\\Users\\Name\\Documents\\data.csv") -->
-<!-- Another option is to use the readr and writr packages from the tidyverse collection of packages. These packages provide faster and more consistent versions of the base R functions, with similar syntax and arguments. They also have some additional features, such as progress bars, guessing column types, and specifying locale settings. For example, to read a tab-delimited file with no header row and specify the column types manually, you can use: -->
-<!-- library(readr) -->
-<!-- data <- read_tsv("data.tsv", col_names = FALSE, col_types = "icd") -->
-<!-- To write a data frame to a tab-delimited file with no row names and quote all non-numeric columns, you can use: -->
-<!-- library(writr) -->
-<!-- write_tsv(data, "data.tsv", col_names = FALSE, quote = "nonnumeric") -->
-<!-- You can also load data from URLs directly, without downloading them first. This is especially useful for accessing data from online repositories, such as GitHub. For example, to load a CSV file from GitHub using readr, you can use: -->
-<!-- data <- read_csv("https://raw.githubusercontent.com/user/repo/master/data.csv") -->
-<!-- If you want to import or export data from other file formats, such as Excel, SPSS, Stata, or SAS files, you may need to use some other packages that are specialized for those formats. Some of the most popular ones are readxl, haven, and rio. The readxl package allows you to read Excel files (.xls and .xlsx) using the read_excel function. The haven package allows you to read and write SPSS (.sav), Stata (.dta), and SAS (.sas7bdat) files using the read_sav, read_dta, read_sas, write_sav, write_dta, and write_sas functions. The rio package is a wrapper for many other packages that provides a simple and consistent interface for importing and exporting data from various formats using the import and export functions. For example, to import an Excel file using rio, you can use: -->
-<!-- library(rio) -->
-<!-- data <- import("data.xlsx") -->
-<!-- To export a data frame to a Stata file using rio, you can use: -->
-<!-- export(data, "data.dta") -->
-<!-- Finally, if you want to save your data in a format that preserves the R objects and attributes exactly as they are in your workspace, you can use the save and load functions for .RData files or the saveRDS and readRDS functions for .rds files. These formats are useful for sharing data between R sessions or users without losing any information or structure. For example, to save a data frame to an .RData file, you can use: -->
-<!-- save(data, file = "data.RData") -->
-<!-- To load it back into your workspace later, you can use: -->
-<!-- load("data.RData") -->
-<!-- To save a single object to an .rds file (which can be more efficient than .RData files), you can use: -->
-<!-- saveRDS(data, file = "data.rds") -->
-<!-- To load it back into your workspace later (with a different name if you want), you can use: -->
-<!-- data2 <- readRDS("data.rds") -->
+</div>
 </div>
 <div id="combining-dataframes" class="section level1">
 <h1>Combining dataframes</h1>
