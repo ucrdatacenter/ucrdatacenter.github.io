@@ -1503,113 +1503,262 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Data Center
 Apprenticeship:<br>Introduction</h1>
-<h4 class="date">Spring 2024<br>Last updated: 2023-12-22</h4>
+<h4 class="date">Spring 2024<br>Last updated: 2023-12-25</h4>
 
 </div>
 
 
-<div id="introduction-to-the-apprenticeship-program-30-min" class="section level1">
-<h1>Introduction to the Apprenticeship program <em>~30 min</em></h1>
+<p><em>Schedule:</em></p>
+<ul>
+<li>~30 min intro to apprenticeship</li>
+<li>~30 min intro to R</li>
+<li>~1.5 hours data wrangling</li>
+</ul>
+<div id="introduction-to-the-apprenticeship-program" class="section level1">
+<h1>Introduction to the Apprenticeship program</h1>
 <div id="workshops" class="section level2">
 <h2>Workshops</h2>
-<ul>
-<li>where to find schedule; timing, location</li>
-<li>updates via Moodle</li>
-<li>mandatory attendance</li>
-<li>bring laptop, active participation</li>
-</ul>
+<p>Detailed information about the workshop schedule is available in the
+course outline on Moodle. Any updates to the timing or location will
+also be announced there. Unless specified otherwise, workshops take
+place between 9:00-14:00 in classroom A-24.</p>
+<p>For apprentices, active workshop participation is mandatory.
+Therefore, please bring your fully charged laptop to all workshops.</p>
+<p>Other interested members of the UCR community may join in-person
+(please bring you laptop) or online. If interested, please enroll in the
+UCR Data Center Moodle course (enrollment key “Data-Center-1”) to
+receive Teams links and schedule updates.</p>
 </div>
 <div id="projects" class="section level2">
 <h2>Projects</h2>
-<ul>
-<li>work on them in the afternoons - ideally in A24</li>
-<li>communicate with supervisors regularly</li>
-<li>DC available in afternoons for support</li>
-<li>not expected to finish by 26 jan, but have some progress; finish
-during the semester</li>
-</ul>
+<p>You should work on your projects in the afternoons, preferably in
+room A-24, where the Data Center will be regularly available for
+support. We also encourage collaboration between apprentices: while all
+apprentices need to produce individual work, feel free to discuss your
+progress with each other and ask for help. Note that you are not
+expected to finish your projects by 26 January, but you should have some
+progress and a plan on how you’ll move forward. You will then have the
+rest of the semester to complete your project and submit your internship
+report (following the usual internship guidelines on the Intranet).</p>
 </div>
 <div id="presentation" class="section level2">
 <h2>Presentation</h2>
-<ul>
-<li>26 jan: poster session; practical details to be announced later</li>
-<li>present work in progress - i.e. doesn’t have to be finished but want
-to see where it’s going</li>
-</ul>
+<p>On 26 January we will organize a session where all apprentices can
+showcase their work. You will have to prepare and briefly present a
+poster on your project; you will receive more detailed guidelines and
+expectations later. You do not need to have complete results, but you
+should demonstrate the progress and direction of your project.</p>
 </div>
 </div>
-<div id="introduction-to-r-30-min" class="section level1">
-<h1>Introduction to R <em>~30 min</em></h1>
+<div id="introduction-to-r" class="section level1">
+<h1>Introduction to R</h1>
 <div id="installation-and-setup-prepare-in-advance" class="section level2">
 <h2>Installation and setup: prepare in advance</h2>
 <ul>
-<li>install R, RStudio: <a href="https://ucrdatacenter.github.io/tutorial/r_install.html" class="uri">https://ucrdatacenter.github.io/tutorial/r_install.html</a></li>
-<li>tour of RStudio panes, how to create and save a new script (add to R
-basics tutorial)</li>
-<li>creating a project, installing and loading packages (<a href="https://ucrdatacenter.github.io/tutorial/r_basics.html" class="uri">https://ucrdatacenter.github.io/tutorial/r_basics.html</a>)</li>
+<li><strong>Add to R basics tutorial: tour of RStudio panes, how to
+create and save a new script</strong></li>
+</ul>
+<p>Before the first workshop, please make sure that you have access to R
+and RStudio on your laptop. If you need help with the installation,
+please follow <a href="https://ucrdatacenter.github.io/tutorial/r_install.html">this
+tutorial</a>.</p>
+<p>The <a href="https://ucrdatacenter.github.io/tutorial/r_basics.html">R basics
+tutorial</a> on the Data Center website explains the RStudio interface,
+and shows how to create a new project and how to install packages.
+Please make sure that you are familiar with these features before the
+workshop, and complete the following:</p>
+<ul>
+<li>create a new project for your apprenticeship work;</li>
+<li>install the <code>tidyverse</code> package.</li>
 </ul>
 </div>
 <div id="objects-in-r" class="section level2">
 <h2>Objects in R</h2>
-<ul>
-<li>define vectors with examples</li>
-<li>combine vectors into dataframe</li>
-<li>subset vectors</li>
-<li>find defined objects in the environment</li>
-</ul>
+<p>One of the most basic types of objects in R is a vector. A vector is
+a collection of values of the same type, such as numbers, characters, or
+logicals (TRUE/FALSE). You can create a vector with the <code>c()</code>
+function, which stands for concatenate. If you assign a vector to an
+object with the assignment operator <code>&lt;-</code>, your vector will
+be saved in your environment so you can work with it within your current
+R session. Some examples of creating vectors are:</p>
+<pre class="r"><code>v1 &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;)
+v2 &lt;- 25
+v3 &lt;- 1:10</code></pre>
+<p>To subset or extract elements from a vector, you can use square
+brackets <code>[ ]</code> with an index. For example, <code>v1[1]</code>
+returns the first element of <code>v1</code>, <code>v3[2:5]</code>
+returns the 2nd to 5th elements of <code>v3</code>, and
+<code>v3[-c(2, 4, 6)]</code> returns all but the 2nd, 4th and 6th
+elements of <code>v3</code>.</p>
+<pre class="r"><code>v1[1]</code></pre>
+<pre><code>## [1] &quot;A&quot;</code></pre>
+<pre class="r"><code>v3[2:5]</code></pre>
+<pre><code>## [1] 2 3 4 5</code></pre>
+<pre class="r"><code>v3[-c(2, 4, 6)]</code></pre>
+<pre><code>## [1]  1  3  5  7  8  9 10</code></pre>
+<p>A dataframe (or tibble in <code>tidyverse</code>) is a special type
+of object that combines vectors into a rectangular table. Each column of
+a dataframe is a vector, and each row is an observation. usually you
+would load data from an external source, but you can create a dataframe
+with the <code>data.frame()</code> and a tibble with the
+<code>tibble()</code> function. You can also convert other data types
+such as matrices to tibbles with the <code>as_tibble()</code> function.
+Both functions take vectors as their arguments. Tibbles are preferred
+because they are more modern and have some convenient features that
+dataframes don’t, but for the most part, differences are minor and for
+the most part it does not matter whether you work with tibbles or
+dataframes.</p>
+<p>A simple example of creating a tibble is (make sure to load
+<code>tidyverse first</code>):</p>
+<pre class="r"><code>library(tidyverse)
+
+# define vectors within the tibble() function
+tibble(
+  name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Chris&quot;),
+  height = c(165, 180, 175)
+)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   name  height
+##   &lt;chr&gt;  &lt;dbl&gt;
+## 1 Alice    165
+## 2 Bob      180
+## 3 Chris    175</code></pre>
+<pre class="r"><code># define the vectors first, then combine them into a tibble
+name &lt;- c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Chris&quot;)
+height &lt;- c(165, 180, 175)
+tibble(name, height)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   name  height
+##   &lt;chr&gt;  &lt;dbl&gt;
+## 1 Alice    165
+## 2 Bob      180
+## 3 Chris    175</code></pre>
 </div>
 <div id="functions-in-r" class="section level2">
 <h2>Functions in R</h2>
-<ul>
-<li>define functions with examples</li>
-<li>apply basic functions (sum, mean, length, unique) to vectors</li>
-<li>look up functions and function arguments in help files</li>
-</ul>
+<p>Functions are reusable pieces of code that perform a specific task.
+They take arguments as inputs and return one or more pieces of output.
+You will mostly work with functions loaded from various packages or from
+the base R distribution, and in some cases you may write your own
+functions to avoid repetition or improve the readability of your code.
+We will cover writing your own functions later in the program.</p>
+<p>As with vectors, the output of a function is saved to your
+environment only if you assign the result to an object. For example,
+<code>sum(x)</code> will display the sum of the elements of the vector
+<code>x</code>, but <code>sum &lt;- sum(x)</code> will save this result
+to an object.</p>
+<pre class="r"><code>x &lt;- c(1, 5, 6, 2, 1, 8)
+
+sum(x)</code></pre>
+<pre><code>## [1] 23</code></pre>
+<pre class="r"><code>sum &lt;- sum(x)</code></pre>
+<p>Some important functions on vectors are</p>
+<pre class="r"><code>mean(x) # return the mean; add the argument na.rm = TRUE if missing values should be excluded</code></pre>
+<pre><code>## [1] 3.833333</code></pre>
+<pre class="r"><code>length(x) # give the length of the vector (number of elements)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>unique(x) # list the unique elements of the vector</code></pre>
+<pre><code>## [1] 1 5 6 2 8</code></pre>
+<p>To learn more about a function and its arguments, you can use the ?
+operator or the help() function, for example by typing <code>?sum</code>
+(or equivalently, <code>?sum()</code>). It is good practice to request
+help files from your console and not you R script, since there is no
+need to save these queries for the future.</p>
 </div>
 </div>
-<div id="data-wrangling-in-r-1.5-hours" class="section level1">
-<h1>Data wrangling in R <em>~1.5 hours</em></h1>
+<div id="data-wrangling-in-r" class="section level1">
+<h1>Data wrangling in R</h1>
 <div id="importing-data" class="section level2">
 <h2>Importing data</h2>
-<ul>
-<li>load data from csv file (data carpentry data uploaded to
-github)</li>
-<li>view data from environment</li>
-<li>summary()</li>
-</ul>
+<p>In the following we will be working with a dataset on animal species
+diversity and weights. You can load this data directly from <a href="https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/1_intro/surveys.csv">this
+link</a> by pasting the URL as the argument of the
+<code>read_csv()</code> function (make sure you loaded
+<code>tidyverse</code> in your current R session). Pay attention to the
+quotation marks around the URL so R treats the URL as a character string
+to parse, and not an object defined in the R environment.</p>
+<pre class="r"><code>surveys &lt;- read_csv(&quot;https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/1_intro/surveys.csv&quot;)</code></pre>
+<p>After importing the data, the <code>surveys</code> object will show
+up in your Environment tab. If you click on the object name, the full
+dataset will be displayed in your data viewer. Looking at your console,
+you can see that clicking on the object name automatically runs the
+<code>View(surveys)</code> function. If you would like to get an
+overview of what variables are in your data, you can use the summary
+function that gives you information about each variable:</p>
+<pre class="r"><code>summary(surveys)</code></pre>
+<pre><code>##    record_id         month             day            year         plot_id     
+##  Min.   :    1   Min.   : 1.000   Min.   : 1.0   Min.   :1977   Min.   : 1.00  
+##  1st Qu.: 8964   1st Qu.: 4.000   1st Qu.: 9.0   1st Qu.:1984   1st Qu.: 5.00  
+##  Median :17762   Median : 6.000   Median :16.0   Median :1990   Median :11.00  
+##  Mean   :17804   Mean   : 6.474   Mean   :16.1   Mean   :1990   Mean   :11.34  
+##  3rd Qu.:26655   3rd Qu.:10.000   3rd Qu.:23.0   3rd Qu.:1997   3rd Qu.:17.00  
+##  Max.   :35548   Max.   :12.000   Max.   :31.0   Max.   :2002   Max.   :24.00  
+##                                                                                
+##   species_id            sex            hindfoot_length     weight      
+##  Length:34786       Length:34786       Min.   : 2.00   Min.   :  4.00  
+##  Class :character   Class :character   1st Qu.:21.00   1st Qu.: 20.00  
+##  Mode  :character   Mode  :character   Median :32.00   Median : 37.00  
+##                                        Mean   :29.29   Mean   : 42.67  
+##                                        3rd Qu.:36.00   3rd Qu.: 48.00  
+##                                        Max.   :70.00   Max.   :280.00  
+##                                        NA&#39;s   :3348    NA&#39;s   :2503    
+##     genus             species              taxa            plot_type        
+##  Length:34786       Length:34786       Length:34786       Length:34786      
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+## </code></pre>
 </div>
 <div id="data-wrangling" class="section level2">
 <h2>Data wrangling</h2>
-<p>source: <a href="https://datacarpentry.org/R-ecology-lesson/" class="uri">https://datacarpentry.org/R-ecology-lesson/</a></p>
-<p><em>When we can directly use resources, would we just say “from now
-on follow this section of this resource” instead of actually writing the
-material based on the resource?</em></p>
-<p>Covered in the carpentry workshop:</p>
+<p>To learn the basics of data wrangling using the
+<code>tidyverse</code> (in particular, the <code>dplyer</code> package
+within tidyverse), we follow Section 4 of the Data Carpentry course
+“Data Analysis and Visualization in R for Ecologists”. It uses the
+species data we imported in the previous section.</p>
+<p>The tutorial covers</p>
 <ul>
-<li>select</li>
-<li>filter</li>
-<li>pipes (mention base vs magrittr)</li>
-<li>mutate</li>
-<li>group_by</li>
-<li>summarize</li>
-<li>arrange</li>
-<li>count</li>
-<li>is.na</li>
-<li>pivot_longer, pivot_wider</li>
+<li>how to select a subset of the variables in a dataframe;</li>
+<li>how to filter observations based on logical conditions (e.g. only
+keep observations from a particular area or removing missing
+values);</li>
+<li>how to create new variables or transform existing ones;</li>
+<li>how to analyze and summarize data within groups;</li>
+<li>how to convert data from wide to long format and vice versa;</li>
+<li>how to organize the data wrangling process into a tidy workflow
+using pipes (<code>%&gt;%</code> or <code>|&gt;</code>).</li>
 </ul>
-<p>Notes on the workshop:</p>
+<p>Please use <a href="https://datacarpentry.org/R-ecology-lesson/03-dplyr.html">this
+link</a> to follow the relevant part of the tutorial.</p>
+<p>A few notes on the contents of the tutorial:</p>
 <ul>
-<li>you can also load this data from github with this link</li>
-<li>the tutorial uses the magrittr pipe but now there’s also a base
-pipe</li>
-<li>filter out missing variables also with drop_na</li>
+<li>The Data Carpentry workshop uses the pipe from the
+<code>magrittr</code> package (<code>%&gt;%</code>). Now there is also
+an alternative, the base pipe (<code>|&gt;</code>). For the most part,
+they are equivalent. In the workshops we will primarily use the base
+pipe. You can change your default pipe setting in RStudio -&gt; Tools
+-&gt; Global options -&gt; Code -&gt; Use native pipe operator.</li>
+<li>The tutorial shows you how to filter out missing variables by
+combining the <code>filter()</code> and <code>is.na()</code> functions.
+An alternative is to use the <code>drop_na()</code> function, especially
+if you would like to drop missing values from multiple or all variables.
+An example is below, showing how many observations remain in each case
+using the <code>nrow()</code> function. Note the character vector of
+variable names when using the <code>all_of()</code> selection helper
+function.</li>
 </ul>
-</div>
-<div id="exporting-tidy-data" class="section level2">
-<h2>Exporting tidy data</h2>
-<ul>
-<li>write_csv</li>
-</ul>
+<pre class="r"><code># drop all observations where at least one variable is missing
+surveys |&gt; 
+  drop_na() |&gt; 
+  nrow()</code></pre>
+<pre><code>## [1] 30676</code></pre>
+<pre class="r"><code># drop all observations where at least one of the listed variables is missing
+surveys |&gt; 
+  drop_na(weight, hindfoot_length) |&gt; 
+  nrow()</code></pre>
+<pre><code>## [1] 30738</code></pre>
 </div>
 </div>
 

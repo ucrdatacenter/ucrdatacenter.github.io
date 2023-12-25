@@ -29,8 +29,8 @@ Week|Topic
 1.1 |[Apprenticeship introduction; introduction to R; data wrangling in R](apprenticeship/intro)
 1.2 |Start on apprenticeship projects (no workshop)
 1.3 |[Working with external data: importing, exporting and merging files with R](apprenticeship/data)
-1.4 |[Data visualization with ggplot2](apprenticeship/visualization-1)
-1.5 |[Data visualization with ggplot2 and other packages](apprenticeship/visualization-2)
+1.4 |[Data visualization with ggplot2](apprenticeship/visualization)
+1.5 |[Data visualization with ggplot2 and other packages](apprenticeship/visualization)
 2.1 |[Character strings and regular expressions](apprenticeship/strings)
 2.2 |Introduction to GitHub; good practices in code style and structure         
 2.3 |[Data scraping from the web and pdf documents in R](apprenticeship/scraping)

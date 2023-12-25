@@ -1,0 +1,328 @@
+---
+title: "Data Center Apprenticeship:<br>Data visualization"
+date: "Spring 2024<br>Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+# Introduction
+
+source: https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/#tipps
+
+# Visualization with ggplot2
+
+## Packages and data
+
+```{r}
+library(tidyverse)
+library(patchwork)
+
+chic <- read_csv("https://cedricscherer.com/data/chicago-nmmaps-custom.csv")
+```
+
+## Basic plots
+
+```{r}
+ggplot(chic, aes(x = date, y = temp))
+
+ggplot(chic, aes(x = date, y = temp)) + 
+  geom_point()
+
+ggplot(chic, aes(x = date, y = temp)) + 
+  geom_line()
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point() +
+  geom_line()
+
+ggplot(chic, aes(x = date, y = temp)) + 
+  geom_point(color = "firebrick", shape = "diamond", size = 2) +
+  geom_line(color = "firebrick", linetype = "dotted", size = .3) +
+  theme_light()
+```
+
+```{r}
+theme_set(theme_light())
+```
+
+
+```{r}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  xlab("Year") +
+  ylab("Temperature")
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = expression(paste("Temperature (", degree ~ F, ")")))
+```
+
+## Additional aesthetics and legends
+
+```{r}
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature")
+
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature", color = "Season") +
+  theme(legend.position = c(0.85, 0.2))
+
+ggplot(chic, aes(x = date, y = temp, color = season, shape = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature") +
+  theme(legend.position = "top")
+
+chic |> 
+  mutate(season = factor(season, levels = c("Winter", "Spring", "Summer", "Autumn"))) |> 
+  ggplot(aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature")
+```
+
+```{r}
+chic <- chic |> 
+  mutate(season = factor(season, levels = c("Winter", "Spring", "Summer", "Autumn")))
+```
+
+
+## Other geoms
+
+r-graph-gallery
+
+```{r}
+ggplot(chic, aes(temp)) +
+  geom_histogram(fill = "grey", color = "red")
+
+ggplot(chic, aes(temp)) +
+  geom_density(fill = "grey", alpha = 0.5)
+
+ggplot(chic, aes(temp, fill = season)) +
+  geom_density(alpha = 0.3)
+
+ggplot(chic, aes(month)) +
+  geom_bar()
+
+ggplot(chic, aes(month, fill = factor(year))) +
+  geom_bar()
+
+ggplot(chic, aes(season, fill = factor(year))) +
+  geom_bar(position = "dodge")
+```
+
+```{r}
+ggplot(chic, aes(date, temp)) +
+  geom_point() +
+  geom_smooth() +
+  labs(x = "Year", y = "Temperature")
+
+ggplot(chic, aes(date, temp)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Year", y = "Temperature")
+
+chic |> 
+  group_by(year, season) |> 
+  summarize(temp = mean(temp)) |> 
+  ggplot(aes(year, temp)) +
+  geom_text(aes(label = season)) +
+  labs(x = NULL, y = "Mean temperature per season")
+
+chic |> 
+  group_by(year, season) |> 
+  summarize(temp = mean(temp)) |> 
+  ggplot(aes(year, temp)) +
+  geom_label(aes(label = season, fill = season)) +
+  labs(x = NULL, y = "Mean temperature per season") +
+  theme(legend.position = "none")
+
+ggplot(chic, aes(date, temp)) +
+  geom_point(color = "grey70", alpha = 0.5, size = 2) +
+  geom_point(data = chic |> filter(yday %in% 358:360), color = "red", size = 2) +
+  geom_hline(yintercept = 32, color = "blue", linetype = "dashed", size = 1.5) +
+  labs(x = "Year", y = "Temperature")
+
+chic |> 
+  group_by(year, month) |> 
+  mutate(upper = max(temp), 
+         lower = min(temp)) |> 
+  ggplot() +
+  geom_ribbon(aes(x = date, ymin = lower, ymax = upper), alpha = 0.2) +
+  geom_point(aes(date, temp))
+
+
+```
+
+```{r}
+chic |> 
+  filter(year == 2000, month == "Dec") |> 
+  ggplot(aes(temp, o3)) +
+  geom_point() +
+  labs(x = "Temperature", y = "Ozone", title = "December 2000")
+
+arrow_data <- tibble(
+  x = 20,
+  y = 25,
+  xend = chic |> filter(date == ymd(20001201)) |> pull(temp),
+  yend = chic |> filter(date == ymd(20001201)) |> pull(o3)
+)
+
+chic |> 
+  filter(year == 2000, month == "Dec") |> 
+  ggplot(aes(temp, o3)) + 
+  geom_path() +
+  geom_point(data = filter(chic, date == ymd(20001231))) +
+  geom_segment(data = arrow_data, aes(x = x, y = y, xend = xend, yend = yend),
+               inherit.aes = FALSE, color = "red",
+               arrow = arrow()) +
+  geom_text(data = NULL, aes(x = 20, y = 26, label = "Dec 1, 2000"), color = "red") +
+  labs(x = "Temperature", y = "Ozone", title = "December 2000")
+
+```
+## Scales
+
+```{r}
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature") +
+  scale_color_discrete(
+    name = "Seasons:",
+    labels = c("Mar—May", "Jun—Aug", "Sep—Nov", "Dec—Feb")
+  )
+
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature") +
+  scale_color_manual(values = c("darkblue", "green3", "pink", "gold"))
+
+
+ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature") +
+  scale_colour_brewer(type = "qual", palette = 2)
+
+ggplot(chic, aes(x = date, y = temp, color = o3, shape = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature") +
+  scale_color_gradient(low = "lightblue", high = "darkblue") +
+  scale_shape_manual(values = c(15, 16, 17, 18))
+```
+
+## Coordinate systems 
+
+```{r}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature") +
+  scale_y_continuous(limits = c(0, 50))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature") +
+  coord_cartesian(y = c(0, 50))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature") +
+  coord_cartesian(y = c(0, 50), clip = "off") +
+  theme(plot.margin = margin(t = 20))
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "firebrick") +
+  labs(x = "Year", y = "Temperature") +
+  scale_y_continuous(breaks = seq(0, 90, 10), minor_breaks = NULL) +
+  scale_x_date(date_breaks = "6 months", date_labels = "%Y-%b", minor_breaks = NULL)
+
+ggplot(chic, aes(temp)) +
+  geom_histogram(fill = "grey", color = "red") +
+  coord_flip()
+
+ggplot(chic, aes(temp)) +
+  geom_histogram(fill = "grey", color = "red") +
+  scale_x_reverse()
+```
+
+## Multiple plots
+
+### Splitting based on variables
+
+```{r}
+theme_set(theme_bw())
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "orangered", alpha = .3) +
+  labs(x = "Year", y = "Temperature") +
+  facet_wrap(~year)
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "orangered", alpha = .3) +
+  labs(x = "Year", y = "Temperature") +
+  facet_wrap(~year, scales = "free_x")
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "orangered", alpha = .3) +
+  labs(x = "Year", y = "Temperature") +
+  facet_wrap(~season, nrow = 1, scales = "free")
+```
+
+```{r}
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "orangered", alpha = .3) +
+  labs(x = "Year", y = "Temperature") +
+  facet_grid(year~season)
+
+ggplot(chic, aes(x = date, y = temp)) +
+  geom_point(color = "orangered", alpha = .3) +
+  labs(x = "Year", y = "Temperature") +
+  facet_wrap(year~season, scales = "free")
+```
+
+### Combining plots with patchwork
+
+```{r}
+p1 <- ggplot(chic, aes(x = date, y = temp, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Temperature")
+
+p2 <- ggplot(chic, aes(x = date, y = o3, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Ozone")
+
+p3 <- ggplot(chic, aes(x = date, y = dewpoint, color = season)) +
+  geom_point() +
+  labs(x = "Year", y = "Dewpoint")
+
+p1 + p2
+
+p1 / p2
+
+p1 + p2 + plot_layout(ncol = 1, guides = "collect")
+
+(p1 + p2) / (p1 + p2 + p3) + plot_layout(guides = "collect")
+```
+```{r}
+chic |> 
+  pivot_longer(c(temp, o3, dewpoint)) |> 
+  ggplot(aes(date, value, color = season)) +
+  geom_point() + 
+  facet_wrap(~name, ncol = 1)
+```
+
+## Customizing plot elements
+
+```{r}
+
+```
+
+
+# Other plotting packages
