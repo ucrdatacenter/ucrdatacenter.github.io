@@ -1503,28 +1503,101 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Data Center Apprenticeship:<br>Working with
 external data</h1>
-<h4 class="date">Spring 2024<br>Last updated: 2023-12-23</h4>
+<h4 class="date">Spring 2024<br>Last updated: 2023-12-25</h4>
 
 </div>
 
 
+<p><em>Schedule:</em></p>
+<ul>
+<li>any unfinished data wrangling</li>
+<li>~1 hour: import/export</li>
+<li>~1 hour: combining data</li>
+<li>anything else to add here?</li>
+</ul>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
+<p>This tutorial covers how to work with various types of external data
+in R. First we cover how to import and export from and to various file
+formats, and discuss a number of available packages to do so. Then
+you’ll also learn multiple ways of combining data from different sources
+into a single tibble.</p>
 </div>
 <div id="importing-and-exporting-different-file-formats" class="section level1">
 <h1>Importing and exporting different file formats</h1>
-<p>source: <a href="https://ucrdatacenter.github.io/tutorial/r_data.html" class="uri">https://ucrdatacenter.github.io/tutorial/r_data.html</a></p>
+<p><strong>source: <a href="https://ucrdatacenter.github.io/tutorial/r_data.html" class="uri">https://ucrdatacenter.github.io/tutorial/r_data.html</a> -
+fix broken link at bottom of page</strong></p>
+<p>Start by reading the introduction to importing the most common file
+types (text files, Excel, SPSS, Stata) <a href="https://ucrdatacenter.github.io/tutorial/r_data.html">here</a>. It
+is good to be aware of the Import dataset button and use it when needed,
+but in the long run it is easier to be aware of the available import
+functions and use them directly.</p>
+<p>The following gives more information and examples of importing data
+from different file formats and different levels of tidiness.</p>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(haven)
+library(rio)
+library(jsonlite)
+library(arrow)</code></pre>
+<p>First, download <a href="https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2_data">this</a>
+zip-file from GitHub, and extract it into a data folder within your
+apprenticeship project directory. We now import each file, explaining
+the packages, functions, and function arguments used.</p>
+<pre class="r"><code>student_male &lt;- read_csv2(&quot;data/student_male.csv&quot;)
+student_male &lt;- read_delim(&quot;data/student_male.csv&quot;, delim = &quot;;&quot;)
+student_male &lt;- import(&quot;data/student_male.csv&quot;)</code></pre>
+<pre class="r"><code>student_female &lt;- read_delim(&quot;data/student_female.tab&quot;, delim = &quot;\t&quot;)
+student_female &lt;- read_tsv(&quot;data/student_female.tab&quot;)</code></pre>
+<pre class="r"><code>student_char_sports &lt;- read_excel(&quot;data/student_char_sports.xlsx&quot;)
+student_char_sports &lt;- import(&quot;data/student_char_sports.xlsx&quot;)</code></pre>
+<pre class="r"><code>student_char1_A &lt;- read_dta(&quot;data/student_char1_A.dta&quot;)</code></pre>
+<pre class="r"><code>student_char2_A &lt;- read_sav(&quot;data/student_char2_A.sav&quot;)</code></pre>
+<pre class="r"><code>student_age_grades_working &lt;- read_rds(&quot;data/student_age_grades_working.rds&quot;)</code></pre>
+<pre class="r"><code>student_grades &lt;- fromJSON(&quot;data/student_grades.json&quot;)</code></pre>
+<pre class="r"><code>student_more_id_age &lt;- open_dataset(&quot;data/student_more_id_age&quot;)</code></pre>
 <p>encourage writing own import functions</p>
 <p>add info on:</p>
 <ul>
-<li>available options: file formats, delimiters, skip, column types,
+<li><p>available options: file formats, delimiters, skip, column types,
 column names<br />
-</li>
-<li>windows file path  to /</li>
-<li>loading data from URLs, especially from Github</li>
-<li>more on available packages (readxl, haven, rio)</li>
-<li>export with write functions to csv, excel, rds, rdata?</li>
+</p></li>
+<li><p>windows file path  to /</p></li>
+<li><p>loading data from URLs, especially from Github</p></li>
+<li><p>more on available packages (readxl, haven, rio)</p></li>
+<li><p>export with write functions to csv, excel, rds, rdata?</p></li>
+<li><p>big data with arrow?</p></li>
 </ul>
+<!-- One of the most important skills for data science students is importing and exporting data in R. There are many options and packages available for this task, depending on the type and source of the data. In this text, we will cover some of the most common and useful ones. -->
+<!-- The first option is to use the base R functions, such as read.table, read.csv, read.delim, write.table, write.csv, and write.delim. These functions allow you to read and write data from different file formats, such as text files, comma-separated values (CSV) files, and tab-delimited files. You can also specify various arguments to control how the data is imported or exported, such as the delimiter character, the number of lines to skip, the column types, and the column names. For example, to read a CSV file with a header row and a semicolon as the delimiter, you can use: -->
+<!-- data <- read.csv("data.csv", sep = ";", header = TRUE) -->
+<!-- To write a data frame to a CSV file with a comma as the delimiter, you can use: -->
+<!-- write.csv(data, "data.csv", row.names = FALSE) -->
+<!-- Note that if you are using Windows, you may need to replace the backslashes (\) in the file path with forward slashes (/), or use double backslashes (\\), to avoid errors. For example: -->
+<!-- data <- read.csv("C:/Users/Name/Documents/data.csv") -->
+<!-- or -->
+<!-- data <- read.csv("C:\\Users\\Name\\Documents\\data.csv") -->
+<!-- Another option is to use the readr and writr packages from the tidyverse collection of packages. These packages provide faster and more consistent versions of the base R functions, with similar syntax and arguments. They also have some additional features, such as progress bars, guessing column types, and specifying locale settings. For example, to read a tab-delimited file with no header row and specify the column types manually, you can use: -->
+<!-- library(readr) -->
+<!-- data <- read_tsv("data.tsv", col_names = FALSE, col_types = "icd") -->
+<!-- To write a data frame to a tab-delimited file with no row names and quote all non-numeric columns, you can use: -->
+<!-- library(writr) -->
+<!-- write_tsv(data, "data.tsv", col_names = FALSE, quote = "nonnumeric") -->
+<!-- You can also load data from URLs directly, without downloading them first. This is especially useful for accessing data from online repositories, such as GitHub. For example, to load a CSV file from GitHub using readr, you can use: -->
+<!-- data <- read_csv("https://raw.githubusercontent.com/user/repo/master/data.csv") -->
+<!-- If you want to import or export data from other file formats, such as Excel, SPSS, Stata, or SAS files, you may need to use some other packages that are specialized for those formats. Some of the most popular ones are readxl, haven, and rio. The readxl package allows you to read Excel files (.xls and .xlsx) using the read_excel function. The haven package allows you to read and write SPSS (.sav), Stata (.dta), and SAS (.sas7bdat) files using the read_sav, read_dta, read_sas, write_sav, write_dta, and write_sas functions. The rio package is a wrapper for many other packages that provides a simple and consistent interface for importing and exporting data from various formats using the import and export functions. For example, to import an Excel file using rio, you can use: -->
+<!-- library(rio) -->
+<!-- data <- import("data.xlsx") -->
+<!-- To export a data frame to a Stata file using rio, you can use: -->
+<!-- export(data, "data.dta") -->
+<!-- Finally, if you want to save your data in a format that preserves the R objects and attributes exactly as they are in your workspace, you can use the save and load functions for .RData files or the saveRDS and readRDS functions for .rds files. These formats are useful for sharing data between R sessions or users without losing any information or structure. For example, to save a data frame to an .RData file, you can use: -->
+<!-- save(data, file = "data.RData") -->
+<!-- To load it back into your workspace later, you can use: -->
+<!-- load("data.RData") -->
+<!-- To save a single object to an .rds file (which can be more efficient than .RData files), you can use: -->
+<!-- saveRDS(data, file = "data.rds") -->
+<!-- To load it back into your workspace later (with a different name if you want), you can use: -->
+<!-- data2 <- readRDS("data.rds") -->
 </div>
 <div id="combining-dataframes" class="section level1">
 <h1>Combining dataframes</h1>
@@ -1535,6 +1608,7 @@ column names<br />
 <li>mention that for matrices corresponding functions are rbind(),
 cbind(), for vectors and lists c()</li>
 </ul>
+<!-- One of the common tasks in data analysis is to combine different data sets into a single one. This can be done by either binding rows or columns of two or more data frames. The tidyverse package provides two functions for this purpose: bind_rows() and bind_cols(). These functions are similar to the base R functions rbind() and cbind(), but they have some advantages, such as preserving column names and types, and handling missing values. For matrices, rbind() and cbind() are still the preferred options, and for vectors and lists, the c() function can be used to concatenate them. -->
 </div>
 <div id="joins" class="section level2">
 <h2>Joins</h2>
@@ -1543,6 +1617,15 @@ cbind(), for vectors and lists c()</li>
 <li>animations of joins: <a href="https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins" class="uri">https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins</a></li>
 <li>syntax of by argument</li>
 </ul>
+<!-- Mutating joins are a type of join operation that add columns from one data frame to another, based on matching values of some variables. They are useful when you want to combine information from different sources without losing observations or duplicating rows. In R, you can use the dplyr package from the tidyverse to perform mutating joins with a consistent syntax. -->
+<!-- There are four types of mutating joins: inner join, left join, right join, and full join. Each one has a different behavior when there are unmatched rows in either data frame. Here is a brief summary of each join: -->
+<!-- - inner_join(x, y) keeps only the rows in x that have a matching value in y. It is the most restrictive type of join, and it can result in data loss if there are unmatched rows. -->
+<!-- - left_join(x, y) keeps all the rows in x, and adds columns from y if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to preserve the original data frame and augment it with additional information. -->
+<!-- - right_join(x, y) keeps all the rows in y, and adds columns from x if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to use the second data frame as the reference and add information from the first one. -->
+<!-- - full_join(x, y) keeps all the rows in x or y, and adds columns from both data frames if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to include all possible combinations of values from both data frames. -->
+<!-- To perform a mutating join, you need to specify which variables to use as the keys for matching. You can do this in two ways: -->
+<!-- - If the variables have the same name in both data frames, you can use by = "variable" or by = c("var1", "var2", ...) to list them. -->
+<!-- - If the variables have different names in each data frame, you can use by = join_by(x_var == y_var) or by = join_by(x_var1 == y_var1, x_var2 == y_var2, ...) to create an equality expression for each pair of variables. -->
 </div>
 </div>
 

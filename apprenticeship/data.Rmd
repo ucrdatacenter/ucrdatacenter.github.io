@@ -14,11 +14,77 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
+*Schedule:*
+
+* any unfinished data wrangling
+* ~1 hour: import/export
+* ~1 hour: combining data
+* anything else to add here?
+
 # Introduction
+
+This tutorial covers how to work with various types of external data in R.
+First we cover how to import and export from and to various file formats, and discuss a number of available packages to do so.
+Then you'll also learn multiple ways of combining data from different sources into a single tibble.
 
 # Importing and exporting different file formats
 
-source: https://ucrdatacenter.github.io/tutorial/r_data.html
+**source: https://ucrdatacenter.github.io/tutorial/r_data.html - fix broken link at bottom of page**
+
+Start by reading the introduction to importing the most common file types (text files, Excel, SPSS, Stata) [here](https://ucrdatacenter.github.io/tutorial/r_data.html).
+It is good to be aware of the Import dataset button and use it when needed, but in the long run it is easier to be aware of the available import functions and use them directly.
+
+The following gives more information and examples of importing data from different file formats and different levels of tidiness.
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(haven)
+library(rio)
+library(jsonlite)
+library(arrow)
+```
+
+
+First, download [this](https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2_data) zip-file from GitHub, and extract it into a data folder within your apprenticeship project directory.
+We now import each file, explaining the packages, functions, and function arguments used.
+
+```{r, eval = FALSE}
+student_male <- read_csv2("data/student_male.csv")
+student_male <- read_delim("data/student_male.csv", delim = ";")
+student_male <- import("data/student_male.csv")
+```
+
+```{r}
+student_female <- read_delim("data/student_female.tab", delim = "\t")
+student_female <- read_tsv("data/student_female.tab")
+```
+
+```{r}
+student_char_sports <- read_excel("data/student_char_sports.xlsx")
+student_char_sports <- import("data/student_char_sports.xlsx")
+```
+
+```{r}
+student_char1_A <- read_dta("data/student_char1_A.dta")
+```
+
+```{r}
+student_char2_A <- read_sav("data/student_char2_A.sav")
+```
+
+```{r}
+student_age_grades_working <- read_rds("data/student_age_grades_working.rds")
+```
+
+```{r}
+student_grades <- fromJSON("data/student_grades.json")
+```
+
+```{r}
+student_more_id_age <- open_dataset("data/student_more_id_age")
+```
+
 
 encourage writing own import functions
 
