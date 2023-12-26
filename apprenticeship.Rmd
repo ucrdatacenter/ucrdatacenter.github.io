@@ -39,7 +39,7 @@ Week|Topic
 3.1 |[Statistics in R: descriptive statistics, regression, classification methods](apprenticeship/statistics)
 3.2 |[Text analysis in R](apprenticeship/text)
 3.3 |[Advanced treatment of data types and functions in R](apprenticeship/data-types)
-3.4 |Applications of data science and AI in finance                             
+3.4 |Other AI tools
 3.5 |Apprenticeship presentations   
 
 # Projects
