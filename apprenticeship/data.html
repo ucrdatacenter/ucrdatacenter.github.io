@@ -1503,7 +1503,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">Data Center Apprenticeship:<br>Working with
 external data</h1>
-<h4 class="date">Spring 2024<br>Last updated: 2023-12-25</h4>
+<h4 class="date">Spring 2024<br>Last updated: 2023-12-26</h4>
 
 </div>
 
@@ -1556,7 +1556,11 @@ cases, <code>rio</code> can read URL file paths that <code>readr</code>
 <p>First, download <a href="https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2_data">this</a>
 zip-file from GitHub, and extract it into a data folder within your
 apprenticeship project directory. We now import each file, explaining
-the packages, functions, and function arguments used.</p>
+the packages, functions, and function arguments used. These files are
+all versions of the same dataset on student characteristics and grades
+at a university (<a href="https://www.kaggle.com/datasets/jacksondivakarr/student-classification-dataset?resource=download">original
+source</a>), each with only a subset of the observations and/or
+variables.</p>
 <p><code>student_male.csv</code> is a comma-separated text file. Opening
 it in a notepad or Excel shows that the column separators are semicolons
 (;). The <code>read_csv()</code> function from the previous workshop
@@ -1564,25 +1568,52 @@ expects commas as a separator, while <code>read_csv()</code> expects
 semicolons. Since CSV files are a form of delimited text files, we can
 also use the more versatile <code>read_delim()</code> function
 specifying the delimiter as the argument.</p>
-<pre class="r"><code>student_male &lt;- read_csv2(&quot;data/student_male.csv&quot;)
-student_male &lt;- read_delim(&quot;data/student_male.csv&quot;, delim = &quot;;&quot;)</code></pre>
+<p>If you open the file in Excel or load it in R without additional
+arguments, you will see that the file does not contain variable names,
+so R treats the first observation as the variable names. To disable this
+behavior, you can use the <code>col_names</code> argument to either
+specify that the data does not contain variable names
+(<code>col_names = FALSE</code>), in which case R will assign automatic
+names, or you can specify a vector of names to use.</p>
+<pre class="r"><code>student_male &lt;- read_csv2(&quot;data/student_male.csv&quot;, col_names = FALSE)
+student_male &lt;- read_delim(&quot;data/student_male.csv&quot;, delim = &quot;;&quot;, col_names = FALSE)</code></pre>
 <p><code>student_female.tab</code> is also a delimited text file.
 Opening it in a notepad shows that the delimiter is a tab. The notation
 for tab whitespace is <code>\t</code>, which we can specify in the
 <code>delim</code> argument. Like the “.tab” file extension, “.tsv” is
 also a tab-separated text file, so the more specialized
 <code>read_tsv()</code> function also works.</p>
-<pre class="r"><code>student_female &lt;- read_delim(&quot;data/student_female.tab&quot;, delim = &quot;\t&quot;)
-student_female &lt;- read_tsv(&quot;data/student_female.tab&quot;)</code></pre>
+<p>If you load this data without arguments, you’ll see that the
+<code>Scholarship</code> variable is treated as a number, while in the
+previous data it was a character due to the percentage signs and the
+occurrence of “None” as a value. You can use the <code>col_types</code>
+argument to specify a string that shows the type of each variable. In
+the example below “i” stands for integer columns and “c” for character
+columns. Often, especially if there are many columns but only a few have
+an incorrect type, it is easier to change the variable type with a
+<code>mutate()</code> function after importing.</p>
+<pre class="r"><code>student_female &lt;- read_delim(&quot;data/student_female.tab&quot;, delim = &quot;\t&quot;,
+                             col_types = c(&quot;iicccccciccccc&quot;))
+student_female &lt;- read_tsv(&quot;data/student_female.tab&quot;, col_types = c(&quot;iicccccciccccc&quot;))</code></pre>
 <p>To import Excel file we need the <code>read_excel()</code> function
 from the <code>read_excel()</code> package. With this function you can
 specify which sheet to use in addition to similar arguments as for
-delimited text files.</p>
-<pre class="r"><code>student_char_sports &lt;- read_excel(&quot;data/student_char_sports.xlsx&quot;)</code></pre>
+delimited text files. Notice that by default R imports the “Metadata”
+sheet, so we can use the <code>sheet</code> argument to specify which
+sheet to import. In addition, the first two rows contain introductory
+text, not the data, so we can use the <code>skip</code> argument to skip
+those rows. You may also notice that previously the variable name for
+age was <code>Student_Age</code> and now it is <code>Student_age</code>.
+You can rename the variable either by giving a full list of column names
+in the import function, but often it is easier to use the
+<code>rename()</code> function after importing.</p>
+<pre class="r"><code>student_char_sports &lt;- read_excel(&quot;data/student_char_sports.xlsx&quot;, 
+                                  sheet = &quot;Data&quot;, skip = 2) |&gt; 
+  rename(&quot;Student_Age&quot; = Student_age)</code></pre>
 <p>The <code>haven</code> package reads files in the data formats of
 Stata (.dta) and SPSS (.sav).</p>
-<pre class="r"><code>student_char1_A &lt;- read_dta(&quot;data/student_char1_A.dta&quot;)</code></pre>
-<pre class="r"><code>student_char2_A &lt;- read_sav(&quot;data/student_char2_A.sav&quot;)</code></pre>
+<pre class="r"><code>student_char1_A &lt;- read_dta(&quot;data/student_char1_A.dta&quot;)
+student_char2_A &lt;- read_sav(&quot;data/student_char2_A.sav&quot;)</code></pre>
 <p>RDS is an R-specific file format that saves all attributes of the
 dataframe as well (e.g. grouping, factor levels). It is particularly
 useful for saving intermediate data files, e.g. saving the cleaned data
@@ -1630,15 +1661,16 @@ can try to copy that download link by right-clicking and selecting “Copy
 link address”; the <code>import()</code> function from <code>rio</code>
 might be successful with those links.</li>
 </ul>
-<p>add info on:</p>
-<ul>
-<li>available options: file formats, delimiters, skip, column types,
-column names</li>
-</ul>
 </div>
 </div>
 <div id="combining-dataframes" class="section level1">
 <h1>Combining dataframes</h1>
+<p>Now we use the previously imported dataframes to learn the different
+ways of combining mutliple dataframes into one. Since many functions
+take a single dataframe as an input (think plots, summary statistics,
+statistical models), it is important to make sure that you choose the
+right function to combine dataframes in a way that makes sure that each
+row contains observations for the same case throughout the row.</p>
 <div id="row-and-column-binding" class="section level2">
 <h2>Row and column binding</h2>
 <ul>
@@ -1646,10 +1678,66 @@ column names</li>
 <li>mention that for matrices corresponding functions are rbind(),
 cbind(), for vectors and lists c()</li>
 </ul>
-<!-- One of the common tasks in data analysis is to combine different data sets into a single one. This can be done by either binding rows or columns of two or more data frames. The tidyverse package provides two functions for this purpose: bind_rows() and bind_cols(). These functions are similar to the base R functions rbind() and cbind(), but they have some advantages, such as preserving column names and types, and handling missing values. For matrices, rbind() and cbind() are still the preferred options, and for vectors and lists, the c() function can be used to concatenate them. -->
+<p>The simplest way to combine dataframes is to use row or column
+binding. These functions append new data to your old data by adding it
+as new rows or new columns.</p>
+<p>An example where row binding is useful is to combine the
+<code>student_male</code> and <code>student_female</code> datasets. They
+both contain the same information on students (same variables), but they
+include different subsets of the data (one is only males, the other only
+females). So we can recreate the full data by row-binding the two
+dataframes.</p>
+<p>Notice that since the variable names don’t match, R can’t match up
+the variables. Therefore we should start by fixing the variable names of
+<code>student_male</code>: in this case we know it contains the exact
+same variables as <code>student_female</code> does, so we can extract
+the names from <code>student_female</code> and set that vector as the
+names of <code>student_male</code>:</p>
+<pre class="r"><code>data_full &lt;- student_male |&gt; 
+  setNames(names(student_female)) |&gt; 
+  bind_rows(student_female)</code></pre>
+<p>Column binding, on the other hand, is useful if the two dataframes
+include the (exact) same observations, but different variables. Use
+column binding only if you are completely sure that both dataframes
+contain information on the same cases in the same order. In our case,
+the <code>student_char1_A</code> and <code>student_char2_A</code>
+contain characteristics of all students who got an “AA” final grade, and
+the ordering of the students is the same. The first dataframe contains
+numerical variables and the second characters, so to get a full data of
+the characteristics of all students who got “AA” grades, we can
+column-bind the dataframes:</p>
+<pre class="r"><code>data_char_A &lt;- bind_cols(student_char1_A, student_char2_A)</code></pre>
+<p>Note that the <code>bind_rows()</code> and <code>bind_cols()</code>
+functions are the tidy versions of the base functions
+<code>rbind()</code> and <code>cbind()</code>. For dataframes the tidy
+versions have many advantages over the base functions, e.g. in
+preserving variable names. For matrices, <code>rbind()</code> and
+<code>cbind()</code> are still the preferred options, and the
+<code>c()</code> function also works for combining vectors and
+lists.</p>
 </div>
 <div id="joins" class="section level2">
 <h2>Joins</h2>
+<p>full_join</p>
+<pre class="r"><code>data_work_or_sport_1 &lt;- full_join(student_char_sports, student_age_grades_working) |&gt; 
+  arrange(Id)
+
+data_work_or_sport_2 &lt;- full_join(student_char_sports, student_age_grades_working, 
+                                  by = &quot;Id&quot;) |&gt; 
+  arrange(Id)
+
+data_work_or_sport_2 &lt;- full_join(student_char_sports, student_age_grades_working, 
+                                  by = c(&quot;Id&quot; = &quot;Id&quot;)) |&gt; 
+  arrange(Id)</code></pre>
+<p>inner_join</p>
+<pre class="r"><code>data_work_and_sport &lt;- inner_join(student_char_sports, student_age_grades_working) |&gt; 
+  arrange(Id)</code></pre>
+<p>left_join</p>
+<pre class="r"><code>data_sport &lt;- left_join(student_char_sports, student_grades)</code></pre>
+<p>right_join</p>
+<pre class="r"><code>data_sport &lt;- right_join(student_grades, student_char_sports)</code></pre>
+<p>anti_join</p>
+<pre class="r"><code>data_grades_nosport &lt;- anti_join(student_grades, student_char_sports)</code></pre>
 <ul>
 <li>examples of when each join is useful</li>
 <li>animations of joins: <a href="https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins" class="uri">https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins</a></li>

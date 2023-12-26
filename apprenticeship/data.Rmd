@@ -56,15 +56,19 @@ In some cases, `rio` can read URL file paths that `readr` (the `tidyverse` packa
 
 First, download [this](https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2_data) zip-file from GitHub, and extract it into a data folder within your apprenticeship project directory.
 We now import each file, explaining the packages, functions, and function arguments used.
+These files are all versions of the same dataset on student characteristics and grades at a university ([original source](https://www.kaggle.com/datasets/jacksondivakarr/student-classification-dataset?resource=download)), each with only a subset of the observations and/or variables.
 
 `student_male.csv` is a comma-separated text file.
 Opening it in a notepad or Excel shows that the column separators are semicolons (;).
 The `read_csv()` function from the previous workshop expects commas as a separator, while `read_csv()` expects semicolons.
 Since CSV files are a form of delimited text files, we can also use the more versatile `read_delim()` function specifying the delimiter as the argument.
 
-```{r, eval = FALSE}
-student_male <- read_csv2("data/student_male.csv")
-student_male <- read_delim("data/student_male.csv", delim = ";")
+If you open the file in Excel or load it in R without additional arguments, you will see that the file does not contain variable names, so R treats the first observation as the variable names.
+To disable this behavior, you can use the `col_names` argument to either specify that the data does not contain variable names (`col_names = FALSE`), in which case R will assign automatic names, or you can specify a vector of names to use.
+
+```{r}
+student_male <- read_csv2("data/student_male.csv", col_names = FALSE)
+student_male <- read_delim("data/student_male.csv", delim = ";", col_names = FALSE)
 ```
 
 `student_female.tab` is also a delimited text file.
@@ -72,25 +76,34 @@ Opening it in a notepad shows that the delimiter is a tab.
 The notation for tab whitespace is `\t`, which we can specify in the `delim` argument.
 Like the ".tab" file extension, ".tsv" is also a tab-separated text file, so the more specialized `read_tsv()` function also works.
 
+If you load this data without arguments, you'll see that the `Scholarship` variable is treated as a number, while in the previous data it was a character due to the percentage signs and the occurrence of "None" as a value.
+You can use the `col_types` argument to specify a string that shows the type of each variable.
+In the example below "i" stands for integer columns and "c" for character columns.
+Often, especially if there are many columns but only a few have an incorrect type, it is easier to change the variable type with a `mutate()` function after importing.
+
 ```{r}
-student_female <- read_delim("data/student_female.tab", delim = "\t")
-student_female <- read_tsv("data/student_female.tab")
+student_female <- read_delim("data/student_female.tab", delim = "\t",
+                             col_types = c("iicccccciccccc"))
+student_female <- read_tsv("data/student_female.tab", col_types = c("iicccccciccccc"))
 ```
 
 To import Excel file we need the `read_excel()` function from the `read_excel()` package.
 With this function you can specify which sheet to use in addition to similar arguments as for delimited text files.
+Notice that by default R imports the "Metadata" sheet, so we can use the `sheet` argument to specify which sheet to import.
+In addition, the first two rows contain introductory text, not the data, so we can use the `skip` argument to skip those rows.
+You may also notice that previously the variable name for age was `Student_Age` and now it is `Student_age`.
+You can rename the variable either by giving a full list of column names in the import function, but often it is easier to use the `rename()` function after importing.
 
 ```{r}
-student_char_sports <- read_excel("data/student_char_sports.xlsx")
+student_char_sports <- read_excel("data/student_char_sports.xlsx", 
+                                  sheet = "Data", skip = 2) |> 
+  rename("Student_Age" = Student_age)
 ```
 
 The `haven` package reads files in the data formats of Stata (.dta) and SPSS (.sav).
 
 ```{r}
 student_char1_A <- read_dta("data/student_char1_A.dta")
-```
-
-```{r}
 student_char2_A <- read_sav("data/student_char2_A.sav")
 ```
 
@@ -134,21 +147,87 @@ A few notes regarding importing and exporting data:
 * Note that if you are using Windows, you may need to replace the backslashes (\\) in the file path with forward slashes (/) to avoid errors.
 * You can import files directly from URLs, although you often need the URL of a raw file. On Github you can access the URL of raw CSV files by clicking on the "Raw" button on the data preview page (see e.g. [here](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/1_intro/surveys.csv)). If a file downloads immediately instead of opening in a raw format, you can try to copy that download link by right-clicking and selecting "Copy link address"; the `import()` function from `rio` might be successful with those links.
 
-add info on:
-
-* available options: file formats, delimiters, skip, column types, column names  
-
 # Combining dataframes
+
+Now we use the previously imported dataframes to learn the different ways of combining mutliple dataframes into one.
+Since many functions take a single dataframe as an input (think plots, summary statistics, statistical models), it is important to make sure that you choose the right function to combine dataframes in a way that makes sure that each row contains observations for the same case throughout the row.
 
 ## Row and column binding
 
 * example cases where bind_rows() and bind_cols() are useful
 * mention that for matrices corresponding functions are rbind(), cbind(), for vectors and lists c()
 
-<!-- One of the common tasks in data analysis is to combine different data sets into a single one. This can be done by either binding rows or columns of two or more data frames. The tidyverse package provides two functions for this purpose: bind_rows() and bind_cols(). These functions are similar to the base R functions rbind() and cbind(), but they have some advantages, such as preserving column names and types, and handling missing values. For matrices, rbind() and cbind() are still the preferred options, and for vectors and lists, the c() function can be used to concatenate them. -->
+The simplest way to combine dataframes is to use row or column binding.
+These functions append new data to your old data by adding it as new rows or new columns.
 
+An example where row binding is useful is to combine the `student_male` and `student_female` datasets.
+They both contain the same information on students (same variables), but they include different subsets of the data (one is only males, the other only females).
+So we can recreate the full data by row-binding the two dataframes.
+
+Notice that since the variable names don't match, R can't match up the variables.
+Therefore we should start by fixing the variable names of `student_male`: in this case we know it contains the exact same variables as `student_female` does, so we can extract the names from `student_female` and set that vector as the names of `student_male`:
+
+```{r}
+data_full <- student_male |> 
+  setNames(names(student_female)) |> 
+  bind_rows(student_female)
+```
+
+Column binding, on the other hand, is useful if the two dataframes include the (exact) same observations, but different variables.
+Use column binding only if you are completely sure that both dataframes contain information on the same cases in the same order.
+In our case, the `student_char1_A` and `student_char2_A` contain characteristics of all students who got an "AA" final grade, and the ordering of the students is the same.
+The first dataframe contains numerical variables and the second characters, so to get a full data of the characteristics of all students who got "AA" grades, we can column-bind the dataframes:
+
+```{r}
+data_char_A <- bind_cols(student_char1_A, student_char2_A)
+```
+
+Note that the `bind_rows()` and `bind_cols()` functions are the tidy versions of the base functions `rbind()` and `cbind()`.
+For dataframes the tidy versions have many advantages over the base functions, e.g. in preserving variable names.
+For matrices, `rbind()` and `cbind()` are still the preferred options, and the `c()` function also works for combining vectors and lists.
 
 ## Joins
+
+full_join
+
+```{r}
+data_work_or_sport_1 <- full_join(student_char_sports, student_age_grades_working) |> 
+  arrange(Id)
+
+data_work_or_sport_2 <- full_join(student_char_sports, student_age_grades_working, 
+                                  by = "Id") |> 
+  arrange(Id)
+
+data_work_or_sport_2 <- full_join(student_char_sports, student_age_grades_working, 
+                                  by = c("Id" = "Id")) |> 
+  arrange(Id)
+```
+
+inner_join
+
+```{r}
+data_work_and_sport <- inner_join(student_char_sports, student_age_grades_working) |> 
+  arrange(Id)
+```
+
+left_join
+
+```{r}
+data_sport <- left_join(student_char_sports, student_grades)
+```
+
+right_join
+
+```{r}
+data_sport <- right_join(student_grades, student_char_sports)
+```
+
+anti_join
+
+```{r}
+data_grades_nosport <- anti_join(student_grades, student_char_sports)
+```
+
 
 * examples of when each join is useful
 * animations of joins: https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins
