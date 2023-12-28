@@ -14,6 +14,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
+<!-- Note: to compile this file, download the data zip file from projects and extract the contents to ucrdatacenter.github.io/apprenticeship/data (that folder is in the gitignore to prevent uploading data files to the website repo). -->
+
 *Schedule:*
 
 * any unfinished data wrangling
@@ -28,8 +30,6 @@ First we cover how to import and export from and to various file formats, and di
 Then you'll also learn multiple ways of combining data from different sources into a single tibble.
 
 # Importing and exporting different file formats
-
-**source: https://ucrdatacenter.github.io/tutorial/r_data.html - fix broken link at bottom of page**
 
 Start by reading the introduction to importing the most common file types (text files, Excel, SPSS, Stata) [here](https://ucrdatacenter.github.io/tutorial/r_data.html).
 It is good to be aware of the Import dataset button and use it when needed, but in the long run it is easier to be aware of the available import functions and use them directly.
@@ -114,13 +114,22 @@ It is particularly useful for saving intermediate data files, e.g. saving the cl
 student_age_grades_working <- read_rds("data/student_age_grades_working.rds")
 ```
 
-JSON
+JSON files (.json extension) are highly structured text files, and therefore often used to store data.
+If you open a JSON file as a simple text file, it can look quite confusing because it does not have the standard table structure as the file formats we looked at so far.
+Nevertheless, if you encounter a JSON file, you can import it to R as a dataframe using the `jsonlite` package by specifying the file path as the argument to the `fromJSON()` function:
 
 ```{r}
 student_grades <- fromJSON("data/student_grades.json")
 ```
 
 parquet
+
+When you work with very large datasets, even loading the data can take considerable time.
+Therefore some file formats have been developed with the aim of working with big data more efficient.
+One example of such a file format is parquet, which is a tabular format like CSV, but with some key differences that make it easier to work with big data (see [R for Data Science (2e)](https://r4ds.hadley.nz/arrow#sec-parquet) for more details).
+Parquet files are partitioned along some dimension of the data, and all files corresponding to a datafile are stored in the same folder.
+The `open_dataset()` function from the `arrow` package can load all parquet files from one folder if you specify the host folder as the function argument.
+In our case the student data (including some simulated observations) is partitioned by student age:
 
 ```{r}
 student_more_id_age <- open_dataset("data/student_more_id_age")
@@ -154,9 +163,6 @@ Since many functions take a single dataframe as an input (think plots, summary s
 
 ## Row and column binding
 
-* example cases where bind_rows() and bind_cols() are useful
-* mention that for matrices corresponding functions are rbind(), cbind(), for vectors and lists c()
-
 The simplest way to combine dataframes is to use row or column binding.
 These functions append new data to your old data by adding it as new rows or new columns.
 
@@ -188,7 +194,25 @@ For matrices, `rbind()` and `cbind()` are still the preferred options, and the `
 
 ## Joins
 
-full_join
+Mutating joins are a type of join operation that add columns from one data frame to another, based on matching values of some variables. 
+They are useful when you want to combine information from different sources without mismatching observations or duplicating rows. 
+In most cases your data contains an observation identifier that is consistent across data sources and therefore can be used for matching observations (think e.g. country codes or student numbers).
+
+There are four types of mutating joins: inner join, left join, right join, and full join. 
+Their behavior differs only if there are unmatched rows in either dataframe.
+In addition, anti-join uses the same syntax as the other joins, but it is used to remove observations from a dataframe.
+
+Full join retains all observations that appear in at least one of the dataframes.
+In this case, `student_char_sports` contains the characteristics of students who play sports, and `student_age_grades_working` contains the age and grades of students who work.
+Some students both play sports and work, but not all.
+The resulting `data_work_or_sport_1` contains the data of all students who play sports or work, however, for those who don't work, we grades are missing, and for those who don't play sports, characteristics are missing.
+
+Also note that if you run the function without specifying the variable on which to join, the function automatically joins by all variables with the same name.
+In this case that is `Id` and `Student_Age`.
+If you instead specify the `by` argument to join only by `Id`, then R will retain both `Student_Age` variables as separate columns.
+You can also specify a vector of variables to join by (see `data_work_or_sport_2`), or, especially if the names of the identifier variable are different in the two dataframes, you can connect the two variable names by an equality sign (see `data_work_or_sport_3`).
+In our case the matching is not affected by whether we only match on ID or also on age, but if there are disparities between the dataframes or if a variable with the same name has a different meaning, then not specifying the `by` argument correctly can lead to mismatched observations.
+For now `data_work_or_sport_2` and `data_work_or_sport_3` are equivalent, and the only difference between them and `data_work_or_sport_1` is whether the age variable gets duplicated.
 
 ```{r}
 data_work_or_sport_1 <- full_join(student_char_sports, student_age_grades_working) |> 
@@ -198,51 +222,35 @@ data_work_or_sport_2 <- full_join(student_char_sports, student_age_grades_workin
                                   by = "Id") |> 
   arrange(Id)
 
-data_work_or_sport_2 <- full_join(student_char_sports, student_age_grades_working, 
+data_work_or_sport_3 <- full_join(student_char_sports, student_age_grades_working, 
                                   by = c("Id" = "Id")) |> 
   arrange(Id)
 ```
 
-inner_join
+Inner join works the same way as full join, except it drops any observations that do not appear in both datasets.
+In our case that means that the resulting `data_work_and_sport` only contains the data of students who both play a sport and work.
 
 ```{r}
 data_work_and_sport <- inner_join(student_char_sports, student_age_grades_working) |> 
   arrange(Id)
 ```
 
-left_join
+Left and right joins keep all observations from the first or second dataframes respectively, and drop unmatched observations from the other input dataframe.
+`left_join(data1, data2)` is equivalent to `right_join(data2, data1)` (if needed also switching the order of the `by` argument).
+The reason why one function might be preferred over the other is if one of the inputs is the result of a longer pipe workflow, because in that case you can simply append the join to the workflow (like `data1 |> ... |> left_join(data2)`).
+In this example both joins retain the characteristics of all students who play sports, and add the grades of only the same students.
 
 ```{r}
 data_sport <- left_join(student_char_sports, student_grades)
-```
-
-right_join
-
-```{r}
 data_sport <- right_join(student_grades, student_char_sports)
 ```
 
-anti_join
+Unlike the other join functions, `anti_join()` is more similar to the `filter()` function: it retains the observations of the first dataset only if those identifiers don't appear in the second dataset.
+Anti-joins are particularly useful when observations are identified by the combination of multiple variables (e.g. location and time).
+In this example we retain the grades of students who don't play sports by anti-joining the dataframe of all grades with the characteristics of students who play sports.
 
 ```{r}
 data_grades_nosport <- anti_join(student_grades, student_char_sports)
 ```
 
-
-* examples of when each join is useful
-* animations of joins: https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins
-* syntax of by argument
-
-<!-- Mutating joins are a type of join operation that add columns from one data frame to another, based on matching values of some variables. They are useful when you want to combine information from different sources without losing observations or duplicating rows. In R, you can use the dplyr package from the tidyverse to perform mutating joins with a consistent syntax. -->
-
-<!-- There are four types of mutating joins: inner join, left join, right join, and full join. Each one has a different behavior when there are unmatched rows in either data frame. Here is a brief summary of each join: -->
-
-<!-- - inner_join(x, y) keeps only the rows in x that have a matching value in y. It is the most restrictive type of join, and it can result in data loss if there are unmatched rows. -->
-<!-- - left_join(x, y) keeps all the rows in x, and adds columns from y if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to preserve the original data frame and augment it with additional information. -->
-<!-- - right_join(x, y) keeps all the rows in y, and adds columns from x if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to use the second data frame as the reference and add information from the first one. -->
-<!-- - full_join(x, y) keeps all the rows in x or y, and adds columns from both data frames if there is a match. If there is no match, it fills the new columns with NA values. It is useful when you want to include all possible combinations of values from both data frames. -->
-
-<!-- To perform a mutating join, you need to specify which variables to use as the keys for matching. You can do this in two ways: -->
-
-<!-- - If the variables have the same name in both data frames, you can use by = "variable" or by = c("var1", "var2", ...) to list them. -->
-<!-- - If the variables have different names in each data frame, you can use by = join_by(x_var == y_var) or by = join_by(x_var1 == y_var1, x_var2 == y_var2, ...) to create an equality expression for each pair of variables. -->
+In addition to the examples above, you can find animations of which observations are retained and dropped by each join function [here](https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins).

@@ -101,7 +101,3 @@ Again, you can rely on the help-files of these functions for further explanation
 As long as you work in a project, you only need to specify relative file paths.
 If your data files are saved to your main project folder, then the relative file path is simply the file name (including the file extension, e.g. "data.csv").
 If your data is in a subfolder within your project folder, then your relative file path must also include references to the subfolder(s), separated by slashes (/), e.g. as "data/data.csv".
-
-# Further information
-
-If you would like to learn more about importing data, have a look at the *Importing data* section of the [R basics tutorial](r_basics.html#Importing_data).
