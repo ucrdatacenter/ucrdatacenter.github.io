@@ -38,6 +38,35 @@ You can create a project as follows:
 After a project is created, there are two easy ways of accessing it. 
 You can either use the same dropdown window in the top right corner of RStudio that you used to create the project, and click on the name of the project there, or you can find the project folder within your files and click on the file with the .Rproj extension.
 
+## The RStudio environment
+
+When you open RStudio, your screen is most divided into 3 or 4 panels (depending on whether you have any open scripts or data viewer tabs).
+The most important tabs are the Console, the Environment, Files, Plots, Help, Viewer, and the script/data viewer pane.
+
+The Console runs any code just by pressing Enter.
+It runs code and displays output.
+It is good practice to run small functions that don't need to be saved, such as installing packages or searching for help files directly from the Console.
+When you run a script, your code automatically gets sent to the Console.
+
+The Environment tab lists all objects currently defined in your R session.
+You can work with them within R, but they are not saved anywhere outside of R, and therefore disappear when your session is over.
+If you click on the name of a dataframe in the Environment tab, it opens the full data in the data viewer.
+
+The Files tab lists the files in your current working directory by default, but allows you to look at the contents of the other folders on your computer as well.
+It is equivalent to browsing your file explorer.
+
+The Plots and Viewer tabs display the static and and interactive plots you create, while the Help tab lets you browse help files.
+
+## Working with scripts
+
+Scripts are the basis of reproducible workflows: you save all your code into a script (basically a text file), and you can use that file to rerun your analysis and get the same result every time.
+It also makes your code easier to edit and gives you a clear overview.
+
+You can open a new script by File -> New File -> R Script or by the keyboard shortcut Control/Command + Shift + N.
+You can run parts of you script by selecting the relevant lines and clicking "Run" or using the shortcut Control/Command + Enter.
+Control/Command + Shift + Enter runs your whole script.
+Make sure to save your script regularly.
+
 ## Installing packages
 
 Most of the time when you work with R, you'll need to use functions or data from packages next to the base R functions that are automatically loaded when you open R.
