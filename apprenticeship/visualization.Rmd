@@ -21,11 +21,15 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 
 # Introduction
 
-source: https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/#tipps
+This tutorial introduces data visualization in R, primarily using the `ggplot2` package (included in `tidyverse`).
+The tutorial is based on [*A ggplot2 Tutorial for Beautiful Plotting in R*](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) by Cédric Scherer and [*Modern Data Visualization with R*](https://rkabacoff.github.io/datavis/index.html) by Robert Kabacoff.
 
 # Visualization with ggplot2
 
 ## Packages and data
+
+You will use the following packages and dataset to practice data visualization.
+The data contains information about Chicago's weather on a daily basis between 1997--2000.
 
 ```{r}
 library(tidyverse)
@@ -37,10 +41,19 @@ library(networkD3) # interactive alluvial diagram
 library(plotly) # interactive plots
 
 # Load the data from GitHub
-chic <- read_csv("https://cedricscherer.com/data/chicago-nmmaps-custom.csv")
+chic <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/3_visualization/chicago.csv")
 ```
 
 ## Basic plots
+
+The `ggplot2` package builds up figures in layers, by adding elements one at a time.
+You always start with a base `ggplot` where you specify the data used by the plot and possibly the variables to place on each axis.
+These variables are specified within an `aes()` function, which stands for aesthetics.
+
+The `ggplot()` function in itself only creates a blank canvas; we need to add so-called geoms to actually plot the data.
+You can choose from a wide range of geoms, and also use multiple geoms in one plot.
+You can add elements to a `ggplot` objects with the `+` sign.
+You should think of the `+` sign in `ggplot` workflows in the same way you think of the pipe operators in data wrangling workflows.
 
 ```{r}
 # Create the base of a plot with date on the x-axis and temperature on the y-axis
@@ -66,11 +79,16 @@ ggplot(chic, aes(x = date, y = temp)) +
   theme_light() # Apply a light theme
 ```
 
+The previous example used the `theme_light()` function to change the design of the plot.
+Instead of specifying it per individual plot, you can change the default setting for all future plots with the `theme_set()` function.
+
 ```{r}
 # Set the default theme for all following plots
 theme_set(theme_light())
 ```
 
+There are multiple ways to make axis titles more informative, such as the `xlab()` and `ylab()` functions or the `x` and `y` arguments in the `labs()` function.
+These elements can be added to a `ggplot` object just like any geom, theme, or other customization option.
 
 ```{r}
 # Add axis labels with xlab() and ylab()
@@ -87,6 +105,13 @@ ggplot(chic, aes(x = date, y = temp)) +
 
 ## Additional aesthetics and legends
 
+In addition to using the x and y axes to show variable values, you can use other characteristics of geoms to vary based on variables.
+You can add these additional characteristics -- such as color, fill, size, shape -- to the `aes()` function.
+
+Notice that R treats characters as factors, and arranges them in alphabetical order.
+If you would like to change this default behavior because the variable has another meaningful order (e.g. for seasons Spring should come after Winter), you can convert the variable to a factor with the levels defined in the correct order.
+The code below is also an example of how you can transition from a pipe workflow of data wrangling to immediately visualizing the data without needing to save the intermediate dataset as a separate object.
+
 ```{r}
 # Color the scatterplot points by season
 ggplot(chic, aes(x = date, y = temp, color = season)) +
@@ -102,6 +127,8 @@ chic |>
   labs(x = "Year", y = "Temperature")
 ```
 
+If a step of data wrangling should apply to all plots, it is easier to save the resulting data as a new object or overwrite the original data (if it doesn't lead to a loss of information).
+
 ```{r}
 # Convert season to a factor in the original data
 chic <- chic |> 
@@ -111,7 +138,11 @@ chic <- chic |>
 
 ## Other geoms
 
-r-graph-gallery
+So far you have seen point and line geoms, but there are many more.
+The [R Graph Gallery](https://r-graph-gallery.com/) provides a long list of common plot types, and so do Chapters 4 and 5 of [*Modern Data Visualization with R*](https://rkabacoff.github.io/datavis/index.html).
+Both resources group geoms by the type of variable(s) plotted.
+
+For the frequency distribution of a continuous variable, you'd often use a histogram or density plot, while for the frequencies of a categorical variable you'd use a bar chart.
 
 ```{r}
 # Histogram of temperatures
@@ -138,6 +169,7 @@ ggplot(chic, aes(month, fill = factor(year))) +
 ggplot(chic, aes(season, fill = factor(year))) +
   geom_bar(position = "dodge")
 ```
+To make relationships between two continuous variables clearer, you can add smoothing curves -- you can keep the curve flexible or restrict it to a straight line.
 
 ```{r}
 # Add a smooth curve to the scatterplot
@@ -151,7 +183,12 @@ ggplot(chic, aes(date, temp)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   labs(x = "Year", y = "Temperature")
+```
 
+You can use text as geoms as well, either on top of other geoms to label them, or as the main data markers.
+In this case the y-coordinates of the labels correspond to the average temperature of the season.
+
+```{r}
 # Plot the mean temperature per season
 chic |> 
   # Calculate mean temperature per year and season
@@ -169,7 +206,15 @@ chic |>
   # Fill label background per season
   geom_label(aes(label = season, fill = season)) +
   labs(x = NULL, y = "Mean temperature per season")
+```
 
+You can use various other geoms to highlight particular points or boundaries of your plot, e.g. by adding horizontal or vertical lines at key locations.
+An easy way to highlight particular observations is to add a new layer of geoms, where instead of the full dataset you use a filtered version with only the highlighted observations.
+In that case you can override the global data choice in `ggplot()` by adding a `data` argument within a geom.
+In this case `chic |> filter(yday %in% 358:360)` keeps the Chistmas period in all years, and highlights them in red.
+The dashed blue line at 32F temperature (0 Celsius) makes it easy to determine whether a particular year had below-freezing temperatures on Christmas.
+
+```{r}
 ggplot(chic, aes(date, temp)) +
   geom_point(color = "grey70", alpha = 0.5, size = 2) +
   # Highlight selected points: Christmas from each year
@@ -177,8 +222,15 @@ ggplot(chic, aes(date, temp)) +
   # Add a horizontal line at temp == 32
   geom_hline(yintercept = 32, color = "blue", linetype = "dashed", size = 1.5) +
   labs(x = "Year", y = "Temperature")
+```
 
-# Add a ribbon showing montly range of temperatures
+If you'd like to plot intervals, ribbon geoms may be useful.
+For each x (y) value the ribbon needs a minimum and maximum point along the y (x) axis.
+In this case the monthly minimum and maximum temperatures form the lower and upper bounds of the ribbon.
+It can also be used to plot confidence intervals or standard errors around estimated values.
+
+```{r}
+# Add a ribbon showing monthly range of temperatures
 chic |> 
   # Calculate lowest and highest temperature per month
   group_by(year, month) |> 
@@ -188,7 +240,12 @@ chic |>
   # use those temperatures as upper and lower bound of a ribbon
   geom_ribbon(aes(x = date, ymin = lower, ymax = upper), alpha = 0.2) +
   geom_point(aes(date, temp))
+```
 
+Heatmaps have a variety of uses; they are most commonly used to show correlations between predictors, but they can have any two categorical variables on the axes, and use color to show how the value of a (usually continuous) variable differs between different combinations of the categorical variables.
+For example this figure shows how average temperature changes in different years and seasons.
+
+```{r}
 # Heatmap of average temperature per season
 chic |> 
   # Calculate average temperature per season
@@ -202,8 +259,14 @@ chic |>
   labs(x = NULL, y = NULL, fill = "Average\ntemperature")
 ```
 
+To show how relationships evole over time, you can use `geom_path` that connects observations based on their ordering in the original dataframe (so make sure that your data is properly sorted, otherwise you'll end up with nonsense results).
+If you have may observations, paths can look very cluttered (which is why the following example restricts the data to a single month).
+In those cases it may be useful to add markers to notable points, or use arrows to specify the direction of the path.
+In addition to highlighting observations as you have seen before, you can add segment geoms to draw lines or arrows on the plot.
+While you can specify the coordinates of these segments within the `ggplot` workflow, it is often clearer to store these coordinates in a separate tibble.
+
 ```{r}
-# Scatterplot of temperature and ozone levels in Dec 2000
+# Scatterplot of temperature and ozone levels in Dec 2000 - evolution over time is unclear
 chic |> 
   filter(year == 2000, month == "Dec") |> 
   ggplot(aes(temp, o3)) +
@@ -218,6 +281,7 @@ arrow_data <- tibble(
   yend = chic |> filter(date == ymd(20001201)) |> pull(o3)
 )
 
+# Path of temperature and ozone levels make it clear how values change over time
 chic |> 
   filter(year == 2000, month == "Dec") |> 
   ggplot(aes(temp, o3)) + 
@@ -236,7 +300,11 @@ chic |>
   labs(x = "Temperature", y = "Ozone", title = "December 2000")
 
 ```
+
 ## Scales
+
+For any aesthetic you specify, you can override the default behavior by adding `scale_...` elements.
+You can manually specify legend titles, color palettes, labels, etc.
 
 ```{r}
 ggplot(chic, aes(x = date, y = temp, color = season)) +
@@ -271,6 +339,12 @@ ggplot(chic, aes(x = date, y = temp, color = o3, shape = season)) +
 ```
 
 ## Coordinate systems 
+
+Similarly to scales, you can adjust the default behavior of the x and y axes as well (e.g. specify different axis limits, breaks, or labels), either by the `scale_x_...()/scale_y_...()` arguments or by changing the coordinate system with `coord_...()`.
+
+`scale_x_...()/scale_y_...()` is most useful for changing the axis breaks and labels, while `coord_...()` can e.g. flip the axes, adjust the aspect ratio (see `coord_fixed()`), and determine whether observations beyond the plot boundaries should be displayed.
+
+Both `scale` and `coord` can adjust axis limits, with a subtle difference in their behavior.
 
 ```{r}
 ggplot(chic, aes(x = date, y = temp)) +
@@ -311,6 +385,8 @@ ggplot(chic, aes(temp)) +
 ```
 
 ## Multiple plots
+
+
 
 ### Splitting based on variables
 
