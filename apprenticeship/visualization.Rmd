@@ -386,9 +386,18 @@ ggplot(chic, aes(temp)) +
 
 ## Multiple plots
 
+Often you would like to present multiple plots side-by-side: maybe show how the relationship between variables differs depending on some groupings of observations (and putting all observations on a single plot looks too cluttered), or compare how different outcome variables react to changes in an explanatory variable.
+The two main ways to nicely arrange plots are
 
+* creating a single plot with multiple panels, known as facets;
+* creating multiple independent plots, and arranging them into one figure afterwards.
 
-### Splitting based on variables
+### Using facets
+
+By specifying a grouping variable along which to facet, you can create a separate plot for each value of your facet variable.
+You can create faceted plots by adding `facet_wrap()` to your `ggplot` object, and specify the faceting variable with a tilde (`~`).
+You can also specify additional arguments such as whether to allow the axis limits to vary between panels.
+Only use variables with relatively few unique values as your facet dimension, otherwise R will attempt to create far too many plots, which takes a long time and might even crash your R session.
 
 ```{r}
 # Change the default theme to bw
@@ -413,6 +422,10 @@ ggplot(chic, aes(x = date, y = temp)) +
   facet_wrap(~season, nrow = 1, scales = "free")
 ```
 
+If you would like to group your data based on two variables, you can use `facet_grid()`, separating your two variables with a tilde.
+However, note that axis limit customization options are more limited with `facet_grid()`, so if you need your axes to vary within columns/rows as well, you can use `facet_wrap()` with the same two-variable argument as well.
+However, with `facet_wrap()` your faceting variables are "stuck" together, which makes the overview of which dimension corresponds to changes in whcih faceting variable less clear.
+
 ```{r}
 ggplot(chic, aes(x = date, y = temp)) +
   geom_point(color = "orangered", alpha = .3) +
@@ -427,7 +440,12 @@ ggplot(chic, aes(x = date, y = temp)) +
   facet_wrap(year~season, scales = "free")
 ```
 
-### Combining plots with patchwork
+### Combining independent plots with `patchwork`
+
+In order to nicely arrange separate plots and same them as a single file, you can use the `patchwork packages`.
+First you need to save each of your plots into an R object (here `p1`, `p2`, `p3`), then use `+` signs to combine the plots horizontally, and `/` signs to combine them vertically.
+You can make these layouts as complex as you want to by using parentheses to group rows.
+Alternatively, you can specify custom layout options, including additional options such as whether to repeat or collect legends, by adding a `plot_layout()` function to the plot objects.
 
 ```{r}
 # Create and save plots of temp, ozone level and dewpoint over time
@@ -456,6 +474,12 @@ p1 + p2 + plot_layout(ncol = 1, guides = "collect")
 # Arrange p1 and p2 horizontally on top, p1, p2 and p3 horizontally below
 (p1 + p2) / (p1 + p2 + p3) + plot_layout(guides = "collect")
 ```
+
+Often it is possible to achieve your desired plot layout both by faceting or with `patchwork`, but depending on your goal and the structure of your data, one approach may be easier than the other.
+A good rule to keep in mind is that faceting wants data in long format, while `patchwork` often wants wide format: faceting needs a grouping variable that for each observation defines which facet it should go on, while in `patchwork` you can change the aesthetics between plots, so you can easily switch which variables to use per plot.
+
+The following example shows how we can create the same plots with faceting as with `patchwork` by converting the data to long format where the `name` variable specifies whether the value is the value of temperature, ozone, or dewpoint.
+
 ```{r}
 # Side-by-side plots of temperature, ozone and dewpoint with facet_wrap
 chic |> 
@@ -468,6 +492,13 @@ chic |>
 ```
 
 ## Customizing plot elements
+
+So far we modified the default theme (aka `theme_grey()`) by specifying alternative predefined themes (e.g. `theme_light()`).
+A way to customize plot elements even further is to change the `theme()` function by redefining particular plot elements.
+
+Every design element of a plot (panel, grid, axes, text, legend keys, etc.) can be changed with an `element_...()` function (e.g. `element_text()` for text, `element_line()` for lines, `element_blank()` if the element shouldn't be displayed).
+Each element type has different characteristics you can customize; a few examples are shown here.
+The help file of the `theme()` functions describes the options in detail.
 
 ```{r}
 ggplot(chic, aes(x = date, y = temp)) +
@@ -497,7 +528,13 @@ ggplot(chic, aes(x = date, y = temp, color = season)) +
   theme(legend.position = c(0.85, 0.2),
         # Add whitespace to the left side of the plot
         plot.margin = margin(l = 50))
+```
 
+In addition to the `theme()` function there are also other ways to customize legends.
+You can change what key shape to use by specifying the `key_glyph` within a geom (for the available options of shapes, see [here](https://ggplot2.tidyverse.org/reference/draw_key.html)).
+You can also add a `guides()` function to your `ggplot` object: some options there overlap with options in `theme()`, but there are also additional arguments such as arranging legend items in multiple rows/columns or specifying the order of legends if there are multiple.
+
+```{r}
 ggplot(chic, aes(x = date, y = temp, color = season)) +
   geom_point(key_glyph = "vline") +
   labs(x = "Year", y = "Temperature") +
@@ -507,9 +544,13 @@ ggplot(chic, aes(x = date, y = temp, color = season)) +
 
 # Other plotting packages and plot types
 
+While `ggplot` is extremely flexible and therefore sufficient for most of your plotting needs, it is good to be aware of how to use a few other packages developed for more specific purposes.
+
 ## Correlation scatterplot matrix with `GGally`
 
-https://rkabacoff.github.io/datavis/Other.html#scatterplot-matrix
+To estimate the relationships between a set of (continuous) variables in a dataset, you'd usually calculate a correlation matrix.
+The `ggpairs()` function from the `GGally` packages presents both this correlation matrix, and plots the distribution of each variable and the relationships for each variable pair.
+You can adjust the default function e.g. by specifying an additional grouping variable; for more options, see the examples in [*Modern Data Visualization with R*](https://rkabacoff.github.io/datavis/Other.html#scatterplot-matrix).
 
 ```{r}
 chic |> 
@@ -519,12 +560,18 @@ chic |>
   ggpairs()
 
 chic |> 
+  # Keep 4 continuous variables and season as the grouping variable
   select(temp, o3, dewpoint, pm10, season) |> 
   # Recreate the previous plot but group observations by season
+  # Use only the first 4 columns for the plots (exclude season)
   ggpairs(columns = 1:4, ggplot2::aes(color = season))
 ```
 
 ## Pie chart
+
+While data scientists do not recommend using pie charts (because humans are quite bad at comparing areas, and better at comparing lengths such as on bar charts), you can nevertheless create pie charts in `ggplot`.
+In order to do so, you need to create a bar chart, and change the coordinate system to polar coordinates.
+To make the bars look nice, you should specify your aesthetics and geoms similarly to the example below.
 
 ```{r}
 chic |> 
@@ -542,6 +589,10 @@ chic |>
 
 ## 3-D scatterplot
 
+Similarly to pie charts, 3-D plots are also discouraged because they are hard to interpret, so use them only if absolutely necessary.
+In that case, the `scatterplot3d` package contains the `scatterplot3d()` function where you need to specify the variables to put on each axis.
+Note that this function does not have a separate `data` argument, so you need to specify the variables by extracting the column from the dataframe with the `$` operator.
+
 ```{r}
 # Create a 3-D scatterplot of temperature, dewpoint and ozone levels
 scatterplot3d(x = chic$temp,
@@ -550,6 +601,12 @@ scatterplot3d(x = chic$temp,
 ```
 
 ## Alluvial/Sankey diagrams with `ggalluvial` and `networkD3`
+
+An interesting plot type is an alluvial diagram, also known as a Sankey diagram.
+It shows flows between different categories, and is frequently used e.g. to show changes over time in the share of observations belonging to particular groups (e.g. what energy sources households use in 1950 versus in 2000).
+For demonstration purposes, we'll instead look at how observations per different seasons are split between high and low temperatures (e.g. expecting to see mostly low temperatures in Winter).
+
+In order to create a static alluvial diagram, you can use the `ggalluvial` package and standard `ggplot` workflows with `alluvium` and `stratum` geoms.
 
 ```{r}
 chic |> 
@@ -570,6 +627,14 @@ chic |>
   theme_void() +
   theme(legend.position = "none")
 ```
+
+For an interactive version of the previous plot, you can use the `networkD3` package, however, note that this package requires the input data to have quite a specific format.
+You need a dataframe of the widths (frequencies/shares) of each link, specifying a numeric identifier for the source and target nodes.
+In addition, you need a dataframe of nodes that matches the numeric IDs to node names.
+Once you have both of these dataframes, you can use the `sankeyNetwork()` function.
+Note that creating the input dataframes gets significantly more complex if the diagram has more than two levels.
+
+(Interactive plots do not display properly on the website.)
 
 ```{r}
 # Create a tibble of links with 3 variables: source, target, number of observations
@@ -594,6 +659,11 @@ sankeyNetwork(Links = links, Nodes = nodes, Source = "IDseason",
 
 ## Interactive charts with `plotly`
 
+If you work with interactive documents, you might want to make your plots interactive as well, e.g. by highlighting the data points that a user hovers over.
+It is very easy to turn `ggplot` objects into interactive plots with the `plotly` package: just save the `ggplot` to an object, and use that object as the argument of the `ggplotly()` function.
+
+(Interactive plots do not display properly on the website.)
+
 ```{r}
 # Define a simple plot and assign to an object
 p <- ggplot(chic, aes(x = date, y = temp, color = season)) +
@@ -603,4 +673,3 @@ p <- ggplot(chic, aes(x = date, y = temp, color = season)) +
 # Display the plot as an interactive plot 
 ggplotly(p)
 ```
-
