@@ -542,6 +542,28 @@ ggplot(chic, aes(x = date, y = temp, color = season)) +
   guides(color = guide_legend("Season:", title.hjust = 0.5, nrow = 2))
 ```
 
+## Saving plots
+
+You can save `ggplot` objects to use outside of the R environment with the `ggsave` function.
+You can specify an existing `ggplot` object as the first argument, but by default `ggsave()` saves the last plot displayed in your Plots panel.
+You always need to specify the file path of the saved plot, including the preferred file format (e.g. .png, .jpg, .pdf).
+You can adjust the plot size with the `scale` argument or by specifying the height and width in your preferred units (the default units are inches).
+
+```{r, eval = FALSE}
+ggplot(chic, aes(x = date, y = temp)) + 
+  geom_point()
+
+# Save last plot
+ggsave("figures/plot1.png", scale = 1.5)
+
+p <- ggplot(chic, aes(x = date, y = temp)) + 
+  geom_point()
+
+# Save plot saved to the Environment
+ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
+```
+
+
 # Other plotting packages and plot types
 
 While `ggplot` is extremely flexible and therefore sufficient for most of your plotting needs, it is good to be aware of how to use a few other packages developed for more specific purposes.
