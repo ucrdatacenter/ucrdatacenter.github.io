@@ -26,7 +26,7 @@ Everything that is not a comment will be seen as executable code. If we place a 
 # Workshop 1: Simple Frequency Plot
 
 ```{r out.width = "90%", fig.align = "center", echo=FALSE, results = 'markup'}
-knitr::include_graphics("images/corpusling.png")
+knitr::include_graphics("AH-LING203_2023h1/corpusling.png")
 ```
 
 ## Packages
@@ -58,10 +58,10 @@ Let's now load a data frame into your R Environment. You can do this by using th
 
 ## Data
 
-In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" from github and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv). The variables are separated by semicolons. That's why we specify the delim to be ";".
+In this assignment, you will have to use the "musicians.csv" file. The data frame consists of a musician's name and all the text from their Wikipedia page. This is done with webscraping, a skill you will get introduced to in the second workshop. For now we will create a simple frequency plot. The following code will load in the data frame "musicisians.csv" from github and assign the name wikipedia_texts to it. You can see what the file looks like [here](https://raw.githubusercontent.com/ucrdatacenter/projects/main/AH-LING203/2023h1/musicians.csv). The variables are separated by semicolons. That's why we specify the delim to be ";".
 
 ```{r}
-wikipedia_texts <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/AHLING203/2023h1/musicians.csv", delim = ";")
+wikipedia_texts <- read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/AH-LING203/2023h1/musicians.csv", delim = ";")
 ```
 
 As you can see, a new variable with your data frame has been added to your Environment section (top right) in RStudio. You can see that it has 5 observations of 2 variables. To view your data frame you can open it by double clicking it there or you can use the view() function.
@@ -204,7 +204,7 @@ The rvest package will allow us to scrape data from web pages and extract the ne
 Go to [this website](https://subslikescript.com/series/NCIS-364845/season-1/episode-1-Yankee_White) for the script of the very first episode of NCIS. To inspect what this page looks like in HTML, you can right click on the information you want to see and select "inspect". This will open a screen that might look slightly intimidating. However with some further investigation, you see that it shows the web page and how it is formatted. If you hover over some of the code, you can see that this will highlight some parts of the web page. You can expand and collapse parts by clicking on the small triangles. Try to find the piece of HTML that concerns the text of the script. 
 
 ```{r out.width = "90%", fig.align = "center", echo=FALSE, results = 'markup'}
-knitr::include_graphics("images/inspectpage.png")
+knitr::include_graphics("AH-LING203_2023h1/inspectpage.png")
 ```
 
 If you take a good look, you'll find that every part of the page starts with <> and </>. For example, all the way at the top, you'll find the header (\<head> ... \</head>). You can also find the start of the body with <body>. Moreover, \<h> ... \</h> indicate headings, \<p> ... \</p> paragraphs, \<a> ... \</a> links, \<img> ... \</img> images, etc.
