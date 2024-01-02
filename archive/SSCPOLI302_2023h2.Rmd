@@ -26,7 +26,7 @@ In case you get stuck at any point, or would like more guidance in the installat
 # Course Schedule 
 
 ```{r, echo=FALSE}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/hours.png")
+knitr::include_graphics("SSCPOLI302_2023h2/hours.png")
 ```
 
 # Assignment Instructions for the Poster
@@ -39,7 +39,7 @@ You will create the following three plots.
 
 
 ```{r, echo=FALSE, fig.cap="*dossiers-bibliotheque.sciencespo.fr/une-vie-politique-europeenne-european-political-life/participation-eu-elections-decreasing*"}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/heatmap.png")
+knitr::include_graphics("SSCPOLI302_2023h2/heatmap.png")
 ```
 
 **Plot 2**: Select an additional member state and make a line graph or bar chart that depicts the evolution of turn-out for these two countries over time. Discuss the patterns that you observe and provide possible explanations based upon the discussion in the textbook (p.111-p.114).
@@ -116,7 +116,7 @@ Watch these videos for guidance on getting to know RStudio and coding the plots 
 Posters will be graded on four aspects: correct execution of the tasks, analysis of your results, correct use of R and script, and exposition/layout.  
 
 ```{r, echo=FALSE, out.width="70%", fig.cap="Rubric SSCPOLI302 Poster Assignment"}
-knitr::include_graphics("C:/Users/Eigenaar/Documents/GitHub/ucrdatacenter.github.io/SSCPOLI302/rubric.png")
+knitr::include_graphics("SSCPOLI302_2023h2/rubric.png")
 ```
 
 *Course:* SSCPOLI302 
