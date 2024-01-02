@@ -1,8 +1,6 @@
 ---
+layout: home
 title: "UCR Data Center"
-output: 
-  prettydoc::html_pretty:
-    theme: tactile
 ---
 
 ## Welcome to the website of the UCR Data Center!
