@@ -23,7 +23,8 @@ navbar-links:
   Apprenticeship: "apprenticeship"
   Tutorials: "tutorial"
   Courses:
-    - Ongoing: "https://ucrdatacenter.github.io"
+    - Ongoing:
+        - AH-FTME101: "AH-FTME101"
     - Archive: "archive"
 
 ################
