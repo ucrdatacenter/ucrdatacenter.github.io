@@ -1,14 +1,11 @@
 ---
+layout: page
 title: "R: Importing data"
 date: "Last updated: `r Sys.Date()`"
-output: 
-  html_document:
-    theme: cosmo
-    toc: true
-    toc_depth: 3
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
 ---
 
 ```{r setup, include=FALSE}

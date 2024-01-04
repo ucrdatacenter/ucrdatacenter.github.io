@@ -1,13 +1,12 @@
 ---
-title: "Data Center Apprenticeship:<br>Introduction"
-date: "Spring 2024<br>Last updated: `r Sys.Date()`"
-output: 
-  html_document:
-    theme: cosmo
+title: "Data Center Apprenticeship:\nIntroduction"
+subtitle: "Spring 2024" 
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
     toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
 ---
 
 ```{r setup, include=FALSE}
@@ -52,9 +51,9 @@ You do not need to have complete results, but you should demonstrate the progres
 ## Installation and setup: prepare in advance
 
 Before the first workshop, please make sure that you have access to R and RStudio on your laptop.
-If you need help with the installation, please follow [this tutorial](https://ucrdatacenter.github.io/tutorial/r_install.html).
+If you need help with the installation, please follow [this tutorial](../tutorial/r_install).
 
-The [R basics tutorial](https://ucrdatacenter.github.io/tutorial/r_basics.html) on the Data Center website explains the RStudio interface, and shows how to create a new project and how to install packages.
+The [R basics tutorial](../tutorial/r_basics) on the Data Center website explains the RStudio interface, and shows how to create a new project and how to install packages.
 Please make sure that you are familiar with these features before the workshop, and complete the following:
 
 * create a new project for your apprenticeship work;

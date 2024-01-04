@@ -1,0 +1,73 @@
+---
+layout: page
+title: "Useful data sources"
+date: "Last updated: 2024-01-02"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+# General data sources
+
+- [Our World in Data](https://ourworldindata.org/): open-access data
+  source for a wide range of indicators
+- [World Bank Open Data](https://data.worldbank.org/): open-access data
+  source related to development
+- [OECD data](https://data.oecd.org/): open-access data source primarily
+  on advanced economies
+- [Eurostat](https://ec.europa.eu/eurostat/web/main/home): European
+  Union data
+- [Gapminder](https://www.gapminder.org/data/): open-access data source
+  related to development; all World Development Indicators also
+  available here
+
+# Field-specific data sources
+
+## Ecology
+
+- [Global Biodiversity Information Facility
+  (gbif)](https://www.gbif.org/): citizen science based open-access
+  database containing information on species occurrences all across the
+  world
+- [EDI Data Portal](https://portal.edirepository.org/nis/home.jsp):
+  collection of environmental data and metadata derived from publicly
+  funded research
+- [Ecological Data Wiki](https://ecologicaldata.org/home): Wikipedia of
+  ecology data
+- [International Institute for Sustainable Development- Experimental
+  Lakes Area
+  (IISD-ELA)](https://www.iisd.org/ela/science-data/our-data/):
+  biological, environmental and meteorological data on freshwater lakes
+  and watersheds
+- [European Soil Data Centre
+  (ESDAC)](https://esdac.jrc.ec.europa.eu/resource-type/datasets):
+  biological, physical, and chemical information on the European soils
+- [DRYAD](https://datadryad.org/search): open-access research data
+- [eBird](https://ebird.org/explore): data collection on bird
+  distribution, abundance, habitat use, and trends
+- [waterinfo](https://waterinfo.rws.nl/#!/nav/themakaarten/): physical
+  and chemical data on water in the Netherlands
+- [British Antarctic Survey](https://data.bas.ac.uk/): database on
+  agriculture, atmosphere, biosphere, climate indicators, cryosphere,
+  human dimension, hydrosphere, land surface, oceans, paleoclimate,
+  solid earth and sun-earth interactions in the antarctic region
+- [WorldClim](https://www.worldclim.org/data/index.html): database of
+  high resolution global weather and climate data including future
+  predictions (spatial data)
+- [Land-Use Harmonization](https://luh.umd.edu/index.shtml): database of
+  high resolution land use information (spatial data)
+
+## Economics
+
+- [Total Economy
+  Database](https://www.conference-board.org/data/economydatabase/total-economy-database-productivity):
+  data on GDP and labour statistics for 131 countries (available after
+  creating a free account)
+- [FRED (US Federal Reserve)](https://fred.stlouisfed.org/tags/series):
+  mostly US economic data
+- [Maddison Historical
+  Statistics](https://www.rug.nl/ggdc/historicaldevelopment/maddison/?lang=en):
+  GDP per capita and population data for 169 countries between 1000–2018
+- [DBnomics](https://db.nomics.world/): collection of publicly available
+  economics data
