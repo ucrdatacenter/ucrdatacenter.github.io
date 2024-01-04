@@ -1,13 +1,11 @@
 ---
-title: "Data Center Apprenticeship program<br>Spring 2024 (January)"
+title: "Data Center Apprenticeship program"
+subtitle: "Spring 2024 (January)"
 date: "Last updated: `r Sys.Date()`"
-output: 
-  html_document:
-    theme: cosmo
-    toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
 ---
 
 # Introduction
@@ -26,19 +24,19 @@ Note that the pages are still a work in progress and subject to frequent updates
 
 Week|Topic                                                                      
 ----|---------------------------------------------------------------------------
-1.1 |[Apprenticeship introduction; introduction to R; data wrangling in R](apprenticeship/intro)
+1.1 |[Apprenticeship introduction; introduction to R; data wrangling in R](intro)
 1.2 |Start on apprenticeship projects (no workshop)
-1.3 |[Working with external data: importing, exporting and merging files with R](apprenticeship/data)
-1.4 |[Data visualization with ggplot2](apprenticeship/visualization)
-1.5 |[Data visualization with ggplot2 and other packages](apprenticeship/visualization)
-2.1 |[Character strings and regular expressions](apprenticeship/strings)
+1.3 |[Working with external data: importing, exporting and merging files with R](data)
+1.4 |[Data visualization with ggplot2](visualization)
+1.5 |[Data visualization with ggplot2 and other packages](visualization)
+2.1 |[Character strings and regular expressions](strings)
 2.2 |Introduction to GitHub; good practices in code style and structure         
-2.3 |[Data scraping from the web and pdf documents in R](apprenticeship/scraping)
-2.4 |[Wrangling and visualizing spatial data in R](apprenticeship/spatial)
-2.5 |[Interactive applications with Shiny](apprenticeship/shiny)
-3.1 |[Statistics in R: descriptive statistics, regression, classification methods](apprenticeship/statistics)
-3.2 |[Text analysis in R](apprenticeship/text)
-3.3 |[Advanced treatment of data types and functions in R](apprenticeship/data-types)
+2.3 |[Data scraping from the web and pdf documents in R](scraping)
+2.4 |[Wrangling and visualizing spatial data in R](spatial)
+2.5 |[Interactive applications with Shiny](shiny)
+3.1 |[Statistics in R: descriptive statistics, regression, classification methods](statistics)
+3.2 |[Text analysis in R](text)
+3.3 |[Advanced treatment of data types and functions in R](data-types)
 3.4 |Other AI tools
 3.5 |Apprenticeship presentations   
 
@@ -46,6 +44,6 @@ Week|Topic
 
 Below you can find a list of external resources compiled by the Data Center that you may find helpful when working on your project:
 
-* [Basic data wrangling and visualization in R](https://ucrdatacenter.github.io/tutorial/links.html)
-* [Useful data sources by discipline](https://ucrdatacenter.github.io/tutorial/data.html)
+* [Basic data wrangling and visualization in R](../tutorial/links)
+* [Useful data sources by discipline](../tutorial/data)
 * Project-specific resources (TBA)

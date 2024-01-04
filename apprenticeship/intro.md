@@ -1,0 +1,329 @@
+---
+title: "Data Center Apprenticeship:\nIntroduction"
+subtitle: "Spring 2024" 
+date: "Last updated: 2024-01-04"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+    toc: true
+---
+
+- [Introduction to the Apprenticeship
+  program](#introduction-to-the-apprenticeship-program)
+  - [Workshops](#workshops)
+  - [Projects](#projects)
+  - [Presentation](#presentation)
+- [Introduction to R](#introduction-to-r)
+  - [Installation and setup: prepare in
+    advance](#installation-and-setup-prepare-in-advance)
+  - [Objects in R](#objects-in-r)
+  - [Functions in R](#functions-in-r)
+- [Data wrangling in R](#data-wrangling-in-r)
+  - [Importing data](#importing-data)
+  - [Data wrangling](#data-wrangling)
+
+*Schedule:*
+
+- ~30 min intro to apprenticeship
+- ~30 min intro to R
+- ~1.5 hours data wrangling
+
+# Introduction to the Apprenticeship program
+
+## Workshops
+
+Detailed information about the workshop schedule is available in the
+course outline on Moodle. Any updates to the timing or location will
+also be announced there. Unless specified otherwise, workshops take
+place between 9:00-14:00 in classroom A-24.
+
+For apprentices, active workshop participation is mandatory. Therefore,
+please bring your fully charged laptop to all workshops.
+
+Other interested members of the UCR community may join in-person (please
+bring you laptop) or online. If interested, please enroll in the UCR
+Data Center Moodle course (enrollment key “Data-Center-1”) to receive
+Teams links and schedule updates.
+
+## Projects
+
+You should work on your projects in the afternoons, preferably in room
+A-24, where the Data Center will be regularly available for support. We
+also encourage collaboration between apprentices: while all apprentices
+need to produce individual work, feel free to discuss your progress with
+each other and ask for help. Note that you are not expected to finish
+your projects by 26 January, but you should have some progress and a
+plan on how you’ll move forward. You will then have the rest of the
+semester to complete your project and submit your internship report
+(following the usual internship guidelines on the Intranet).
+
+## Presentation
+
+On 26 January we will organize a session where all apprentices can
+showcase their work. You will have to prepare and briefly present a
+poster on your project; you will receive more detailed guidelines and
+expectations later. You do not need to have complete results, but you
+should demonstrate the progress and direction of your project.
+
+# Introduction to R
+
+## Installation and setup: prepare in advance
+
+Before the first workshop, please make sure that you have access to R
+and RStudio on your laptop. If you need help with the installation,
+please follow [this tutorial](../tutorial/r_install).
+
+The [R basics tutorial](../tutorial/r_basics) on the Data Center website
+explains the RStudio interface, and shows how to create a new project
+and how to install packages. Please make sure that you are familiar with
+these features before the workshop, and complete the following:
+
+- create a new project for your apprenticeship work;
+- install the `tidyverse` package.
+
+## Objects in R
+
+One of the most basic types of objects in R is a vector. A vector is a
+collection of values of the same type, such as numbers, characters, or
+logicals (TRUE/FALSE). You can create a vector with the `c()` function,
+which stands for concatenate. If you assign a vector to an object with
+the assignment operator `<-`, your vector will be saved in your
+environment so you can work with it within your current R session. Some
+examples of creating vectors are:
+
+``` r
+v1 <- c("A", "B", "C")
+v2 <- 25
+v3 <- 1:10
+```
+
+To subset or extract elements from a vector, you can use square brackets
+`[ ]` with an index. For example, `v1[1]` returns the first element of
+`v1`, `v3[2:5]` returns the 2nd to 5th elements of `v3`, and
+`v3[-c(2, 4, 6)]` returns all but the 2nd, 4th and 6th elements of `v3`.
+
+``` r
+v1[1]
+```
+
+    ## [1] "A"
+
+``` r
+v3[2:5]
+```
+
+    ## [1] 2 3 4 5
+
+``` r
+v3[-c(2, 4, 6)]
+```
+
+    ## [1]  1  3  5  7  8  9 10
+
+A dataframe (or tibble in `tidyverse`) is a special type of object that
+combines vectors into a rectangular table. Each column of a dataframe is
+a vector, and each row is an observation. usually you would load data
+from an external source, but you can create a dataframe with the
+`data.frame()` and a tibble with the `tibble()` function. You can also
+convert other data types such as matrices to tibbles with the
+`as_tibble()` function. Both functions take vectors as their arguments.
+Tibbles are preferred because they are more modern and have some
+convenient features that dataframes don’t, but for the most part,
+differences are minor and for the most part it does not matter whether
+you work with tibbles or dataframes.
+
+A simple example of creating a tibble is (make sure to load
+`tidyverse first`):
+
+``` r
+library(tidyverse)
+
+# define vectors within the tibble() function
+tibble(
+  name = c("Alice", "Bob", "Chris"),
+  height = c(165, 180, 175)
+)
+```
+
+    ## # A tibble: 3 × 2
+    ##   name  height
+    ##   <chr>  <dbl>
+    ## 1 Alice    165
+    ## 2 Bob      180
+    ## 3 Chris    175
+
+``` r
+# define the vectors first, then combine them into a tibble
+name <- c("Alice", "Bob", "Chris")
+height <- c(165, 180, 175)
+tibble(name, height)
+```
+
+    ## # A tibble: 3 × 2
+    ##   name  height
+    ##   <chr>  <dbl>
+    ## 1 Alice    165
+    ## 2 Bob      180
+    ## 3 Chris    175
+
+## Functions in R
+
+Functions are reusable pieces of code that perform a specific task. They
+take arguments as inputs and return one or more pieces of output. You
+will mostly work with functions loaded from various packages or from the
+base R distribution, and in some cases you may write your own functions
+to avoid repetition or improve the readability of your code. We will
+cover writing your own functions later in the program.
+
+As with vectors, the output of a function is saved to your environment
+only if you assign the result to an object. For example, `sum(x)` will
+display the sum of the elements of the vector `x`, but `sum <- sum(x)`
+will save this result to an object.
+
+``` r
+x <- c(1, 5, 6, 2, 1, 8)
+
+sum(x)
+```
+
+    ## [1] 23
+
+``` r
+sum <- sum(x)
+```
+
+Some important functions on vectors are
+
+``` r
+mean(x) # return the mean; add the argument na.rm = TRUE if missing values should be excluded
+```
+
+    ## [1] 3.833333
+
+``` r
+length(x) # give the length of the vector (number of elements)
+```
+
+    ## [1] 6
+
+``` r
+unique(x) # list the unique elements of the vector
+```
+
+    ## [1] 1 5 6 2 8
+
+To learn more about a function and its arguments, you can use the ?
+operator or the help() function, for example by typing `?sum` (or
+equivalently, `?sum()`). It is good practice to request help files from
+your console and not you R script, since there is no need to save these
+queries for the future.
+
+# Data wrangling in R
+
+## Importing data
+
+In the following we will be working with a dataset on animal species
+diversity and weights. You can load this data directly from [this
+link](https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/1_intro/surveys.csv)
+by pasting the URL as the argument of the `read_csv()` function (make
+sure you loaded `tidyverse` in your current R session). Pay attention to
+the quotation marks around the URL so R treats the URL as a character
+string to parse, and not an object defined in the R environment.
+
+``` r
+surveys <- read_csv("https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/1_intro/surveys.csv")
+```
+
+After importing the data, the `surveys` object will show up in your
+Environment tab. If you click on the object name, the full dataset will
+be displayed in your data viewer. Looking at your console, you can see
+that clicking on the object name automatically runs the `View(surveys)`
+function. If you would like to get an overview of what variables are in
+your data, you can use the summary function that gives you information
+about each variable:
+
+``` r
+summary(surveys)
+```
+
+    ##    record_id         month             day            year         plot_id     
+    ##  Min.   :    1   Min.   : 1.000   Min.   : 1.0   Min.   :1977   Min.   : 1.00  
+    ##  1st Qu.: 8964   1st Qu.: 4.000   1st Qu.: 9.0   1st Qu.:1984   1st Qu.: 5.00  
+    ##  Median :17762   Median : 6.000   Median :16.0   Median :1990   Median :11.00  
+    ##  Mean   :17804   Mean   : 6.474   Mean   :16.1   Mean   :1990   Mean   :11.34  
+    ##  3rd Qu.:26655   3rd Qu.:10.000   3rd Qu.:23.0   3rd Qu.:1997   3rd Qu.:17.00  
+    ##  Max.   :35548   Max.   :12.000   Max.   :31.0   Max.   :2002   Max.   :24.00  
+    ##                                                                                
+    ##   species_id            sex            hindfoot_length     weight      
+    ##  Length:34786       Length:34786       Min.   : 2.00   Min.   :  4.00  
+    ##  Class :character   Class :character   1st Qu.:21.00   1st Qu.: 20.00  
+    ##  Mode  :character   Mode  :character   Median :32.00   Median : 37.00  
+    ##                                        Mean   :29.29   Mean   : 42.67  
+    ##                                        3rd Qu.:36.00   3rd Qu.: 48.00  
+    ##                                        Max.   :70.00   Max.   :280.00  
+    ##                                        NA's   :3348    NA's   :2503    
+    ##     genus             species              taxa            plot_type        
+    ##  Length:34786       Length:34786       Length:34786       Length:34786      
+    ##  Class :character   Class :character   Class :character   Class :character  
+    ##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+    ##                                                                             
+    ##                                                                             
+    ##                                                                             
+    ## 
+
+## Data wrangling
+
+To learn the basics of data wrangling using the `tidyverse` (in
+particular, the `dplyer` package within tidyverse), we follow Section 4
+of the Data Carpentry course “Data Analysis and Visualization in R for
+Ecologists”. It uses the species data we imported in the previous
+section.
+
+The tutorial covers
+
+- how to select a subset of the variables in a dataframe;
+- how to filter observations based on logical conditions (e.g. only keep
+  observations from a particular area or removing missing values);
+- how to create new variables or transform existing ones;
+- how to analyze and summarize data within groups;
+- how to convert data from wide to long format and vice versa;
+- how to organize the data wrangling process into a tidy workflow using
+  pipes (`%>%` or `|>`).
+
+Please use [this
+link](https://datacarpentry.org/R-ecology-lesson/03-dplyr.html) to
+follow the relevant part of the tutorial.
+
+A few notes on the contents of the tutorial:
+
+- The Data Carpentry workshop uses the pipe from the `magrittr` package
+  (`%>%`). Now there is also an alternative, the base pipe (`|>`). For
+  the most part, they are equivalent. In the workshops we will primarily
+  use the base pipe. You can change your default pipe setting in RStudio
+  -\> Tools -\> Global options -\> Code -\> Use native pipe operator.
+- The tutorial shows you how to filter out missing variables by
+  combining the `filter()` and `is.na()` functions. An alternative is to
+  use the `drop_na()` function, especially if you would like to drop
+  missing values from multiple or all variables. An example is below,
+  showing how many observations remain in each case using the `nrow()`
+  function. Note the character vector of variable names when using the
+  `all_of()` selection helper function.
+
+``` r
+# drop all observations where at least one variable is missing
+surveys |> 
+  drop_na() |> 
+  nrow()
+```
+
+    ## [1] 30676
+
+``` r
+# drop all observations where at least one of the listed variables is missing
+surveys |> 
+  drop_na(weight, hindfoot_length) |> 
+  nrow()
+```
+
+    ## [1] 30738
