@@ -23,8 +23,7 @@ navbar-links:
   Apprenticeship: "apprenticeship"
   Tutorials: "tutorial"
   Courses:
-    - Ongoing:
-        - AH-FTME101: "AH-FTME101"
+    - Ongoing: "index#ongoing-courses"
     - Archive: "archive"
 
 ################
