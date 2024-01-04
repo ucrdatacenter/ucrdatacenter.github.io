@@ -72,12 +72,13 @@ should demonstrate the progress and direction of your project.
 
 Before the first workshop, please make sure that you have access to R
 and RStudio on your laptop. If you need help with the installation,
-please follow [this tutorial](../tutorial/r_install).
+please follow [this tutorial](../../tutorial/r_install).
 
-The [R basics tutorial](../tutorial/r_basics) on the Data Center website
-explains the RStudio interface, and shows how to create a new project
-and how to install packages. Please make sure that you are familiar with
-these features before the workshop, and complete the following:
+The [R basics tutorial](../../tutorial/r_basics) on the Data Center
+website explains the RStudio interface, and shows how to create a new
+project and how to install packages. Please make sure that you are
+familiar with these features before the workshop, and complete the
+following:
 
 - create a new project for your apprenticeship work;
 - install the `tidyverse` package.

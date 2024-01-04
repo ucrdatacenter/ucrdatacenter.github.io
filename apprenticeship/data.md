@@ -39,8 +39,8 @@ into a single tibble.
 # Importing and exporting different file formats
 
 Start by reading the introduction to importing the most common file
-types (text files, Excel, SPSS, Stata) [here](../tutorial/r_data). It is
-good to be aware of the Import dataset button and use it when needed,
+types (text files, Excel, SPSS, Stata) [here](../../tutorial/r_data). It
+is good to be aware of the Import dataset button and use it when needed,
 but in the long run it is easier to be aware of the available import
 functions and use them directly.
 
