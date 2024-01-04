@@ -23,7 +23,7 @@ navbar-links:
   Apprenticeship: "apprenticeship"
   Tutorials: "tutorial"
   Courses:
-    - Ongoing: "https://ucrdatacenter.github.io"
+    - Ongoing: "index#ongoing-courses"
     - Archive: "archive"
 
 ################
