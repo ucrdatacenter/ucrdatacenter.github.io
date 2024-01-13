@@ -1,5 +1,5 @@
 ---
-title: "*Data Center Apprenticeship:*\nData scraping from the web and pdf documents in R"
+title: "Data Center Apprenticeship:\nData scraping from the web and pdf documents in R"
 subtitle: "Spring 2024" 
 date: "Last updated: `r Sys.Date()`"
 output:
@@ -13,4 +13,328 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-TBA
+# Introduction
+
+This tutorial covers how to scrape data from webpages and PDF documents using the `rvest` and `pdftools` packages in R.
+The introduction to the HTML is a slightly modified version of the [Web Scraping with RVest](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/rvest.md) tutorial by Kasper Welbers, Wouter van Atteveldt & Philipp Masur.
+
+# Motivation for scraping
+
+The internet is a veritable data gold mine, and being able to mine this
+data is a valuable skill.
+In the most straightforward situation, you can just
+**download** some data, for instance as a CSV or JSON file. This is
+great if it’s possible, but alas, there often is no download button.
+Another convenient situation is that some platforms have an **API**. For
+example, Twitter has an API where one can collect tweets for a given
+search term or user. But what if you encounter data that can’t be
+downloaded, and for which no API is available? In this case, you might
+still be able to collect it using **web scraping**.
+
+A simple example is a table on a website. This table might practically
+be a dataframe, with nice rows and columns, but it can be hassle to
+copy this data. A more elaborate example could be that you want to
+gather all user posts on a web forum, or all press releases from the
+website of a certain organization. You could technically click your way
+through the website and copy/paste each item manually, but you (or the
+people you hire) will die a little inside. Whenever you encounter such a
+tedious, repetitive data collection task, chances are good you can
+automate it with a web scraper.
+
+The idea of web scraping may seem intimidating, and indeed it can get quite complex.
+However, the `rvest` R package simplifies the process considerably by using intuitive, tidyverse-based workflows for extracting data from HTML files.
+With this package you don't need to have a complete understanding of how the underlying HTML scripts of a webpage are structured in order to extract data from the page.
+Nevertheless, the next section introduces some basic concepts and structures when it comes to HTML files in order to give you a better understanding of what the `rvest` functions actually do.
+
+# Scraping web pages
+
+## HTML basics
+
+The vast majority of the internet uses **HTML** to make nice looking
+web pages. Simply put, HTML is a markup language that tells a browser
+what things are shown where. For example, it could say that halfway on
+the page there is a table, and then tell what data there is in the rows
+and columns.
+In other words, HTML translates data into a webpage that is easily readable by humans.
+With web scraping, we’re basically translating the page back into
+data. 
+
+To get a feel for HTML code, open [this link
+here](https://bit.ly/3lz6ZRe) in your web browser. Use Chrome or Firefox
+if you have it (not all browsers let you *inspect elements* as we’ll do
+below). You should see a nicely formatted document. Sure, it’s not very
+pretty, but it does have a big bold title, and two tables.
+
+The purpose of this page is to show an easy example of what the HTML
+code looks like. If you right-click on the page, you should see an
+option like *view page source*. If you select it you’ll see the entire
+HTML source code. This can seem a bit overwhelming, but don’t worry, you
+will never actually be reading the entire thing. We only need to look
+for the elements that we’re interested in, and there are some nice
+tricks for this. For now, let’s say that we’re interested in the table
+on the left of the page. Somewhere in the middle of the code you’ll find
+the code for this table.
+
+    <table class="someTable" id="exampleTable">           <!-- table                -->
+        <tr class="headerRow">                            <!--    table row         -->
+            <th>First column</th>                         <!--       table header   -->
+            <th>Second column</th>                        <!--       table header   -->
+            <th>Third column</th>                         <!--       table header   -->
+        </tr>
+        <tr>                                              <!--    table row         -->
+            <td>1</td>                                    <!--       table data     -->
+            <td>2</td>                                    <!--       table data     -->
+            <td>3</td>                                    <!--       table data     -->
+        </tr>
+        <tr>                                              <!--    table row         -->
+            <td>4</td>                                    <!--       table dat      -->
+            <td>5</td>                                    <!--       table dat      -->
+            <td>6</td>                                    <!--       table data     -->
+        </tr>
+    </table>
+
+This is the HTML representation of the table, and it’s a good showcase
+of what HTML is about. The parts after the `<!--` are comments and therefore do not affect the layout of the website. First of all,
+notice that the table has a tree-like shape. At the highest
+level we have the `<table>`. This table has three table rows
+(`<tr>`), which we can think of as it’s children. Each of these rows
+in turn also has three children that contain the data in these rows.
+
+Let’s see how we can tell where the table starts and ends. The table
+starts at the opening tag `<table>`, and ends at the closing tag
+`</table>` (the `/` always indicates a closing tag). This means that
+everything in between of these tags is part of the table. Likewise, we
+see that each table row opens with `<tr>`, and closes with `</tr>`,
+and everything between these tags is part of the row. In the first row,
+these are 3 table headers `<th>`, which contain the column names. The
+second and third row each have 3 table data `<td>`, that contain the
+data points.
+
+Each of these components can be thought of as an element. 
+It's these elements that we want to extract into R objects with `rvest`.
+
+So let's use this simple example site to go over the main `rvest` functions.
+
+## Simple example with `rvest`
+
+First load the `rvest` and `tidyverse` packages, and specify the URL of the webpage we intend to scrape.
+You can define the URL within as a separate object or inside the scraping function; since often you want to scrape multiple pages in one workflow, it is good practice to specify URLs outside the function.
+
+```{r}
+library(tidyverse)
+library(rvest)
+
+url <- "https://bit.ly/3lz6ZRe"
+```
+
+The function to read the HTML code from a URL into R is `read_html()`, with the URL as the function argument.
+
+```{r}
+html <- read_html(url)
+```
+
+The result of this function is a list containing the raw HTML code, which is quite difficult to work with.
+So the next step is to extract the elements that we want to work with.
+
+Elements can be selected with the `html_element()` or `html_elements()` function depending on whether you want to access only the first item matching the element specification or get a list of all fitting elements.
+
+By element specification we usually refer to CSS selectors that categorize the object we want to extract.
+CSS is mostly used by web developers to style web pages, but the CSS selectors are also a good way to identify types of data such as tables or lists.
+Once we have the CSS selector we are looking for, we can add it as the argument of the `html_elements()` function, and extract only the parts of the HTML code that correspond to the selector.
+
+There are quite a lot of [CSS
+selectors](https://www.w3schools.com/cssref/css_selectors.asp), and the table below gives some of the main examples.
+However, you don't actually need to remember any of these, but instead you can use selector tools to extract the information you need.
+
+| selector      | example           | Selects                                                |
+|---------------|-------------------|--------------------------------------------------------|
+| element/tag   | `table`           | **all** `<table>` elements                             |
+| class         | `.someTable`      | **all** elements with `class="someTable"`              |
+| id            | `#steve`          | **unique** element with `id="steve"`                   |
+| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `someTable` class     |
+| class1.class2 | `.someTable.blue` | **all** elements with the `someTable` AND `blue` class |
+
+Instead of going through the raw HTML and trying to match up the code to the observed website, you can use a browser extension that tells you the CSS selector you're looking for just by clicking on the part of the webpage that you'd like to select.
+In Chrome this extension is called Selector Gadget.
+You can simply search for the extension and install it, at which point you can use it on your chosen webpage by clicking on the extension in your list of installed browser extensions.
+
+In the example webpage you can see that selecting the title gives you a CSS selector "h2" (which stands for level 2 header), while selecting any of the main text gives "p" for paragraph.
+Selecting elements can sometimes get a bit difficult with the gadget, and you can't always get it to do exactly what you want: for example, it is hard to select the entire table and receive the selector "table", as the gadget often tries to select subitems of the table such as "td" instead.
+If you can't get the gadget to select what you're looking for, it might be a good idea to go back to manually inspecting the HTML source code and looking for the element there.
+
+If the selector gadget fails, the Inspect option of Chrome may be more helpful than viewing the full source code.
+Inspecting the page allows you to focus on particular elements, because when you hover your mouse over the elements, you can directly see the correspondence between the code and the
+page. The tree structure is also made more obvious by allowing you to
+fold and unfold elements by clicking on the triangles on the left. Therefore you can quickly
+identify the HTML elements that you want to select.
+
+In this example let's try to extract the table with the ID "#exampleTable".
+Alternatively, we can extract both tables by asking for all "table" elements.
+
+```{r}
+# Select the element with ID "exampleTable"
+example_table <- html |> 
+  html_element("#exampleTable") 
+```
+
+The output looks a bit messy, but what it tells us is that we have
+selected the `<table>` html element/node. It also shows that this
+element has the three table rows (tr) as children, and shows the values
+within these rows.
+
+In order to turn the HTML code of the table into a tibble, we can use the `html_table()` function.
+
+```{r}
+example_table_tidy <- example_table |> 
+  html_table()
+```
+
+Putting the whole workflow together, web scraping takes three main steps:
+
+* load the full HTML code with `read_html()`
+* extract the elements you need with `html_elements()`
+* transform the HTML code to clean objects with e.g. `html_table()` or `html_text()`
+
+To get both tables into a list of tibbles, we can use the following code chunk:
+
+```{r}
+tables <- read_html(url) |> 
+  html_elements("table") |> 
+  html_table()
+```
+
+Of course, in this case we worked with a very small and clean example, so the `tables` list already contains clean tibbles.
+That is not always the case, and often you need further data wrangling steps to clean up variable names, data types, row structure, ect., but at that point you can use standard `tidyverse` workflows.
+
+As another example, you can extract and display the text from the right column of the example page:
+
+```{r}
+read_html(url) |> 
+  html_elements("div.rightColumn") |> 
+  html_text2() |> 
+  cat()
+```
+
+We used the `html_text2()` function to transform HTML code into plain text (`html_text2()` usually creates nicer text output than `html_text()`), and then used the `cat()` function to print it on the screen.
+
+Another nice function is `html_attr()` or `html_attrs()`, for getting
+attributes of elements. With `html_attrs` we get all attributes. For
+example, we can get the attributes of the `#exampleTable`.
+
+```{r}
+html |> 
+  html_elements("#exampleTable") |> 
+  html_attrs()
+```
+
+Being able to access attributes is especially useful for scraping links.
+Links are typically represented by `<a>` tags, in which the link is
+stored as the `href` attribute.
+
+```{r}
+html |> 
+  html_elements("a") |> 
+  html_attr("href")
+```
+
+# Web scraping case study: LAS colleges in the US
+
+In the following we will work towards solving a hypothetical problem:
+
+> You're starting a new liberal arts college, and there is one big unresolved question: what should be the school colors?
+> You want to pick a nice set of colors, but you worry that some other colleges already use the same color scheme, and therefore your branding will be easily confused with the brand of existing colleges.
+> Therefore you want to make sure to choose unpopular colors so your new college can stand out from the hundreds of existing liberal arts colleges.
+> Unfortunately, there's no comprehesive database of the school colors of liberal arts colleges, although this information usually shows up on the fact sheet of each college's Wikipedia page.
+> In addition, Wikipedia also has a list of all LAS colleges in the US (see [here](https://en.wikipedia.org/wiki/List_of_liberal_arts_colleges_in_the_United_States)).
+
+## Scrape the fact sheet of a single college
+
+```{r}
+url <- "https://en.wikipedia.org/wiki/Amherst_College"
+html <- read_html(url)
+
+label <- html |>
+  html_elements(".infobox-label") |>
+  html_text2()
+
+value <- html |>
+  html_elements(".infobox-data") |>
+  html_text2()
+
+factsheet <- tibble(label, value)
+factsheet
+```
+
+## Find and clean the school color values
+
+```{r}
+r_colors <- colors() |> paste(collapse = "|")
+
+factsheet |> 
+  filter(label == "Colors") |> 
+  mutate(value = str_remove(value, "\\.mw-parser-output.*\\.mw-parser-output \\.legend-text\\{\\}"),
+         known_color = str_extract_all(tolower(value), r_colors)) |> 
+  unnest()
+```
+
+## Get a list of colleges with Wikipedia links
+
+```{r}
+url <- "https://en.wikipedia.org/wiki/List_of_liberal_arts_colleges_in_the_United_States"
+
+html <- read_html(url) |>
+  html_elements("#mw-content-text li a")
+
+list <- tibble(url = html_attr(html, "href"),
+               name = html_attr(html, "title")) |>
+  filter(str_detect(name, "(University|College)")) |>
+  mutate(url = paste0("https://en.wikipedia.org", url))
+```
+
+## Write a function for extracting the color given a link
+
+```{r}
+get_school_color <- function(url) {
+  html <- read_html(url)
+
+  label <- html |>
+    html_elements(".infobox-label") |>
+    html_text2()
+  
+  value <- html |>
+    html_elements(".infobox-data") |>
+    html_text2()
+  
+  tibble(url, label, value) |> 
+    filter(label == "Colors") |> 
+    select(-label) 
+}
+```
+
+## Get all school colors and visualize the distribution
+
+```{r, eval = FALSE}
+r_colors <- colors() |> paste(collapse = "|")
+data <- map_df(list$url, get_school_color)
+
+colors <- data |> 
+  mutate(value = str_remove(value, "\\.mw-parser-output.*\\.mw-parser-output \\.legend-text\\{\\}"),
+         value = str_replace(value, "[nN]avy [bB]lue", "navy"),
+         known_color = str_extract_all(tolower(value), r_colors)) |> 
+  unnest(known_color) |> 
+  left_join(list) |> 
+  distinct(name, known_color) |> 
+  mutate(known_color = ifelse(known_color == "gray", "grey", known_color))
+
+color_counts <- colors |> 
+  count(known_color)
+
+ggplot(color_counts, aes(n, fct_reorder(known_color, n))) +
+  geom_col(fill = color_counts$known_color, color = "black") +
+  xlab("Number of colleges with school color") + ylab(NULL) +
+  theme_light()
+```
+
+!()[scraping_files/colors.png]
+
+# Pdf scraping with `pdftools`
