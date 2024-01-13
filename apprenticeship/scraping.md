@@ -323,16 +323,16 @@ html |>
 In the following we will work towards solving a hypothetical problem:
 
 > You’re starting a new liberal arts college, and there is one big
-> unresolved question: what should be the school colors? You want to
+> unresolved question: what should the school colors be? You want to
 > pick a nice set of colors, but you worry that some other colleges
 > already use the same color scheme, and therefore your branding will be
-> easily confused with the brand of existing colleges. Therefore you
-> want to make sure to choose unpopular colors so your new college can
-> stand out from the hundreds of existing liberal arts colleges.
-> Unfortunately, there’s no comprehesive database of the school colors
-> of liberal arts colleges, although this information usually shows up
-> on the fact sheet of each college’s Wikipedia page. In addition,
-> Wikipedia also has a list of all LAS colleges in the US (see
+> easily confused with existing colleges. Therefore you want to choose
+> unpopular colors so your new college can stand out from the hundreds
+> of existing liberal arts colleges. Unfortunately, there’s no
+> comprehesive database of the school colors of liberal arts colleges.
+> However, this information usually shows up on the fact sheet of each
+> college’s Wikipedia page. In addition, Wikipedia also has a list of
+> all LAS colleges in the US (see
 > [here](https://en.wikipedia.org/wiki/List_of_liberal_arts_colleges_in_the_United_States)).
 
 ## Scrape the fact sheet of a single college
@@ -444,6 +444,6 @@ ggplot(color_counts, aes(n, fct_reorder(known_color, n))) +
   theme_light()
 ```
 
-!()\[scraping_files/colors.png\]
+!()\[/scraping_files/colors.png\]
 
 # Pdf scraping with `pdftools`
