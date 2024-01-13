@@ -248,7 +248,28 @@ In the following we will work towards solving a hypothetical problem:
 > However, this information usually shows up on the fact sheet of each college's Wikipedia page.
 > In addition, Wikipedia also has a list of all LAS colleges in the US (see [here](https://en.wikipedia.org/wiki/List_of_liberal_arts_colleges_in_the_United_States)).
 
+Given that there are hundreds of LAS colleges, it would be extremely time-consuming to one by one open their Wikipedia pages and extract their school colors into a spreadsheet.
+However, Wikipedia pages are highly organized, so if we write a scraping script that works for the page of one college, it is likely to work for all colleges.
+In addition, the list of all colleges contains hyperlinks to the individual college pages, which makes it easy to create a list of the URLs we would like to access.
+Therefore, we can make a straightforward plan to tackle this initially quite intimidating problem.
+
+1. Look at a few example Wikipedia pages to understand where they mention the school colors.
+1. Write a scraping script that extracts the relevant information for a single college.
+1. Get a list of URLs for all colleges.
+1. Apply the scraping script repeatedly, changing only the URL.
+1. Merge the extracted information.
+1. Analyze/visualize the data.
+
 ## Scrape the fact sheet of a single college
+
+Let's start by writing a scraping script for one college as a representative example.
+In this case, let's use Amherst College, and try to extract the colors "white" and "purple" from the grey factsheet on the right hand side of the page.
+
+The selector gadget shows us that we can extract the elements by referring to ".infobox".
+Instead of extracting the infobox as a table, let's extract the variable labels and values separately into two character vectors, and combine them into a tibble afterwards.
+We can do this by extracting ".infobox-label" and ".infobox-data" elements separately, and converting them into character strings with `htlm_text2()`.
+In this case this is a better approach than extracting the whole table, because it gives us more control over the layout of the tibble, which makes it easier to handle slight differences in the different Wikipedia pages.
+You can also try to extract the whole ".infobox" as a table, but you might need to take some additional steps of data wrangling e.g. to fix variable names.
 
 ```{r}
 url <- "https://en.wikipedia.org/wiki/Amherst_College"
@@ -268,9 +289,35 @@ factsheet
 
 ## Find and clean the school color values
 
+The resulting `factsheet` tibble indeed contains the school colors, but also a lot of other information that we don't need.
+In addition, the cell containing the colors also has some HTML code that wasn't removed by the previous code.
+We might also want to make the color names more consistent so we can count the number of occurrences more easily (so e.g. we don't have "Red" and "red" separately).
+
+One idea for making the color references more consistent is to allow only the colors that R recognizes.
+While this is not the only approach and it will lead to a loss of information if a college uses a particular shade not defined in R, this approach has a nice advantage: when we visualize the distribution of colors, we can actually use the color codes defined in R to add color to our figure.
+So let's extract the vector colors defined in R with the `colors()` function, and convert this vector to a single string with the colors separated by `|`.
+Recall from the workshop on regular expressions that `|` in a regex stands for "OR", so using the resulting `r_colors` string as a pattern will detect any occurrence of an R color in a string.
+
 ```{r}
 r_colors <- colors() |> paste(collapse = "|")
+```
 
+Now we can move on to wrangling our `factsheet` tibble: let's keep only the row containing the color, and use string operations to extract the colors appearing in the `value` variable.
+
+By looking at the Wikipedia page, you might figure out that the weird ".mw-parser-output..." section of the value string refers to the displayed color squares.
+If that part didn't contain any color references, there would be no problem with leaving it in the value, but notice that it specifies that the square border should be black.
+So if we extract all colors appearing in the text, we'll mistakenly find that one of the school colors is black.
+So let's remove the text creating these squares: it seems that it starts with ".mw-parser-output" and ends with ".mw-parser-output .legend-text{}" (normally you'd need to check the results from multiple different college pages to make sure that this pattern is consistent). 
+
+Once only the color (and some footnote references) remain in the cell, we can extract the colors recognized by R using `str_extract_all()`.
+Note the use of `str_extract_all()` over `str_extract()` to make sure that we extract all colors if a school has more than one colors.
+
+The result of `str_extract_all()` is a variable of character vector instead of single strings, which makes the variable quite hard to work with.
+It would be better to have a row corresponding to every individual color a school has -- so we'd have two rows for Amherst, one with purple and one with white.
+Then we can easily count how many universities use a particular color.
+We can do this transformation by calling the `unnest()` function, which expands the character vector to become separate observations corresponding to each element of the vector.
+
+```{r}
 factsheet |> 
   filter(label == "Colors") |> 
   mutate(value = str_remove(value, "\\.mw-parser-output.*\\.mw-parser-output \\.legend-text\\{\\}"),
@@ -279,6 +326,18 @@ factsheet |>
 ```
 
 ## Get a list of colleges with Wikipedia links
+
+Now that we have a scraper that should work for any LAS college Wikipedia page with the same structure as Amherst, we need a list of the URLs that we want to scrape.
+Conveniently, there is a Wikipedia page of a list of LAS colleges, which features a list linking to all individual college Wikipedia pages.
+So all we have to do is scrape that list and extract the URLs.
+
+The selector gadget shows us that we can extract the list of schools with the element tag "#mw-content-text li a" -- that is, we're looking for elements of the content text that are both a list ("li") and a hyperlink ("a").
+Then we can extract the attributes of the hyperlink to get the URL from "href" and the school name from "title", and combine the resulting vectors to a tibble.
+
+Since there are a few links that have the same element tag as the school links, but are not school links, we can filter the resulting list of links by requiring that the link name includes "University" or "College" -- a quick look at the Wikipedia list shows that all schools meet this criteria.
+In addition, looking at the URLs, you might notice that they are relative links that only contain the subpage of Wikipedia.
+In order to open the URL with `rvest`, we need to complete URL, so we should add "https://en.wikipedia.org" to the start of each link -- the `paste0()` function does exactly that (it combines its arguments into a single string, with no separator between them).
+The resulting `list` object is a tibble with two columns: the name of all colleges and their corresponding Wikipedia page URL.
 
 ```{r}
 url <- "https://en.wikipedia.org/wiki/List_of_liberal_arts_colleges_in_the_United_States"
@@ -336,6 +395,6 @@ ggplot(color_counts, aes(n, fct_reorder(known_color, n))) +
   theme_light()
 ```
 
-![](/scraping_files/colors.png)
+![](scraping_files/colors.png)
 
 # Pdf scraping with `pdftools`
