@@ -444,6 +444,6 @@ ggplot(color_counts, aes(n, fct_reorder(known_color, n))) +
   theme_light()
 ```
 
-!()\[/scraping_files/colors.png\]
+![](/scraping_files/colors.png)
 
 # Pdf scraping with `pdftools`
