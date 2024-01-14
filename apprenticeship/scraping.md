@@ -854,7 +854,7 @@ and combine that with the variable names with a `paste()` function to
 create our vector of desired variable names.
 
 ``` r
-var <- names(cancer) |> trimws() |> str_split_1("\\s{2,}")
+var <- names(cancer) |> str_trim() |> str_split_1("\\s{2,}")
 cat <- c("", rep("new", 4), rep("death", 4), rep("5year", 2))
 names <- paste0(cat, var)
 ```
@@ -862,7 +862,7 @@ names <- paste0(cat, var)
 To split a single column into multiple columns, we can use the
 `separate()` function. However, before we can do that, let’s do a bit of
 data cleaning: to make references to the current one variable easier,
-let’s rename it to `value`. Let’s also use the `trimws()` function to
+let’s rename it to `value`. Let’s also use the `str_trim()` function to
 remove any leading and trailing white space from the observations. Then
 we can use the separate function where we specify that we want to use
 the `value` column as the variable we split, and we want the new
@@ -879,7 +879,7 @@ the `across()` function that takes the affected columns as the first
 argument and the function to apply as the second. If you want to use a
 single function where the only function argument is the variable itself,
 you can specify the function simply as the name of the function – see
-the first part of the `mutate()` function that applies the `trimws`
+the first part of the `mutate()` function that applies the `str_trim`
 function to all variables (defined by `everything()`). If you want to do
 more complex operations, then your function call should start with a
 tilde `~`, and you should refer to the variable with `.x` (e.g. if you’d
@@ -898,9 +898,9 @@ these two numbers a lot more clearly than the original table did.
 ``` r
 cancer_tidy <- cancer |> 
   setNames("value") |> 
-  mutate(value = trimws(value)) |> 
+  mutate(value = str_trim(value)) |> 
   separate(1, into = names, sep = "\\s{2,}") |> 
-  mutate(across(everything(), trimws),
+  mutate(across(everything(), str_trim),
          across(-Cancer, ~as.numeric(str_remove_all(.x, "\\s")))) |> 
   filter(Cancer != "All cancer sites")
   
