@@ -353,6 +353,16 @@ list <- tibble(url = html_attr(html, "href"),
 
 ## Write a function for extracting the color given a link
 
+We will cover writing functions in more detail later in the apprenticeship, but for now let's have a look at the example below.
+You might notice that the code inside the same code we have seen before: we extract the HTML code from a URL input, get the vector of infobox labels and data, and combine them into a tibble, keeping only the URL and the cell containing the color (notice that the `url` vector has a length of one and therefore gets recycled in the tibble).
+By containing this code within a `function(){}` argument, we make the code reusable: we can rerun it just by calling the function name (in this case, `get_school_color`) and the arguments we would like to use as inputs.
+In the function definition these arguments are listed inside the parentheses: in this case, the only argument is `url` so by calling the `get_school_color()` function with a different `url` argument will run the code in the function body (inside the curly braces), changing every mention of `url` into the the new URL specified in the function argument.
+
+The example below shows how to use this new function to extract the school colors of Amherst.
+Notice that if you run the function without assigning the result to a new object, it prints the final tibble created by the code in the function body.
+This happens because in the function we don't assign this final tibble to an object, therefore by default it becomes the value returned by the function.
+In turn, if we assign the outcome of the function to an object, then the resulting tibble of colors gets saved to the R environment (notice that our function behaves in the same way as pre-defined functions like `sum()` -- printing the result if the function is called, and saving it to the environment if assigned to an object).
+
 ```{r}
 get_school_color <- function(url) {
   html <- read_html(url)
@@ -369,13 +379,43 @@ get_school_color <- function(url) {
     filter(label == "Colors") |> 
     select(-label) 
 }
+
+get_school_color("https://en.wikipedia.org/wiki/Amherst_College")
+amherst_color <- get_school_color("https://en.wikipedia.org/wiki/Amherst_College")
 ```
 
 ## Get all school colors and visualize the distribution
 
+So the next thing to do is to run the function we just defined for all URLs that we have in our `list` object.
+Again, we will cover appropriate functions for these repeated actions later, for now we'll just learn how to solve this particular challenge.
+
+If you are familiar with other programming languages, you might consider using a loop to run the function for every element of the `url` variable of the `list` tibble.
+In R, however, loops are not the best solution in many cases.
+Instead, the `tidyverse` contains a package called `purrr` that contains functions that takes vectors and functions as its inputs: it runs the function one by one with each element of the vector as the function argument, and combines the results into a single object.
+In this case, we can use the `map_df()` function to combine the results into a dataframe (the `map()` function uses a list instead), and we can take the vector of `list$url` as the potential arguments for the `get_school_color` function.
+Since this single line of code opens and scrapes hundreds of webpages, it can take a few minutes to run.
+
+```{r, eval = FALSE}
+data <- map_df(list$url, get_school_color)
+```
+
+Once we have our `data` object that contains all the color information extracted from the webpages, we can take some additional steps of data cleaning in order to visualize the distribution of colors.
+We can simply repeat the same steps that worked for the case of a single college.
+
+First we create a string that defines all colors known to R, separated by `|` to use as a regex pattern.
+Then we can take the `data` object, and remove the HTML code creating the color squares, and use the regex pattern to extract the colors recognized by R.
+The extra line in the `mutate` function converts all occurrences of the color "navy blue" to "navy" because otherwise R will extract "navy" and "blue" separately and therefore inflate the occurrences of "blue" -- you'll notice issues like this after you try to extract the colors and have a look at the results.
+We again use the `unnest()` function to have a new row for every element of the character vector of known colors.
+In addition, we merge the results with the original `list` object so we can add the university names as identifiers in addition to the URL, and keep only the `name` and `known_color` variables, and only unique combinations of these values.
+At this point you might also notice that `grey` and `gray` are both accepted spellings of the same color, so we can replace one with the other to make sure the spelling is consistent across colleges.
+
+Once we have this `colors` tibble that contains the extracted colors for each college, it is quite easy to count the number of times each color appears and plot the results on a bar chart.
+The `fct_reorder()` function in the aesthetic specification arranges the values based on the corresponding counts.
+As for the bars, instead of specifying the `fill` as an aesthetic or a single value, we specify it as a character vector that has the same length as the number of categories plotted.
+In this case we can exploit the fact that the `known_color` variable already contains color strings recognized by R, so by specifying the variable as the colors we want to use, each bar will be filled with the color corresponding to the category displayed.
+
 ```{r, eval = FALSE}
 r_colors <- colors() |> paste(collapse = "|")
-data <- map_df(list$url, get_school_color)
 
 colors <- data |> 
   mutate(value = str_remove(value, "\\.mw-parser-output.*\\.mw-parser-output \\.legend-text\\{\\}"),
@@ -396,5 +436,9 @@ ggplot(color_counts, aes(n, fct_reorder(known_color, n))) +
 ```
 
 ![](scraping_files/colors.png)
+
+The resulting plot shows how often each color is used as the school colors of a US liberal arts college.
+The results are not perfect, as not all hues are recognized and therefore extracted by R: for instance, "cardinal" (a shade of red) is used by 14 colleges, but the color is not defined in R, so there is no bar for cardinal, and neither does it contribute to the counts of "red".
+Nevertheless, there is certainly evidence that if you want your hypothetical school to stand out, white, blue and gold are certainly bad options for the school color.
 
 # Pdf scraping with `pdftools`
