@@ -666,3 +666,251 @@ evidence that if you want your hypothetical school to stand out, white,
 blue and gold are certainly bad options for the school color.
 
 # Pdf scraping with `pdftools`
+
+Scraping pdf documents is useful for the same reason as scraping web
+pages: often you want to extract information from several documents with
+the same structure, and manually copy-pasting all that information would
+get very tedious. In addition, if you ever tried to copy information
+from pdf files, you might have found that sometimes line breaks in the
+pdf copy over, tables get messy, headers and footers copy end up in the
+middle of the text, or special characters are lost. Fortunately, there
+are a few R packages that make it easier to read pdf files into R as
+plain text. Unfortunately, these tools are not perfect, and therefore
+pdf scraping usually involves a quick and easy first step of importing
+the data, and a far longer step of extensive cleaning of the messy
+character strings you imported.
+
+We will use the `pdftools` package, so let’s install and load it.
+
+``` r
+# install.packages("pdftools")
+library(pdftools)
+```
+
+As an example, we look at a report on cancer rates in the Netherlands in
+2020 that you can find
+[here](https://gco.iarc.fr/today/data/factsheets/populations/528-the-netherlands-fact-sheets.pdf).
+Our goal is to extract the table on page 2, and visualize the data
+presented there.
+
+We can extract all text from the report into R with the `pdf_text()`
+function, which imports the contents of the referenced pdf file as a
+character vector, each element containing all text on one page. If you
+have a look at what the current 2nd page looks like, you can see that it
+is a very messy character string instead of a nice table. Using the
+`cat()` function to display the text more nicely also doesn’t make it
+much better. But technically all the data is in R, so the importing step
+is done.
+
+``` r
+pdf <- pdf_text("https://gco.iarc.fr/today/data/factsheets/populations/528-the-netherlands-fact-sheets.pdf")
+
+pdf[2]
+```
+
+    ## [1] "                   The Netherlands\n                   Source: Globocan\n\n\n                                                                           Incidence, Mortality and Prevalence by cancer site\n\n                                                                        New cases                                                                         Deaths                                 5-year prevalence (all ages)\n                                     Cancer              Number         Rank        (%)              Cum.risk                     Number                Rank          (%)            Cum.risk   Number          Prop. (per 100 000)\n                                      Breast              15 725           1        11.9                    10.75                   3 283                      3      6.7                1.64    67 477                        784.82\n                                    Prostate              14 580           2        11.0                     9.75                   2 976                      5      6.1                0.92    61 096                        715.65\n                                       Lung               13 500           3        10.2                     4.08                  11 188                      1     22.8                3.05    17 878                        104.34\n                                  Colon                   11 887           4         9.0                     3.25                   4 730                   2          9.7               0.99    36 117                        210.78\n                        Melanoma of skin                   8 310           5         6.3                     2.89                     906                  17          1.8               0.24    29 557                        172.50\n                               Bladder                     7 417           6         5.6                     2.07                   1 811                   7          3.7               0.33    25 162                        146.85\n                               Rectum                      4 845           7         3.7                     1.53                   1 787                   8          3.6               0.42    16 171                         94.37\n                Non-Hodgkin lymphoma                       4 105           8         3.1                     1.32                   1 462                  10          3.0               0.33    13 624                         79.51\n                                   Pancreas                3 331           9         2.5                     0.86                   3 137                   4          6.4               0.83     2 519                         14.70\n                                     Kidney                3 019          10         2.3                     1.00                   1 306                  12          2.7               0.33     9 426                         55.01\n                                Oesophagus                 2 776          11         2.1                     0.85                   2 139                      6       4.4               0.59     3 512                         20.50\n                                 Leukaemia                 2 375          12         1.8                     0.77                   1 628                      9       3.3               0.33     7 434                         43.39\n                                Corpus uteri               2 202          13         1.7                     1.44                     537                  18         1.1                0.27     8 981                        104.46\n                                    Stomach                2 099          14         1.6                     0.60                   1 240                  13         2.5                0.29     3 553                         20.74\n                              Lip, oral cavity             1 558          15         1.2                     0.52                     331                  20        0.68                0.09     5 108                         29.81\n                       Multiple myeloma                    1 504          16         1.1                     0.45                     950                  16          1.9               0.19     4 338                         25.32\n                                   Liver                   1 494          17         1.1                     0.41                   1 446                  11          3.0               0.40     1 518                          8.86\n            Brain, central nervous system                  1 391          18         1.1                     0.53                   1 037                  15         2.1                0.37     4 355                         25.42\n                                    Ovary                  1 245          19        0.94                     0.73                   1 068                  14         2.2                0.55     3 629                         42.21\n                                  Thyroid                    873          20        0.66                     0.34                     178                  24        0.36                0.04     3 410                         19.90\n                                       Testis               830           21        0.63                     0.76                     22                   34        0.04                0.02     3 838                         44.96\n                                 Cervix uteri               773           22        0.59                     0.63                    253                   21        0.52                0.15     2 472                         28.75\n                                    Larynx                  738           23        0.56                     0.26                    247                   22        0.50                0.07     2 630                         15.35\n                              Mesothelioma                  599           24        0.45                     0.16                    535                   19         1.1                0.14       722                          4.21\n                                     Vulva                  565           25        0.43                     0.32                    120                   26        0.24                0.04     1 948                         22.66\n                     Hodgkin lymphoma                       461           26        0.35                     0.20                     81                   28        0.17                0.02     1 953                         11.40\n                           Oropharynx                       439           27        0.33                     0.17                    187                   23        0.38                0.07     1 394                          8.14\n                                     Anus                   283           28        0.21                     0.10                     62                   30        0.13                0.02      943                           5.50\n                               Hypopharynx                  245           29        0.19                     0.09                     94                   27        0.19                0.03      503                           2.94\n                                  Gallbladder               210           30        0.16                     0.06                    131                   25        0.27                0.03      267                           1.56\n                                        Penis               192           31        0.15                     0.11                     35                   32        0.07                0.02      676                           7.92\n                              Salivary glands               185           32        0.14                     0.06                     63                   29        0.13                0.01      670                           3.91\n                            Nasopharynx                      79           33        0.06                     0.03                     43                   31        0.09                0.01      286                           1.67\n                          Kaposi sarcoma                     75           34        0.06                     0.03                      1                   35        0.00                0.00      259                           1.51\n                                      Vagina                 70           35        0.05                     0.04                     25                   33        0.05                0.01      212                           2.47\n                          All cancer sites               132 014           -           -                    33.42                  49 008                      -            -           11.26   461 066                        2690.8\n\n\n                                                                   Age-standardized (World) incidence rates per sex, top 10 cancers\n\n\n                                                                                                                       Males                       Females\n\n                    Breast                                                                                                                                                                                      100.9\n\n                Colorectum                                                      48.4                                                                                        34.3\n\n                  Prostate                                     73.9\n\n                      Lung                                                                    34.3                                                                          33.5\n\n          Melanoma of skin                                                                           27.1                                                            27.4\n\n                   Bladder                                                                           27.3                                          8.1\n\n    Non-Hodgkin lymphoma                                                                                        14.4                                9.2\n\n                    Kidney                                                                                           11.6                        5.6\n\n                Leukaemia                                                                                                 9.5                     6.3\n\n                  Pancreas                                                                                                  8.1                   6.8\n\n                                    120            100             80          60               40                   20               0                        20               40        60      80         100         120\n                                                                                                                          ASR (World) per 100 000\n\n                                                             Age-standardized (World) incidence and mortality rates, top 10 cancers\n\n\n                                                                                                                Incidence                           Mortality\n\n                    Breast                 100.9                                                                                                           15.3\n\n                  Prostate                                     73.9                                                                                     11.5\n\n                Colorectum                                                             41.0                                                               13.5\n\n                      Lung                                                                    33.4                                                                  25.7\n\n          Melanoma of skin                                                                           27.0                                   2.3\n\n                   Bladder                                                                                    17.2                          3.3\n\n    Non-Hodgkin lymphoma                                                                                             11.7                   3.1\n\n               Corpus uteri                                                                                          11.3                   2.2\n\n                     Testis                                                                                            9.9                0.19\n\n                    Kidney                                                                                                8.5               3.0\n\n                                    120            100             80          60               40                   20               0                        20               40        60      80         100         120\n                                                                                                                          ASR (World) per 100 000\n\n\n\nThe Global Cancer Observatory - All Rights Reserved - March, 2021.                                                                                                                                                              Page 2\n"
+
+``` r
+cat(pdf[2])
+```
+
+    ##                    The Netherlands
+    ##                    Source: Globocan
+    ## 
+    ## 
+    ##                                                                            Incidence, Mortality and Prevalence by cancer site
+    ## 
+    ##                                                                         New cases                                                                         Deaths                                 5-year prevalence (all ages)
+    ##                                      Cancer              Number         Rank        (%)              Cum.risk                     Number                Rank          (%)            Cum.risk   Number          Prop. (per 100 000)
+    ##                                       Breast              15 725           1        11.9                    10.75                   3 283                      3      6.7                1.64    67 477                        784.82
+    ##                                     Prostate              14 580           2        11.0                     9.75                   2 976                      5      6.1                0.92    61 096                        715.65
+    ##                                        Lung               13 500           3        10.2                     4.08                  11 188                      1     22.8                3.05    17 878                        104.34
+    ##                                   Colon                   11 887           4         9.0                     3.25                   4 730                   2          9.7               0.99    36 117                        210.78
+    ##                         Melanoma of skin                   8 310           5         6.3                     2.89                     906                  17          1.8               0.24    29 557                        172.50
+    ##                                Bladder                     7 417           6         5.6                     2.07                   1 811                   7          3.7               0.33    25 162                        146.85
+    ##                                Rectum                      4 845           7         3.7                     1.53                   1 787                   8          3.6               0.42    16 171                         94.37
+    ##                 Non-Hodgkin lymphoma                       4 105           8         3.1                     1.32                   1 462                  10          3.0               0.33    13 624                         79.51
+    ##                                    Pancreas                3 331           9         2.5                     0.86                   3 137                   4          6.4               0.83     2 519                         14.70
+    ##                                      Kidney                3 019          10         2.3                     1.00                   1 306                  12          2.7               0.33     9 426                         55.01
+    ##                                 Oesophagus                 2 776          11         2.1                     0.85                   2 139                      6       4.4               0.59     3 512                         20.50
+    ##                                  Leukaemia                 2 375          12         1.8                     0.77                   1 628                      9       3.3               0.33     7 434                         43.39
+    ##                                 Corpus uteri               2 202          13         1.7                     1.44                     537                  18         1.1                0.27     8 981                        104.46
+    ##                                     Stomach                2 099          14         1.6                     0.60                   1 240                  13         2.5                0.29     3 553                         20.74
+    ##                               Lip, oral cavity             1 558          15         1.2                     0.52                     331                  20        0.68                0.09     5 108                         29.81
+    ##                        Multiple myeloma                    1 504          16         1.1                     0.45                     950                  16          1.9               0.19     4 338                         25.32
+    ##                                    Liver                   1 494          17         1.1                     0.41                   1 446                  11          3.0               0.40     1 518                          8.86
+    ##             Brain, central nervous system                  1 391          18         1.1                     0.53                   1 037                  15         2.1                0.37     4 355                         25.42
+    ##                                     Ovary                  1 245          19        0.94                     0.73                   1 068                  14         2.2                0.55     3 629                         42.21
+    ##                                   Thyroid                    873          20        0.66                     0.34                     178                  24        0.36                0.04     3 410                         19.90
+    ##                                        Testis               830           21        0.63                     0.76                     22                   34        0.04                0.02     3 838                         44.96
+    ##                                  Cervix uteri               773           22        0.59                     0.63                    253                   21        0.52                0.15     2 472                         28.75
+    ##                                     Larynx                  738           23        0.56                     0.26                    247                   22        0.50                0.07     2 630                         15.35
+    ##                               Mesothelioma                  599           24        0.45                     0.16                    535                   19         1.1                0.14       722                          4.21
+    ##                                      Vulva                  565           25        0.43                     0.32                    120                   26        0.24                0.04     1 948                         22.66
+    ##                      Hodgkin lymphoma                       461           26        0.35                     0.20                     81                   28        0.17                0.02     1 953                         11.40
+    ##                            Oropharynx                       439           27        0.33                     0.17                    187                   23        0.38                0.07     1 394                          8.14
+    ##                                      Anus                   283           28        0.21                     0.10                     62                   30        0.13                0.02      943                           5.50
+    ##                                Hypopharynx                  245           29        0.19                     0.09                     94                   27        0.19                0.03      503                           2.94
+    ##                                   Gallbladder               210           30        0.16                     0.06                    131                   25        0.27                0.03      267                           1.56
+    ##                                         Penis               192           31        0.15                     0.11                     35                   32        0.07                0.02      676                           7.92
+    ##                               Salivary glands               185           32        0.14                     0.06                     63                   29        0.13                0.01      670                           3.91
+    ##                             Nasopharynx                      79           33        0.06                     0.03                     43                   31        0.09                0.01      286                           1.67
+    ##                           Kaposi sarcoma                     75           34        0.06                     0.03                      1                   35        0.00                0.00      259                           1.51
+    ##                                       Vagina                 70           35        0.05                     0.04                     25                   33        0.05                0.01      212                           2.47
+    ##                           All cancer sites               132 014           -           -                    33.42                  49 008                      -            -           11.26   461 066                        2690.8
+    ## 
+    ## 
+    ##                                                                    Age-standardized (World) incidence rates per sex, top 10 cancers
+    ## 
+    ## 
+    ##                                                                                                                        Males                       Females
+    ## 
+    ##                     Breast                                                                                                                                                                                      100.9
+    ## 
+    ##                 Colorectum                                                      48.4                                                                                        34.3
+    ## 
+    ##                   Prostate                                     73.9
+    ## 
+    ##                       Lung                                                                    34.3                                                                          33.5
+    ## 
+    ##           Melanoma of skin                                                                           27.1                                                            27.4
+    ## 
+    ##                    Bladder                                                                           27.3                                          8.1
+    ## 
+    ##     Non-Hodgkin lymphoma                                                                                        14.4                                9.2
+    ## 
+    ##                     Kidney                                                                                           11.6                        5.6
+    ## 
+    ##                 Leukaemia                                                                                                 9.5                     6.3
+    ## 
+    ##                   Pancreas                                                                                                  8.1                   6.8
+    ## 
+    ##                                     120            100             80          60               40                   20               0                        20               40        60      80         100         120
+    ##                                                                                                                           ASR (World) per 100 000
+    ## 
+    ##                                                              Age-standardized (World) incidence and mortality rates, top 10 cancers
+    ## 
+    ## 
+    ##                                                                                                                 Incidence                           Mortality
+    ## 
+    ##                     Breast                 100.9                                                                                                           15.3
+    ## 
+    ##                   Prostate                                     73.9                                                                                     11.5
+    ## 
+    ##                 Colorectum                                                             41.0                                                               13.5
+    ## 
+    ##                       Lung                                                                    33.4                                                                  25.7
+    ## 
+    ##           Melanoma of skin                                                                           27.0                                   2.3
+    ## 
+    ##                    Bladder                                                                                    17.2                          3.3
+    ## 
+    ##     Non-Hodgkin lymphoma                                                                                             11.7                   3.1
+    ## 
+    ##                Corpus uteri                                                                                          11.3                   2.2
+    ## 
+    ##                      Testis                                                                                            9.9                0.19
+    ## 
+    ##                     Kidney                                                                                                8.5               3.0
+    ## 
+    ##                                     120            100             80          60               40                   20               0                        20               40        60      80         100         120
+    ##                                                                                                                           ASR (World) per 100 000
+    ## 
+    ## 
+    ## 
+    ## The Global Cancer Observatory - All Rights Reserved - March, 2021.                                                                                                                                                              Page 2
+
+If we actually want to work with the data contained in the document, we
+need to clean it.
+
+Let’s first try to limit the data only to the table we want to extract:
+we can work only with page 2 of the `pdf` object, and let’s keep only
+the part of text between headers “Incidence, Mortality and Prevalence by
+cancer site” and “Age-standardized (World) incidence rates per sex, top
+10 cancers”. Notice that the `.` regex catches all characters except for
+a new line, so we have to explicitly allow for new lines with `\\n` and
+the use of lookaheads and lookbehinds. Then we can try to separate the
+string into a vector where each element corresponds to one line of the
+table – `read_delim()` accomplishes that, although it doesn’t actually
+manage to split the data into variables based on the delimiter, so we
+need to do that in a different way. We specify `skip = 3` to skip the
+first three detected lines and start the table with the row of variable
+names.
+
+``` r
+cancer <- pdf[2] |> 
+  str_extract("(?<=(site))(.|\\n)*(?=(Age-standardized \\(World\\) incidence rates per sex))") |> 
+  read_delim(delim = "\\s", skip = 3)
+```
+
+To split the data into variables, let’s first split the variable name.
+We can take the variable name, remove leading and trailing whitespace,
+and split at any occurrence of at least two spaces – below defined as
+the object `var`. Notice that the original table has an extra header row
+that specifies whether the variable names correspond to new cases,
+deaths, or 5-year summary statistics. So let’s create a vector that
+specifies which of these categories each element of `var` belongs to,
+and combine that with the variable names with a `paste()` function to
+create our vector of desired variable names.
+
+``` r
+var <- names(cancer) |> trimws() |> str_split_1("\\s{2,}")
+cat <- c("", rep("new", 4), rep("death", 4), rep("5year", 2))
+names <- paste0(cat, var)
+```
+
+To split a single column into multiple columns, we can use the
+`separate()` function. However, before we can do that, let’s do a bit of
+data cleaning: to make references to the current one variable easier,
+let’s rename it to `value`. Let’s also use the `trimws()` function to
+remove any leading and trailing white space from the observations. Then
+we can use the separate function where we specify that we want to use
+the `value` column as the variable we split, and we want the new
+variables to have names specified in the `names` vector. Just like with
+the variable names, we use two or more whitespaces as the separator.
+
+Now the data is correctly organized into cells, but all the numbers are
+character strings surrounded by whitespace. So let’s remove the
+whitespace around all cells, and let’s convert all but the first
+variables into numeric.
+
+To use `mutate()` across multiple columns at the same time, we can use
+the `across()` function that takes the affected columns as the first
+argument and the function to apply as the second. If you want to use a
+single function where the only function argument is the variable itself,
+you can specify the function simply as the name of the function – see
+the first part of the `mutate()` function that applies the `trimws`
+function to all variables (defined by `everything()`). If you want to do
+more complex operations, then your function call should start with a
+tilde `~`, and you should refer to the variable with `.x` (e.g. if you’d
+write `var = as.numeric(var)` in the single variable case, instead you’d
+write `~as.numeric(var)` when applying the same function to multiple
+variables) – see how for all variables except for `Cancer` we remove all
+whitespace inside the string and convert the result to numeric.
+
+Finally, we remove the row that sums up the previous rows in the
+original table. Now we have our final, clean dataset of cancer rates in
+the Netherlands in 2020, so let’s create an example visualization: the
+scatterplot below shows the relationship between new cancer cases and
+cancer deaths per cancer type, which shows the relationship between
+these two numbers a lot more clearly than the original table did.
+
+``` r
+cancer_tidy <- cancer |> 
+  setNames("value") |> 
+  mutate(value = trimws(value)) |> 
+  separate(1, into = names, sep = "\\s{2,}") |> 
+  mutate(across(everything(), trimws),
+         across(-Cancer, ~as.numeric(str_remove_all(.x, "\\s")))) |> 
+  filter(Cancer != "All cancer sites")
+  
+ggplot(cancer_tidy, aes(newNumber, deathNumber)) +
+  geom_point() +
+  labs(x = "Number of new cases in 2020",
+       y = "Number of deaths in 2020",
+       title = "Incidence and mortality per cancer type") +
+  coord_fixed() +
+  theme_light()
+```
+
+![](scraping_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
