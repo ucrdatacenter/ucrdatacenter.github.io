@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship program"
 subtitle: "Spring 2024 (January)"
-date: "Last updated: 2024-01-12"
+date: "Last updated: 2024-01-17"
 output:
   md_document:
     variant: gfm
@@ -29,23 +29,23 @@ Below you can find the schedule of the apprenticeship workshops between
 that the pages are still a work in progress and subject to frequent
 updates.
 
-| Week | Topic                                                                                     | Time        |
-|------|-------------------------------------------------------------------------------------------|-------------|
-| 1.1  | [Apprenticeship introduction; introduction to R; data wrangling in R](intro)              | 9:00-14:00  |
-| 1.2  | Start on apprenticeship projects (no workshop)                                            | \-          |
-| 1.3  | [Working with external data: importing, exporting and merging files with R](data)         | 9:00-14:00  |
-| 1.4  | [Data visualization with ggplot2](visualization)                                          | 14:00-18:00 |
-| 1.5  | [Data visualization with ggplot2 and other packages](visualization)                       | 9:00-14:00  |
-| 2.1  | [Character strings and regular expressions](strings)                                      | 10:00-14:00 |
-| 2.2  | Introduction to GitHub; good practices in code style and structure                        | 9:00-14:00  |
-| 2.3  | [Data scraping from the web and pdf documents in R](scraping)                             | 10:00-14:00 |
-| 2.4  | [Wrangling and visualizing spatial data in R](spatial)                                    | 9:00-14:00  |
-| 2.5  | [Interactive applications with Shiny](shiny)                                              | 10:00-14:00 |
-| 3.1  | [Statistics in R: descriptive statistics, regression, classification methods](statistics) | 10:00-14:00 |
-| 3.2  | [Text analysis in R](text)                                                                | 9:00-14:00  |
-| 3.3  | [Advanced treatment of data types and functions in R](data-types)                         | 10:00-14:00 |
-| 3.4  | Other AI tools                                                                            | 9:00-14:00  |
-| 3.5  | Apprenticeship presentations                                                              | TBA         |
+| Week | Topic                                                                                     | Time                                 |
+|------|-------------------------------------------------------------------------------------------|--------------------------------------|
+| 1.1  | [Apprenticeship introduction; introduction to R; data wrangling in R](intro)              | 9:00-14:00                           |
+| 1.2  | Start on apprenticeship projects (no workshop)                                            | \-                                   |
+| 1.3  | [Working with external data: importing, exporting and merging files with R](data)         | 9:00-14:00                           |
+| 1.4  | [Data visualization with ggplot2](visualization)                                          | 14:00-18:00                          |
+| 1.5  | [Data visualization with ggplot2 and other packages](visualization)                       | 9:00-14:00                           |
+| 2.1  | [Character strings and regular expressions](strings)                                      | 10:00-14:00                          |
+| 2.2  | Introduction to GitHub; good practices in code style and structure                        | 9:00-14:00                           |
+| 2.3  | [Data scraping from the web and pdf documents in R](scraping)                             | 13:00-16:00 & 17:00-18:00            |
+| 2.4  | [Wrangling and visualizing spatial data in R](spatial)                                    | 9:00-14:00                           |
+| 2.5  | [Interactive applications with Shiny](shiny)                                              | 10:00-14:00                          |
+| 3.1  | [Statistics in R: descriptive statistics, regression, classification methods](statistics) | 10:00-14:00                          |
+| 3.2  | [Text analysis in R](text)                                                                | 9:00-14:00                           |
+| 3.3  | [Advanced treatment of data types and functions in R](data-types)                         | 14:00-18:00 (online, link on Moodle) |
+| 3.4  | Other AI tools                                                                            | 9:00-14:00                           |
+| 3.5  | Apprenticeship presentations                                                              | TBA                                  |
 
 # Projects
 
