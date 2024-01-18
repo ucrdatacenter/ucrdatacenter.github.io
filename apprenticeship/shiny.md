@@ -38,7 +38,11 @@ In this tutorial, we discuss the basic layout of a Shiny app and some
 examples of customizing the user interface, including inputs, outputs
 and reactive elements. We also discuss how to publish your apps on the
 Shiny server, and some considerations that specifically apply to apps
-hosted on Shiny. The tutorial is partially based on …..
+hosted on Shiny. Some elements of this tutorial are based on Joachim
+Goedhart’s [A Shiny start -
+Tutorial](https://github.com/JoachimGoedhart/A_Shiny_start). The final
+app script created in this tutorial is available
+[here](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/8_shiny/app.R).
 
 # The structure of a Shiny app
 
