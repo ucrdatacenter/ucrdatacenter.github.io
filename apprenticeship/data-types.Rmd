@@ -13,4 +13,49 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-TBA
+# More on data types
+
+https://adv-r.hadley.nz/vectors-chap.html
+
+## Vectors
+
+Vector types (including factors, dates), missing values, coercion
+Named vectors, dimensions, other attributes
+NULL, NA, NaN and their uses, differences
+
+## Lists
+
+List structure
+Referencing elements of a list
+
+## Data frames and tibbles
+
+Attributes: extracting rownames, colnames, dimensions
+Multiple ways to subset
+Special columns: lists, nested tibbles - unnesting
+
+# Writing your own functions
+
+https://r4ds.had.co.nz/functions.html
+
+view source code of existing functions in console
+why define your own function
+single line or curly braces
+function syntax: function name, returned values, arguments
+- good naming conventions
+- returned values: one or more objects (list return)
+- arguments: names (avoiding `name == name` in function body), default values
+- tidy, pipeable functions
+what objects can you use inside and outside the function?
+conditional execution, adding error messages
+
+# Iteration with functionals
+
+https://adv-r.hadley.nz/functionals.html#map
+
+functionals instead of loops - why?
+map and its versions (map2, map_df, map_dbl, pmap, ect.)
+function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`)
+
+map in mutate - when useful?
+across?
