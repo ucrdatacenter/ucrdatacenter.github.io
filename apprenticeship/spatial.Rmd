@@ -32,3 +32,7 @@ Chaffinch_2018 <-
              delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 
 ```
+
+# Workshop code
+
+The code from the workshop is available [here](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/7_spatial/spatial_code.R).

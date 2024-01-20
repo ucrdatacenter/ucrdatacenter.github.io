@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nWrangling and visualizing spatial data in R"
 subtitle: "Spring 2024" 
-date: "Last updated: 2024-01-18"
+date: "Last updated: 2024-01-20"
 output:
   md_document:
     variant: gfm
@@ -10,6 +10,7 @@ output:
 ---
 
 - [Data](#data)
+- [Workshop code](#workshop-code)
 
 # Data
 
@@ -32,3 +33,8 @@ Chaffinch_2018 <-
   read_delim("https://raw.githubusercontent.com/ucrdatacenter/projects/main/SCIENVI201/2022h1/Data/chaffinch/chaffinch_2018.csv",
              delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 ```
+
+# Workshop code
+
+The code from the workshop is available
+[here](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/7_spatial/spatial_code.R).
