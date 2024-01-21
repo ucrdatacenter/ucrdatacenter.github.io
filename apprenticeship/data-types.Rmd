@@ -13,49 +13,147 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
+```{r}
+library(tidyverse)
+library(lubridate) # for dates
+```
+
 # More on data types
 
-https://adv-r.hadley.nz/vectors-chap.html
+Source: Hadley Wickham: [Advanced R](https://adv-r.hadley.nz/vectors-chap.html) (Chapter 3: Vectors).
 
 ## Vectors
 
-Vector types (including factors, dates), missing values, coercion
-Named vectors, dimensions, other attributes
-NULL, NA, NaN and their uses, differences
+### Scalars: testing and coercion
+
+```{r}
+vectors <- tibble(
+  logical = c(TRUE, FALSE, NA),
+  integer = as.integer(logical),
+  numeric = as.numeric(logical),
+  character_log = as.character(logical),
+  character_num = as.character(numeric)
+)
+
+print(vectors)
+
+class(c(vectors$logical, vectors$numeric))
+class(c(vectors$logical, vectors$numeric, vectors$character_log, vectors$character_num))
+
+is.numeric(vectors$logical)
+is.character(vectors$logical)
+```
+### Factors: coercion, levels, ordering
+
+```{r}
+factors <- tibble(
+  logical = c(TRUE, FALSE, NA),
+  factor = as.factor(logical),
+  numeric_log = as.numeric(logical),
+  numeric_fac = as.numeric(factor)
+)
+
+print(factors)
+
+char <- c("x", "x", "x")
+factor <- factor(char, levels = c("x", "y"))
+
+as.numeric(char)
+as.numeric(factor)
+
+table(char)
+table(factor)
+
+ordered(char, levels = c("x", "y"))
+```
+
+### Dates: `lubridate`
+
+```{r}
+dates <- c(ymd(20201001), dmy("31082022"), Sys.Date(), today())
+dates
+as_datetime(dates)
+as.numeric(dates)
+ymd(19700101) + days(as.numeric(dates))
+
+now()
+date_decimal(c(1990, 1990.1, 1990.5))
+
+year(dates)
+quarter(dates)
+week(dates)
+
+dates + months(1)
+dates + dmonths(1)
+floor_date(dates + dmonths(1), unit = "day")
+```
+
+### Vector attributes
+
+```{r}
+v <- c("a" = 1, "b" = 2, "c" = 3)
+attr(v, "other_attribute") <- "x"
+attributes(v)
+
+names(v) <- c("a1", "b1", "c1")
+v <- setNames(v, c("a2", "b2", "c2"))
+
+as.data.frame(v) |> 
+  rownames_to_column()
+
+dim(v)
+dim(as.matrix(v))
+```
+
+### NA, NULL, NaN
+
+```{r}
+na <- c(NA, NA_integer_, NA_real_, NaN, NULL)
+length(na)
+is.na(na)
+is.nan(na)
+is.null(na)
+
+tibble(x = NA)
+tibble(x = NaN)
+tibble(x = NULL)
+```
 
 ## Lists
 
-List structure
-Referencing elements of a list
+* List structure
+* Referencing elements of a list
 
 ## Data frames and tibbles
 
-Attributes: extracting rownames, colnames, dimensions
-Multiple ways to subset
-Special columns: lists, nested tibbles - unnesting
+* Attributes: extracting rownames, colnames, dimensions
+* Multiple ways to subset
+* Special columns: lists, nested tibbles - unnesting
 
 # Writing your own functions
 
-https://r4ds.had.co.nz/functions.html
+Source: https://r4ds.had.co.nz/functions.html
 
-view source code of existing functions in console
-why define your own function
-single line or curly braces
-function syntax: function name, returned values, arguments
-- good naming conventions
-- returned values: one or more objects (list return)
-- arguments: names (avoiding `name == name` in function body), default values
-- tidy, pipeable functions
-what objects can you use inside and outside the function?
-conditional execution, adding error messages
+* view source code of existing functions in console
+* why define your own function
+* single line or curly braces
+* function syntax: function name, returned values, arguments
+
+  + good naming conventions
+  + returned values: one or more objects (list return)
+  + arguments: names (avoiding `name == name` in function body), default values
+  + tidy, pipeable functions
+  
+* what objects can you use inside and outside the function?
+* conditional execution, adding error messages
 
 # Iteration with functionals
 
-https://adv-r.hadley.nz/functionals.html#map
+Source: https://adv-r.hadley.nz/functionals.html#map
 
-functionals instead of loops - why?
-map and its versions (map2, map_df, map_dbl, pmap, ect.)
-function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`)
+* functionals instead of loops - why?
+* map and its versions (map2, map_df, map_dbl, pmap, ect.)
+* function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`)
 
-map in mutate - when useful?
-across?
+* map in mutate - when is it needed?
+* changing multiple variables at once with across 
