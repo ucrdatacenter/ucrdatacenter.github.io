@@ -51,12 +51,13 @@ R](https://adv-r.hadley.nz/vectors-chap.html) (Chapter 3: Vectors).
 ### Scalars: testing and coercion
 
 ``` r
+# Create a tibble with logical column, coerce it to other types
 vectors <- tibble(
-  logical = c(TRUE, FALSE, NA),
-  integer = as.integer(logical),
-  numeric = as.numeric(logical),
-  character_log = as.character(logical),
-  character_num = as.character(numeric)
+ logical = c(TRUE, FALSE, NA),
+ integer = as.integer(logical),
+ numeric = as.numeric(logical),
+ character_log = as.character(logical),
+ character_num = as.character(numeric)
 )
 
 print(vectors)
@@ -70,18 +71,21 @@ print(vectors)
     ## 3 NA           NA      NA <NA>          <NA>
 
 ``` r
+# Logical is coerced to numeric
 class(c(vectors$logical, vectors$numeric))
 ```
 
     ## [1] "numeric"
 
 ``` r
+# Logical and numeric are coerced to character
 class(c(vectors$logical, vectors$numeric, vectors$character_log, vectors$character_num))
 ```
 
     ## [1] "character"
 
 ``` r
+# Logical is not numeric or character, just coercible to them
 is.numeric(vectors$logical)
 ```
 
@@ -96,11 +100,12 @@ is.character(vectors$logical)
 ### Factors: coercion, levels, ordering
 
 ``` r
+# Logical and factor is numbered differently when coerced to numeric
 factors <- tibble(
-  logical = c(TRUE, FALSE, NA),
-  factor = as.factor(logical),
-  numeric_log = as.numeric(logical),
-  numeric_fac = as.numeric(factor)
+ logical = c(TRUE, FALSE, NA),
+ factor = as.factor(logical),
+ numeric_log = as.numeric(logical),
+ numeric_fac = as.numeric(factor)
 )
 
 print(factors)
@@ -114,9 +119,13 @@ print(factors)
     ## 3 NA      <NA>            NA          NA
 
 ``` r
+# Define a character vector
 char <- c("x", "x", "x")
+
+# Convert character vector to factor with levels x and y
 factor <- factor(char, levels = c("x", "y"))
 
+# Only factor can be coerced to numeric, not character
 as.numeric(char)
 ```
 
@@ -129,6 +138,7 @@ as.numeric(factor)
     ## [1] 1 1 1
 
 ``` r
+# Table counts all factor levels, even with no observations
 table(char)
 ```
 
@@ -145,6 +155,7 @@ table(factor)
     ## 3 0
 
 ``` r
+# Order character vector with levels x < y
 ordered(char, levels = c("x", "y"))
 ```
 
@@ -154,6 +165,7 @@ ordered(char, levels = c("x", "y"))
 ### Dates: `lubridate`
 
 ``` r
+# Create a vector of dates
 dates <- c(ymd(20201001), dmy("31082022"), Sys.Date(), today())
 dates
 ```
@@ -161,30 +173,35 @@ dates
     ## [1] "2020-10-01" "2022-08-31" "2024-01-22" "2024-01-22"
 
 ``` r
+# Convert dates to datetime
 as_datetime(dates)
 ```
 
     ## [1] "2020-10-01 UTC" "2022-08-31 UTC" "2024-01-22 UTC" "2024-01-22 UTC"
 
 ``` r
+# Convert dates to numeric
 as.numeric(dates)
 ```
 
     ## [1] 18536 19235 19744 19744
 
 ``` r
+# Reconstruct dates from numeric representation as number of days since base date (01/01/1970)
 ymd(19700101) + days(as.numeric(dates))
 ```
 
     ## [1] "2020-10-01" "2022-08-31" "2024-01-22" "2024-01-22"
 
 ``` r
+# Get current date and time
 now()
 ```
 
-    ## [1] "2024-01-22 08:10:50 CET"
+    ## [1] "2024-01-22 17:50:51 CET"
 
 ``` r
+# Convert decimal years to date
 date_decimal(c(1990, 1990.1, 1990.5))
 ```
 
@@ -192,6 +209,7 @@ date_decimal(c(1990, 1990.1, 1990.5))
     ## [3] "1990-07-02 12:00:00 UTC"
 
 ``` r
+# Extract year, quarter, and week from dates
 year(dates)
 ```
 
@@ -210,6 +228,7 @@ week(dates)
     ## [1] 40 35  4  4
 
 ``` r
+# Difference between time and difftime
 dates + months(1)
 ```
 
@@ -223,6 +242,7 @@ dates + dmonths(1)
     ## [3] "2024-02-21 10:30:00 UTC" "2024-02-21 10:30:00 UTC"
 
 ``` r
+# Round down dates to nearest day 
 floor_date(dates + dmonths(1), unit = "day")
 ```
 
@@ -231,8 +251,13 @@ floor_date(dates + dmonths(1), unit = "day")
 ### Vector attributes
 
 ``` r
+# Create a named vector
 v <- c("a" = 1, "b" = 2, "c" = 3)
+
+# Add an attribute 'other_attribute' to 'v'
 attr(v, "other_attribute") <- "x"
+
+# Display attributes of 'v'
 attributes(v)
 ```
 
@@ -243,11 +268,13 @@ attributes(v)
     ## [1] "x"
 
 ``` r
+# Change names of 'v'
 names(v) <- c("a1", "b1", "c1")
 v <- setNames(v, c("a2", "b2", "c2"))
 
-as.data.frame(v) |> 
-  rownames_to_column()
+# Convert 'v' to a dataframe and add row names as a column
+# Note: as_tibble() loses rownames
+as.data.frame(v) |> rownames_to_column()
 ```
 
     ##   rowname v
@@ -256,12 +283,16 @@ as.data.frame(v) |>
     ## 3      c2 3
 
 ``` r
+# Get dimensions of 'v'
+# vectors always have NULL dimension
 dim(v)
 ```
 
     ## NULL
 
 ``` r
+# Get dimensions of 'v' as a matrix 
+# matrices have two dimensions (rows x columns)
 dim(as.matrix(v))
 ```
 
@@ -270,13 +301,19 @@ dim(as.matrix(v))
 ### NA, NULL, NaN
 
 ``` r
+# NA: missing
+# NaN: not a number
+# NULL: special object of length 0
 na <- c(NA, NA_integer_, NA_real_, NaN, NULL)
+
+# NULL does not contribute to vector length/content
 length(na)
 ```
 
     ## [1] 4
 
 ``` r
+# NA, NaN are all NA, but only NaN is NaN
 is.na(na)
 ```
 
@@ -289,12 +326,14 @@ is.nan(na)
     ## [1] FALSE FALSE FALSE  TRUE
 
 ``` r
+# object is NULL if it only contains NULL
 is.null(na)
 ```
 
     ## [1] FALSE
 
 ``` r
+# NA and NaN create an observation
 tibble(x = NA)
 ```
 
@@ -313,6 +352,7 @@ tibble(x = NaN)
     ## 1   NaN
 
 ``` r
+# NULL creates tibble with 0 rows, 0 columns
 tibble(x = NULL)
 ```
 
@@ -321,6 +361,7 @@ tibble(x = NULL)
 ## Lists
 
 ``` r
+# Define list with elements of different types, lengths
 l <- list(
   1:3, 
   "a", 
@@ -329,6 +370,7 @@ l <- list(
   l1 = list(l2 = list(1, 2, 3), l3 = list(4, 5))
 )
 
+# Access elements of 'l' using different methods
 l[1]
 ```
 
@@ -464,6 +506,7 @@ l$l1[[1]]
     ## [1] 3
 
 ``` r
+# convert list to a single vector (character, due to coercion)
 unlist(l)
 ```
 
@@ -475,7 +518,11 @@ unlist(l)
 ## Data frames and tibbles
 
 ``` r
+# Create a data frame and a tibble with the same contents
 df <- data.frame(x = 1:3, y = letters[1:3])
+tbl <- tibble(x = 1:3, y = letters[1:3])
+
+# Compare attributes of 'df' and 'tbl'
 attributes(df)
 ```
 
@@ -489,7 +536,6 @@ attributes(df)
     ## [1] 1 2 3
 
 ``` r
-tbl <- tibble(x = 1:3, y = letters[1:3])
 attributes(tbl)
 ```
 
@@ -503,6 +549,7 @@ attributes(tbl)
     ## [1] "x" "y"
 
 ``` r
+# Get number of rows and columns of 'df'
 nrow(df)
 ```
 
@@ -515,18 +562,21 @@ ncol(df)
     ## [1] 2
 
 ``` r
+# Get dimensions of 'df'
 dim(df)
 ```
 
     ## [1] 3 2
 
 ``` r
+# Get names of 'df'
 names(df)
 ```
 
     ## [1] "x" "y"
 
 ``` r
+# Create a complex tibble 
 d <- tibble("1 problematic variable name" = 1:3, 
             y = letters[1:3], 
             z = list(c(1:3), c(4:6), c(7:9)),
@@ -534,6 +584,7 @@ d <- tibble("1 problematic variable name" = 1:3,
                        tibble(x1 = 3:4, y1 = letters[3:4]),
                        tibble(x1 = 5:6, y1 = letters[5:6])))
 
+# Select a variable; result: tibble
 select(d, y)
 ```
 
@@ -567,6 +618,7 @@ d[ , 2]
     ## 3 c
 
 ``` r
+# Pull a variable; result: vector
 pull(d, y)
 ```
 
@@ -591,6 +643,7 @@ d[[2]]
     ## [1] "a" "b" "c"
 
 ``` r
+# Use backquotes for problematic names
 select(d, `1 problematic variable name`)
 ```
 
@@ -648,6 +701,7 @@ d[[1]]
     ## [1] 1 2 3
 
 ``` r
+# Select all variables containing a single lowercase letter
 select(d, matches("^[a-z]$"))
 ```
 
@@ -659,6 +713,7 @@ select(d, matches("^[a-z]$"))
     ## 3 c     <int [3]>
 
 ``` r
+# Select which rows and columns to keep
 d[2:3, c(1, 3)]
 ```
 
@@ -669,6 +724,7 @@ d[2:3, c(1, 3)]
     ## 2                             3 <int [3]>
 
 ``` r
+# Unnest 'z' and 'tib' from 'd'
 d |> unnest(z)
 ```
 
@@ -700,6 +756,7 @@ d |> unnest(tib)
     ## 6                             3 c     <int [3]>     6 f
 
 ``` r
+# Default unnest behavior: unnest all list columns (but length mismatch error)
 # d |> unnest()
 ```
 
@@ -712,6 +769,34 @@ Data Science (2e)](https://r4ds.hadley.nz/functions) (Chapter 25:
 Functions)
 
 ## What does a function look like?
+
+``` r
+# Access function definition
+sd
+```
+
+    ## function (x, na.rm = FALSE) 
+    ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
+    ##     na.rm = na.rm))
+    ## <bytecode: 0x00000216249fd5b8>
+    ## <environment: namespace:stats>
+
+``` r
+# Defining a simple function: rescale a vector so that all elements are between 0 and 1
+rescale01 <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+# Use function defined in global environment
+rescale01(x = c(1, 4, 5, 8, 10))
+```
+
+    ## [1] 0.0000000 0.3333333 0.4444444 0.7777778 1.0000000
+
+``` r
+# For short functions, use one line and omit the braces
+rescale01 <- function(x) (x - min(x)) / (max(x) - min(x))
+```
 
 ## Function name, arguments, body, return value(s)
 
