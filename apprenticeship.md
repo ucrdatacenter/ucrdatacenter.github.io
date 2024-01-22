@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship program"
 subtitle: "Spring 2024 (January)"
-date: "Last updated: 2024-01-17"
+date: "Last updated: 2024-01-22"
 output:
   md_document:
     variant: gfm
@@ -45,7 +45,7 @@ updates.
 | 3.2  | [Text analysis in R](text)                                                                | 14:00-18:00 (online, link on Moodle) |
 | 3.3  | [Advanced treatment of data types and functions in R](data-types)                         | 10:00-14:00                          |
 | 3.4  | Other AI tools                                                                            | 9:00-14:00                           |
-| 3.5  | Apprenticeship presentations                                                              | TBA                                  |
+| 3.5  | Apprenticeship presentations                                                              | 10:00-14:00                          |
 
 # Projects
 

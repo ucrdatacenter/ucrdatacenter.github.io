@@ -38,7 +38,7 @@ Week|Topic                                                                      
 3.2 |[Text analysis in R](text)                                                 |14:00-18:00 (online, link on Moodle)
 3.3 |[Advanced treatment of data types and functions in R](data-types)          |10:00-14:00
 3.4 |Other AI tools                                                             |9:00-14:00
-3.5 |Apprenticeship presentations                                               |TBA
+3.5 |Apprenticeship presentations                                               |10:00-14:00
 
 # Projects
 
