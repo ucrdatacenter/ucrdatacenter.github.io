@@ -17,3 +17,11 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 
 You can download the NASA metadata using [this link](https://raw.githubusercontent.com/ucrdatacenter/projects/main/apprenticeship/10_text/NASAmetadata.zip).
 After downloading, unzip the file in your working directory and import `metadata.JSON` using the `fromJSON()` function from the `jsonlite` package.
+
+# Code
+
+The code from the workshop is available [here](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/10_text/text_code.R).
+
+# More on text mining
+
+See ["Text Mining with R: A Tidy Approach"](https://www.tidytextmining.com/) by Julia Silge and David Robinson.
