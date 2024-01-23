@@ -566,7 +566,7 @@ f <- function(x) {
 y <- 5
 f(2)
 ```
-```{r}
+```{r, eval = FALSE}
 res
 ```
 
