@@ -284,41 +284,291 @@ rescale01 <- function(x) (x - min(x)) / (max(x) - min(x))
 
 ## Function name, arguments, body, return value(s)
 
-```{r}
+Function naming:
 
+* informative, with verbs 
+* if using multiple related functions, use common prefix (see e.g. `str_...` family)
+* don't override built-in functions
+
+```{r}
+# Arguments with default values
+rescale01 <- function(x = 1:10) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+rescale01()
+rescale01(1:10)
+rescale01(x = 1:10)
+
+# ... argument
+commas <- function(...) paste(..., collapse = ", ")
+commas(letters[1:10])
+
+# Unexpected results in logical statements
+names <- tibble(id = 1:3, name = LETTERS[1:3])
+
+filter_name <- function(data, name) filter(data, name == name)
+filter_name(names, name = "B")
+
+filter_name <- function(data, n) filter(data, name == n)
+filter_name(names, n = "B")
+
+# Return values with and without return statement
+rescale01 <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+  result
+}
+
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+  return(result)
+}
+
+# access result only if assigned to an object
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+}
+
+# List returns
+rescale01 <- function(x) {
+  min <- min(x)
+  max <- max(x)
+  result <- (x - min) / (max - min)
+  
+  # returned list
+  list(x = result, original_minimum = min, original_maximum = max)
+}
+
+# Access elements of list return
+rescale01(1:10)$original_minimum
+# better method for computation efficiency
+res <- rescale01(1:10)
+res$x
+
+# Invisible returns: return object without displaying it
+show_missings <- function(df) {
+  n <- sum(is.na(df))
+  cat("Missing values: ", n, "\n", sep = "")
+  
+  invisible(df)
+}
+
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12]) |> 
+  show_missings() |> 
+  drop_na() |> 
+  show_missings()
 ```
 
-## Tidy functions: pipes, data masking, tidy evaluation
+## Tidy functions: pipes, tidy evaluation
 
 ```{r}
+## Mutate functions
+# input: one vector; output: one vector (same length)
+z_score <- function(x) {
+  (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)
+}
 
+first_upper <- function(x) {
+  str_sub(x, 1, 1) <- str_to_upper(str_sub(x, 1, 1))
+  x
+}
+
+tibble(x = 1:10,
+       y = paste0("test", x)) |> 
+  mutate(z_score = z_score(x),
+         y_upper = first_upper(y))
+
+## Summarize functions
+# input: one vector; output: one value
+n_missing <- function(x) {
+  sum(is.na(x))
+} 
+
+commas <- function(x) {
+  str_flatten(x, collapse = ", ", last = " and ")
+}
+
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12]) |> 
+  summarize(x_missing = n_missing(x),
+            y = commas(y))
+
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12],
+       group = rep(1:2, each = 6)) |> 
+  group_by(group) |> 
+  summarize(x_missing = n_missing(x),
+            y = commas(y))
+```
+
+Dataframe functions can be embedded into pipe workflows of data wrangling: input and output are both dataframes, so you can take additional steps of data manipulation before and after calling the function.
+
+The issue you're likely to encounter when writing dataframe functions is having to override the default tidy evaluation.
+Tidy evaluation is why you can refer to variable names as objects in `dplyr` functions (e.g. `filter(type == 1)`).
+Because of tidy evaluation, if you specify a variable name as a function argument, referring to the argument as an object inside the function body (as you would with vector functions), R will take the argument name instead the argument value you define in the function call to be the variable used in the function body.
+Embracing the variable names in question tells R that you're referring to the function argument, not the variable name directly.
+
+```{r, eval = FALSE}
+## Dataframe functions
+# input: dataframe; output: dataframe
+
+# group_var and mean_var treated as variable names, not function arguments
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by(group_var) |> 
+    summarize(mean(mean_var))
+}
+
+# error: variables not found
+tibble(x = 1:20,
+       group = rep(1:2, each = 10)) |> 
+  grouped_mean(group_var = group, mean_var = x)
+```
+```{r}
+# embracing arguments means they take on the value defined in the function call
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by({{ group_var }}) |> 
+    summarize(mean({{ mean_var }}))
+}
+
+# works as expected
+tibble(x = 1:20,
+       group = rep(1:2, each = 10)) |> 
+  grouped_mean(group_var = group, mean_var = x)
+
+# More examples
+count_prop <- function(df, var, sort = FALSE) {
+  df |>
+    count({{ var }}, sort = sort) |>
+    mutate(prop = n / sum(n))
+}
+
+diamonds |> count_prop(clarity)
+
+unique_where <- function(df, condition, var) {
+  df |> 
+    filter({{ condition }}) |> 
+    distinct({{ var }}) |> 
+    arrange({{ var }})
+}
+
+diamonds |> unique_where(cut == "Ideal", color)
+```
+```{r, eval = FALSE}
+## Plot functions
+
+# Define the repetitive part of ggplot code
+histogram <- function(df, var) {
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram() 
+}
+
+histogram(diamonds, carat)
+
+# Add more plot elements, data wrangling
+diamonds |> 
+  filter(color == "G") |> 
+  histogram(carat) +
+  facet_wrap(~cut)
+
+# Add labels with rlang::englue
+# variables in {{ }}, other arguments in { }
+histogram <- function(df, var, binwidth) {
+  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
+  
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram(binwidth = binwidth) + 
+    labs(title = label)
+}
+
+diamonds |> histogram(carat, 0.1)
 ```
 
 ## Conditional execution
 
 ```{r}
+## Use for early return/stopping/error messages
 
+# Return normal mean if weights are not specified
+weighted_mean <- function(x, w = NULL) {
+  if (is.null(w)) {
+    return(mean(x))
+  }
+  sum(w * x) / sum(w)
+}
+
+# Stop with custom error message
+weighted_mean <- function(x, w) {
+  if (length(x) != length(w)) {
+    stop("`x` and `w` must be the same length")
+  }
+  sum(w * x) / sum(w)
+}
+
+# Alternatively, use stopifnot for a generic error
+weighted_mean <- function(x, w) {
+  stopifnot(length(x) == length(w))
+  sum(w * x) / sum(w)
+}
+
+## Use conditions for different behavior with different arguments
+weighted_mean <- function(x, w, na.rm = FALSE) {
+  stopifnot(length(x) == length(w), is.logical(na.rm), length(na.rm) == 1)
+  
+  # Drop NA values from x and w if na.rm == TRUE
+  if (na.rm) {
+    na <- is.na(x) | is.na(w)
+    x <- x[!na]
+    w <- w[!na]
+  }
+  
+  sum(w * x) / sum(w)
+}
+```
+```{r, eval = FALSE}
+## Nested if else
+if (this) {
+  # do that
+} else if (that) {
+  # do something else
+} else {
+  # do a different thing
+}
 ```
 
 ## What objects exist in which environment?
 
 ```{r}
+## Functions can find objects defined outside the function
 
+# works if y is defined outside the function (but not advised)
+f <- function(x) {
+  x + y
+} 
+
+y <- 5
+f(2)
+
+## Functions defined inside the function don't exist outside the function
+f <- function(x) {
+  res <- x + y
+  res
+}
+
+y <- 5
+f(2)
 ```
-
-
-<!-- * view source code of existing functions in console -->
-<!-- * why define your own function -->
-<!-- * single line or curly braces -->
-<!-- * function syntax: function name, returned values, arguments -->
-
-<!--   + good naming conventions -->
-<!--   + returned values: one or more objects (list return) -->
-<!--   + arguments: names (avoiding `name == name` in function body), default values -->
-<!--   + tidy, pipeable functions -->
-
-<!-- * what objects can you use inside and outside the function? -->
-<!-- * conditional execution, adding error messages -->
+```{r}
+res
+```
 
 # Iteration with functionals
 
@@ -345,12 +595,77 @@ Hadley Wickham: [Advanced R](https://adv-r.hadley.nz/functionals.html#map) (Chap
 ## Applying methods to multiple variables with `across()`
 
 ```{r}
+df <- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
 
+df |> summarize(
+  n = n(),
+  a = median(a),
+  b = median(b),
+  c = median(c),
+  d = median(d)
+)
+
+# Get column medians for columns a to d
+df |> summarize(
+  n = n(),
+  across(a:d, median)
+)
+
+# Get column medians for all columns
+df |> summarize(
+  n = n(),
+  across(everything(), median)
+)
+
+# Other variable list specifications:
+
+# starts_with("s") # equivalent to regex "^s.*"
+# ends_with("s") # equivalent to regex ".*s$"
+# contains("s") # equivalent to regex "s"
+# matches("s") # equivalent to contains() but "s" can be regex
+# where(is.numeric) # all numeric (or other type) variables
+# ! negates selectors (e.g. !where(is.numeric))
+
+# Explicit function arguments
+df |> summarize(
+  n = n(),
+  across(everything(), ~mean(., na.rm = TRUE))
+)
+
+# More complex functions, overwrite existing variable
+df |> 
+  mutate(across(everything(), ~ (. - min(.)) / (max(.) - min(.))))
+
+# More complex functions, create new variable
+df |> 
+  mutate(across(everything(), list(rescaled = ~ (. - min(.)) / (max(.) - min(.)))))
+
+# Multiple functions
+df |> summarize(
+  n = n(),
+  across(everything(), 
+         list(mean = ~mean(., na.rm = TRUE), 
+              median = median),
+         .names = "{.fn}_{.col}")
+)
+```
+
+## Filtering with `if_any` and `if_all`
+
+```{r}
+df |> filter(if_any(a:d, ~ . > 0))
+df |> filter(if_all(a:b, ~ . > 0))
+
+# across() is equivalent to if_all but less intuitive
+df |> filter(across(a:b, ~ . > 0))
 ```
 
 <!-- * functionals instead of loops - why? -->
 <!-- * map and its versions (map2, map_df, map_dbl, pmap, ect.) -->
 <!-- * function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`) -->
-
 <!-- * map in mutate - when is it needed? -->
-<!-- * changing multiple variables at once with across  -->

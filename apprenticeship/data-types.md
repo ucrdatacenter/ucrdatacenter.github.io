@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nAdvanced treatment of data types and functions in R"
 subtitle: "Spring 2024" 
-date: "Last updated: 2024-01-22"
+date: "Last updated: 2024-01-23"
 output:
   md_document:
     variant: gfm
@@ -23,8 +23,8 @@ output:
   - [What does a function look like?](#what-does-a-function-look-like)
   - [Function name, arguments, body, return
     value(s)](#function-name-arguments-body-return-values)
-  - [Tidy functions: pipes, data masking, tidy
-    evaluation](#tidy-functions-pipes-data-masking-tidy-evaluation)
+  - [Tidy functions: pipes, tidy
+    evaluation](#tidy-functions-pipes-tidy-evaluation)
   - [Conditional execution](#conditional-execution)
   - [What objects exist in which
     environment?](#what-objects-exist-in-which-environment)
@@ -35,6 +35,8 @@ output:
     wrangling](#functionals-in-tidy-data-wrangling)
   - [Applying methods to multiple variables with
     `across()`](#applying-methods-to-multiple-variables-with-across)
+  - [Filtering with `if_any` and
+    `if_all`](#filtering-with-if_any-and-if_all)
 
 ``` r
 library(tidyverse)
@@ -170,35 +172,35 @@ dates <- c(ymd(20201001), dmy("31082022"), Sys.Date(), today())
 dates
 ```
 
-    ## [1] "2020-10-01" "2022-08-31" "2024-01-22" "2024-01-22"
+    ## [1] "2020-10-01" "2022-08-31" "2024-01-23" "2024-01-23"
 
 ``` r
 # Convert dates to datetime
 as_datetime(dates)
 ```
 
-    ## [1] "2020-10-01 UTC" "2022-08-31 UTC" "2024-01-22 UTC" "2024-01-22 UTC"
+    ## [1] "2020-10-01 UTC" "2022-08-31 UTC" "2024-01-23 UTC" "2024-01-23 UTC"
 
 ``` r
 # Convert dates to numeric
 as.numeric(dates)
 ```
 
-    ## [1] 18536 19235 19744 19744
+    ## [1] 18536 19235 19745 19745
 
 ``` r
 # Reconstruct dates from numeric representation as number of days since base date (01/01/1970)
 ymd(19700101) + days(as.numeric(dates))
 ```
 
-    ## [1] "2020-10-01" "2022-08-31" "2024-01-22" "2024-01-22"
+    ## [1] "2020-10-01" "2022-08-31" "2024-01-23" "2024-01-23"
 
 ``` r
 # Get current date and time
 now()
 ```
 
-    ## [1] "2024-01-22 17:50:51 CET"
+    ## [1] "2024-01-23 17:27:14 CET"
 
 ``` r
 # Convert decimal years to date
@@ -232,21 +234,21 @@ week(dates)
 dates + months(1)
 ```
 
-    ## [1] "2020-11-01" NA           "2024-02-22" "2024-02-22"
+    ## [1] "2020-11-01" NA           "2024-02-23" "2024-02-23"
 
 ``` r
 dates + dmonths(1)
 ```
 
     ## [1] "2020-10-31 10:30:00 UTC" "2022-09-30 10:30:00 UTC"
-    ## [3] "2024-02-21 10:30:00 UTC" "2024-02-21 10:30:00 UTC"
+    ## [3] "2024-02-22 10:30:00 UTC" "2024-02-22 10:30:00 UTC"
 
 ``` r
 # Round down dates to nearest day 
 floor_date(dates + dmonths(1), unit = "day")
 ```
 
-    ## [1] "2020-10-31 UTC" "2022-09-30 UTC" "2024-02-21 UTC" "2024-02-21 UTC"
+    ## [1] "2020-10-31 UTC" "2022-09-30 UTC" "2024-02-22 UTC" "2024-02-22 UTC"
 
 ### Vector attributes
 
@@ -778,7 +780,7 @@ sd
     ## function (x, na.rm = FALSE) 
     ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
     ##     na.rm = na.rm))
-    ## <bytecode: 0x00000216249fd5b8>
+    ## <bytecode: 0x000001ffd66244d0>
     ## <environment: namespace:stats>
 
 ``` r
@@ -800,22 +802,433 @@ rescale01 <- function(x) (x - min(x)) / (max(x) - min(x))
 
 ## Function name, arguments, body, return value(s)
 
-## Tidy functions: pipes, data masking, tidy evaluation
+Function naming:
+
+- informative, with verbs
+- if using multiple related functions, use common prefix (see
+  e.g. `str_...` family)
+- don’t override built-in functions
+
+``` r
+# Arguments with default values
+rescale01 <- function(x = 1:10) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+rescale01()
+```
+
+    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
+    ##  [8] 0.7777778 0.8888889 1.0000000
+
+``` r
+rescale01(1:10)
+```
+
+    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
+    ##  [8] 0.7777778 0.8888889 1.0000000
+
+``` r
+rescale01(x = 1:10)
+```
+
+    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
+    ##  [8] 0.7777778 0.8888889 1.0000000
+
+``` r
+# ... argument
+commas <- function(...) paste(..., collapse = ", ")
+commas(letters[1:10])
+```
+
+    ## [1] "a, b, c, d, e, f, g, h, i, j"
+
+``` r
+# Unexpected results in logical statements
+names <- tibble(id = 1:3, name = LETTERS[1:3])
+
+filter_name <- function(data, name) filter(data, name == name)
+filter_name(names, name = "B")
+```
+
+    ## # A tibble: 3 × 2
+    ##      id name 
+    ##   <int> <chr>
+    ## 1     1 A    
+    ## 2     2 B    
+    ## 3     3 C
+
+``` r
+filter_name <- function(data, n) filter(data, name == n)
+filter_name(names, n = "B")
+```
+
+    ## # A tibble: 1 × 2
+    ##      id name 
+    ##   <int> <chr>
+    ## 1     2 B
+
+``` r
+# Return values with and without return statement
+rescale01 <- function(x) {
+  (x - min(x)) / (max(x) - min(x))
+}
+
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+  result
+}
+
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+  return(result)
+}
+
+# access result only if assigned to an object
+rescale01 <- function(x) {
+  result <- (x - min(x)) / (max(x) - min(x))
+}
+
+# List returns
+rescale01 <- function(x) {
+  min <- min(x)
+  max <- max(x)
+  result <- (x - min) / (max - min)
+  
+  # returned list
+  list(x = result, original_minimum = min, original_maximum = max)
+}
+
+# Access elements of list return
+rescale01(1:10)$original_minimum
+```
+
+    ## [1] 1
+
+``` r
+# better method for computation efficiency
+res <- rescale01(1:10)
+res$x
+```
+
+    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
+    ##  [8] 0.7777778 0.8888889 1.0000000
+
+``` r
+# Invisible returns: return object without displaying it
+show_missings <- function(df) {
+  n <- sum(is.na(df))
+  cat("Missing values: ", n, "\n", sep = "")
+  
+  invisible(df)
+}
+
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12]) |> 
+  show_missings() |> 
+  drop_na() |> 
+  show_missings()
+```
+
+    ## Missing values: 4
+    ## Missing values: 0
+
+## Tidy functions: pipes, tidy evaluation
+
+``` r
+## Mutate functions
+# input: one vector; output: one vector (same length)
+z_score <- function(x) {
+  (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)
+}
+
+first_upper <- function(x) {
+  str_sub(x, 1, 1) <- str_to_upper(str_sub(x, 1, 1))
+  x
+}
+
+tibble(x = 1:10,
+       y = paste0("test", x)) |> 
+  mutate(z_score = z_score(x),
+         y_upper = first_upper(y))
+```
+
+    ## # A tibble: 10 × 4
+    ##        x y      z_score y_upper
+    ##    <int> <chr>    <dbl> <chr>  
+    ##  1     1 test1   -1.49  Test1  
+    ##  2     2 test2   -1.16  Test2  
+    ##  3     3 test3   -0.826 Test3  
+    ##  4     4 test4   -0.495 Test4  
+    ##  5     5 test5   -0.165 Test5  
+    ##  6     6 test6    0.165 Test6  
+    ##  7     7 test7    0.495 Test7  
+    ##  8     8 test8    0.826 Test8  
+    ##  9     9 test9    1.16  Test9  
+    ## 10    10 test10   1.49  Test10
+
+``` r
+## Summarize functions
+# input: one vector; output: one value
+n_missing <- function(x) {
+  sum(is.na(x))
+} 
+
+commas <- function(x) {
+  str_flatten(x, collapse = ", ", last = " and ")
+}
+
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12]) |> 
+  summarize(x_missing = n_missing(x),
+            y = commas(y))
+```
+
+    ## # A tibble: 1 × 2
+    ##   x_missing y                                    
+    ##       <int> <chr>                                
+    ## 1         4 a, b, c, d, e, f, g, h, i, j, k and l
+
+``` r
+tibble(x = rep(c(1, 2, NA), times = 4),
+       y = letters[1:12],
+       group = rep(1:2, each = 6)) |> 
+  group_by(group) |> 
+  summarize(x_missing = n_missing(x),
+            y = commas(y))
+```
+
+    ## # A tibble: 2 × 3
+    ##   group x_missing y                  
+    ##   <int>     <int> <chr>              
+    ## 1     1         2 a, b, c, d, e and f
+    ## 2     2         2 g, h, i, j, k and l
+
+Dataframe functions can be embedded into pipe workflows of data
+wrangling: input and output are both dataframes, so you can take
+additional steps of data manipulation before and after calling the
+function.
+
+The issue you’re likely to encounter when writing dataframe functions is
+having to override the default tidy evaluation. Tidy evaluation is why
+you can refer to variable names as objects in `dplyr` functions
+(e.g. `filter(type == 1)`). Because of tidy evaluation, if you specify a
+variable name as a function argument, referring to the argument as an
+object inside the function body (as you would with vector functions), R
+will take the argument name instead the argument value you define in the
+function call to be the variable used in the function body. Embracing
+the variable names in question tells R that you’re referring to the
+function argument, not the variable name directly.
+
+``` r
+## Dataframe functions
+# input: dataframe; output: dataframe
+
+# group_var and mean_var treated as variable names, not function arguments
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by(group_var) |> 
+    summarize(mean(mean_var))
+}
+
+# error: variables not found
+tibble(x = 1:20,
+       group = rep(1:2, each = 10)) |> 
+  grouped_mean(group_var = group, mean_var = x)
+```
+
+``` r
+# embracing arguments means they take on the value defined in the function call
+grouped_mean <- function(df, group_var, mean_var) {
+  df |> 
+    group_by({{ group_var }}) |> 
+    summarize(mean({{ mean_var }}))
+}
+
+# works as expected
+tibble(x = 1:20,
+       group = rep(1:2, each = 10)) |> 
+  grouped_mean(group_var = group, mean_var = x)
+```
+
+    ## # A tibble: 2 × 2
+    ##   group `mean(x)`
+    ##   <int>     <dbl>
+    ## 1     1       5.5
+    ## 2     2      15.5
+
+``` r
+# More examples
+count_prop <- function(df, var, sort = FALSE) {
+  df |>
+    count({{ var }}, sort = sort) |>
+    mutate(prop = n / sum(n))
+}
+
+diamonds |> count_prop(clarity)
+```
+
+    ## # A tibble: 8 × 3
+    ##   clarity     n   prop
+    ##   <ord>   <int>  <dbl>
+    ## 1 I1        741 0.0137
+    ## 2 SI2      9194 0.170 
+    ## 3 SI1     13065 0.242 
+    ## 4 VS2     12258 0.227 
+    ## 5 VS1      8171 0.151 
+    ## 6 VVS2     5066 0.0939
+    ## 7 VVS1     3655 0.0678
+    ## 8 IF       1790 0.0332
+
+``` r
+unique_where <- function(df, condition, var) {
+  df |> 
+    filter({{ condition }}) |> 
+    distinct({{ var }}) |> 
+    arrange({{ var }})
+}
+
+diamonds |> unique_where(cut == "Ideal", color)
+```
+
+    ## # A tibble: 7 × 1
+    ##   color
+    ##   <ord>
+    ## 1 D    
+    ## 2 E    
+    ## 3 F    
+    ## 4 G    
+    ## 5 H    
+    ## 6 I    
+    ## 7 J
+
+``` r
+## Plot functions
+
+# Define the repetitive part of ggplot code
+histogram <- function(df, var) {
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram() 
+}
+
+histogram(diamonds, carat)
+
+# Add more plot elements, data wrangling
+diamonds |> 
+  filter(color == "G") |> 
+  histogram(carat) +
+  facet_wrap(~cut)
+
+# Add labels with rlang::englue
+# variables in {{ }}, other arguments in { }
+histogram <- function(df, var, binwidth) {
+  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
+  
+  df |> 
+    ggplot(aes(x = {{ var }})) + 
+    geom_histogram(binwidth = binwidth) + 
+    labs(title = label)
+}
+
+diamonds |> histogram(carat, 0.1)
+```
 
 ## Conditional execution
 
+``` r
+## Use for early return/stopping/error messages
+
+# Return normal mean if weights are not specified
+weighted_mean <- function(x, w = NULL) {
+  if (is.null(w)) {
+    return(mean(x))
+  }
+  sum(w * x) / sum(w)
+}
+
+# Stop with custom error message
+weighted_mean <- function(x, w) {
+  if (length(x) != length(w)) {
+    stop("`x` and `w` must be the same length")
+  }
+  sum(w * x) / sum(w)
+}
+
+# Alternatively, use stopifnot for a generic error
+weighted_mean <- function(x, w) {
+  stopifnot(length(x) == length(w))
+  sum(w * x) / sum(w)
+}
+
+## Use conditions for different behavior with different arguments
+weighted_mean <- function(x, w, na.rm = FALSE) {
+  stopifnot(length(x) == length(w), is.logical(na.rm), length(na.rm) == 1)
+  
+  # Drop NA values from x and w if na.rm == TRUE
+  if (na.rm) {
+    na <- is.na(x) | is.na(w)
+    x <- x[!na]
+    w <- w[!na]
+  }
+  
+  sum(w * x) / sum(w)
+}
+```
+
+``` r
+## Nested if else
+if (this) {
+  # do that
+} else if (that) {
+  # do something else
+} else {
+  # do a different thing
+}
+```
+
 ## What objects exist in which environment?
 
-<!-- * view source code of existing functions in console -->
-<!-- * why define your own function -->
-<!-- * single line or curly braces -->
-<!-- * function syntax: function name, returned values, arguments -->
-<!--   + good naming conventions -->
-<!--   + returned values: one or more objects (list return) -->
-<!--   + arguments: names (avoiding `name == name` in function body), default values -->
-<!--   + tidy, pipeable functions -->
-<!-- * what objects can you use inside and outside the function? -->
-<!-- * conditional execution, adding error messages -->
+``` r
+## Functions can find objects defined outside the function
+
+# works if y is defined outside the function (but not advised)
+f <- function(x) {
+  x + y
+} 
+
+y <- 5
+f(2)
+```
+
+    ## [1] 7
+
+``` r
+## Functions defined inside the function don't exist outside the function
+f <- function(x) {
+  res <- x + y
+  res
+}
+
+y <- 5
+f(2)
+```
+
+    ## [1] 7
+
+``` r
+res
+```
+
+    ## $x
+    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
+    ##  [8] 0.7777778 0.8888889 1.0000000
+    ## 
+    ## $original_minimum
+    ## [1] 1
+    ## 
+    ## $original_maximum
+    ## [1] 10
 
 # Iteration with functionals
 
@@ -831,8 +1244,177 @@ Functionals).
 
 ## Applying methods to multiple variables with `across()`
 
+``` r
+df <- tibble(
+  a = rnorm(10),
+  b = rnorm(10),
+  c = rnorm(10),
+  d = rnorm(10)
+)
+
+df |> summarize(
+  n = n(),
+  a = median(a),
+  b = median(b),
+  c = median(c),
+  d = median(d)
+)
+```
+
+    ## # A tibble: 1 × 5
+    ##       n     a     b     c     d
+    ##   <int> <dbl> <dbl> <dbl> <dbl>
+    ## 1    10 0.191 0.472 0.366 0.184
+
+``` r
+# Get column medians for columns a to d
+df |> summarize(
+  n = n(),
+  across(a:d, median)
+)
+```
+
+    ## # A tibble: 1 × 5
+    ##       n     a     b     c     d
+    ##   <int> <dbl> <dbl> <dbl> <dbl>
+    ## 1    10 0.191 0.472 0.366 0.184
+
+``` r
+# Get column medians for all columns
+df |> summarize(
+  n = n(),
+  across(everything(), median)
+)
+```
+
+    ## # A tibble: 1 × 5
+    ##       n     a     b     c     d
+    ##   <int> <dbl> <dbl> <dbl> <dbl>
+    ## 1    10 0.191 0.472 0.366 0.184
+
+``` r
+# Other variable list specifications:
+
+# starts_with("s") # equivalent to regex "^s.*"
+# ends_with("s") # equivalent to regex ".*s$"
+# contains("s") # equivalent to regex "s"
+# matches("s") # equivalent to contains() but "s" can be regex
+# where(is.numeric) # all numeric (or other type) variables
+# ! negates selectors (e.g. !where(is.numeric))
+
+# Explicit function arguments
+df |> summarize(
+  n = n(),
+  across(everything(), ~mean(., na.rm = TRUE))
+)
+```
+
+    ## # A tibble: 1 × 5
+    ##       n     a     b     c     d
+    ##   <dbl> <dbl> <dbl> <dbl> <dbl>
+    ## 1    10 0.227 0.211 0.504 0.138
+
+``` r
+# More complex functions, overwrite existing variable
+df |> 
+  mutate(across(everything(), ~ (. - min(.)) / (max(.) - min(.))))
+```
+
+    ## # A tibble: 10 × 4
+    ##        a     b      c     d
+    ##    <dbl> <dbl>  <dbl> <dbl>
+    ##  1 0.489 0.765 1      0    
+    ##  2 0.565 0.486 0      0.385
+    ##  3 0.621 0.333 0.0327 0.646
+    ##  4 0.481 1     0.128  0.662
+    ##  5 0.590 0.914 0.350  0.574
+    ##  6 0.633 0.679 0.248  0.207
+    ##  7 0     0.949 0.0900 0.191
+    ##  8 1     0.685 0.602  0.412
+    ##  9 0.551 0.395 0.616  1    
+    ## 10 0.978 0     0.376  0.720
+
+``` r
+# More complex functions, create new variable
+df |> 
+  mutate(across(everything(), list(rescaled = ~ (. - min(.)) / (max(.) - min(.)))))
+```
+
+    ## # A tibble: 10 × 8
+    ##          a      b      c       d a_rescaled b_rescaled c_rescaled d_rescaled
+    ##      <dbl>  <dbl>  <dbl>   <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
+    ##  1 -0.0550  0.825  2.52  -1.52        0.489      0.765     1           0    
+    ##  2  0.155  -0.361 -0.554 -0.190       0.565      0.486     0           0.385
+    ##  3  0.312  -1.01  -0.454  0.713       0.621      0.333     0.0327      0.646
+    ##  4 -0.0789  1.82  -0.161  0.767       0.481      1         0.128       0.662
+    ##  5  0.226   1.46   0.523  0.465       0.590      0.914     0.350       0.574
+    ##  6  0.345   0.459  0.209 -0.807       0.633      0.679     0.248       0.207
+    ##  7 -1.41    1.61  -0.277 -0.859       0          0.949     0.0900      0.191
+    ##  8  1.36    0.485  1.30  -0.0973      1          0.685     0.602       0.412
+    ##  9  0.116  -0.748  1.34   1.94        0.551      0.395     0.616       1    
+    ## 10  1.30   -2.43   0.602  0.969       0.978      0         0.376       0.720
+
+``` r
+# Multiple functions
+df |> summarize(
+  n = n(),
+  across(everything(), 
+         list(mean = ~mean(., na.rm = TRUE), 
+              median = median),
+         .names = "{.fn}_{.col}")
+)
+```
+
+    ## # A tibble: 1 × 11
+    ##       n mean_a median_a mean_b median_b mean_c median_c mean_d median_d mean_n
+    ##   <int>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>
+    ## 1    10  0.227    0.191  0.211    0.472  0.504    0.366  0.138    0.184     10
+    ## # ℹ 1 more variable: median_n <int>
+
+## Filtering with `if_any` and `if_all`
+
+``` r
+df |> filter(if_any(a:d, ~ . > 0))
+```
+
+    ## # A tibble: 10 × 4
+    ##          a      b      c       d
+    ##      <dbl>  <dbl>  <dbl>   <dbl>
+    ##  1 -0.0550  0.825  2.52  -1.52  
+    ##  2  0.155  -0.361 -0.554 -0.190 
+    ##  3  0.312  -1.01  -0.454  0.713 
+    ##  4 -0.0789  1.82  -0.161  0.767 
+    ##  5  0.226   1.46   0.523  0.465 
+    ##  6  0.345   0.459  0.209 -0.807 
+    ##  7 -1.41    1.61  -0.277 -0.859 
+    ##  8  1.36    0.485  1.30  -0.0973
+    ##  9  0.116  -0.748  1.34   1.94  
+    ## 10  1.30   -2.43   0.602  0.969
+
+``` r
+df |> filter(if_all(a:b, ~ . > 0))
+```
+
+    ## # A tibble: 3 × 4
+    ##       a     b     c       d
+    ##   <dbl> <dbl> <dbl>   <dbl>
+    ## 1 0.226 1.46  0.523  0.465 
+    ## 2 0.345 0.459 0.209 -0.807 
+    ## 3 1.36  0.485 1.30  -0.0973
+
+``` r
+# across() is equivalent to if_all but less intuitive
+df |> filter(across(a:b, ~ . > 0))
+```
+
+    ## # A tibble: 3 × 4
+    ##       a     b     c       d
+    ##   <dbl> <dbl> <dbl>   <dbl>
+    ## 1 0.226 1.46  0.523  0.465 
+    ## 2 0.345 0.459 0.209 -0.807 
+    ## 3 1.36  0.485 1.30  -0.0973
+
 <!-- * functionals instead of loops - why? -->
 <!-- * map and its versions (map2, map_df, map_dbl, pmap, ect.) -->
 <!-- * function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`) -->
 <!-- * map in mutate - when is it needed? -->
-<!-- * changing multiple variables at once with across  -->
