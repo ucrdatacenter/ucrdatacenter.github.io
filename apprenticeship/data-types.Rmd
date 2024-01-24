@@ -481,7 +481,7 @@ diamonds |>
 # Add labels with rlang::englue
 # variables in {{ }}, other arguments in { }
 histogram <- function(df, var, binwidth) {
-  label <- rlang::englue("A histogram of \{\{var\}\} with binwidth {binwidth}")
+  label <- rlang::englue("A histogram of {{var}} with binwidth {binwidth}")
   
   df |> 
     ggplot(aes(x = {{ var }})) + 
