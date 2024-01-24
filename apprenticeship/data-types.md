@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nAdvanced treatment of data types and functions in R"
 subtitle: "Spring 2024" 
-date: "Last updated: 2024-01-23"
+date: "Last updated: 2024-01-24"
 output:
   md_document:
     variant: gfm
@@ -63,41 +63,17 @@ vectors <- tibble(
 )
 
 print(vectors)
-```
 
-    ## # A tibble: 3 × 5
-    ##   logical integer numeric character_log character_num
-    ##   <lgl>     <int>   <dbl> <chr>         <chr>        
-    ## 1 TRUE          1       1 TRUE          1            
-    ## 2 FALSE         0       0 FALSE         0            
-    ## 3 NA           NA      NA <NA>          <NA>
-
-``` r
 # Logical is coerced to numeric
 class(c(vectors$logical, vectors$numeric))
-```
 
-    ## [1] "numeric"
-
-``` r
 # Logical and numeric are coerced to character
 class(c(vectors$logical, vectors$numeric, vectors$character_log, vectors$character_num))
-```
 
-    ## [1] "character"
-
-``` r
 # Logical is not numeric or character, just coercible to them
 is.numeric(vectors$logical)
-```
-
-    ## [1] FALSE
-
-``` r
 is.character(vectors$logical)
 ```
-
-    ## [1] FALSE
 
 ### Factors: coercion, levels, ordering
 
@@ -111,16 +87,7 @@ factors <- tibble(
 )
 
 print(factors)
-```
 
-    ## # A tibble: 3 × 4
-    ##   logical factor numeric_log numeric_fac
-    ##   <lgl>   <fct>        <dbl>       <dbl>
-    ## 1 TRUE    TRUE             1           2
-    ## 2 FALSE   FALSE            0           1
-    ## 3 NA      <NA>            NA          NA
-
-``` r
 # Define a character vector
 char <- c("x", "x", "x")
 
@@ -129,40 +96,15 @@ factor <- factor(char, levels = c("x", "y"))
 
 # Only factor can be coerced to numeric, not character
 as.numeric(char)
-```
-
-    ## [1] NA NA NA
-
-``` r
 as.numeric(factor)
-```
 
-    ## [1] 1 1 1
-
-``` r
 # Table counts all factor levels, even with no observations
 table(char)
-```
-
-    ## char
-    ## x 
-    ## 3
-
-``` r
 table(factor)
-```
 
-    ## factor
-    ## x y 
-    ## 3 0
-
-``` r
 # Order character vector with levels x < y
 ordered(char, levels = c("x", "y"))
 ```
-
-    ## [1] x x x
-    ## Levels: x < y
 
 ### Dates: `lubridate`
 
@@ -170,85 +112,34 @@ ordered(char, levels = c("x", "y"))
 # Create a vector of dates
 dates <- c(ymd(20201001), dmy("31082022"), Sys.Date(), today())
 dates
-```
 
-    ## [1] "2020-10-01" "2022-08-31" "2024-01-23" "2024-01-23"
-
-``` r
 # Convert dates to datetime
 as_datetime(dates)
-```
 
-    ## [1] "2020-10-01 UTC" "2022-08-31 UTC" "2024-01-23 UTC" "2024-01-23 UTC"
-
-``` r
 # Convert dates to numeric
 as.numeric(dates)
-```
 
-    ## [1] 18536 19235 19745 19745
-
-``` r
 # Reconstruct dates from numeric representation as number of days since base date (01/01/1970)
 ymd(19700101) + days(as.numeric(dates))
-```
 
-    ## [1] "2020-10-01" "2022-08-31" "2024-01-23" "2024-01-23"
-
-``` r
 # Get current date and time
 now()
-```
 
-    ## [1] "2024-01-23 17:37:41 CET"
-
-``` r
 # Convert decimal years to date
 date_decimal(c(1990, 1990.1, 1990.5))
-```
 
-    ## [1] "1990-01-01 00:00:00 UTC" "1990-02-06 11:59:59 UTC"
-    ## [3] "1990-07-02 12:00:00 UTC"
-
-``` r
 # Extract year, quarter, and week from dates
 year(dates)
-```
-
-    ## [1] 2020 2022 2024 2024
-
-``` r
 quarter(dates)
-```
-
-    ## [1] 4 3 1 1
-
-``` r
 week(dates)
-```
 
-    ## [1] 40 35  4  4
-
-``` r
 # Difference between time and difftime
 dates + months(1)
-```
-
-    ## [1] "2020-11-01" NA           "2024-02-23" "2024-02-23"
-
-``` r
 dates + dmonths(1)
-```
 
-    ## [1] "2020-10-31 10:30:00 UTC" "2022-09-30 10:30:00 UTC"
-    ## [3] "2024-02-22 10:30:00 UTC" "2024-02-22 10:30:00 UTC"
-
-``` r
 # Round down dates to nearest day 
 floor_date(dates + dmonths(1), unit = "day")
 ```
-
-    ## [1] "2020-10-31 UTC" "2022-09-30 UTC" "2024-02-22 UTC" "2024-02-22 UTC"
 
 ### Vector attributes
 
@@ -261,15 +152,7 @@ attr(v, "other_attribute") <- "x"
 
 # Display attributes of 'v'
 attributes(v)
-```
 
-    ## $names
-    ## [1] "a" "b" "c"
-    ## 
-    ## $other_attribute
-    ## [1] "x"
-
-``` r
 # Change names of 'v'
 names(v) <- c("a1", "b1", "c1")
 v <- setNames(v, c("a2", "b2", "c2"))
@@ -277,28 +160,15 @@ v <- setNames(v, c("a2", "b2", "c2"))
 # Convert 'v' to a dataframe and add row names as a column
 # Note: as_tibble() loses rownames
 as.data.frame(v) |> rownames_to_column()
-```
 
-    ##   rowname v
-    ## 1      a2 1
-    ## 2      b2 2
-    ## 3      c2 3
-
-``` r
 # Get dimensions of 'v'
 # vectors always have NULL dimension
 dim(v)
-```
 
-    ## NULL
-
-``` r
 # Get dimensions of 'v' as a matrix 
 # matrices have two dimensions (rows x columns)
 dim(as.matrix(v))
 ```
-
-    ## [1] 3 1
 
 ### NA, NULL, NaN
 
@@ -310,55 +180,18 @@ na <- c(NA, NA_integer_, NA_real_, NaN, NULL)
 
 # NULL does not contribute to vector length/content
 length(na)
-```
-
-    ## [1] 4
-
-``` r
 # NA, NaN are all NA, but only NaN is NaN
 is.na(na)
-```
-
-    ## [1] TRUE TRUE TRUE TRUE
-
-``` r
 is.nan(na)
-```
-
-    ## [1] FALSE FALSE FALSE  TRUE
-
-``` r
 # object is NULL if it only contains NULL
 is.null(na)
-```
 
-    ## [1] FALSE
-
-``` r
 # NA and NaN create an observation
 tibble(x = NA)
-```
-
-    ## # A tibble: 1 × 1
-    ##   x    
-    ##   <lgl>
-    ## 1 NA
-
-``` r
 tibble(x = NaN)
-```
-
-    ## # A tibble: 1 × 1
-    ##       x
-    ##   <dbl>
-    ## 1   NaN
-
-``` r
 # NULL creates tibble with 0 rows, 0 columns
 tibble(x = NULL)
 ```
-
-    ## # A tibble: 0 × 0
 
 ## Lists
 
@@ -374,148 +207,19 @@ l <- list(
 
 # Access elements of 'l' using different methods
 l[1]
-```
-
-    ## [[1]]
-    ## [1] 1 2 3
-
-``` r
 l[[1]]
-```
-
-    ## [1] 1 2 3
-
-``` r
 l$x
-```
-
-    ## # A tibble: 2 × 2
-    ##       y     z
-    ##   <dbl> <dbl>
-    ## 1   2.3     5
-    ## 2   5.9     6
-
-``` r
 l$x$y
-```
-
-    ## [1] 2.3 5.9
-
-``` r
 l["l1"]
-```
-
-    ## $l1
-    ## $l1$l2
-    ## $l1$l2[[1]]
-    ## [1] 1
-    ## 
-    ## $l1$l2[[2]]
-    ## [1] 2
-    ## 
-    ## $l1$l2[[3]]
-    ## [1] 3
-    ## 
-    ## 
-    ## $l1$l3
-    ## $l1$l3[[1]]
-    ## [1] 4
-    ## 
-    ## $l1$l3[[2]]
-    ## [1] 5
-
-``` r
 l[["l1"]]
-```
-
-    ## $l2
-    ## $l2[[1]]
-    ## [1] 1
-    ## 
-    ## $l2[[2]]
-    ## [1] 2
-    ## 
-    ## $l2[[3]]
-    ## [1] 3
-    ## 
-    ## 
-    ## $l3
-    ## $l3[[1]]
-    ## [1] 4
-    ## 
-    ## $l3[[2]]
-    ## [1] 5
-
-``` r
 l$l1
-```
-
-    ## $l2
-    ## $l2[[1]]
-    ## [1] 1
-    ## 
-    ## $l2[[2]]
-    ## [1] 2
-    ## 
-    ## $l2[[3]]
-    ## [1] 3
-    ## 
-    ## 
-    ## $l3
-    ## $l3[[1]]
-    ## [1] 4
-    ## 
-    ## $l3[[2]]
-    ## [1] 5
-
-``` r
 l$l1$l2
-```
-
-    ## [[1]]
-    ## [1] 1
-    ## 
-    ## [[2]]
-    ## [1] 2
-    ## 
-    ## [[3]]
-    ## [1] 3
-
-``` r
 l$l1[["l2"]]
-```
-
-    ## [[1]]
-    ## [1] 1
-    ## 
-    ## [[2]]
-    ## [1] 2
-    ## 
-    ## [[3]]
-    ## [1] 3
-
-``` r
 l$l1[[1]]
-```
 
-    ## [[1]]
-    ## [1] 1
-    ## 
-    ## [[2]]
-    ## [1] 2
-    ## 
-    ## [[3]]
-    ## [1] 3
-
-``` r
 # convert list to a single vector (character, due to coercion)
 unlist(l)
 ```
-
-    ##                                                    x.y1    x.y2    x.z1    x.z2 
-    ##     "1"     "2"     "3"     "a"  "TRUE" "FALSE"   "2.3"   "5.9"     "5"     "6" 
-    ##  l1.l21  l1.l22  l1.l23  l1.l31  l1.l32 
-    ##     "1"     "2"     "3"     "4"     "5"
 
 ## Data frames and tibbles
 
@@ -526,58 +230,18 @@ tbl <- tibble(x = 1:3, y = letters[1:3])
 
 # Compare attributes of 'df' and 'tbl'
 attributes(df)
-```
-
-    ## $names
-    ## [1] "x" "y"
-    ## 
-    ## $class
-    ## [1] "data.frame"
-    ## 
-    ## $row.names
-    ## [1] 1 2 3
-
-``` r
 attributes(tbl)
-```
 
-    ## $class
-    ## [1] "tbl_df"     "tbl"        "data.frame"
-    ## 
-    ## $row.names
-    ## [1] 1 2 3
-    ## 
-    ## $names
-    ## [1] "x" "y"
-
-``` r
 # Get number of rows and columns of 'df'
 nrow(df)
-```
-
-    ## [1] 3
-
-``` r
 ncol(df)
-```
 
-    ## [1] 2
-
-``` r
 # Get dimensions of 'df'
 dim(df)
-```
 
-    ## [1] 3 2
-
-``` r
 # Get names of 'df'
 names(df)
-```
 
-    ## [1] "x" "y"
-
-``` r
 # Create a complex tibble 
 d <- tibble("1 problematic variable name" = 1:3, 
             y = letters[1:3], 
@@ -588,176 +252,33 @@ d <- tibble("1 problematic variable name" = 1:3,
 
 # Select a variable; result: tibble
 select(d, y)
-```
-
-    ## # A tibble: 3 × 1
-    ##   y    
-    ##   <chr>
-    ## 1 a    
-    ## 2 b    
-    ## 3 c
-
-``` r
 d[ , "y"]
-```
-
-    ## # A tibble: 3 × 1
-    ##   y    
-    ##   <chr>
-    ## 1 a    
-    ## 2 b    
-    ## 3 c
-
-``` r
 d[ , 2]
-```
 
-    ## # A tibble: 3 × 1
-    ##   y    
-    ##   <chr>
-    ## 1 a    
-    ## 2 b    
-    ## 3 c
-
-``` r
 # Pull a variable; result: vector
 pull(d, y)
-```
-
-    ## [1] "a" "b" "c"
-
-``` r
 d$y
-```
-
-    ## [1] "a" "b" "c"
-
-``` r
 d[["y"]]
-```
-
-    ## [1] "a" "b" "c"
-
-``` r
 d[[2]]
-```
 
-    ## [1] "a" "b" "c"
-
-``` r
 # Use backquotes for problematic names
 select(d, `1 problematic variable name`)
-```
-
-    ## # A tibble: 3 × 1
-    ##   `1 problematic variable name`
-    ##                           <int>
-    ## 1                             1
-    ## 2                             2
-    ## 3                             3
-
-``` r
 d[ , "1 problematic variable name"]
-```
-
-    ## # A tibble: 3 × 1
-    ##   `1 problematic variable name`
-    ##                           <int>
-    ## 1                             1
-    ## 2                             2
-    ## 3                             3
-
-``` r
 d[ , 1]
-```
 
-    ## # A tibble: 3 × 1
-    ##   `1 problematic variable name`
-    ##                           <int>
-    ## 1                             1
-    ## 2                             2
-    ## 3                             3
-
-``` r
 pull(d, `1 problematic variable name`)
-```
-
-    ## [1] 1 2 3
-
-``` r
 d$`1 problematic variable name`
-```
-
-    ## [1] 1 2 3
-
-``` r
 d[["1 problematic variable name"]]
-```
-
-    ## [1] 1 2 3
-
-``` r
 d[[1]]
-```
 
-    ## [1] 1 2 3
-
-``` r
 # Select all variables containing a single lowercase letter
 select(d, matches("^[a-z]$"))
-```
-
-    ## # A tibble: 3 × 2
-    ##   y     z        
-    ##   <chr> <list>   
-    ## 1 a     <int [3]>
-    ## 2 b     <int [3]>
-    ## 3 c     <int [3]>
-
-``` r
 # Select which rows and columns to keep
 d[2:3, c(1, 3)]
-```
 
-    ## # A tibble: 2 × 2
-    ##   `1 problematic variable name` z        
-    ##                           <int> <list>   
-    ## 1                             2 <int [3]>
-    ## 2                             3 <int [3]>
-
-``` r
 # Unnest 'z' and 'tib' from 'd'
 d |> unnest(z)
-```
-
-    ## # A tibble: 9 × 4
-    ##   `1 problematic variable name` y         z tib             
-    ##                           <int> <chr> <int> <list>          
-    ## 1                             1 a         1 <tibble [2 × 2]>
-    ## 2                             1 a         2 <tibble [2 × 2]>
-    ## 3                             1 a         3 <tibble [2 × 2]>
-    ## 4                             2 b         4 <tibble [2 × 2]>
-    ## 5                             2 b         5 <tibble [2 × 2]>
-    ## 6                             2 b         6 <tibble [2 × 2]>
-    ## 7                             3 c         7 <tibble [2 × 2]>
-    ## 8                             3 c         8 <tibble [2 × 2]>
-    ## 9                             3 c         9 <tibble [2 × 2]>
-
-``` r
 d |> unnest(tib)
-```
-
-    ## # A tibble: 6 × 5
-    ##   `1 problematic variable name` y     z            x1 y1   
-    ##                           <int> <chr> <list>    <int> <chr>
-    ## 1                             1 a     <int [3]>     1 a    
-    ## 2                             1 a     <int [3]>     2 b    
-    ## 3                             2 b     <int [3]>     3 c    
-    ## 4                             2 b     <int [3]>     4 d    
-    ## 5                             3 c     <int [3]>     5 e    
-    ## 6                             3 c     <int [3]>     6 f
-
-``` r
 # Default unnest behavior: unnest all list columns (but length mismatch error)
 # d |> unnest()
 ```
@@ -775,15 +296,7 @@ Functions)
 ``` r
 # Access function definition
 sd
-```
 
-    ## function (x, na.rm = FALSE) 
-    ## sqrt(var(if (is.vector(x) || is.factor(x)) x else as.double(x), 
-    ##     na.rm = na.rm))
-    ## <bytecode: 0x000001c1b973c570>
-    ## <environment: namespace:stats>
-
-``` r
 # Defining a simple function: rescale a vector so that all elements are between 0 and 1
 rescale01 <- function(x) {
   (x - min(x)) / (max(x) - min(x))
@@ -791,11 +304,7 @@ rescale01 <- function(x) {
 
 # Use function defined in global environment
 rescale01(x = c(1, 4, 5, 8, 10))
-```
 
-    ## [1] 0.0000000 0.3333333 0.4444444 0.7777778 1.0000000
-
-``` r
 # For short functions, use one line and omit the braces
 rescale01 <- function(x) (x - min(x)) / (max(x) - min(x))
 ```
@@ -816,59 +325,22 @@ rescale01 <- function(x = 1:10) {
 }
 
 rescale01()
-```
-
-    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
-    ##  [8] 0.7777778 0.8888889 1.0000000
-
-``` r
 rescale01(1:10)
-```
-
-    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
-    ##  [8] 0.7777778 0.8888889 1.0000000
-
-``` r
 rescale01(x = 1:10)
-```
 
-    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
-    ##  [8] 0.7777778 0.8888889 1.0000000
-
-``` r
 # ... argument
 commas <- function(...) paste(..., collapse = ", ")
 commas(letters[1:10])
-```
 
-    ## [1] "a, b, c, d, e, f, g, h, i, j"
-
-``` r
 # Unexpected results in logical statements
 names <- tibble(id = 1:3, name = LETTERS[1:3])
 
 filter_name <- function(data, name) filter(data, name == name)
 filter_name(names, name = "B")
-```
 
-    ## # A tibble: 3 × 2
-    ##      id name 
-    ##   <int> <chr>
-    ## 1     1 A    
-    ## 2     2 B    
-    ## 3     3 C
-
-``` r
 filter_name <- function(data, n) filter(data, name == n)
 filter_name(names, n = "B")
-```
 
-    ## # A tibble: 1 × 2
-    ##      id name 
-    ##   <int> <chr>
-    ## 1     2 B
-
-``` r
 # Return values with and without return statement
 rescale01 <- function(x) {
   (x - min(x)) / (max(x) - min(x))
@@ -901,20 +373,10 @@ rescale01 <- function(x) {
 
 # Access elements of list return
 rescale01(1:10)$original_minimum
-```
-
-    ## [1] 1
-
-``` r
 # better method for computation efficiency
 res <- rescale01(1:10)
 res$x
-```
 
-    ##  [1] 0.0000000 0.1111111 0.2222222 0.3333333 0.4444444 0.5555556 0.6666667
-    ##  [8] 0.7777778 0.8888889 1.0000000
-
-``` r
 # Invisible returns: return object without displaying it
 show_missings <- function(df) {
   n <- sum(is.na(df))
@@ -929,9 +391,6 @@ tibble(x = rep(c(1, 2, NA), times = 4),
   drop_na() |> 
   show_missings()
 ```
-
-    ## Missing values: 4
-    ## Missing values: 0
 
 ## Tidy functions: pipes, tidy evaluation
 
@@ -951,23 +410,7 @@ tibble(x = 1:10,
        y = paste0("test", x)) |> 
   mutate(z_score = z_score(x),
          y_upper = first_upper(y))
-```
 
-    ## # A tibble: 10 × 4
-    ##        x y      z_score y_upper
-    ##    <int> <chr>    <dbl> <chr>  
-    ##  1     1 test1   -1.49  Test1  
-    ##  2     2 test2   -1.16  Test2  
-    ##  3     3 test3   -0.826 Test3  
-    ##  4     4 test4   -0.495 Test4  
-    ##  5     5 test5   -0.165 Test5  
-    ##  6     6 test6    0.165 Test6  
-    ##  7     7 test7    0.495 Test7  
-    ##  8     8 test8    0.826 Test8  
-    ##  9     9 test9    1.16  Test9  
-    ## 10    10 test10   1.49  Test10
-
-``` r
 ## Summarize functions
 # input: one vector; output: one value
 n_missing <- function(x) {
@@ -982,14 +425,7 @@ tibble(x = rep(c(1, 2, NA), times = 4),
        y = letters[1:12]) |> 
   summarize(x_missing = n_missing(x),
             y = commas(y))
-```
 
-    ## # A tibble: 1 × 2
-    ##   x_missing y                                    
-    ##       <int> <chr>                                
-    ## 1         4 a, b, c, d, e, f, g, h, i, j, k and l
-
-``` r
 tibble(x = rep(c(1, 2, NA), times = 4),
        y = letters[1:12],
        group = rep(1:2, each = 6)) |> 
@@ -997,12 +433,6 @@ tibble(x = rep(c(1, 2, NA), times = 4),
   summarize(x_missing = n_missing(x),
             y = commas(y))
 ```
-
-    ## # A tibble: 2 × 3
-    ##   group x_missing y                  
-    ##   <int>     <int> <chr>              
-    ## 1     1         2 a, b, c, d, e and f
-    ## 2     2         2 g, h, i, j, k and l
 
 Dataframe functions can be embedded into pipe workflows of data
 wrangling: input and output are both dataframes, so you can take
@@ -1049,15 +479,7 @@ grouped_mean <- function(df, group_var, mean_var) {
 tibble(x = 1:20,
        group = rep(1:2, each = 10)) |> 
   grouped_mean(group_var = group, mean_var = x)
-```
 
-    ## # A tibble: 2 × 2
-    ##   group `mean(x)`
-    ##   <int>     <dbl>
-    ## 1     1       5.5
-    ## 2     2      15.5
-
-``` r
 # More examples
 count_prop <- function(df, var, sort = FALSE) {
   df |>
@@ -1066,21 +488,7 @@ count_prop <- function(df, var, sort = FALSE) {
 }
 
 diamonds |> count_prop(clarity)
-```
 
-    ## # A tibble: 8 × 3
-    ##   clarity     n   prop
-    ##   <ord>   <int>  <dbl>
-    ## 1 I1        741 0.0137
-    ## 2 SI2      9194 0.170 
-    ## 3 SI1     13065 0.242 
-    ## 4 VS2     12258 0.227 
-    ## 5 VS1      8171 0.151 
-    ## 6 VVS2     5066 0.0939
-    ## 7 VVS1     3655 0.0678
-    ## 8 IF       1790 0.0332
-
-``` r
 unique_where <- function(df, condition, var) {
   df |> 
     filter({{ condition }}) |> 
@@ -1090,17 +498,6 @@ unique_where <- function(df, condition, var) {
 
 diamonds |> unique_where(cut == "Ideal", color)
 ```
-
-    ## # A tibble: 7 × 1
-    ##   color
-    ##   <ord>
-    ## 1 D    
-    ## 2 E    
-    ## 3 F    
-    ## 4 G    
-    ## 5 H    
-    ## 6 I    
-    ## 7 J
 
 ``` r
 ## Plot functions
@@ -1199,11 +596,7 @@ f <- function(x) {
 
 y <- 5
 f(2)
-```
 
-    ## [1] 7
-
-``` r
 ## Functions defined inside the function don't exist outside the function
 f <- function(x) {
   res <- x + y
@@ -1213,8 +606,6 @@ f <- function(x) {
 y <- 5
 f(2)
 ```
-
-    ## [1] 7
 
 ``` r
 res
@@ -1228,9 +619,104 @@ Functionals).
 
 ## Why should you use functionals?
 
+``` r
+# Most R functions are vectorized
+
+# Other languages:
+results <- NULL
+for (i in 1:3) {
+  results[i] <- paste("result", i)
+}
+
+# R: vectorized function
+results <- paste("result", 1:3)
+
+# Vectorized functions don't always give expected results
+x <- rnorm(10)
+mean(x, trim = c(0, 0.1, 0.2, 0.5))
+
+# To get a list of means with different trim values, iterate explicitly
+
+# One approach: for-loop
+means <- NULL; i <- 1
+for (t in c(0, 0.1, 0.2, 0.5)) {
+  means[i] <- mean(x, trim = t)
+  i <- i + 1
+}
+
+# Other approach: map()
+means <- map(c(0, 0.1, 0.2, 0.5), ~mean(x, trim = .x))
+```
+
 ## `map()` and its versions
 
+``` r
+# map() iterates over one vector, gives list
+map(c(0, 0.1, 0.2, 0.5), ~mean(x, trim = .x))
+
+# map_dbl/chr/df/etc. gives specified output type (if possible)
+map_dbl(c(0, 0.1, 0.2, 0.5), ~mean(x, trim = .x))
+map_chr(c(0, 0.1, 0.2, 0.5), ~mean(x, trim = .x))
+map_df(c(0, 0.1, 0.2, 0.5), ~tibble(trim = .x,
+                                    trimmed_mean = mean(x, trim = .x)))
+
+# map2() family iterates over 2 vectors
+n <- c(10, 50, 100, 500)
+trims <- c(0, 0.1, 0.2, 0.5)
+map2_df(n, trims, ~tibble(n = .x,
+                          trim = .y,
+                          trimmed_mean = mean(rnorm(.x), trim = .y)))
+
+# pmap() family iterates over n vectors (parallel)
+n <- c(10, 50, 100, 500)
+means <- c(0, 1, 2, 5)
+trims <- c(0, 0.1, 0.2, 0.5)
+pmap_df(list(n, means, trims), 
+        ~tibble(n = ..1,
+                mean = ..2,
+                trim = ..3,
+                trimmed_mean = mean(rnorm(..1, mean = ..2), trim = ..3)))
+
+# Or use reference names with a named list
+pmap_df(list(n = n, means = means, trims = trims), 
+        function (n, means, trims) tibble(
+          n = n,
+          mean = means,
+          trim = trims,
+          trimmed_mean = mean(rnorm(n, mean = means), trim = trims)))
+
+# Iterate over a tibble rather than a list
+params <- tribble(
+  ~ n, ~ min, ~ max,
+   1,     0,     1,
+   2,    10,   100,
+   3,   100,  1000
+)
+pmap(params, runif)
+```
+
 ## Functionals in tidy data wrangling
+
+``` r
+# Compare methods:
+
+# Draws one random number with mean 0, recycles
+tibble(true_mean = 0:5) |> 
+  mutate(sample = rnorm(1, mean = true_mean))
+
+# Draws one random number per mean
+tibble(true_mean = 0:5) |> 
+  mutate(sample = map_dbl(true_mean, ~rnorm(1, mean = .x)))
+
+# Draws 5 random numbers per mean, creates list column
+tibble(true_mean = 0:5) |> 
+  mutate(sample = map(true_mean, ~rnorm(5, mean = .x))) |> 
+  unnest()
+
+# Without map(): error
+tibble(true_mean = 0:5) |> 
+  mutate(sample = rnorm(5, mean = true_mean))
+```
 
 ## Applying methods to multiple variables with `across()`
 
@@ -1249,40 +735,19 @@ df |> summarize(
   c = median(c),
   d = median(d)
 )
-```
 
-    ## # A tibble: 1 × 5
-    ##       n      a     b      c     d
-    ##   <int>  <dbl> <dbl>  <dbl> <dbl>
-    ## 1    10 -0.131 0.353 -0.345 0.412
-
-``` r
 # Get column medians for columns a to d
 df |> summarize(
   n = n(),
   across(a:d, median)
 )
-```
 
-    ## # A tibble: 1 × 5
-    ##       n      a     b      c     d
-    ##   <int>  <dbl> <dbl>  <dbl> <dbl>
-    ## 1    10 -0.131 0.353 -0.345 0.412
-
-``` r
 # Get column medians for all columns
 df |> summarize(
   n = n(),
   across(everything(), median)
 )
-```
 
-    ## # A tibble: 1 × 5
-    ##       n      a     b      c     d
-    ##   <int>  <dbl> <dbl>  <dbl> <dbl>
-    ## 1    10 -0.131 0.353 -0.345 0.412
-
-``` r
 # Other variable list specifications:
 
 # starts_with("s") # equivalent to regex "^s.*"
@@ -1297,54 +762,15 @@ df |> summarize(
   n = n(),
   across(everything(), ~mean(., na.rm = TRUE))
 )
-```
 
-    ## # A tibble: 1 × 5
-    ##       n      a     b      c     d
-    ##   <dbl>  <dbl> <dbl>  <dbl> <dbl>
-    ## 1    10 0.0996 0.218 -0.421 0.192
-
-``` r
 # More complex functions, overwrite existing variable
 df |> 
   mutate(across(everything(), ~ (. - min(.)) / (max(.) - min(.))))
-```
 
-    ## # A tibble: 10 × 4
-    ##        a      b     c     d
-    ##    <dbl>  <dbl> <dbl> <dbl>
-    ##  1 1     0.705  0.649 0.575
-    ##  2 0.548 0.599  1     0.693
-    ##  3 0.124 0      0.566 0.746
-    ##  4 0.197 0.0176 0.883 0.673
-    ##  5 0.701 0.277  0     0.305
-    ##  6 0.348 0.911  0.731 1    
-    ##  7 0     1      0.514 0.560
-    ##  8 0.295 0.614  0.158 0.772
-    ##  9 0.197 0.624  0.504 0.928
-    ## 10 0.214 0.505  0.611 0
-
-``` r
 # More complex functions, create new variable
 df |> 
   mutate(across(everything(), list(rescaled = ~ (. - min(.)) / (max(.) - min(.)))))
-```
 
-    ## # A tibble: 10 × 8
-    ##          a      b       c        d a_rescaled b_rescaled c_rescaled d_rescaled
-    ##      <dbl>  <dbl>   <dbl>    <dbl>      <dbl>      <dbl>      <dbl>      <dbl>
-    ##  1  1.46    0.516 -0.169   0.00104      1         0.705       0.649      0.575
-    ##  2  0.496   0.341  0.838   0.449        0.548     0.599       1          0.693
-    ##  3 -0.411  -0.656 -0.409   0.650        0.124     0           0.566      0.746
-    ##  4 -0.255  -0.627  0.503   0.376        0.197     0.0176      0.883      0.673
-    ##  5  0.825  -0.196 -2.03   -1.03         0.701     0.277       0          0.305
-    ##  6  0.0693  0.859  0.0643  1.62         0.348     0.911       0.731      1    
-    ##  7 -0.676   1.01  -0.557  -0.0579       0         1           0.514      0.560
-    ##  8 -0.0439  0.365 -1.58    0.752        0.295     0.614       0.158      0.772
-    ##  9 -0.255   0.382 -0.587   1.35         0.197     0.624       0.504      0.928
-    ## 10 -0.219   0.185 -0.280  -2.19         0.214     0.505       0.611      0
-
-``` r
 # Multiple functions
 df |> summarize(
   n = n(),
@@ -1355,56 +781,12 @@ df |> summarize(
 )
 ```
 
-    ## # A tibble: 1 × 11
-    ##       n mean_a median_a mean_b median_b mean_c median_c mean_d median_d mean_n
-    ##   <int>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>    <dbl>  <dbl>
-    ## 1    10 0.0996   -0.131  0.218    0.353 -0.421   -0.345  0.192    0.412     10
-    ## # ℹ 1 more variable: median_n <int>
-
 ## Filtering with `if_any` and `if_all`
 
 ``` r
 df |> filter(if_any(a:d, ~ . > 0))
-```
-
-    ## # A tibble: 10 × 4
-    ##          a      b       c        d
-    ##      <dbl>  <dbl>   <dbl>    <dbl>
-    ##  1  1.46    0.516 -0.169   0.00104
-    ##  2  0.496   0.341  0.838   0.449  
-    ##  3 -0.411  -0.656 -0.409   0.650  
-    ##  4 -0.255  -0.627  0.503   0.376  
-    ##  5  0.825  -0.196 -2.03   -1.03   
-    ##  6  0.0693  0.859  0.0643  1.62   
-    ##  7 -0.676   1.01  -0.557  -0.0579 
-    ##  8 -0.0439  0.365 -1.58    0.752  
-    ##  9 -0.255   0.382 -0.587   1.35   
-    ## 10 -0.219   0.185 -0.280  -2.19
-
-``` r
 df |> filter(if_all(a:b, ~ . > 0))
-```
 
-    ## # A tibble: 3 × 4
-    ##        a     b       c       d
-    ##    <dbl> <dbl>   <dbl>   <dbl>
-    ## 1 1.46   0.516 -0.169  0.00104
-    ## 2 0.496  0.341  0.838  0.449  
-    ## 3 0.0693 0.859  0.0643 1.62
-
-``` r
 # across() is equivalent to if_all but less intuitive
 df |> filter(across(a:b, ~ . > 0))
 ```
-
-    ## # A tibble: 3 × 4
-    ##        a     b       c       d
-    ##    <dbl> <dbl>   <dbl>   <dbl>
-    ## 1 1.46   0.516 -0.169  0.00104
-    ## 2 0.496  0.341  0.838  0.449  
-    ## 3 0.0693 0.859  0.0643 1.62
-
-<!-- * functionals instead of loops - why? -->
-<!-- * map and its versions (map2, map_df, map_dbl, pmap, ect.) -->
-<!-- * function specification: function name or syntax with `~` and `.x`/`.y`(/position/name with `pmap`) -->
-<!-- * map in mutate - when is it needed? -->
