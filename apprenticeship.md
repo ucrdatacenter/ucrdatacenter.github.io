@@ -57,20 +57,17 @@ Center that you may find helpful when working on your project:
 
 # Posters
 
-- Farkhunda Ayobi – Data encounter in pre-med: How do mutations in
-  viruses affect their interactions with HLA? –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_BIOM.pdf)
-- Catalina Caradja – Data encounter in economics: Exploring the effects
+- Farkhunda Ayobi – [Data encounter in pre-med: How do mutations in
+  viruses affect their interactions with
+  HLA?](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_BIOM.pdf)
+- Catalina Caradja – [Data encounter in economics: Exploring the effects
   of mergers and acquisitions on tech industry stock prices: an event
-  study –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ECON.pdf)
-- Koen Denekamp – Data encounter in archeology: Archeological data
-  science –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ANTQ.pdf)
-- Stavroula Iliadi – Track and course planner for (incoming) UCR
-  students –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_coursebuilder.pdf)
-- Vayona Narekuli – Darkness areas in the Netherlands –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_darkareas.pdf)
-- Natalia Serra Antonucci – Major choosing app –
-  [poster](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_majorquiz.pdf)
+  study](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ECON.pdf)
+- Koen Denekamp – [Data encounter in archeology: Archeological data
+  science](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ANTQ.pdf)
+- Stavroula Iliadi – [Track and course planner for (incoming) UCR
+  students](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_coursebuilder.pdf)
+- Vayona Narekuli – [Darkness areas in the
+  Netherlands](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_darkareas.pdf)
+- Natalia Serra Antonucci – [Major choosing
+  app](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_majorquiz.pdf)
