@@ -8,6 +8,29 @@ output:
     preserve_yaml: true
 ---
 
+# Posters
+
+The apprentices have completed their projects and presented their work
+in a poster session on 26 January 2024. These are the posters they have
+created, showcasing their progress:
+
+- Farkhunda Ayobi – [Data encounter in pre-med: How do mutations in
+  viruses affect their interactions with
+  HLA?](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_BIOM.pdf)
+- Catalina Caradja – [Data encounter in economics: Exploring the effects
+  of mergers and acquisitions on tech industry stock prices: an event
+  study](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ECON.pdf)
+- Koen Denekamp – [Data encounter in archeology: Archeological data
+  science](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ANTQ.pdf)
+- Stavroula Iliadi – [Track and course planner for (incoming) UCR
+  students](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_coursebuilder.pdf)
+- Vayona Narekuli – [Darkness areas in the
+  Netherlands](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_darkareas.pdf)
+- Natalia Serra Antonucci – [Major choosing
+  app](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_majorquiz.pdf)
+
+------------------------------------------------------------------------
+
 # Introduction
 
 This page collects all materials related to the 2024 Data Center
@@ -54,20 +77,3 @@ Center that you may find helpful when working on your project:
 
 - [Basic data wrangling and visualization in R](../tutorial/links)
 - [Useful data sources by discipline](../tutorial/data)
-
-# Posters
-
-- Farkhunda Ayobi – [Data encounter in pre-med: How do mutations in
-  viruses affect their interactions with
-  HLA?](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_BIOM.pdf)
-- Catalina Caradja – [Data encounter in economics: Exploring the effects
-  of mergers and acquisitions on tech industry stock prices: an event
-  study](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ECON.pdf)
-- Koen Denekamp – [Data encounter in archeology: Archeological data
-  science](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_ANTQ.pdf)
-- Stavroula Iliadi – [Track and course planner for (incoming) UCR
-  students](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_coursebuilder.pdf)
-- Vayona Narekuli – [Darkness areas in the
-  Netherlands](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_darkareas.pdf)
-- Natalia Serra Antonucci – [Major choosing
-  app](https://github.com/ucrdatacenter/projects/blob/main/apprenticeship/posters/poster_majorquiz.pdf)
