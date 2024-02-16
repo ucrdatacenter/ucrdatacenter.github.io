@@ -1,7 +1,7 @@
 ---
 layour: page
 title: "Useful links"
-date: "Last updated: 2024-01-02"
+date: "Last updated: 2024-02-16"
 output:
   md_document:
     variant: gfm
@@ -108,3 +108,20 @@ on the Tutorials page and the individual course pages).
   joins](https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)
 - [More on join functions
   (video)](https://www.youtube.com/watch?v=Yg-pNqzDuN4)
+
+# Geospatial data
+
+- Cornell University Computing for Information Science materials:
+
+  - [Introduction to geospatial
+    visualization](https://info5940.infosci.cornell.edu/notes/geoviz/intro-geospatial-viz/)
+  - [Drawing raster maps with
+    ggmap](https://info5940.infosci.cornell.edu/notes/geoviz/raster-maps-with-ggmap/)
+  - [Practice drawing raster
+    maps](https://info5940.infosci.cornell.edu/notes/geoviz/raster-maps-practice/)
+  - [Importing spatial data files using
+    sf](https://info5940.infosci.cornell.edu/notes/geoviz/simple-features/)
+  - [Drawing vector maps with simple features and
+    ggplot2](https://info5940.infosci.cornell.edu/notes/geoviz/vector-maps/)
+  - [Practice drawing vector
+    maps](https://info5940.infosci.cornell.edu/notes/geoviz/vector-maps-practice/)
