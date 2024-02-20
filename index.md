@@ -41,7 +41,7 @@ collection of useful data sources [here](tutorial).
 
 ## Ongoing courses
 
-- [Data Center Apprenticeship](apprenticeship)
+- [SCIBIOM303 - Mechanisms of Disease](SCIBIOM303)
 - [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
 
 ## Past courses
