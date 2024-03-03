@@ -60,6 +60,7 @@ collection of useful data sources [here](tutorial).
 
 ## Ongoing courses
 
+- [AH-ANTQ103 - Introduction to Archeology](AH-ANTQ103)
 - [SCIBIOM303 - Mechanisms of Disease](SCIBIOM303)
 - [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
 
