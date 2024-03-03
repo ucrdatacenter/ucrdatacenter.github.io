@@ -380,7 +380,7 @@ ggplot(data = plat_area_data) +
   theme_classic(base_size = 14)
 ```
 
-## Assignment 2
+### Assignment 2
 Create the plot below of the most common colours. You will need to perform some data manipulation first.
 
 ```{r assignment_2, echo = FALSE, warning=FALSE}
@@ -398,7 +398,7 @@ ggplot(data = colour_count) +
   theme_classic(base_size = 14) 
 ```
 
-## Assignment 3
+### Assignment 3
 What is the most common term in the dataset? Create a tibble that contains the term and the number of times it occurs.
 
 

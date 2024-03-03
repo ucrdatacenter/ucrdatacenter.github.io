@@ -12,8 +12,8 @@ output:
 
 - [Homework assignments](#homework-assignments)
   - [Assignment 1](#assignment-1)
-- [Assignment 2](#assignment-2)
-- [Assignment 3](#assignment-3)
+  - [Assignment 2](#assignment-2)
+  - [Assignment 3](#assignment-3)
 
 In this workshop, we will expand on some of the basic functions, use
 tidyverse more and introduce some archaeology specific functions. It
@@ -585,14 +585,14 @@ workshop.
 
 ![](workshop2_files/figure-gfm/assignment_1-1.png)<!-- -->
 
-## Assignment 2
+### Assignment 2
 
 Create the plot below of the most common colours. You will need to
 perform some data manipulation first.
 
 ![](workshop2_files/figure-gfm/assignment_2-1.png)<!-- -->
 
-## Assignment 3
+### Assignment 3
 
 What is the most common term in the dataset? Create a tibble that
 contains the term and the number of times it occurs.
