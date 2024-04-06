@@ -30,3 +30,7 @@ You can also access the related files (data and R scripts) directly on [GitHub](
 # Workshop 3
 
 [Link](workshop3) to the workshop page.
+
+# Example of what you will learn
+
+![](AH-ANTQ103/workshop3_files/figure-gfm/plot_3-1.png)

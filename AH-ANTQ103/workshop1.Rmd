@@ -51,53 +51,6 @@ x / y
 x ^ y
 ```
 
-R can also be used to assign values to vectors. Try the following operations. These vectors should be added to the environment pane (On the right)
-Assign the values 1, 2, 3, 4, 5 to the vector x.
-
-```{r vectors, eval=FALSE}
-x <- c(1, 2, 3, 4, 5)
-```
-
-An alternative way to create this vector is to use the colon operator, which creates a sequence of consecutive numbers.
-
-```{r vectors2, eval=FALSE}
-x <- 1:5
-```
-
-Assign the values 6, 7, 8, 9, 10 to the vector y.
-
-```{r vectors3, eval=FALSE}
-y <- c(6, 7, 8, 9, 10)
-y <- 6:10
-```
-
-We can now use these vectors in calculations. Try the following operations. 
-
-```{r vectors4, eval=FALSE}
-x + y
-x - y
-x * y
-x / y
-x ^ y
-```
-
-Now we create a vector with a different length. Note that R will give a warning, but it will still perform the operation, reusing the values in the shorter vector.
-
-```{r vectors5, eval=FALSE}
-z <- c(1, 2, 3)
-x + z
-x - z
-x * z
-x / z
-x ^ z
-```
-
-We can also concatenate vectors together. Note that the order of the vectors and the order in the vectors matter
-
-```{r vectors6, eval=FALSE}
-c(x, y)
-c(y, x)
-```
 
 Sometimes it is useful to find the sum of a vector. We can do this using the `sum` function.
 
@@ -345,29 +298,3 @@ Assignment 2: Using the Beazley Archive data, create two new data sets. Give the
 The first data set should only contain rows using an Mycenean fabric.
 The second data set should only contain rows using Cypriot fabrics (from the bronze age).
 Which data set has more rows?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

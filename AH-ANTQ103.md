@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103\nIntroduction to Archeology"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-03-03"
+date: "Last updated: 2024-04-06"
 output:
   md_document:
     variant: gfm
@@ -14,6 +14,7 @@ output:
 - [Workshop 1](#workshop-1)
 - [Workshop 2](#workshop-2)
 - [Workshop 3](#workshop-3)
+- [Example of what you will learn](#example-of-what-you-will-learn)
 
 # Introduction
 
@@ -33,3 +34,7 @@ access the related files (data and R scripts) directly on
 # Workshop 3
 
 [Link](workshop3) to the workshop page.
+
+# Example of what you will learn
+
+![](AH-ANTQ103/workshop3_files/figure-gfm/plot_3-1.png)

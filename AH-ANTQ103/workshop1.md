@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 1"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-03-03"
+date: "Last updated: 2024-04-06"
 output:
   md_document:
     variant: gfm
@@ -67,60 +67,6 @@ x - y
 x * y
 x / y
 x ^ y
-```
-
-R can also be used to assign values to vectors. Try the following
-operations. These vectors should be added to the environment pane (On
-the right) Assign the values 1, 2, 3, 4, 5 to the vector x.
-
-``` r
-x <- c(1, 2, 3, 4, 5)
-```
-
-An alternative way to create this vector is to use the colon operator,
-which creates a sequence of consecutive numbers.
-
-``` r
-x <- 1:5
-```
-
-Assign the values 6, 7, 8, 9, 10 to the vector y.
-
-``` r
-y <- c(6, 7, 8, 9, 10)
-y <- 6:10
-```
-
-We can now use these vectors in calculations. Try the following
-operations.
-
-``` r
-x + y
-x - y
-x * y
-x / y
-x ^ y
-```
-
-Now we create a vector with a different length. Note that R will give a
-warning, but it will still perform the operation, reusing the values in
-the shorter vector.
-
-``` r
-z <- c(1, 2, 3)
-x + z
-x - z
-x * z
-x / z
-x ^ z
-```
-
-We can also concatenate vectors together. Note that the order of the
-vectors and the order in the vectors matter
-
-``` r
-c(x, y)
-c(y, x)
 ```
 
 Sometimes it is useful to find the sum of a vector. We can do this using

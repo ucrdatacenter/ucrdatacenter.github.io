@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 3"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-03-03"
+date: "Last updated: 2024-04-06"
 output:
   md_document:
     variant: gfm
@@ -65,20 +65,18 @@ Or by stating the column names we want to keep
 
 ``` r
 data_short <- data %>% 
-  select(`URI`, `Vase Number`, `Fabric`, `Technique`, `Sub Technique`, `Shape Name`, `Provenance`, `Date`, `Attributed To`, `Decoration`)
+  select(URI, Vase_Number, Fabric, Technique, Sub_Technique, Shape_Name, Provenance, Date, Attributed_To, Decoration)
 ```
 
 We might want to check if there are multiple entries for the same
 object. Luckily there is a Vase Number column, so we can check if there
 are multiple entries for the same vase number. We can do this using the
-`duplicated()` function. Note that if there is a space in the column
-name, we need to use backticks around the column name. We can then use
-the `filter()` function to filter the data to only include the
-duplicated rows.
+`duplicated()` function. We can then use the `filter()` function to
+filter the data to only include the duplicated rows.
 
 ``` r
 data_short %>% 
-  filter(duplicated(`Vase Number`))
+  filter(duplicated(Vase_Number))
 ```
 
 Given that the tibble that this returns is empty, we can conclude that
@@ -90,7 +88,7 @@ we can then use to filter the data.
 
 ``` r
 data_short %>% 
-  filter(is.na(`Vase Number`))
+  filter(is.na(Vase_Number))
 ```
 
 Given that the tibble that this returns is empty, we can conclude that
@@ -221,7 +219,7 @@ using the `separate()` function, by setting the separator to “:”.
 
 ``` r
 data_short %>% 
-  separate(Decoration, c("Decoration 1", "Decoration 2"), sep = ":")
+  separate(Decoration, c("Decoration_1", "Decoration_2"), sep = ":")
 ```
 
 ## Fuzzy dates
@@ -240,7 +238,7 @@ the two columns. We can do this using the `separate()` function.
 
 ``` r
 data_short_dates <- data_short %>% 
-  separate(Date, c("Date start", "Date end"), sep = " to ")
+  separate(Date, c("Date_start", "Date_end"), sep = " to ")
 ```
 
 These columns are now character columns. We can convert them to numeric
@@ -248,18 +246,18 @@ columns using the `as.numeric()` function.
 
 ``` r
 data_short_dates <- data_short_dates %>% 
-  mutate(`Date start` = as.numeric(`Date start`), 
-         `Date end` = as.numeric(`Date end`))
+  mutate(Date_start = as.numeric(Date_start), 
+         Date_end = as.numeric(Date_end))
 ```
 
 We can then calculate the mean for each row.
 
 ``` r
 data_short_dates <- data_short_dates %>% 
-  mutate(`Date mean` = (`Date start` + `Date end`) / 2)
+  mutate(Date_mean = (Date_start + Date_end) / 2)
 ```
 
-We only keep the rows with a black figure or red figure techniqu, as
+We only keep the rows with a black figure or red figure technique, as
 this allows for easier comparison with the plot we will make later.
 
 ``` r
@@ -271,7 +269,7 @@ We can then create a plot of the technique over time. We use the `fill`
 aesthetic to fill the bars with the technique.
 
 ``` r
-ggplot(plotting_data, aes(x = `Date mean`, fill = Technique)) +
+ggplot(plotting_data, aes(x = Date_mean, fill = Technique)) +
   geom_histogram(binwidth = 25, position = "dodge")
 ```
 
@@ -331,9 +329,7 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
 
 1.  Create a plot of the most common descriptions of the vases (As we
     did in the tutorial) in a new dataset. Use [this
-    dataset](https://www.carc.ox.ac.uk/XDB/ASP/searchOpen.asp?setResultCheckboxes=chkAlbum&chkAlbum=true&windowWidth=1535&windowHeight=689&search=%20%7BAND%7D%20%20%5BProvenance%5D%20GREECE%2C%20ATHENS%2C%20CERAMICUS#aHeader)
-    which you can also download from
-    [GitHub](https://github.com/ucrdatacenter/projects/raw/main/AH-ANTQ103/Beazley_Archive_2.csv).
+    dataset](https://www.carc.ox.ac.uk/XDB/ASP/searchOpen.asp?setResultCheckboxes=chkAlbum&chkAlbum=true&windowWidth=1535&windowHeight=689&search=%20%7BAND%7D%20%20%5BProvenance%5D%20GREECE%2C%20ATHENS%2C%20CERAMICUS#aHeader).
     Reuse the code from the lecture to create the plot, and compare the
     results. What do you notice?
 
@@ -364,10 +360,10 @@ point.
 
 ``` r
 data_short_dates <- data_short %>% 
-  separate(Date, c("Date start", "Date end"), sep = " to ")
+  separate(Date, c("Date_start", "Date_end"), sep = " to ")
 data_short_dates <- data_short_dates %>% 
-  mutate(`Date start` = as.numeric(`Date start`), 
-         `Date end` = as.numeric(`Date end`))
+  mutate(Date_start = as.numeric(Date_start), 
+         Date_end = as.numeric(Date_end))
 ```
 
 The plot should look like this:

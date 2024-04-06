@@ -63,11 +63,6 @@ data %>%
   select(Square, Spit, Weight)
 ```
 
-Alternatively, if we only want columns that have numbers, we can use the `where` function.
-```{r select_if, eval=FALSE}
-data %>% 
-  select(where(is.numeric))
-```
 
 We now want to get into plotting our data.
 For this we are only interested in the `Square`, `Spit`, `Material`, `Weight` and `Thick` columns.
@@ -380,7 +375,7 @@ ggplot(data = plat_area_data) +
   theme_classic(base_size = 14)
 ```
 
-### Assignment 2
+## Assignment 2
 Create the plot below of the most common colours. You will need to perform some data manipulation first.
 
 ```{r assignment_2, echo = FALSE, warning=FALSE}
@@ -398,11 +393,5 @@ ggplot(data = colour_count) +
   theme_classic(base_size = 14) 
 ```
 
-### Assignment 3
+## Assignment 3
 What is the most common term in the dataset? Create a tibble that contains the term and the number of times it occurs.
-
-
-
-
-
-
