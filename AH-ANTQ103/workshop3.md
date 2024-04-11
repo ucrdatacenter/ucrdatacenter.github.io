@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 3"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-04-06"
+date: "Last updated: 2024-04-11"
 output:
   md_document:
     variant: gfm
@@ -10,12 +10,16 @@ output:
     toc: true
 ---
 
+- [Data](#data)
+- [Text analysis](#text-analysis)
 - [Fuzzy dates](#fuzzy-dates)
 - [Homework assignments](#homework-assignments)
   - [Assignment 1](#assignment-1)
   - [Assignment 2](#assignment-2)
   - [Assignment 3](#assignment-3)
   - [Assignment 4](#assignment-4)
+
+# Data
 
 In this workshop, we will work with Beazley Archive data and focus more
 on text analysis and fuzzy dates. This workshop is based on work done by
@@ -93,6 +97,8 @@ data_short %>%
 
 Given that the tibble that this returns is empty, we can conclude that
 there are no rows with missing data.
+
+# Text analysis
 
 Now that we know that there are no rows with missing data, and no rows
 with the same vase number, we can start looking at the data in more
@@ -222,7 +228,7 @@ data_short %>%
   separate(Decoration, c("Decoration_1", "Decoration_2"), sep = ":")
 ```
 
-## Fuzzy dates
+# Fuzzy dates
 
 Usually data for origins of artefacts are given in ranges (e.g. 450-375
 BC) and computers do not really like this type of “fuzzy” or uncertain
@@ -323,9 +329,9 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
 
 ![](workshop3_files/figure-gfm/plot_2-1.png)<!-- -->
 
-## Homework assignments
+# Homework assignments
 
-### Assignment 1
+## Assignment 1
 
 1.  Create a plot of the most common descriptions of the vases (As we
     did in the tutorial) in a new dataset. Use [this
@@ -333,7 +339,7 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
     Reuse the code from the lecture to create the plot, and compare the
     results. What do you notice?
 
-### Assignment 2
+## Assignment 2
 
 1.  Create a plot of the most common shapes of the pottery in a new
     dataset. Use the dataset from 1.1. We are looking just for the main
@@ -347,7 +353,7 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
     and “CUP” (and similar definitions) should be counted as the same
     shape. Adapting the code should be very straightforward.
 
-### Assignment 3
+## Assignment 3
 
 Create a plot of the technique over time using the original dataset,
 which includes the fuzzy dates.
@@ -370,7 +376,7 @@ The plot should look like this:
 
 ![](workshop3_files/figure-gfm/plot_3-1.png)<!-- -->
 
-### Assignment 4
+## Assignment 4
 
 This is an open assignment. Create a new, original plot that you think
 is interesting and report your findings. This could be a text analysis

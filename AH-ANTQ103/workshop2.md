@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 2"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-04-06"
+date: "Last updated: 2024-04-11"
 output:
   md_document:
     variant: gfm
@@ -10,10 +10,15 @@ output:
     toc: true
 ---
 
+- [Introduction](#introduction)
+- [Data](#data)
+- [Plotting](#plotting)
 - [Homework assignments](#homework-assignments)
   - [Assignment 1](#assignment-1)
-- [Assignment 2](#assignment-2)
-- [Assignment 3](#assignment-3)
+  - [Assignment 2](#assignment-2)
+  - [Assignment 3](#assignment-3)
+
+## Introduction
 
 In this workshop, we will expand on some of the basic functions, use
 tidyverse more and introduce some archaeology specific functions. It
@@ -30,6 +35,8 @@ Load the `tidyverse` package.
 ``` r
 library(tidyverse)
 ```
+
+## Data
 
 This data is coming from an URL, and it is an excel file. We
 unfortunately cannot use tidyverse to read excel files, so we will use
@@ -113,6 +120,8 @@ can select multiple columns in one go using the comma.
 data %>% 
   select(Square, Spit, Weight)
 ```
+
+## Plotting
 
 We now want to get into plotting our data. For this we are only
 interested in the `Square`, `Spit`, `Material`, `Weight` and `Thick`
@@ -577,14 +586,14 @@ workshop.
 
 ![](workshop2_files/figure-gfm/assignment_1-1.png)<!-- -->
 
-## Assignment 2
+### Assignment 2
 
 Create the plot below of the most common colours. You will need to
 perform some data manipulation first.
 
 ![](workshop2_files/figure-gfm/assignment_2-1.png)<!-- -->
 
-## Assignment 3
+### Assignment 3
 
 What is the most common term in the dataset? Create a tibble that
 contains the term and the number of times it occurs.

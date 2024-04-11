@@ -14,6 +14,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
+## Introduction
+
 In this workshop, we will expand on some of the basic functions, use tidyverse more and introduce some archaeology specific functions.
 It will follow the flow of a more typical data analysis workflow.
 We will work with data about lithics from the Jerimalai rockshelter in East-Timor.
@@ -25,6 +27,8 @@ Load the `tidyverse` package.
 ```{r tidyverse, message=FALSE, warning=FALSE}
 library(tidyverse)
 ```
+
+## Data
 
 This data is coming from an URL, and it is an excel file. We unfortunately cannot use tidyverse to read excel files, so we will use the `rio` package.
 
@@ -63,6 +67,7 @@ data %>%
   select(Square, Spit, Weight)
 ```
 
+## Plotting
 
 We now want to get into plotting our data.
 For this we are only interested in the `Square`, `Spit`, `Material`, `Weight` and `Thick` columns.
@@ -375,7 +380,7 @@ ggplot(data = plat_area_data) +
   theme_classic(base_size = 14)
 ```
 
-## Assignment 2
+### Assignment 2
 Create the plot below of the most common colours. You will need to perform some data manipulation first.
 
 ```{r assignment_2, echo = FALSE, warning=FALSE}
@@ -393,5 +398,5 @@ ggplot(data = colour_count) +
   theme_classic(base_size = 14) 
 ```
 
-## Assignment 3
+### Assignment 3
 What is the most common term in the dataset? Create a tibble that contains the term and the number of times it occurs.

@@ -14,6 +14,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
+# Data
+
 In this workshop, we will work with Beazley Archive data and focus more on text analysis and fuzzy dates.
 This workshop is based on work done by Kalle Valkeakari.
 
@@ -80,6 +82,8 @@ data_short %>%
 ```
 
 Given that the tibble that this returns is empty, we can conclude that there are no rows with missing data.
+
+# Text analysis
 
 Now that we know that there are no rows with missing data, and no rows with the same vase number, we can start looking at the data in more detail.
 We are interested in the decorations on the vases, so we will look at the Decoration column.
@@ -188,7 +192,7 @@ data_short %>%
   separate(Decoration, c("Decoration_1", "Decoration_2"), sep = ":")
 ```
 
-## Fuzzy dates
+# Fuzzy dates
 
 Usually data for origins of artefacts are given in ranges (e.g. 450-375 BC) and computers do not really like this type of "fuzzy" or uncertain time. There are two ways to deal with this type of data. The first is quite simple and implies taking the mean of these two values, but can lead to big errors if you do not understand the limitations to this approach. Let's look at the underlying technique used for pottery, that is, the colors of the decorations on the pottery. Then we can ask, how does the technique change over time?
 
@@ -272,14 +276,14 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
 
 
 
-## Homework assignments
+# Homework assignments
 
-### Assignment 1
+## Assignment 1
 
 1. Create a plot of the most common descriptions of the vases (As we did in the tutorial) in a new dataset. Use [this dataset](https://www.carc.ox.ac.uk/XDB/ASP/searchOpen.asp?setResultCheckboxes=chkAlbum&chkAlbum=true&windowWidth=1535&windowHeight=689&search=%20{AND}%20%20[Provenance]%20GREECE%2C%20ATHENS%2C%20CERAMICUS#aHeader). 
 Reuse the code from the lecture to create the plot, and compare the results. What do you notice?
 
-### Assignment 2
+## Assignment 2
 
 1. Create a plot of the most common shapes of the pottery in a new dataset. Use the dataset from 1.1. We are looking just for the main shapes, so for example: "CUP FRAGMENT" and "CUP" should be counted as the same shape, namely "CUP". Show the top 10.
 You will need to split a column. 
@@ -287,7 +291,7 @@ Hint: The separator you want to use is either a comma or a space You can use thi
 
 2. Use the code you wrote for 1.1 to create a plot of the most common shapes of the pottery in the original dataset. Again, "CUP FRAGMENT" and "CUP" (and similar definitions) should be counted as the same shape. Adapting the code should be very straightforward.
 
-### Assignment 3
+## Assignment 3
 
 Create a plot of the technique over time using the original dataset, which includes the fuzzy dates.
 
@@ -317,7 +321,7 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
   ggtitle("Technique over time")
 ```
 
-### Assignment 4
+## Assignment 4
 This is an open assignment. Create a new, original plot that you think is interesting and report your findings. This could be a text analysis on a new Beazley dataset and compare the results to what we found earlier, or you can perform another time analysis on the Beazley dataset. You can also use a different dataset and compare your findings. Lastly, if you can think of another interesting analysis using archaeological data, you can do that as well. While working on this assignment, please be aware that this is the file you will be asked to work with for the final report.
 
 Some ideas may include, but are not limited to:
