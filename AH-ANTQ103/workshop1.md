@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 1"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-04-06"
+date: "Last updated: 2024-04-30"
 output:
   md_document:
     variant: gfm
@@ -354,6 +354,7 @@ than 40. Finally, print the tibble.
 
 Assignment 2: Using the Beazley Archive data, create two new data sets.
 Give them descriptive names. The first data set should only contain rows
-using an Mycenean fabric. The second data set should only contain rows
-using Cypriot fabrics (from the bronze age). Which data set has more
-rows?
+using an Athenian fabric (So without any specifics).
+
+The second data set should only contain rows using Geometric Athenian
+fabrics. Which data set has more rows?

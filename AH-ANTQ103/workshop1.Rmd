@@ -295,6 +295,7 @@ Finally, print the tibble.
 ## Assignment 2
 
 Assignment 2: Using the Beazley Archive data, create two new data sets. Give them descriptive names.
-The first data set should only contain rows using an Mycenean fabric.
-The second data set should only contain rows using Cypriot fabrics (from the bronze age).
+The first data set should only contain rows using an Athenian fabric (So without any specifics).
+
+The second data set should only contain rows using Geometric Athenian fabrics.
 Which data set has more rows?
