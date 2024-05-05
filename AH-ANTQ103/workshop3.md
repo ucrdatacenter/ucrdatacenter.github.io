@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 3"
 subtitle: "Spring 2024"
-date: "Last updated: 2024-04-11"
+date: "Last updated: 2024-05-05"
 output:
   md_document:
     variant: gfm
@@ -338,6 +338,12 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
     dataset](https://www.carc.ox.ac.uk/XDB/ASP/searchOpen.asp?setResultCheckboxes=chkAlbum&chkAlbum=true&windowWidth=1535&windowHeight=689&search=%20%7BAND%7D%20%20%5BProvenance%5D%20GREECE%2C%20ATHENS%2C%20CERAMICUS#aHeader).
     Reuse the code from the lecture to create the plot, and compare the
     results. What do you notice?
+
+Note that you can import the data from GitHub using this link:
+
+``` r
+"https://github.com/ucrdatacenter/projects/raw/main/AH-ANTQ103/Beazley_Archive_2.csv"
+```
 
 ## Assignment 2
 

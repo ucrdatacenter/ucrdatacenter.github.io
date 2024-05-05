@@ -283,6 +283,12 @@ ggplot(result, aes(x = DAT_step, fill = variable, weight = weight)) +
 1. Create a plot of the most common descriptions of the vases (As we did in the tutorial) in a new dataset. Use [this dataset](https://www.carc.ox.ac.uk/XDB/ASP/searchOpen.asp?setResultCheckboxes=chkAlbum&chkAlbum=true&windowWidth=1535&windowHeight=689&search=%20{AND}%20%20[Provenance]%20GREECE%2C%20ATHENS%2C%20CERAMICUS#aHeader). 
 Reuse the code from the lecture to create the plot, and compare the results. What do you notice?
 
+Note that you can import the data from GitHub using this link:
+```{r, eval = FALSE}
+"https://github.com/ucrdatacenter/projects/raw/main/AH-ANTQ103/Beazley_Archive_2.csv"
+```
+
+
 ## Assignment 2
 
 1. Create a plot of the most common shapes of the pottery in a new dataset. Use the dataset from 1.1. We are looking just for the main shapes, so for example: "CUP FRAGMENT" and "CUP" should be counted as the same shape, namely "CUP". Show the top 10.
