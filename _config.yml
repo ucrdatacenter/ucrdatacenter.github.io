@@ -20,7 +20,9 @@ author: UCR Data Center
 ###############################################
 
 navbar-links:
-  Apprenticeship: "apprenticeship"
+  Apprenticeship: 
+    - 2024 January: "apprenticeship"
+    - 2024 June: "apprenticeship2"
   Tutorials: "tutorial"
   Courses:
     - Ongoing: "index#ongoing-courses"

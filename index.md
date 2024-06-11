@@ -18,29 +18,13 @@ encounters in UCR courses (ongoing or past) at the bottom of this page
 or via the COURSES button in the header. In addition, please see below
 for other initiatives, office hours, and general tutorials.
 
-## DataFest 2024
-
-The date is set: May 30, 2024. Then the new edition of the DataFest will
-take place. A DataFest? Indeed, a hackathon, but for data-related
-challenges. This time, students from the HZ University of Applied
-Sciences, University College Roosevelt and Scalda will be exploring
-innovative solutions together to improve mobility in Zeeland. With
-various data sources regarding incoming and outgoing traffic in the
-region. The focus is on predicting alternative routes, positioning
-public transport hubs and understanding complex traffic patterns. The
-aim is to develop concrete solutions that can improve the mobility and
-flow of traffic in Zeeland.
-
-[Link to DataFest
-2023](https://hz.nl/en/applied-research/news/datafest-2023-data4climate-is-huge-success)
-
 ## DC Apprenticeship
+
+You can find all materials related to the 2024 June Apprenticeship
+workshops and projects [here](apprenticeship2).
 
 You can find all materials related to the 2024 Winter Apprenticeship
 workshops and projects [here](apprenticeship).
-
-The call for proposals for the 2024 Summer Apprenticeship is now open;
-more information is available in the UCR newsletter.
 
 ## Office hours
 
@@ -58,7 +42,7 @@ send an email to <datacenter@ucr.nl>.
 You can find some general tutorials on working with data and a
 collection of useful data sources [here](tutorial).
 
-## Ongoing courses
+## Ongoing/future courses
 
 - [AH-ANTQ103 - Introduction to Archeology](AH-ANTQ103)
 - [SCIBIOM303 - Mechanisms of Disease](SCIBIOM303)
