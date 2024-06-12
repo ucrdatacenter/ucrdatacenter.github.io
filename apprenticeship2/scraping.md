@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nData scraping from the web and pdf documents in R"
 subtitle: "June 2024" 
-date: "Last updated: 2024-06-11"
+date: "Last updated: 2024-06-12"
 output:
   md_document:
     variant: gfm

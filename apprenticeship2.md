@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship program"
 subtitle: "Spring 2024 (June)"
-date: "Last updated: 2024-06-11"
+date: "Last updated: 2024-06-12"
 output:
   md_document:
     variant: gfm
@@ -18,20 +18,19 @@ the workshops or make use of the materials below.
 # Workshop schedule
 
 Below you can find the workshop schedule between 17–21 June. All
-workshops take place in \[classroom TBA\]. The timing of workshops with
-“TBA” time will be discussed with the participants during the first
-workshop.
+workshops take place in E-9. The timing of workshops with “TBA” time
+will be discussed with the participants during the first workshop.
 
 Click on a topic to access the workshop materials. Note that the pages
 are still a work in progress and subject to frequent updates.
 
-| Date  | Time        | Topic                                                                 |
-|-------|-------------|-----------------------------------------------------------------------|
-| 17/07 | 10:00-17:00 | [R basics (1)](basics1)                                               |
-| 18/07 | 10:00-17:00 | [R basics (2)](basics2)                                               |
-| 19/07 | TBA         | [Character strings and regular expressions, text analysis (1)](text1) |
-| 20/07 | TBA         | [Text analysis (2)](text2)                                            |
-| 21/07 | TBA         | Data scraping from the web and pdf documents in R\](scraping)         |
+| Date  | Time        | Topic                                                                   |
+|-------|-------------|-------------------------------------------------------------------------|
+| 17/07 | 10:00-17:00 | [R basics (1)](basics)                                                  |
+| 18/07 | 10:00-17:00 | [R basics (2)](basics)                                                  |
+| 19/07 | TBA         | [Character strings and regular expressions, text analysis (1)](strings) |
+| 20/07 | TBA         | [Text analysis (2)](text)                                               |
+| 21/07 | TBA         | [Data scraping from the web and pdf documents in R](scraping)           |
 
 # Other resources
 
