@@ -28,7 +28,7 @@ are still a work in progress and subject to frequent updates.
 |-------|-------------|-------------------------------------------------------------------------|
 | 17/07 | 10:00-17:00 | [R basics (1)](basics)                                                  |
 | 18/07 | 10:00-17:00 | [R basics (2)](basics)                                                  |
-| 19/07 | TBA         | [Character strings and regular expressions, text analysis (1)](strings) |
+| 19/07 | TBA         | [Character strings and regular expressions; text analysis (1)](strings) |
 | 20/07 | TBA         | [Text analysis (2)](text)                                               |
 | 21/07 | TBA         | [Data scraping from the web and pdf documents in R](scraping)           |
 
