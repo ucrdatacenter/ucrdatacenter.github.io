@@ -867,7 +867,7 @@ ggplot(pdf_data, aes(y = country, fill = eu_group)) +
   geom_bar() +
   xlab("Number of MEPs") + 
   ylab(NULL) +
-  guides(fill = guide_legend(title = NULL, ncol = 2)) +
+  guides(fill = guide_legend(title = NULL, ncol = 1)) +
   theme_light() +
   theme(legend.position = "bottom")
 ```

@@ -521,12 +521,12 @@ pdf_data <- pdf |>
 
 To show that the data is now in a clean format, we can visualize the number of MEPs from each EU political group and from each country.
 
-```{r, fig.height=6}
+```{r, fig.height=9,fig.width=6}
 ggplot(pdf_data, aes(y = country, fill = eu_group)) +
   geom_bar() +
   xlab("Number of MEPs") + 
   ylab(NULL) +
-  guides(fill = guide_legend(title = NULL, ncol = 2)) +
+  guides(fill = guide_legend(title = NULL, ncol = 1)) +
   theme_light() +
   theme(legend.position = "bottom")
 ```
