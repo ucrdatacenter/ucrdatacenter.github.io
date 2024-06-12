@@ -8,6 +8,8 @@ output:
     preserve_yaml: true
 ---
 
+*If you have suggestions for adding more resources, please email us at [datacenter@ucr.nl](mailto:datacenter@ucr.nl).*
+
 # General data sources
 
 * [Our World in Data](https://ourworldindata.org/): open-access data source for a wide range of indicators
@@ -15,6 +17,7 @@ output:
 * [OECD data](https://data.oecd.org/): open-access data source primarily on advanced economies
 * [Eurostat](https://ec.europa.eu/eurostat/web/main/home): European Union data
 * [Gapminder](https://www.gapminder.org/data/): open-access data source related to development; all World Development Indicators also available here
+* [Kaggle](https://www.kaggle.com/): diverse data repository (check the reliability of data before using!)
 
 # Field-specific data sources
 
@@ -32,10 +35,16 @@ output:
 * [WorldClim](https://www.worldclim.org/data/index.html): database of high resolution global weather and climate data including future predictions (spatial data)
 * [Land-Use Harmonization](https://luh.umd.edu/index.shtml): database of high resolution land use information (spatial data)
 
-
 ## Economics
 
 * [Total Economy Database](https://www.conference-board.org/data/economydatabase/total-economy-database-productivity): data on GDP and labour statistics for 131 countries (available after creating a free account)
 * [FRED (US Federal Reserve)](https://fred.stlouisfed.org/tags/series): mostly US economic data
 * [Maddison Historical Statistics](https://www.rug.nl/ggdc/historicaldevelopment/maddison/?lang=en): GDP per capita and population data for 169 countries between 1000--2018
 * [DBnomics](https://db.nomics.world/): collection of publicly available economics data
+
+## Political Science
+
+* [V-Dem](https://www.v-dem.net/): country and party level measures of democracy (global)
+* [ParlGov](https://www.parlgov.org/data-info/): party and election information (mainly EU)
+* [EU Open Data Portal](https://data.europa.eu/en): various EU-level data
+* [CHORUS](https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/RPU1QP): large dataset of interest group positions

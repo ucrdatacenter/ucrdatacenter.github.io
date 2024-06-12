@@ -1,12 +1,15 @@
 ---
 layout: page
 title: "Useful data sources"
-date: "Last updated: 2024-01-02"
+date: "Last updated: 2024-06-12"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
+
+*If you have suggestions for adding more resources, please email us at
+<datacenter@ucr.nl>.*
 
 # General data sources
 
@@ -21,6 +24,8 @@ output:
 - [Gapminder](https://www.gapminder.org/data/): open-access data source
   related to development; all World Development Indicators also
   available here
+- [Kaggle](https://www.kaggle.com/): diverse data repository (check the
+  reliability of data before using!)
 
 # Field-specific data sources
 
@@ -71,3 +76,14 @@ output:
   GDP per capita and population data for 169 countries between 1000–2018
 - [DBnomics](https://db.nomics.world/): collection of publicly available
   economics data
+
+## Political Science
+
+- [V-Dem](https://www.v-dem.net/): country and party level measures of
+  democracy (global)
+- [ParlGov](https://www.parlgov.org/data-info/): party and election
+  information (mainly EU)
+- [EU Open Data Portal](https://data.europa.eu/en): various EU-level
+  data
+- [CHORUS](https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/RPU1QP):
+  large dataset of interest group positions

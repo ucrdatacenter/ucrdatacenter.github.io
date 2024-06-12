@@ -1,7 +1,7 @@
 ---
 layour: page
 title: "Useful links"
-date: "Last updated: 2024-02-16"
+date: "Last updated: 2024-06-12"
 output:
   md_document:
     variant: gfm
@@ -13,6 +13,9 @@ general resources for working with R can be helpful in a wide range of
 assignments. Below are some helpful links in case you would like to
 complement the Data Center workshops and tutorials (which you can find
 on the Tutorials page and the individual course pages).
+
+*If you have suggestions for adding more resources, please email us at
+<datacenter@ucr.nl>.*
 
 # The basics of R
 
@@ -39,8 +42,6 @@ on the Tutorials page and the individual course pages).
   operator](https://r4ds.had.co.nz/pipes.html)
 - [Selecting and filtering
   data](https://mdsr-book.github.io/mdsr2e/ch-dataI.html#sec:pipe)
-- [Conversions between long and wide
-  format](https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa)
 - [Creating a project in RStudio
   (video)](https://www.youtube.com/watch?v=WyrJmJWgPiU)
 - [Packages in R
@@ -91,6 +92,8 @@ on the Tutorials page and the individual course pages).
   `rename()`](https://www.datasciencemadesimple.com/rename-the-column-name-in-r-using-dplyr/)
 - [How to handle missing
   data](https://universeofdatascience.com/how-to-handle-missing-values-in-r/)
+- [Conversions between long and wide
+  format](https://mdsr-book.github.io/mdsr2e/ch-dataII.html#data-verbs-for-converting-wide-to-narrow-and-vice-versa)
 - [Select, filter, mutate and summarize data
   (video)](https://www.youtube.com/watch?v=nRtp7wSEtJA)
 - [Summarizing by groups
@@ -106,6 +109,8 @@ on the Tutorials page and the individual course pages).
   functions](https://www.datasciencemadesimple.com/join-in-r-merge-in-r/)
 - [Examples of using
   joins](https://statisticsglobe.com/r-dplyr-join-inner-left-right-full-semi-anti)
+- [Visualization of joining
+  datasets](https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins)
 - [More on join functions
   (video)](https://www.youtube.com/watch?v=Yg-pNqzDuN4)
 
@@ -125,3 +130,22 @@ on the Tutorials page and the individual course pages).
     ggplot2](https://info5940.infosci.cornell.edu/notes/geoviz/vector-maps/)
   - [Practice drawing vector
     maps](https://info5940.infosci.cornell.edu/notes/geoviz/vector-maps-practice/)
+
+# Text analysis
+
+- [Text mining with R: A tidy approach](https://www.tidytextmining.com/)
+- [Regular expression cheat
+  sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
+- [Interactive tidytext
+  tutorial](https://juliasilge.shinyapps.io/learntidytext/#section-introduction)
+
+# Other
+
+- [The Big Book of R](https://www.bigbookofr.com/): huge list of R
+  resources
+- [adventr](https://www.statisticsadventure.com/adventr/): R tutorial
+  from the author of Discovering Statistics Using IBM SPSS Statistics
+  (ACCRMET101 level)
+- [discovr](https://www.discovr.rocks/discovr/): R tutorial from the
+  author of Discovering Statistics Using IBM SPSS Statistics (SSCRMET201
+  level)
