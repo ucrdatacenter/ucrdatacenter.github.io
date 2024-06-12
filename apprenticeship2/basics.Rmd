@@ -401,7 +401,7 @@ data <- student |>
 ### Data visualization with `ggplot2`
 
 This section introduces data visualization in R, primarily using the `ggplot2` package (included in `tidyverse`).
-The tutorial is based on [*A ggplot2 Tutorial for Beautiful Plotting in R*](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) by Cédric Scherer.
+The tutorial draws on [*A ggplot2 Tutorial for Beautiful Plotting in R*](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/) by Cédric Scherer.
 
 **The logic of `ggplot2`**
 
@@ -417,7 +417,9 @@ You should think of the `+` sign in `ggplot` workflows in the same way you think
 **Univariate plots**
 
 
+
 **Bivariate plots**
+
 
 
 **Customizing plot features**

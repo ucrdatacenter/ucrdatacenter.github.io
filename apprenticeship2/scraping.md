@@ -673,75 +673,202 @@ the same structure, and manually copy-pasting all that information would
 get very tedious. In addition, if you ever tried to copy information
 from pdf files, you might have found that sometimes line breaks in the
 pdf copy over, tables get messy, headers and footers copy end up in the
-middle of the text, or special characters are lost. Fortunately, there
-are a few R packages that make it easier to read pdf files into R as
-plain text. Unfortunately, these tools are not perfect, and therefore
-pdf scraping usually involves a quick and easy first step of importing
-the data, and a far longer step of extensive cleaning of the messy
-character strings you imported.
+middle of the text, or special characters are lost.
 
-We will use the `pdftools` package, so let’s install and load it.
+Fortunately, there are a few R packages that make it easier to read pdf
+files into R as plain text. Unfortunately, these tools are not perfect,
+and therefore pdf scraping usually involves a quick and easy first step
+of importing the data, and a far longer step of extensive cleaning of
+the messy character strings you imported. Every pdf-scraping workflow is
+different based on how nicely the data imports, so it is hard to give a
+general workflow for this task. Generally, you import the data, see what
+patterns you can find that help you identify the data you want to
+extract, and then use string operations to do so. The example we’ll
+cover here illustrates this workflow (with a relatively clean and
+structured example), but it doesn’t cover all the possible issues that
+can come up in the process of working with pdfs.
+
+We will use the `pdftools` package to actually read in the pdf files, so
+let’s install and load it.
 
 ``` r
 # install.packages("pdftools")
 library(pdftools)
 ```
 
-<!-- As an example, we look at a report on cancer rates in the Netherlands in 2020 that you can find [here](https://gco.iarc.fr/today/data/factsheets/populations/528-the-netherlands-fact-sheets.pdf). -->
-<!-- Our goal is to extract the table on page 2, and visualize the data presented there. -->
-<!-- We can extract all text from the report into R with the `pdf_text()` function, which imports the contents of the referenced pdf file as a character vector, each element containing all text on one page. -->
-<!-- If you have a look at what the current 2nd page looks like, you can see that it is a very messy character string instead of a nice table. -->
-<!-- Using the `cat()` function to display the text more nicely also doesn't make it much better. -->
-<!-- But technically all the data is in R, so the importing step is done. -->
-<!-- ```{r} -->
-<!-- pdf <- pdf_text("https://gco.iarc.fr/today/data/factsheets/populations/528-the-netherlands-fact-sheets.pdf") -->
-<!-- pdf[2] -->
-<!-- cat(pdf[2]) -->
-<!-- ``` -->
-<!-- If we actually want to work with the data contained in the document, we need to clean it. -->
-<!-- Let's first try to limit the data only to the table we want to extract: we can work only with page 2 of the `pdf` object, and let's keep only the part of text between headers "Incidence, Mortality and Prevalence by cancer site" and "Age-standardized (World) incidence rates per sex, top 10 cancers". -->
-<!-- Notice that the `.` regex catches all characters except for a new line, so we have to explicitly allow for new lines with `\\n` and the use of lookaheads and lookbehinds. -->
-<!-- Then we can try to separate the string into a vector where each element corresponds to one line of the table -- `read_delim()` accomplishes that, although it doesn't actually manage to split the data into variables based on the delimiter, so we need to do that in a different way. -->
-<!-- We specify `skip = 3` to skip the first three detected lines and start the table with the row of variable names. -->
-<!-- ```{r} -->
-<!-- cancer <- pdf[2] |>  -->
-<!--   str_extract("(?<=(site))(.|\\n)*(?=(Age-standardized \\(World\\) incidence rates per sex))") |>  -->
-<!--   read_delim(delim = "\\s", skip = 3) -->
-<!-- ``` -->
-<!-- To split the data into variables, let's first split the variable name. -->
-<!-- We can take the variable name, remove leading and trailing whitespace, and split at any occurrence of at least two spaces -- below defined as the object `var`. -->
-<!-- Notice that the original table has an extra header row that specifies whether the variable names correspond to new cases, deaths, or 5-year summary statistics. -->
-<!-- So let's create a vector that specifies which of these categories each element of `var` belongs to, and combine that with the variable names with a `paste()` function to create our vector of desired variable names. -->
-<!-- ```{r} -->
-<!-- var <- names(cancer) |> str_trim() |> str_split_1("\\s{2,}") -->
-<!-- cat <- c("", rep("new", 4), rep("death", 4), rep("5year", 2)) -->
-<!-- names <- paste0(cat, var) -->
-<!-- ``` -->
-<!-- To split a single column into multiple columns, we can use the `separate()` function. -->
-<!-- However, before we can do that, let's do a bit of data cleaning: to make references to the current one variable easier, let's rename it to `value`. -->
-<!-- Let's also use the `str_trim()` function to remove any leading and trailing white space from the observations. -->
-<!-- Then we can use the separate function where we specify that we want to use the `value` column as the variable we split, and we want the new variables to have names specified in the `names` vector. -->
-<!-- Just like with the variable names, we use two or more whitespaces as the separator. -->
-<!-- Now the data is correctly organized into cells, but all the numbers are character strings surrounded by whitespace. -->
-<!-- So let's remove the whitespace around all cells, and let's convert all but the first variables into numeric. -->
-<!-- To use `mutate()` across multiple columns at the same time, we can use the `across()` function that takes the affected columns as the first argument and the function to apply as the second. -->
-<!-- If you want to use a single function where the only function argument is the variable itself, you can specify the function simply as the name of the function -- see the first part of the `mutate()` function that applies the `str_trim` function to all variables (defined by `everything()`). -->
-<!-- If you want to do more complex operations, then your function call should start with a tilde `~`, and you should refer to the variable with `.x` (e.g. if you'd write `var = as.numeric(var)` in the single variable case, instead you'd write `~as.numeric(var)` when applying the same function to multiple variables) -- see how for all variables except for `Cancer` we remove all whitespace inside the string and convert the result to numeric. -->
-<!-- Finally, we remove the row that sums up the previous rows in the original table. -->
-<!-- Now we have our final, clean dataset of cancer rates in the Netherlands in 2020, so let's create an example visualization: the scatterplot below shows the relationship between new cancer cases and cancer deaths per cancer type, which shows the relationship between these two numbers a lot more clearly than the original table did. -->
-<!-- ```{r} -->
-<!-- cancer_tidy <- cancer |>  -->
-<!--   setNames("value") |>  -->
-<!--   mutate(value = str_trim(value)) |>  -->
-<!--   separate(1, into = names, sep = "\\s{2,}") |>  -->
-<!--   mutate(across(everything(), str_trim), -->
-<!--          across(-Cancer, ~as.numeric(str_remove_all(.x, "\\s")))) |>  -->
-<!--   filter(Cancer != "All cancer sites") -->
-<!-- ggplot(cancer_tidy, aes(newNumber, deathNumber)) + -->
-<!--   geom_point() + -->
-<!--   labs(x = "Number of new cases in 2020", -->
-<!--        y = "Number of deaths in 2020", -->
-<!--        title = "Incidence and mortality per cancer type") + -->
-<!--   coord_fixed() + -->
-<!--   theme_light() -->
-<!-- ``` -->
+As an example, we look at the Members of the European Parliament (MEPs)
+and their party affiliations. The MEPs are listed
+[here](https://www.europarl.europa.eu/meps/en/full-list/all), with a
+link at the top right side of the page to download the list as a pdf.
+Our goal is to convert this list into a clean tibble that contains
+separate variables for the name and affiliations of each MEP.
+
+To import the pdf into R, you can either download the file and import it
+from your computer, or you can import it directly from the web. In the
+latter case, you need to right-click on the “Download in PDF format”
+button and choose “Copy link address”. Then you can use the `pdf_text()`
+function to import the pdf file as a character vector, where each
+element corresponds to one page of the pdf.
+
+``` r
+pdf <- pdf_text("https://www.europarl.europa.eu/meps/en/full-list/pdf")
+```
+
+Looking at the first page of the pdf, you can see that it is a very
+messy character string instead of a nice table. Using the `cat()`
+function to display the text makes it more readable (e.g. by converting
+the new line characters to actual new lines), but it is still not a nice
+table. But technically all the data is in R, so the importing step is
+done.
+
+``` r
+pdf[1]
+```
+
+    ## [1] "Members\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Asim ADEMOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Citizens for European Development of Bulgaria\n\n             Isabella ADINOLFI\n             Group of the European People's Party (Christian Democrats)\n             Italy Forza Italia\n\n             Matteo ADINOLFI\n             Identity and Democracy Group\n             Italy Lega\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Mazaly AGUILAR\n             European Conservatives and Reformists Group\n             Spain VOX\n\n             Clara AGUILERA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Spain Partido Socialista Obrero Español\n\n             Alviina ALAMETSÄ\n             Group of the Greens/European Free Alliance\n             Finland Vihreä liitto\n\n             João ALBUQUERQUE\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Portugal Partido Socialista\n\n             Alexander ALEXANDROV YORDANOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Union of Democratic Forces\n\n             François ALFONSI\n             Group of the Greens/European Free Alliance\n             France Régions et Peuples Solidaires\n\n             Atidzhe ALIEVA-VELI\n             Renew Europe Group\n             Bulgaria Movement for Rights and Freedoms\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n\n\n\n12/06/2024                                                                                              1\n"
+
+``` r
+cat(pdf[1])
+```
+
+    ## Members
+    ##              Magdalena ADAMOWICZ
+    ##              Group of the European People's Party (Christian Democrats)
+    ##              Poland Independent
+    ## 
+    ##              Asim ADEMOV
+    ##              Group of the European People's Party (Christian Democrats)
+    ##              Bulgaria Citizens for European Development of Bulgaria
+    ## 
+    ##              Isabella ADINOLFI
+    ##              Group of the European People's Party (Christian Democrats)
+    ##              Italy Forza Italia
+    ## 
+    ##              Matteo ADINOLFI
+    ##              Identity and Democracy Group
+    ##              Italy Lega
+    ## 
+    ##              Alex AGIUS SALIBA
+    ##              Group of the Progressive Alliance of Socialists and Democrats in the European Parliament
+    ##              Malta Partit Laburista
+    ## 
+    ##              Mazaly AGUILAR
+    ##              European Conservatives and Reformists Group
+    ##              Spain VOX
+    ## 
+    ##              Clara AGUILERA
+    ##              Group of the Progressive Alliance of Socialists and Democrats in the European Parliament
+    ##              Spain Partido Socialista Obrero Español
+    ## 
+    ##              Alviina ALAMETSÄ
+    ##              Group of the Greens/European Free Alliance
+    ##              Finland Vihreä liitto
+    ## 
+    ##              João ALBUQUERQUE
+    ##              Group of the Progressive Alliance of Socialists and Democrats in the European Parliament
+    ##              Portugal Partido Socialista
+    ## 
+    ##              Alexander ALEXANDROV YORDANOV
+    ##              Group of the European People's Party (Christian Democrats)
+    ##              Bulgaria Union of Democratic Forces
+    ## 
+    ##              François ALFONSI
+    ##              Group of the Greens/European Free Alliance
+    ##              France Régions et Peuples Solidaires
+    ## 
+    ##              Atidzhe ALIEVA-VELI
+    ##              Renew Europe Group
+    ##              Bulgaria Movement for Rights and Freedoms
+    ## 
+    ##              Abir AL-SAHLANI
+    ##              Renew Europe Group
+    ##              Sweden Centerpartiet
+    ## 
+    ## 
+    ## 
+    ## 
+    ## 12/06/2024                                                                                              1
+
+If we actually want to work with the data contained in the document, we
+need to clean it. Currently the vector `pdf` is broken up based on page
+limits, while it would be more informative to have each element
+correspond to one MEP. The most efficient way to change this split is to
+first merge all pages into a single string using the `paste()` function
+(using the same separator that we can observe between MEPs on the same
+page: a double new line `\n\n`), then split the resulting single string
+into a vector with one observation per MEP with the `str_split_1()`
+function (`str_split()` can handle multiple strings and returns a list;
+`str_split_1()` takes a single string and returns a vector). We can use
+the `as_tibble()` function to convert the vector into a tibble, just to
+make it easier to display in the data viewer.
+
+Looking at the resulting tibble, we can see two problems: not all rows
+correspond to MEPs, but some contain metadata such as dates, page
+numbers and data sources; and all information per MEP is in a single
+column. To fix the first issue, we can see that other than the first row
+that starts with a “Members” title, all rows containing MEP information
+start with some whitespace (this corresponds to the unimported image
+locations in the original file). Therefore if we remove the “Members”
+title from the string, all MEP rows will consistently start with
+whitespace, so we can remove any row that doesn’t start with whitespace.
+If we do so, that still leaves us with two remaining date specifications
+that weren’t filtered out: at a closer look, we find that these rows
+start with a new line. So if we remove new lines from the beginning of
+the string together with the “Members” title, our filter works fully as
+intended.
+
+To fix the second issue, we can use the `separate()` function to split
+the single column into multiple columns. Displaying an example cell in
+the console, it becomes clear that the separator between the name, the
+EU political group, and the country + national party is a new line
+character, so we can split based on that. The resulting three new
+columns all have a lot of leading and trailing whitespace, so we can
+remove that with the `str_trim()` function; the
+`across(varlist, function)` specification allows us to apply the same
+transformation to multiple variables at once.
+
+Lastly, the country and national party are currently in the same column
+because they are only separated by a regular space, not a new line like
+the other variables. Instead of trying to do both of these steps with a
+single `separate()` function, it is much easier to first separate based
+on new lines, then run another `separate()` function to split the
+country and national party into separate columns - one column for the
+first word, and one for the rest of the text. This time, we use an extra
+argument for the `separate()` function: `extra = "merge"`, which merges
+all remaining columns into the last one if there are more separators in
+the text than the number of new columns specified (by default they’d be
+dropped).
+
+``` r
+pdf_data <- pdf |> 
+  # merge all pages into one string
+  paste(collapse = "\n\n") |>
+  # split the string into a vector of MEPs
+  str_split_1("\n\n") |> 
+  # convert the vector into a tibble
+  as_tibble() |> 
+  # clean up string beginnings
+  mutate(value = str_remove_all(value, "^(Members|\\n)*")) |> 
+  # remove metadata rows (that don't start with whitespace)
+  filter(str_detect(value, "^\\s+")) |> 
+  # split based on new line separators
+  separate(value, into = c("name", "eu_group", "country"), sep = "\\n") |>
+  # remove leading and trailing whitespace from all variables
+  mutate(across(everything(), str_trim)) |>
+  # split the country variable into the first word and the remaining string
+  separate(country, into = c("country", "party"), sep = " ", extra = "merge")
+```
+
+To show that the data is now in a clean format, we can visualize the
+number of MEPs from each EU political group and from each country.
+
+``` r
+ggplot(pdf_data, aes(y = country, fill = eu_group)) +
+  geom_bar() +
+  xlab("Number of MEPs") + 
+  ylab(NULL) +
+  theme_light() +
+  theme(legend.position = "bottom")
+```
+
+![](scraping_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
