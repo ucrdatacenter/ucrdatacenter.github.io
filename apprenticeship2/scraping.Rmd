@@ -485,7 +485,7 @@ Currently the vector `pdf` is broken up based on page limits, while it would be 
 The most efficient way to change this split is to first merge all pages into a single string using the `paste()` function (using the same separator that we can observe between MEPs on the same page: a double new line `\n\n`), then split the resulting single string into a vector with one observation per MEP with the `str_split_1()` function (`str_split()` can handle multiple strings and returns a list; `str_split_1()` takes a single string and returns a vector).
 We can use the `as_tibble()` function to convert the vector into a tibble, just to make it easier to display in the data viewer.
 
-Looking at the resulting tibble, we can see two problems: not all rows correspond to MEPs, but some contain metadata such as dates, page numbers and data sources; and all information per MEP is in a single column.
+Looking at the resulting tibble, we can see two problems: not all rows correspond to MEPs, but some are empty strings or contain metadata such as dates, page numbers and data sources; and all information per MEP is in a single column.
 To fix the first issue, we can see that other than the first row that starts with a "Members" title, all rows containing MEP information start with some whitespace (this corresponds to the unimported image locations in the original file).
 Therefore if we remove the "Members" title from the string, all MEP rows will consistently start with whitespace, so we can remove any row that doesn't start with whitespace.
 If we do so, that still leaves us with two remaining date specifications that weren't filtered out: at a closer look, we find that these rows start with a new line.
@@ -521,11 +521,12 @@ pdf_data <- pdf |>
 
 To show that the data is now in a clean format, we can visualize the number of MEPs from each EU political group and from each country.
 
-```{r}
+```{r, fig.height=6}
 ggplot(pdf_data, aes(y = country, fill = eu_group)) +
   geom_bar() +
   xlab("Number of MEPs") + 
   ylab(NULL) +
+  guides(fill = guide_legend(title = NULL, ncol = 2)) +
   theme_light() +
   theme(legend.position = "bottom")
 ```

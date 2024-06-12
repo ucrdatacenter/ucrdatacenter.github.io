@@ -803,19 +803,19 @@ the `as_tibble()` function to convert the vector into a tibble, just to
 make it easier to display in the data viewer.
 
 Looking at the resulting tibble, we can see two problems: not all rows
-correspond to MEPs, but some contain metadata such as dates, page
-numbers and data sources; and all information per MEP is in a single
-column. To fix the first issue, we can see that other than the first row
-that starts with a “Members” title, all rows containing MEP information
-start with some whitespace (this corresponds to the unimported image
-locations in the original file). Therefore if we remove the “Members”
-title from the string, all MEP rows will consistently start with
-whitespace, so we can remove any row that doesn’t start with whitespace.
-If we do so, that still leaves us with two remaining date specifications
-that weren’t filtered out: at a closer look, we find that these rows
-start with a new line. So if we remove new lines from the beginning of
-the string together with the “Members” title, our filter works fully as
-intended.
+correspond to MEPs, but some are empty strings or contain metadata such
+as dates, page numbers and data sources; and all information per MEP is
+in a single column. To fix the first issue, we can see that other than
+the first row that starts with a “Members” title, all rows containing
+MEP information start with some whitespace (this corresponds to the
+unimported image locations in the original file). Therefore if we remove
+the “Members” title from the string, all MEP rows will consistently
+start with whitespace, so we can remove any row that doesn’t start with
+whitespace. If we do so, that still leaves us with two remaining date
+specifications that weren’t filtered out: at a closer look, we find that
+these rows start with a new line. So if we remove new lines from the
+beginning of the string together with the “Members” title, our filter
+works fully as intended.
 
 To fix the second issue, we can use the `separate()` function to split
 the single column into multiple columns. Displaying an example cell in
@@ -867,6 +867,7 @@ ggplot(pdf_data, aes(y = country, fill = eu_group)) +
   geom_bar() +
   xlab("Number of MEPs") + 
   ylab(NULL) +
+  guides(fill = guide_legend(title = NULL, ncol = 2)) +
   theme_light() +
   theme(legend.position = "bottom")
 ```
