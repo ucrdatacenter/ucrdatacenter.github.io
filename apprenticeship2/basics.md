@@ -356,27 +356,6 @@ function.
 student5 <- read_rds("data/student5.rds")
 ```
 
-A few notes about importing (and exporting) data:
-
-To export data from R, you can almost always use the `write_...()`
-function corresponding to the desired file format, e.g. `write_csv()` or
-`write_dta`. For Excel files the preferred export function is
-`read_xlsx()`. For other file format the generic `write()` function is
-useful; you can specify any file format, and if your input data is
-readable in the chosen format, the file will export properly. In all
-these `write_()` functions you need to specify the data you’d like to
-save (often in a pipe workflow) and the output file path including
-chosen file extension, with the exception of `write_dataset()` from
-`arrow`, where you specify the path to be a (new) folder, and you add a
-separate `format = "parquet"` argument. For example:
-
-``` r
-write_xlsx(student_male, "data/new_csv_data.csv")
-
-student_female |> 
-  write_dataset("data/new_parquet_data", format = "parquet")
-```
-
 A few notes regarding importing and exporting data:
 
 - Always make sure you know your current working directory and the
@@ -813,15 +792,71 @@ student_subset <- student1 |>
   rename(age = Student_Age)
 ```
 
+To prepare for the rest of the analysis, let’s create a new `data`
+object that keeps all observations, and converts some of the indicators
+to numeric and logical, and rename the relevant variables to convenient
+“snake case”:
+
+``` r
+data <- student |> 
+  mutate(scholarship = parse_number(Scholarship),
+         # ifelse contains a logical condition, a value if TRUE, and a value if FALSE
+         additional_work = ifelse(Additional_Work == "Yes", TRUE, FALSE),
+         reading = ifelse(Reading == "Yes", TRUE, FALSE),
+         notes = ifelse(Notes == "Yes", TRUE, FALSE),
+         listening = ifelse(Listening_in_Class == "Yes", TRUE, FALSE),
+         # case_when is an expansion of ifelse: it allows multiple conditions
+         # the value after the tilde (~) is the value if the condition is TRUE
+         grade = case_when(
+           Grade == "Fail" ~ 0,
+           Grade == "DD" ~ 1,
+           Grade == "DC" ~ 1.5,
+           Grade == "CC" ~ 2,
+           Grade == "CB" ~ 3,
+           Grade == "BB" ~ 3,
+           Grade == "BA" ~ 4,
+           Grade == "AA" ~ 4
+         )) |> 
+  rename(id = Id, age = Student_Age) |> 
+  select(id, age, scholarship, additional_work, reading, notes, listening, grade)
+```
+
 ## Exploratory analysis
 
 ### Summary statistics
 
 <!-- central tendencies, dispersion, correlation -->
 
+**TBA**
+
 ### Data visualization with `ggplot2`
 
-<!-- univariate, bivariate, densities -->
+This section introduces data visualization in R, primarily using the
+`ggplot2` package (included in `tidyverse`). The tutorial is based on
+[*A ggplot2 Tutorial for Beautiful Plotting in
+R*](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+by Cédric Scherer.
+
+**The logic of `ggplot2`**
+
+The `ggplot2` package builds up figures in layers, by adding elements
+one at a time. You always start with a base `ggplot` where you specify
+the data used by the plot and possibly the variables to place on each
+axis. These variables are specified within an `aes()` function, which
+stands for aesthetics.
+
+The `ggplot()` function in itself only creates a blank canvas; we need
+to add so-called geoms to actually plot the data. You can choose from a
+wide range of geoms, and also use multiple geoms in one plot. You can
+add elements to a `ggplot` objects with the `+` sign. You should think
+of the `+` sign in `ggplot` workflows in the same way you think of the
+pipe operators in data wrangling workflows.
+
+**Univariate plots**
+
+**Bivariate plots**
+
+**Customizing plot features**
 
 ## Hypothesis testing / modelling
 
