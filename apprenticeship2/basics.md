@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nR basics"
 subtitle: "June 2024" 
-date: "Last updated: 2024-06-12"
+date: "Last updated: 2024-06-14"
 output:
   md_document:
     variant: gfm
@@ -26,6 +26,8 @@ output:
     - [Creating new variables](#creating-new-variables)
     - [Sorting the data](#sorting-the-data)
     - [Renaming variables](#renaming-variables)
+    - [Categorical variables as
+      factors](#categorical-variables-as-factors)
     - [Data cleaning as a single
       pipeline](#data-cleaning-as-a-single-pipeline)
   - [Exploratory analysis](#exploratory-analysis)
@@ -33,6 +35,18 @@ output:
     - [Data visualization with
       `ggplot2`](#data-visualization-with-ggplot2)
   - [Hypothesis testing / modelling](#hypothesis-testing-modelling)
+    - [t-tests](#t-tests)
+    - [Correlation test](#correlation-test)
+    - [Simple regression](#simple-regression)
+    - [Multiple regression](#multiple-regression)
+    - [ANOVA](#anova)
+    - [Chi-square test](#chi-square-test)
+    - [Logistic regression](#logistic-regression)
+    - [Non-parametric tests](#non-parametric-tests)
+    - [Effect size calculations](#effect-size-calculations)
+    - [PCA and factor analysis](#pca-and-factor-analysis)
+    - [Repeated measures and mixed design
+      ANOVA](#repeated-measures-and-mixed-design-anova)
 - [Other resources](#other-resources)
 
 # Installation and setup: prepare in advance
@@ -777,6 +791,33 @@ student |>
     ## #   weekly_hours <dbl>, Attendance <chr>, Reading <chr>, Notes <chr>,
     ## #   Listening_in_Class <chr>, Project_work <chr>, Grade <chr>
 
+### Categorical variables as factors
+
+It is often useful to clearly define the levels of a categorical
+variable, especially if these levels have a meaningful ordering. For
+unordered categories, R provides the data type `factor`, while for
+ordered variables the relevant data type is `ordered`. Factor and
+ordered values appear as character strings when viewed, but are treated
+as numbers with labels internally, which makes it easier to show
+descriptives of the variable and include it in models. For example, we
+can define `High_School_Type` as a factor with three levels and
+`Attendance` as ordered with the `factor()` and `ordered()` functions.
+If we don’t specify the levels of the factor explicitly, then the levels
+will be sorted alphabetically.
+
+``` r
+student |> 
+  mutate(High_School_Type = factor(High_School_Type),
+         Attendance = ordered(Attendance, levels = c("Never", "Sometimes", "Always"))) |> 
+  select(High_School_Type, Attendance) |> 
+  # view variable types and levels by looking at the structure of the data
+  str()
+```
+
+    ## tibble [145 × 2] (S3: tbl_df/tbl/data.frame)
+    ##  $ High_School_Type: Factor w/ 3 levels "Other","Private",..: 1 1 3 2 2 3 3 3 1 3 ...
+    ##  $ Attendance      : Ord.factor w/ 3 levels "Never"<"Sometimes"<..: 3 3 1 3 3 3 3 2 3 1 ...
+
 ### Data cleaning as a single pipeline
 
 Until now we didn’t save any of our data wrangling steps as new objects,
@@ -825,9 +866,272 @@ data <- student |>
 
 ### Summary statistics
 
-<!-- central tendencies, dispersion, correlation -->
+To get a descriptive statistic of a single variable in a tibble, we can
+use that variable as an argument to a relevant function (using `$` to
+refer to a variable in a tibble).
 
-**TBA**
+``` r
+mean(data$age)
+```
+
+    ## [1] 19.68276
+
+``` r
+median(data$age)
+```
+
+    ## [1] 19
+
+``` r
+sd(data$grade)
+```
+
+    ## [1] 1.281705
+
+To get the frequencies of a categorical variable, we can use the
+`count()` function, with the `sort = TRUE` argument returning the values
+in descending frequency. `count()` is a tidy function that works well
+with pipe workflows and can count the joint frequencies of multiple
+variables.
+
+``` r
+# frequencies of a single variable
+count(data, reading)
+```
+
+    ## # A tibble: 2 × 2
+    ##   reading     n
+    ##   <lgl>   <int>
+    ## 1 FALSE      76
+    ## 2 TRUE       69
+
+``` r
+# joint frequency distribution
+count(data, reading, listening, notes)
+```
+
+    ## # A tibble: 8 × 4
+    ##   reading listening notes     n
+    ##   <lgl>   <lgl>     <lgl> <int>
+    ## 1 FALSE   FALSE     FALSE    14
+    ## 2 FALSE   FALSE     TRUE     23
+    ## 3 FALSE   TRUE      FALSE    20
+    ## 4 FALSE   TRUE      TRUE     19
+    ## 5 TRUE    FALSE     FALSE    19
+    ## 6 TRUE    FALSE     TRUE     14
+    ## 7 TRUE    TRUE      FALSE    15
+    ## 8 TRUE    TRUE      TRUE     21
+
+To get the correlation coefficient between two variables, we can use the
+`cor()` function in the same way we used other descriptives such as
+`mean()`.
+
+``` r
+cor(data$age, data$grade)
+```
+
+    ## [1] 0.1856025
+
+The easiest way to get summary statistics of all variables in a tibble
+is with the `summary()` function: this function shows the distribution
+of numeric variables, the frequencies of categorical variables, and the
+number of missing values for each variable.
+
+``` r
+summary(data)
+```
+
+    ##        id            age         scholarship     additional_work
+    ##  Min.   :5001   Min.   :18.00   Min.   : 25.00   Mode :logical  
+    ##  1st Qu.:5037   1st Qu.:18.00   1st Qu.: 50.00   FALSE:96       
+    ##  Median :5073   Median :19.00   Median : 50.00   TRUE :49       
+    ##  Mean   :5073   Mean   :19.68   Mean   : 64.76                  
+    ##  3rd Qu.:5109   3rd Qu.:21.00   3rd Qu.: 75.00                  
+    ##  Max.   :5145   Max.   :26.00   Max.   :100.00                  
+    ##                                 NA's   :1                       
+    ##   reading          notes         listening           grade      
+    ##  Mode :logical   Mode :logical   Mode :logical   Min.   :0.000  
+    ##  FALSE:76        FALSE:68        FALSE:70        1st Qu.:1.500  
+    ##  TRUE :69        TRUE :77        TRUE :75        Median :3.000  
+    ##                                                  Mean   :2.755  
+    ##                                                  3rd Qu.:4.000  
+    ##                                                  Max.   :4.000  
+    ## 
+
+The `summary()` function is useful for viewing the data in the Console,
+but doesn’t export to outside of R nicely. There are a few packages
+available for generating simple summary statistics tables that contain
+information about the central tendencies and dispersion of the data,
+such as `vtable` or `stargazer` (with many more available). These
+packages all have different default settings, output types, and
+customization options.
+
+``` r
+library(vtable)
+library(stargazer)
+
+# vtable
+
+data |> 
+  # by default creates HTML table; out = "csv" returns a dataframe
+  # can change which descriptives to keep
+  # can report group-level descriptives
+  sumtable(out = "csv", group = "reading")
+```
+
+    ##           Variable  N Mean  SD   N Mean  SD
+    ## 1          reading No          Yes         
+    ## 2               id 76 5080  44  69 5066  39
+    ## 3              age 76   20 2.3  69   20 1.7
+    ## 4      scholarship 75   65  18  69   64  21
+    ## 5  additional_work 76           69         
+    ## 6           ... No 47  62%      49  71%    
+    ## 7          ... Yes 29  38%      20  29%    
+    ## 8            notes 76           69         
+    ## 9           ... No 34  45%      34  49%    
+    ## 10         ... Yes 42  55%      35  51%    
+    ## 11       listening 76           69         
+    ## 12          ... No 37  49%      33  48%    
+    ## 13         ... Yes 39  51%      36  52%    
+    ## 14           grade 76  2.5 1.3  69    3 1.2
+
+``` r
+# stargazer
+
+data |> 
+  # input needs to be a data.frame, not tibble
+  as.data.frame() |> 
+  # default output is LaTeX table
+  # can be exported with the out argument or a following write() function
+  # can change which descriptives to keep or omit
+  # limited to numeric variables
+  stargazer(type = "text")
+```
+
+    ## 
+    ## ==================================================
+    ## Statistic        N    Mean    St. Dev.  Min   Max 
+    ## --------------------------------------------------
+    ## id              145 5,073.000  42.002  5,001 5,145
+    ## age             145  19.683    1.992    18    26  
+    ## scholarship     144  64.757    19.480   25    100 
+    ## additional_work 145   0.338    0.475     0     1  
+    ## reading         145   0.476    0.501     0     1  
+    ## notes           145   0.531    0.501     0     1  
+    ## listening       145   0.517    0.501     0     1  
+    ## grade           145   2.755    1.282   0.000 4.000
+    ## --------------------------------------------------
+
+Alternatively, we can define our own summary statistics with the `dplyr`
+functions `group_by()` and `summarize()`, which also easily allows the
+calculation of more complex descriptive statistics, including grouped
+statistics based on categorical variables. The `across()` helper
+function in the `summarize()` function can be used to apply the same
+calculation to multiple variables at once: it requires the first
+argument as the list of variables (potentially with the help of selector
+functions) and the function we’d like to apply.
+
+``` r
+# tibble of mean and sd for a single variable
+data |> 
+  summarize(mean_grade = mean(grade),
+            sd_grade = sd(grade))
+```
+
+    ## # A tibble: 1 × 2
+    ##   mean_grade sd_grade
+    ##        <dbl>    <dbl>
+    ## 1       2.76     1.28
+
+``` r
+# mean and sd of age and grade variables, grouped by reading
+data |> 
+  group_by(reading) |> 
+  # .names allows overriding default option to reuse original column names
+  summarize(across(c(age, grade), mean, .names = "mean_{.col}"),
+            across(c(age, grade), sd, .names = "sd_{.col}"))
+```
+
+    ## # A tibble: 2 × 5
+    ##   reading mean_age mean_grade sd_age sd_grade
+    ##   <lgl>      <dbl>      <dbl>  <dbl>    <dbl>
+    ## 1 FALSE       19.7       2.54   2.27     1.34
+    ## 2 TRUE        19.7       2.99   1.66     1.18
+
+``` r
+# mean of all numeric variables, grouped by reading
+data |> 
+  group_by(reading) |> 
+  # where() is a helper function evaluating the contents of variables
+  # specify full function call with ~ at the start and .x replacing the variable name
+  summarize(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))
+```
+
+    ## # A tibble: 2 × 5
+    ##   reading    id   age scholarship grade
+    ##   <lgl>   <dbl> <dbl>       <dbl> <dbl>
+    ## 1 FALSE   5080.  19.7        65    2.54
+    ## 2 TRUE    5066.  19.7        64.5  2.99
+
+``` r
+# mean of all variables with names containing the letter a
+data |> 
+  summarize(across(contains("a"), ~mean(.x, na.rm = TRUE)))
+```
+
+    ## # A tibble: 1 × 5
+    ##     age scholarship additional_work reading grade
+    ##   <dbl>       <dbl>           <dbl>   <dbl> <dbl>
+    ## 1  19.7        64.8           0.338   0.476  2.76
+
+``` r
+# sample size of each group and correlation between age and grade per group
+data |> 
+  group_by(reading, listening) |> 
+  summarize(age_grade_correlation = cor(age, grade),
+            n = n())
+```
+
+    ## # A tibble: 4 × 4
+    ## # Groups:   reading [2]
+    ##   reading listening age_grade_correlation     n
+    ##   <lgl>   <lgl>                     <dbl> <int>
+    ## 1 FALSE   FALSE                    0.267     37
+    ## 2 FALSE   TRUE                     0.334     39
+    ## 3 TRUE    FALSE                    0.0720    33
+    ## 4 TRUE    TRUE                    -0.0777    36
+
+The list of helper functions that can be used instead of listing which
+variables to include/exclude is in the help file accessible with
+`?dplyr_tidy_select`.
+
+To export a descriptive statistics table, we can use the relevant
+`write...()` function shown in the data importing section
+(e.g. `write_csv()` for tibbles, general `write()` for HTML, plain text,
+LaTeX, other general types). CSV tables already copy nicely into e.g. MS
+Word. If using LaTeX or RMarkdown, the `knitr` package contains the
+`kable()` function that directly improves on the design of the table
+without needing formatting afterwards.
+
+``` r
+data |> 
+  count(reading, listening) |> 
+  write_csv("table1.csv")
+```
+
+``` r
+data |> 
+  count(reading, listening) |> 
+  # knitr:: allows using function from the package without library(knitr)
+  knitr::kable()
+```
+
+| reading | listening |   n |
+|:--------|:----------|----:|
+| FALSE   | FALSE     |  37 |
+| FALSE   | TRUE      |  39 |
+| TRUE    | FALSE     |  33 |
+| TRUE    | TRUE      |  36 |
 
 ### Data visualization with `ggplot2`
 
@@ -866,21 +1170,21 @@ ggplot(data, aes(x = age)) +
   geom_histogram(binwidth = 1, color = "black", fill = "lightblue")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
 
 ``` r
 ggplot(data, aes(x = age)) +
   geom_density(fill = "lightblue", alpha = 0.5)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-27-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-36-2.png)<!-- -->
 
 ``` r
 ggplot(data, aes(x = age)) +
   geom_boxplot()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-27-3.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-36-3.png)<!-- -->
 
 To compare the frequencies of discrete variables, you can use a bar
 plot.
@@ -890,7 +1194,7 @@ ggplot(data, aes(x = additional_work)) +
   geom_bar()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
 
 **Bivariate plots**
 
@@ -903,7 +1207,7 @@ ggplot(data, aes(x = age, y = grade)) +
   geom_point()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
 
 Fitting a smooth curve or a linear regression line to the scatter plot
 can help you see the overall trend in the data.
@@ -914,7 +1218,7 @@ ggplot(data, aes(x = age, y = grade)) +
   geom_smooth()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
 
 ``` r
 ggplot(data, aes(x = age, y = grade)) +
@@ -923,7 +1227,7 @@ ggplot(data, aes(x = age, y = grade)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-30-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-39-2.png)<!-- -->
 
 If points overlap a lot, it might be useful to add some jitter,
 i.e. random noise to distribute the points, by using `geom_jitter()`
@@ -935,7 +1239,7 @@ ggplot(data, aes(x = age, y = grade)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
 
 Categorical variables can be used to show the distribution of continuous
 variables by group. You can put a categorical variable on one of the
@@ -952,14 +1256,14 @@ ggplot(data, aes(x = grade, y = additional_work)) +
   geom_boxplot()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
 
 ``` r
 ggplot(data) +
   geom_density(aes(x = grade, fill = additional_work), alpha = 0.5)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-32-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-41-2.png)<!-- -->
 
 To plot two categorical variables, you can use a bar plot with an extra
 grouping argument. The next plot shows the number of students who do the
@@ -971,7 +1275,7 @@ ggplot(data, aes(x = reading, fill = notes)) +
   geom_bar()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-42-1.png)<!-- -->
 
 ``` r
 # to put the bars next to each other instead of on top, specify the position
@@ -979,7 +1283,7 @@ ggplot(data, aes(x = reading, fill = notes)) +
   geom_bar(position = "dodge")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-33-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-42-2.png)<!-- -->
 
 Alternatively, you can use the `count()` function to count the number of
 observations in each possible combination of the two variables, and plot
@@ -996,7 +1300,7 @@ data |>
   geom_text(aes(label = n), color = "white")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
 
 **Customizing plot features**
 
@@ -1014,7 +1318,7 @@ ggplot(data, aes(x = grade, y = reading)) +
        y = "Student does the reading?")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-44-1.png)<!-- -->
 
 You can also change the appearance of the plot by changing the theme,
 the color palette, and the axis scales.
@@ -1033,7 +1337,7 @@ ggplot(data, aes(x = grade, y = reading)) +
   theme_light()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-36-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-45-1.png)<!-- -->
 
 ``` r
 ggplot(data, aes(x = reading, fill = notes)) +
@@ -1046,7 +1350,7 @@ ggplot(data, aes(x = reading, fill = notes)) +
   theme_light()
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-36-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-45-2.png)<!-- -->
 
 You can change the theme in your entire R session by using the
 `theme_set()` function. In that case, you don’t need to include the
@@ -1076,7 +1380,7 @@ ggplot(data, aes(x = age, y = grade)) +
   labs(caption = "The red point corresponds to the student without a scholarship")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-38-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-47-1.png)<!-- -->
 
 **Multiple plots**
 
@@ -1109,7 +1413,7 @@ ggplot(data, aes(x = age)) +
   facet_wrap(~reading)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
 
 ``` r
 ggplot(data, aes(x = age)) +
@@ -1118,7 +1422,7 @@ ggplot(data, aes(x = age)) +
   facet_wrap(~reading, ncol = 1, scales = "free")
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-39-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-48-2.png)<!-- -->
 
 If you would like to group your data based on two variables, you can use
 `facet_grid()`, separating your two variables with a tilde. In this
@@ -1135,7 +1439,7 @@ data |>
   facet_grid(~reading~notes)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-40-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
 
 *Combining independent plots with `patchwork`*
 
@@ -1171,21 +1475,21 @@ p3 <- ggplot(data, aes(x = grade, fill = listening)) +
 p1 + p2 + p3
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
 
 ``` r
 # Combine temp and ozone vertically
 p1 / p2 / p3
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-41-2.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-50-2.png)<!-- -->
 
 ``` r
 # Combine the plots vertically with plot_layout
 p1 + p2 + p3 + plot_layout(ncol = 1)
 ```
 
-![](basics_files/figure-gfm/unnamed-chunk-41-3.png)<!-- -->
+![](basics_files/figure-gfm/unnamed-chunk-50-3.png)<!-- -->
 
 **Saving plots**
 
@@ -1214,8 +1518,315 @@ ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
 
 ## Hypothesis testing / modelling
 
-<!-- t-tests, simple regression, ANOVA, chi-square, correlation test  -->
-<!-- multiple regression (+ extra specification), nonparametric tests, power and effect size, logistic regression, PCA, factor analysis, repeated measures ANOVA, mixed design ANOVA -->
+Most of the simple statistical tests are from base R, so they don’t rely
+on tidy principles, but many are compatible with tidy workflows to at
+least some extent. In the following we’ll cover some of the key methods
+that show up in methods and statistics courses at UCR. In addition, the
+`tidy()` function from the `broom` package converts most text output
+into simple tibblesy, which are useful for exporting and visualizing
+results.
+
+### t-tests
+
+``` r
+library(broom) # for tidy()
+
+# simple t-test (H0: mean=mu)
+t.test(data$scholarship, mu = 50)
+```
+
+    ## 
+    ##  One Sample t-test
+    ## 
+    ## data:  data$scholarship
+    ## t = 9.0903, df = 143, p-value = 7.493e-16
+    ## alternative hypothesis: true mean is not equal to 50
+    ## 95 percent confidence interval:
+    ##  61.54805 67.96584
+    ## sample estimates:
+    ## mean of x 
+    ##  64.75694
+
+``` r
+# use data argument instead of data$... to work in pipe workflows
+data |> 
+  # grade ~ reading is formula specification: variable ~ group
+  # _ is placeholder if the pipe input is not the first argument of the next function
+  t.test(grade ~ reading, alternative = "greater", data = _)
+```
+
+    ## 
+    ##  Welch Two Sample t-test
+    ## 
+    ## data:  grade by reading
+    ## t = -2.1671, df = 142.85, p-value = 0.9841
+    ## alternative hypothesis: true difference in means between group FALSE and group TRUE is greater than 0
+    ## 95 percent confidence interval:
+    ##  -0.7995718        Inf
+    ## sample estimates:
+    ## mean in group FALSE  mean in group TRUE 
+    ##            2.539474            2.992754
+
+``` r
+data |> 
+  t.test(grade ~ reading, alternative = "greater", data = _) |> 
+  tidy()
+```
+
+    ## # A tibble: 1 × 10
+    ##   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+    ##      <dbl>     <dbl>     <dbl>     <dbl>   <dbl>     <dbl>    <dbl>     <dbl>
+    ## 1   -0.453      2.54      2.99     -2.17   0.984      143.   -0.800       Inf
+    ## # ℹ 2 more variables: method <chr>, alternative <chr>
+
+### Correlation test
+
+``` r
+cor.test( ~ grade + age, data = data)
+```
+
+    ## 
+    ##  Pearson's product-moment correlation
+    ## 
+    ## data:  grade and age
+    ## t = 2.2587, df = 143, p-value = 0.02541
+    ## alternative hypothesis: true correlation is not equal to 0
+    ## 95 percent confidence interval:
+    ##  0.02329811 0.33837421
+    ## sample estimates:
+    ##       cor 
+    ## 0.1856025
+
+### Simple regression
+
+``` r
+# assign outcome to object
+fit <- lm(grade ~ age, data = data)
+
+# extensive result summary
+fit |> summary()
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = grade ~ age, data = data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.9125 -1.0542  0.3264  1.0875  1.4458 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)  
+    ## (Intercept)  0.40464    1.04592   0.387   0.6994  
+    ## age          0.11942    0.05287   2.259   0.0254 *
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.264 on 143 degrees of freedom
+    ## Multiple R-squared:  0.03445,    Adjusted R-squared:  0.0277 
+    ## F-statistic: 5.102 on 1 and 143 DF,  p-value: 0.02541
+
+``` r
+# tidy coefficients
+fit |> tidy()
+```
+
+    ## # A tibble: 2 × 5
+    ##   term        estimate std.error statistic p.value
+    ##   <chr>          <dbl>     <dbl>     <dbl>   <dbl>
+    ## 1 (Intercept)    0.405    1.05       0.387  0.699 
+    ## 2 age            0.119    0.0529     2.26   0.0254
+
+``` r
+# display-ready table
+fit |> 
+  stargazer(type = "text", title = "Grade - agre regression results")
+```
+
+    ## 
+    ## Grade - agre regression results
+    ## ===============================================
+    ##                         Dependent variable:    
+    ##                     ---------------------------
+    ##                                grade           
+    ## -----------------------------------------------
+    ## age                           0.119**          
+    ##                               (0.053)          
+    ##                                                
+    ## Constant                       0.405           
+    ##                               (1.046)          
+    ##                                                
+    ## -----------------------------------------------
+    ## Observations                    145            
+    ## R2                             0.034           
+    ## Adjusted R2                    0.028           
+    ## Residual Std. Error      1.264 (df = 143)      
+    ## F Statistic            5.102** (df = 1; 143)   
+    ## ===============================================
+    ## Note:               *p<0.1; **p<0.05; ***p<0.01
+
+### Multiple regression
+
+``` r
+lm(grade ~ age + scholarship, data = data) |> summary()
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = grade ~ age + scholarship, data = data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.8845 -1.0609  0.3735  1.1478  1.5025 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)  
+    ## (Intercept) 0.048581   1.292374   0.038    0.970  
+    ## age         0.129004   0.056549   2.281    0.024 *
+    ## scholarship 0.002536   0.005788   0.438    0.662  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.271 on 141 degrees of freedom
+    ##   (1 observation deleted due to missingness)
+    ## Multiple R-squared:  0.03636,    Adjusted R-squared:  0.0227 
+    ## F-statistic:  2.66 on 2 and 141 DF,  p-value: 0.07343
+
+``` r
+# all variables in data
+lm(grade ~ ., data = data) |> summary()
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = grade ~ ., data = data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.0882 -1.0476  0.2493  0.9597  2.0916 
+    ## 
+    ## Coefficients:
+    ##                      Estimate Std. Error t value Pr(>|t|)   
+    ## (Intercept)         35.267125  13.432207   2.626  0.00964 **
+    ## id                  -0.007013   0.002635  -2.662  0.00870 **
+    ## age                  0.118805   0.056971   2.085  0.03891 * 
+    ## scholarship          0.006236   0.005891   1.059  0.29167   
+    ## additional_workTRUE  0.064106   0.229697   0.279  0.78060   
+    ## readingTRUE          0.373299   0.209859   1.779  0.07750 . 
+    ## notesTRUE            0.030760   0.213618   0.144  0.88572   
+    ## listeningTRUE        0.200443   0.212636   0.943  0.34753   
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.236 on 136 degrees of freedom
+    ##   (1 observation deleted due to missingness)
+    ## Multiple R-squared:  0.1208, Adjusted R-squared:  0.07553 
+    ## F-statistic: 2.669 on 7 and 136 DF,  p-value: 0.0128
+
+``` r
+# interactions
+lm(grade ~ age * scholarship, data = data) |> summary()
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = grade ~ age * scholarship, data = data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.8931 -1.0857  0.2747  1.1853  1.5539 
+    ## 
+    ## Coefficients:
+    ##                  Estimate Std. Error t value Pr(>|t|)
+    ## (Intercept)     -2.554899   3.814695  -0.670    0.504
+    ## age              0.262316   0.192274   1.364    0.175
+    ## scholarship      0.046368   0.060690   0.764    0.446
+    ## age:scholarship -0.002266   0.003123  -0.726    0.469
+    ## 
+    ## Residual standard error: 1.273 on 140 degrees of freedom
+    ##   (1 observation deleted due to missingness)
+    ## Multiple R-squared:  0.03997,    Adjusted R-squared:  0.0194 
+    ## F-statistic: 1.943 on 3 and 140 DF,  p-value: 0.1254
+
+### ANOVA
+
+``` r
+anova_fit <- aov(grade ~ reading, data = data)
+
+summary(anova_fit)
+```
+
+    ##              Df Sum Sq Mean Sq F value Pr(>F)  
+    ## reading       1   7.43   7.431   4.638  0.033 *
+    ## Residuals   143 229.13   1.602                 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+tidy(anova_fit)
+```
+
+    ## # A tibble: 2 × 6
+    ##   term         df  sumsq meansq statistic p.value
+    ##   <chr>     <dbl>  <dbl>  <dbl>     <dbl>   <dbl>
+    ## 1 reading       1   7.43   7.43      4.64  0.0330
+    ## 2 Residuals   143 229.     1.60     NA    NA
+
+``` r
+# equivalent regression
+lm(grade ~ reading, data = data) |> summary()
+```
+
+    ## 
+    ## Call:
+    ## lm(formula = grade ~ reading, data = data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -2.9928 -1.0395  0.4605  1.0072  1.4605 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)   2.5395     0.1452  17.490   <2e-16 ***
+    ## readingTRUE   0.4533     0.2105   2.153    0.033 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.266 on 143 degrees of freedom
+    ## Multiple R-squared:  0.03141,    Adjusted R-squared:  0.02464 
+    ## F-statistic: 4.638 on 1 and 143 DF,  p-value: 0.03296
+
+### Chi-square test
+
+``` r
+chisq.test(data$reading)
+```
+
+    ## 
+    ##  Chi-squared test for given probabilities
+    ## 
+    ## data:  data$reading
+    ## X-squared = 76, df = 144, p-value = 1
+
+``` r
+chisq.test(data$reading, data$notes)
+```
+
+    ## 
+    ##  Pearson's Chi-squared test with Yates' continuity correction
+    ## 
+    ## data:  data$reading and data$notes
+    ## X-squared = 0.14464, df = 1, p-value = 0.7037
+
+### Logistic regression
+
+### Non-parametric tests
+
+### Effect size calculations
+
+### PCA and factor analysis
+
+### Repeated measures and mixed design ANOVA
 
 # Other resources
 

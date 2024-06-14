@@ -351,6 +351,23 @@ student |>
   rename(age = Student_Age, weekly_hours = Weekly_Study_Hours)
 ```
 
+### Categorical variables as factors
+
+It is often useful to clearly define the levels of a categorical variable, especially if these levels have a meaningful ordering.
+For unordered categories, R provides the data type `factor`, while for ordered variables the relevant data type is `ordered`.
+Factor and ordered values appear as character strings when viewed, but are treated as numbers with labels internally, which makes it easier to show descriptives of the variable and include it in models.
+For example, we can define `High_School_Type` as a factor with three levels and `Attendance` as ordered with the `factor()` and `ordered()` functions.
+If we don't specify the levels of the factor explicitly, then the levels will be sorted alphabetically.
+
+```{r}
+student |> 
+  mutate(High_School_Type = factor(High_School_Type),
+         Attendance = ordered(Attendance, levels = c("Never", "Sometimes", "Always"))) |> 
+  select(High_School_Type, Attendance) |> 
+  # view variable types and levels by looking at the structure of the data
+  str()
+```
+
 ### Data cleaning as a single pipeline
 
 Until now we didn't save any of our data wrangling steps as new objects, so the original `student1` object is still unchanged.
@@ -394,9 +411,117 @@ data <- student |>
 
 ### Summary statistics
 
-<!-- central tendencies, dispersion, correlation -->
+To get a descriptive statistic of a single variable in a tibble, we can use that variable as an argument to a relevant function (using `$` to refer to a variable in a tibble).
 
-**TBA**
+```{r}
+mean(data$age)
+median(data$age)
+sd(data$grade)
+```
+
+To get the frequencies of a categorical variable, we can use the `count()` function, with the `sort = TRUE` argument returning the values in descending frequency.
+`count()` is a tidy function that works well with pipe workflows and can count the joint frequencies of multiple variables.
+
+```{r}
+# frequencies of a single variable
+count(data, reading)
+
+# joint frequency distribution
+count(data, reading, listening, notes)
+```
+
+To get the correlation coefficient between two variables, we can use the `cor()` function in the same way we used other descriptives such as `mean()`.
+
+```{r}
+cor(data$age, data$grade)
+```
+
+The easiest way to get summary statistics of all variables in a tibble is with the `summary()` function: this function shows the distribution of numeric variables, the frequencies of categorical variables, and the number of missing values for each variable.
+
+```{r}
+summary(data)
+```
+
+The `summary()` function is useful for viewing the data in the Console, but doesn't export to outside of R nicely.
+There are a few packages available for generating simple summary statistics tables that contain information about the central tendencies and dispersion of the data, such as `vtable` or `stargazer` (with many more available).
+These packages all have different default settings, output types, and customization options.
+
+```{r}
+library(vtable)
+library(stargazer)
+
+# vtable
+
+data |> 
+  # by default creates HTML table; out = "csv" returns a dataframe
+  # can change which descriptives to keep
+  # can report group-level descriptives
+  sumtable(out = "csv", group = "reading")
+
+# stargazer
+
+data |> 
+  # input needs to be a data.frame, not tibble
+  as.data.frame() |> 
+  # default output is LaTeX table
+  # can be exported with the out argument or a following write() function
+  # can change which descriptives to keep or omit
+  # limited to numeric variables
+  stargazer(type = "text")
+```
+
+Alternatively, we can define our own summary statistics with the `dplyr` functions `group_by()` and `summarize()`, which also easily allows the calculation of more complex descriptive statistics, including grouped statistics based on categorical variables.
+The `across()` helper function in the `summarize()` function can be used to apply the same calculation to multiple variables at once: it requires the first argument as the list of variables (potentially with the help of selector functions) and the function we'd like to apply.
+
+```{r}
+# tibble of mean and sd for a single variable
+data |> 
+  summarize(mean_grade = mean(grade),
+            sd_grade = sd(grade))
+
+# mean and sd of age and grade variables, grouped by reading
+data |> 
+  group_by(reading) |> 
+  # .names allows overriding default option to reuse original column names
+  summarize(across(c(age, grade), mean, .names = "mean_{.col}"),
+            across(c(age, grade), sd, .names = "sd_{.col}"))
+
+# mean of all numeric variables, grouped by reading
+data |> 
+  group_by(reading) |> 
+  # where() is a helper function evaluating the contents of variables
+  # specify full function call with ~ at the start and .x replacing the variable name
+  summarize(across(where(is.numeric), ~mean(.x, na.rm = TRUE)))
+
+# mean of all variables with names containing the letter a
+data |> 
+  summarize(across(contains("a"), ~mean(.x, na.rm = TRUE)))
+
+# sample size of each group and correlation between age and grade per group
+data |> 
+  group_by(reading, listening) |> 
+  summarize(age_grade_correlation = cor(age, grade),
+            n = n())
+```
+
+The list of helper functions that can be used instead of listing which variables to include/exclude is in the help file accessible with `?dplyr_tidy_select`.
+
+To export a descriptive statistics table, we can use the relevant `write...()` function shown in the data importing section (e.g. `write_csv()` for tibbles, general `write()` for HTML, plain text, LaTeX, other general types).
+CSV tables already copy nicely into e.g. MS Word.
+If using LaTeX or RMarkdown, the `knitr` package contains the `kable()` function that directly improves on the design of the table without needing formatting afterwards.
+
+```{r, eval=FALSE}
+data |> 
+  count(reading, listening) |> 
+  write_csv("table1.csv")
+```
+```{r}
+data |> 
+  count(reading, listening) |> 
+  # knitr:: allows using function from the package without library(knitr)
+  knitr::kable()
+```
+
 
 ### Data visualization with `ggplot2`
 
@@ -666,8 +791,93 @@ ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
 
 ## Hypothesis testing / modelling
 
-<!-- t-tests, simple regression, ANOVA, chi-square, correlation test  -->
-<!-- multiple regression (+ extra specification), nonparametric tests, power and effect size, logistic regression, PCA, factor analysis, repeated measures ANOVA, mixed design ANOVA -->
+Most of the simple statistical tests are from base R, so they don't rely on tidy principles, but many are compatible with tidy workflows to at least some extent.
+In the following we'll cover some of the key methods that show up in methods and statistics courses at UCR.
+In addition, the `tidy()` function from the `broom` package converts most text output into simple tibblesy, which are useful for exporting and visualizing results.
+
+### t-tests
+
+```{r}
+library(broom) # for tidy()
+
+# simple t-test (H0: mean=mu)
+t.test(data$scholarship, mu = 50)
+
+# use data argument instead of data$... to work in pipe workflows
+data |> 
+  # grade ~ reading is formula specification: variable ~ group
+  # _ is placeholder if the pipe input is not the first argument of the next function
+  t.test(grade ~ reading, alternative = "greater", data = _)
+
+data |> 
+  t.test(grade ~ reading, alternative = "greater", data = _) |> 
+  tidy()
+```
+
+### Correlation test
+
+```{r}
+cor.test( ~ grade + age, data = data)
+```
+
+
+### Simple regression
+
+```{r}
+# assign outcome to object
+fit <- lm(grade ~ age, data = data)
+
+# extensive result summary
+fit |> summary()
+
+# tidy coefficients
+fit |> tidy()
+
+# display-ready table
+fit |> 
+  stargazer(type = "text", title = "Grade - agre regression results")
+```
+
+### Multiple regression
+
+```{r}
+lm(grade ~ age + scholarship, data = data) |> summary()
+
+# all variables in data
+lm(grade ~ ., data = data) |> summary()
+
+# interactions
+lm(grade ~ age * scholarship, data = data) |> summary()
+```
+
+### ANOVA
+
+```{r}
+anova_fit <- aov(grade ~ reading, data = data)
+
+summary(anova_fit)
+tidy(anova_fit)
+
+# equivalent regression
+lm(grade ~ reading, data = data) |> summary()
+```
+
+### Chi-square test
+
+```{r}
+chisq.test(data$reading)
+chisq.test(data$reading, data$notes)
+```
+
+### Logistic regression
+
+### Non-parametric tests
+
+### Effect size calculations
+
+### PCA and factor analysis
+
+### Repeated measures and mixed design ANOVA
 
 # Other resources
 
