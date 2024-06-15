@@ -131,8 +131,8 @@ data |>
 
 # Go to
 
-* [Introduction to R](intro)
-* [Finding and importing data](import)
-* [Data cleaning with `dplyr`](clean)
-* [Data visualization with `ggplot2`](ggplot)
-* [Hypothesis testing / modelling](tests)
+* [Introduction to R](../intro)
+* [Finding and importing data](../import)
+* [Data cleaning with `dplyr`](../clean)
+* [Data visualization with `ggplot2`](../ggplot)
+* [Hypothesis testing / modelling](../tests)

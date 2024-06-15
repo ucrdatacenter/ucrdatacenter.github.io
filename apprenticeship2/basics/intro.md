@@ -152,8 +152,8 @@ queries for the future.
 
 # Go to
 
-- [Finding and importing data](import)
-- [Data cleaning with `dplyr`](clean)
-- [Summary statistics](summary)
-- [Data visualization with `ggplot2`](ggplot)
-- [Hypothesis testing / modelling](tests)
+- [Finding and importing data](../import)
+- [Data cleaning with `dplyr`](../clean)
+- [Summary statistics](../summary)
+- [Data visualization with `ggplot2`](../ggplot)
+- [Hypothesis testing / modelling](../tests)

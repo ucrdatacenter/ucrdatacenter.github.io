@@ -466,6 +466,7 @@ to numeric and logical, and rename the relevant variables to convenient
 ``` r
 data <- student |> 
   mutate(scholarship = parse_number(Scholarship),
+         sex = factor(Sex),
          # ifelse contains a logical condition, a value if TRUE, and a value if FALSE
          additional_work = ifelse(Additional_Work == "Yes", TRUE, FALSE),
          reading = ifelse(Reading == "Yes", TRUE, FALSE),
@@ -484,13 +485,13 @@ data <- student |>
            Grade == "AA" ~ 4
          )) |> 
   rename(id = Id, age = Student_Age) |> 
-  select(id, age, scholarship, additional_work, reading, notes, listening, grade)
+  select(id, age, sex, scholarship, additional_work, reading, notes, listening, grade)
 ```
 
 # Go to
 
-- [Introduction to R](intro)
-- [Finding and importing data](import)
-- [Summary statistics](summary)
-- [Data visualization with `ggplot2`](ggplot)
-- [Hypothesis testing / modelling](tests)
+- [Introduction to R](../intro)
+- [Finding and importing data](../import)
+- [Summary statistics](../summary)
+- [Data visualization with `ggplot2`](../ggplot)
+- [Hypothesis testing / modelling](../tests)

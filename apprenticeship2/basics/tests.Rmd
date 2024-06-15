@@ -205,8 +205,8 @@ bind_rows(data,
 
 # Go to
 
-* [Introduction to R](intro)
-* [Finding and importing data](import)
-* [Data cleaning with `dplyr`](clean)
-* [Summary statistics](summary)
-* [Data visualization with `ggplot2`](ggplot)
+* [Introduction to R](../intro)
+* [Finding and importing data](../import)
+* [Data cleaning with `dplyr`](../clean)
+* [Summary statistics](../summary)
+* [Data visualization with `ggplot2`](../ggplot)

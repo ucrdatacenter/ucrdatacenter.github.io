@@ -593,13 +593,13 @@ bind_rows(data,
     ## aov(formula = grade ~ reading + Error(id), data = bind_rows(data, 
     ##     data %>% mutate(grade = grade + rnorm(n()))))
     ## 
-    ## Grand Mean: 2.774326
+    ## Grand Mean: 2.826623
     ## 
     ## Stratum 1: id
     ## 
     ## Terms:
     ##                  reading
-    ## Sum of Squares  19.61234
+    ## Sum of Squares  53.42658
     ## Deg. of Freedom        1
     ## 
     ## Estimated effects are balanced
@@ -608,16 +608,16 @@ bind_rows(data,
     ## 
     ## Terms:
     ##                  reading Residuals
-    ## Sum of Squares    8.3328  563.0446
+    ## Sum of Squares    7.8886  573.2928
     ## Deg. of Freedom        1       287
     ## 
-    ## Residual standard error: 1.400653
+    ## Residual standard error: 1.413342
     ## Estimated effects are balanced
 
 # Go to
 
-- [Introduction to R](intro)
-- [Finding and importing data](import)
-- [Data cleaning with `dplyr`](clean)
-- [Summary statistics](summary)
-- [Data visualization with `ggplot2`](ggplot)
+- [Introduction to R](../intro)
+- [Finding and importing data](../import)
+- [Data cleaning with `dplyr`](../clean)
+- [Summary statistics](../summary)
+- [Data visualization with `ggplot2`](../ggplot)

@@ -178,8 +178,8 @@ write_csv(student1, "data/new_data.csv")
 
 # Go to
 
-- [Introduction to R](intro)
-- [Data cleaning with `dplyr`](clean)
-- [Summary statistics](summary)
-- [Data visualization with `ggplot2`](ggplot)
-- [Hypothesis testing / modelling](tests)
+- [Introduction to R](../intro)
+- [Data cleaning with `dplyr`](../clean)
+- [Summary statistics](../summary)
+- [Data visualization with `ggplot2`](../ggplot)
+- [Hypothesis testing / modelling](../tests)

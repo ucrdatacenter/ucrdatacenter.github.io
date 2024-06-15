@@ -210,8 +210,8 @@ write_csv(data, "data/data.csv")
 
 # Go to
 
-* [Introduction to R](intro)
-* [Finding and importing data](import)
-* [Summary statistics](summary)
-* [Data visualization with `ggplot2`](ggplot)
-* [Hypothesis testing / modelling](tests)
+* [Introduction to R](../intro)
+* [Finding and importing data](../import)
+* [Summary statistics](../summary)
+* [Data visualization with `ggplot2`](../ggplot)
+* [Hypothesis testing / modelling](../tests)

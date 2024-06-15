@@ -86,21 +86,29 @@ number of missing values for each variable.
 summary(data)
 ```
 
-    ##        id            age         scholarship     additional_work
-    ##  Min.   :5001   Min.   :18.00   Min.   : 25.00   Mode :logical  
-    ##  1st Qu.:5037   1st Qu.:18.00   1st Qu.: 50.00   FALSE:96       
-    ##  Median :5073   Median :19.00   Median : 50.00   TRUE :49       
-    ##  Mean   :5073   Mean   :19.68   Mean   : 64.76                  
-    ##  3rd Qu.:5109   3rd Qu.:21.00   3rd Qu.: 75.00                  
-    ##  Max.   :5145   Max.   :26.00   Max.   :100.00                  
-    ##                                 NA's   :1                       
-    ##   reading          notes         listening           grade      
-    ##  Mode :logical   Mode :logical   Mode :logical   Min.   :0.000  
-    ##  FALSE:76        FALSE:68        FALSE:70        1st Qu.:1.500  
-    ##  TRUE :69        TRUE :77        TRUE :75        Median :3.000  
-    ##                                                  Mean   :2.755  
-    ##                                                  3rd Qu.:4.000  
-    ##                                                  Max.   :4.000  
+    ##        id            age            sex             scholarship    
+    ##  Min.   :5001   Min.   :18.00   Length:145         Min.   : 25.00  
+    ##  1st Qu.:5037   1st Qu.:18.00   Class :character   1st Qu.: 50.00  
+    ##  Median :5073   Median :19.00   Mode  :character   Median : 50.00  
+    ##  Mean   :5073   Mean   :19.68                      Mean   : 64.76  
+    ##  3rd Qu.:5109   3rd Qu.:21.00                      3rd Qu.: 75.00  
+    ##  Max.   :5145   Max.   :26.00                      Max.   :100.00  
+    ##                                                    NA's   :1       
+    ##  additional_work  reading          notes         listening      
+    ##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+    ##  FALSE:96        FALSE:76        FALSE:68        FALSE:70       
+    ##  TRUE :49        TRUE :69        TRUE :77        TRUE :75       
+    ##                                                                 
+    ##                                                                 
+    ##                                                                 
+    ##                                                                 
+    ##      grade      
+    ##  Min.   :0.000  
+    ##  1st Qu.:1.500  
+    ##  Median :3.000  
+    ##  Mean   :2.755  
+    ##  3rd Qu.:4.000  
+    ##  Max.   :4.000  
     ## 
 
 The `summary()` function is useful for viewing the data in the Console,
@@ -128,17 +136,20 @@ data |>
     ## 1          reading No          Yes         
     ## 2               id 76 5080  44  69 5066  39
     ## 3              age 76   20 2.3  69   20 1.7
-    ## 4      scholarship 75   65  18  69   64  21
-    ## 5  additional_work 76           69         
-    ## 6           ... No 47  62%      49  71%    
-    ## 7          ... Yes 29  38%      20  29%    
-    ## 8            notes 76           69         
-    ## 9           ... No 34  45%      34  49%    
-    ## 10         ... Yes 42  55%      35  51%    
-    ## 11       listening 76           69         
-    ## 12          ... No 37  49%      33  48%    
-    ## 13         ... Yes 39  51%      36  52%    
-    ## 14           grade 76  2.5 1.3  69    3 1.2
+    ## 4              sex 76           69         
+    ## 5       ... Female 32  42%      26  38%    
+    ## 6         ... Male 44  58%      43  62%    
+    ## 7      scholarship 75   65  18  69   64  21
+    ## 8  additional_work 76           69         
+    ## 9           ... No 47  62%      49  71%    
+    ## 10         ... Yes 29  38%      20  29%    
+    ## 11           notes 76           69         
+    ## 12          ... No 34  45%      34  49%    
+    ## 13         ... Yes 42  55%      35  51%    
+    ## 14       listening 76           69         
+    ## 15          ... No 37  49%      33  48%    
+    ## 16         ... Yes 39  51%      36  52%    
+    ## 17           grade 76  2.5 1.3  69    3 1.2
 
 ``` r
 # stargazer
@@ -280,8 +291,8 @@ data |>
 
 # Go to
 
-- [Introduction to R](intro)
-- [Finding and importing data](import)
-- [Data cleaning with `dplyr`](clean)
-- [Data visualization with `ggplot2`](ggplot)
-- [Hypothesis testing / modelling](tests)
+- [Introduction to R](../intro)
+- [Finding and importing data](../import)
+- [Data cleaning with `dplyr`](../clean)
+- [Data visualization with `ggplot2`](../ggplot)
+- [Hypothesis testing / modelling](../tests)

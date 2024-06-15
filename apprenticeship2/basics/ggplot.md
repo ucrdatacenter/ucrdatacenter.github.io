@@ -404,8 +404,8 @@ ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
 
 # Go to
 
-- [Introduction to R](intro)
-- [Finding and importing data](import)
-- [Data cleaning with `dplyr`](clean)
-- [Summary statistics](summary)
-- [Hypothesis testing / modelling](tests)
+- [Introduction to R](../intro)
+- [Finding and importing data](../import)
+- [Data cleaning with `dplyr`](../clean)
+- [Summary statistics](../summary)
+- [Hypothesis testing / modelling](../tests)
