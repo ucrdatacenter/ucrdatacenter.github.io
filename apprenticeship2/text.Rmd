@@ -300,11 +300,8 @@ dtm <- words |>
   filter(!word %in% stopwords) |>
   cast_dtm(document = book_title, term = word, value = n)
 
-# set seed for reproducibility
-set.seed(1)
-
 # fit LDA model with 2 topics
-lda <- LDA(dtm, k = 2)
+lda <- LDA(dtm, k = 2, control = list(seed = 1))
 ```
 
 When interpreting LDA results, we consider two sets of parameters: the document-topic matrix and the topic-word matrix.
@@ -331,9 +328,9 @@ topic_word |>
   theme_minimal()
 ```
 
-It does not seem like the topics can separate the two books, maybe because Winnie-the-Pooh is longer and the model tries to create about equal-sized topics.
+It seems like the topics can separate the two books well, although it might not succeed with a different random seed.
 
-The per-document-per-topic probabilities confirm that the the documents are not clearly split into topics, as both documents have an ~60% probability of belonging to topic 1 and 40% probability of belonging to topic 2.
+The per-document-per-topic probabilities confirm that the the documents are clearly split into topics, with each having a near-1 probability for one topic and near-0 for the other.
 
 ```{r}
 document_topic |> 
@@ -367,7 +364,7 @@ text <- words |>
 embeddings <- word2vec(text)
 
 # view word embeddings
-predict(embeddings, words$word, type = "embedding")
+predict(embeddings, words$word, type = "embedding")[1:6, 1:6]
 ```
 
 Embeddings are useful for evaluating which words are the most similar to a particular word.
