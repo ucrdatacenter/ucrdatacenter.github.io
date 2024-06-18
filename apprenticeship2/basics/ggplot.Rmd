@@ -277,7 +277,7 @@ p <- ggplot(data, aes(x = grade, y = age)) +
   geom_point()
 
 # Save plot saved to the Environment
-ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
+ggsave("figures/plot2.png", p, height = 10, width = 15, units = "cm")
 ```
 
 # Go to

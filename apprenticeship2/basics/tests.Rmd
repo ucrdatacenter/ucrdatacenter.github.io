@@ -129,6 +129,32 @@ Unlike the previous functions, the function does not allow for a `data` argument
 ```{r}
 chisq.test(data$reading, data$notes)
 ```
+Add contingency tables:
+
+```{r}
+# with table()
+table(data$reading, data$notes)
+
+# with xtabs()
+xtabs(~ reading + notes, data = data)
+
+# with count() and pivot_wider()
+data |> 
+  count(reading, notes) |>
+  pivot_wider(names_from = notes, values_from = n, values_fill = 0)
+
+# proportions with table() and prop.table()
+table(data$reading, data$notes) |> prop.table()
+
+# proportions with count() and pivot_wider()
+data |> 
+  count(reading, notes) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = notes, values_from = prop, values_fill = 0)
+
+```
+
 
 # Logistic regression
 

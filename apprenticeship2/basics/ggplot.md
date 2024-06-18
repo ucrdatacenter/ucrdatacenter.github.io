@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nR basics: Data visualization with `ggplot2`"
 subtitle: "June 2024" 
-date: "Last updated: 2024-06-15"
+date: "Last updated: 2024-06-18"
 output:
   md_document:
     variant: gfm
@@ -399,7 +399,7 @@ p <- ggplot(data, aes(x = grade, y = age)) +
   geom_point()
 
 # Save plot saved to the Environment
-ggsave(p, "figures/plot2.png", height = 10, width = 15, units = "cm")
+ggsave("figures/plot2.png", p, height = 10, width = 15, units = "cm")
 ```
 
 # Go to

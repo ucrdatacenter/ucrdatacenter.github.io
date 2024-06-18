@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nR basics: Hypothesis testing / modelling"
 subtitle: "June 2024" 
-date: "Last updated: 2024-06-15"
+date: "Last updated: 2024-06-18"
 output:
   md_document:
     variant: gfm
@@ -379,6 +379,66 @@ chisq.test(data$reading, data$notes)
     ## data:  data$reading and data$notes
     ## X-squared = 0.14464, df = 1, p-value = 0.7037
 
+Add contingency tables:
+
+``` r
+# with table()
+table(data$reading, data$notes)
+```
+
+    ##        
+    ##         FALSE TRUE
+    ##   FALSE    34   42
+    ##   TRUE     34   35
+
+``` r
+# with xtabs()
+xtabs(~ reading + notes, data = data)
+```
+
+    ##        notes
+    ## reading FALSE TRUE
+    ##   FALSE    34   42
+    ##   TRUE     34   35
+
+``` r
+# with count() and pivot_wider()
+data |> 
+  count(reading, notes) |>
+  pivot_wider(names_from = notes, values_from = n, values_fill = 0)
+```
+
+    ## # A tibble: 2 × 3
+    ##   reading `FALSE` `TRUE`
+    ##   <lgl>     <int>  <int>
+    ## 1 FALSE        34     42
+    ## 2 TRUE         34     35
+
+``` r
+# proportions with table() and prop.table()
+table(data$reading, data$notes) |> prop.table()
+```
+
+    ##        
+    ##             FALSE      TRUE
+    ##   FALSE 0.2344828 0.2896552
+    ##   TRUE  0.2344828 0.2413793
+
+``` r
+# proportions with count() and pivot_wider()
+data |> 
+  count(reading, notes) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n) |> 
+  pivot_wider(names_from = notes, values_from = prop, values_fill = 0)
+```
+
+    ## # A tibble: 2 × 3
+    ##   reading `FALSE` `TRUE`
+    ##   <lgl>     <dbl>  <dbl>
+    ## 1 FALSE     0.234  0.290
+    ## 2 TRUE      0.234  0.241
+
 # Logistic regression
 
 When it comes to predicting binary outcomes, linear regression has some
@@ -593,13 +653,13 @@ bind_rows(data,
     ## aov(formula = grade ~ reading + Error(id), data = bind_rows(data, 
     ##     data %>% mutate(grade = grade + rnorm(n()))))
     ## 
-    ## Grand Mean: 2.826623
+    ## Grand Mean: 2.693187
     ## 
     ## Stratum 1: id
     ## 
     ## Terms:
     ##                  reading
-    ## Sum of Squares  53.42658
+    ## Sum of Squares  26.45933
     ## Deg. of Freedom        1
     ## 
     ## Estimated effects are balanced
@@ -608,10 +668,10 @@ bind_rows(data,
     ## 
     ## Terms:
     ##                  reading Residuals
-    ## Sum of Squares    7.8886  573.2928
+    ## Sum of Squares   14.9978  628.3622
     ## Deg. of Freedom        1       287
     ## 
-    ## Residual standard error: 1.413342
+    ## Residual standard error: 1.479667
     ## Estimated effects are balanced
 
 # Go to
