@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship program"
 subtitle: "Spring 2024 (June)"
-date: "Last updated: 2024-06-15"
+date: "Last updated: 2024-06-18"
 output:
   md_document:
     variant: gfm
@@ -18,8 +18,7 @@ the workshops or make use of the materials below.
 # Workshop schedule
 
 Below you can find the workshop schedule between 17–21 June. All
-workshops take place in E-9. The timing of workshops with “TBA” time
-will be discussed with the participants during the first workshop.
+workshops take place in E-9.
 
 Click on a topic to access the workshop materials. Note that the pages
 are still a work in progress and subject to frequent updates.
@@ -28,9 +27,9 @@ are still a work in progress and subject to frequent updates.
 |-------|-------------|---------------------------------------------------------------|
 | 17/07 | 10:00-17:00 | [R basics (1)](basics)                                        |
 | 18/07 | 10:00-17:00 | [R basics (2)](basics)                                        |
-| 19/07 | TBA         | [Character strings and regular expressions](strings)          |
-| 20/07 | TBA         | [Text analysis](text)                                         |
-| 21/07 | TBA         | [Data scraping from the web and pdf documents in R](scraping) |
+| 19/07 | 12:00-17:00 | [Character strings and regular expressions](strings)          |
+| 20/07 | 12:00-17:00 | [Text analysis](text)                                         |
+| 21/07 | 12:00-17:00 | [Data scraping from the web and pdf documents in R](scraping) |
 
 # Other resources
 
