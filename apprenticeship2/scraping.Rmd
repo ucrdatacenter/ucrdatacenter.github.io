@@ -151,7 +151,7 @@ However, you don't actually need to remember any of these, but instead you can u
 | element/tag   | `table`           | **all** `<table>` elements                             |
 | class         | `.someTable`      | **all** elements with `class="someTable"`              |
 | id            | `#steve`          | **unique** element with `id="steve"`                   |
-| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `someTable` class     |
+| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `headerRow` class     |
 | class1.class2 | `.someTable.blue` | **all** elements with the `someTable` AND `blue` class |
 
 Instead of going through the raw HTML and trying to match up the code to the observed website, you can use a browser extension that tells you the CSS selector you're looking for just by clicking on the part of the webpage that you'd like to select.

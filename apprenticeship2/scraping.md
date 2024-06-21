@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nData scraping from the web and pdf documents in R"
 subtitle: "June 2024" 
-date: "Last updated: 2024-06-12"
+date: "Last updated: 2024-06-21"
 output:
   md_document:
     variant: gfm
@@ -188,7 +188,7 @@ extract the information you need.
 | element/tag   | `table`           | **all** `<table>` elements                             |
 | class         | `.someTable`      | **all** elements with `class="someTable"`              |
 | id            | `#steve`          | **unique** element with `id="steve"`                   |
-| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `someTable` class     |
+| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `headerRow` class     |
 | class1.class2 | `.someTable.blue` | **all** elements with the `someTable` AND `blue` class |
 
 Instead of going through the raw HTML and trying to match up the code to
@@ -725,7 +725,7 @@ done.
 pdf[1]
 ```
 
-    ## [1] "Members\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Asim ADEMOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Citizens for European Development of Bulgaria\n\n             Isabella ADINOLFI\n             Group of the European People's Party (Christian Democrats)\n             Italy Forza Italia\n\n             Matteo ADINOLFI\n             Identity and Democracy Group\n             Italy Lega\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Mazaly AGUILAR\n             European Conservatives and Reformists Group\n             Spain VOX\n\n             Clara AGUILERA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Spain Partido Socialista Obrero Español\n\n             Alviina ALAMETSÄ\n             Group of the Greens/European Free Alliance\n             Finland Vihreä liitto\n\n             João ALBUQUERQUE\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Portugal Partido Socialista\n\n             Alexander ALEXANDROV YORDANOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Union of Democratic Forces\n\n             François ALFONSI\n             Group of the Greens/European Free Alliance\n             France Régions et Peuples Solidaires\n\n             Atidzhe ALIEVA-VELI\n             Renew Europe Group\n             Bulgaria Movement for Rights and Freedoms\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n\n\n\n12/06/2024                                                                                              1\n"
+    ## [1] "Members\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Asim ADEMOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Citizens for European Development of Bulgaria\n\n             Isabella ADINOLFI\n             Group of the European People's Party (Christian Democrats)\n             Italy Forza Italia\n\n             Matteo ADINOLFI\n             Identity and Democracy Group\n             Italy Lega\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Mazaly AGUILAR\n             European Conservatives and Reformists Group\n             Spain VOX\n\n             Clara AGUILERA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Spain Partido Socialista Obrero Español\n\n             Alviina ALAMETSÄ\n             Group of the Greens/European Free Alliance\n             Finland Vihreä liitto\n\n             João ALBUQUERQUE\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Portugal Partido Socialista\n\n             Alexander ALEXANDROV YORDANOV\n             Group of the European People's Party (Christian Democrats)\n             Bulgaria Union of Democratic Forces\n\n             François ALFONSI\n             Group of the Greens/European Free Alliance\n             France Régions et Peuples Solidaires\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n             Catherine AMALRIC\n             Renew Europe Group\n             France Parti Radical\n\n\n\n\n21/06/2024                                                                                              1\n"
 
 ``` r
 cat(pdf[1])
@@ -776,18 +776,18 @@ cat(pdf[1])
     ##              Group of the Greens/European Free Alliance
     ##              France Régions et Peuples Solidaires
     ## 
-    ##              Atidzhe ALIEVA-VELI
-    ##              Renew Europe Group
-    ##              Bulgaria Movement for Rights and Freedoms
-    ## 
     ##              Abir AL-SAHLANI
     ##              Renew Europe Group
     ##              Sweden Centerpartiet
     ## 
+    ##              Catherine AMALRIC
+    ##              Renew Europe Group
+    ##              France Parti Radical
     ## 
     ## 
     ## 
-    ## 12/06/2024                                                                                              1
+    ## 
+    ## 21/06/2024                                                                                              1
 
 If we actually want to work with the data contained in the document, we
 need to clean it. Currently the vector `pdf` is broken up based on page
