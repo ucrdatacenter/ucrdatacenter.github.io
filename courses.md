@@ -7,6 +7,6 @@ output:
     preserve_yaml: true
 ---
 
-# Ongoing / future courses
+# Ongoing/future courses
 
 # Data encounter archive
