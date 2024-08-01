@@ -23,8 +23,8 @@ navbar-links:
   Aubout us: "about"
   Tutorials: "tutorial"
   Courses:
-    - Ongoing: "courses#ongoing"
-    - Archive: "courses#archive"
+    - Ongoing: "courses#Ongoing/future courses"
+    - Archive: "courses#Data encounter archives"
   Apprenticeship: "apprenticeship"
     - 2024 January: "apprenticeship_2024_1"
     - 2024 June: "apprenticeship_2024_2"
