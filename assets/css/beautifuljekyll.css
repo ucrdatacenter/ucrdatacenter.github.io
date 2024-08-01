@@ -38,7 +38,7 @@ h1,h2,h3,h4,h5,h6 {
   line-height: 1.1;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 2.125rem;
 }
 h2 {
   font-size: 1.875rem;
@@ -79,7 +79,7 @@ hr.small {
   content: "";
   display: block;
   height: 3.125rem; /* navbar height */
-  margin: -4.125rem 0 0;
+  margin: -3.125rem 0 0;
 }
 
 .hideme {
