@@ -21,9 +21,9 @@ author: UCR Data Center
 
 navbar-links:
   About us: "about"
-  Tutorials: "tutorial"
+  Tutorials: "tutorials"
   Courses:
-    - Ongoing: "courses#Ongoing/future courses"
+    - Ongoing: "courses#Current courses"
     - Archive: "courses#Data encounter archives"
   Apprenticeships: "apprenticeship"
   Office hours: "contact"

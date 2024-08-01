@@ -7,7 +7,12 @@ output:
     preserve_yaml: true
 ---
 
-Apprenticeship materials:
+Apprenticeships are great etc. intro text here.
 
-- [2024 June](apprenticeship_2024_2)
-- [2024 January](apprenticeship_2024_1)
+# 2024 June
+
+Materials [here](apprenticeship_2024_2).
+
+# 2024 January
+
+Materials [here](apprenticeship_2024_1).

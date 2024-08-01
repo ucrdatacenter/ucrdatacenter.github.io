@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "About the UCR Data Center"
+title: "About the Data Center"
 output:
   md_document:
     variant: gfm
