@@ -2,8 +2,8 @@
 layout: post
 title: eScience Fellowship for the Data Center
 subtitle: Improving the visibility of the Data Center
-thumbnail-img: /assets/img/thumbnails/eSci.jpg
-share-img: /assets/img/thumbnails/eSci.jpg
+thumbnail-img: /assets/img/eSci.JPG
+share-img: /assets/img/eSci.JPG
 tags: [news]
 ---
 
