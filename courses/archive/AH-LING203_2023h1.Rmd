@@ -17,9 +17,9 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, results = 'hide
 
 # Introduction
 
-R is a programming language created for statistical computing and data visualization. To work with R, we tend to use a environment called RStudio. If you have not installed RStudio yet, follow the instructions that you can find on the [data center website](../tutorial/r_install.html). It is important to work in projects to keep your work organized. Create a new project and open a new R Script in there to run the examples from this workshop. If you need help creating a project, you can find some extra info [here](../tutorial/r_basics.html).
+R is a programming language created for statistical computing and data visualization. To work with R, we tend to use a environment called RStudio. If you have not installed RStudio yet, follow the instructions that you can find on the [data center website](../tutorials/r_install.html). It is important to work in projects to keep your work organized. Create a new project and open a new R Script in there to run the examples from this workshop. If you need help creating a project, you can find some extra info [here](../tutorials/r_basics.html).
 
-First we'll go through some of the basics of R before we start making our frequency plot. If you would like some extra information, you can always find some nice tutorials [here](../tutorial/r_basics.html#Supporting_materials). We highly recommend you read through sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1%20Make%20a%20time%20series%20plot%20(using%20ggfortify)) before starting with R. Don't worry if you don't understand anything right away. Most things will become clear when you start working on it.
+First we'll go through some of the basics of R before we start making our frequency plot. If you would like some extra information, you can always find some nice tutorials [here](../tutorials/r_basics.html#Supporting_materials). We highly recommend you read through sections 2, 3.1-3.4 and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1%20Make%20a%20time%20series%20plot%20(using%20ggfortify)) before starting with R. Don't worry if you don't understand anything right away. Most things will become clear when you start working on it.
 
 Everything that is not a comment will be seen as executable code. If we place a single hashtag before anything, it will turn green and become a comment. You can run a piece of code by selecting it and pressing Control+Enter for Windows or Command+Enter for Mac. We strongly suggest you type out the commands in this workshop in your script yourself rather than copy-pasting them.
 
@@ -143,7 +143,7 @@ Miles_20 <- words_final %>%
   top_n(20)
 ```
 
-Let's make a graph displaying the top 20 most used words. To make a plot we use ggplot. ggplot is *the* package for making visualizations in R. It is therefore important to make sure you have some experience with this package. You can find many tutorials online, but the data center has created a small selection for you [here](../tutorial/r_basics.html#Help_with_ggplot).
+Let's make a graph displaying the top 20 most used words. To make a plot we use ggplot. ggplot is *the* package for making visualizations in R. It is therefore important to make sure you have some experience with this package. You can find many tutorials online, but the data center has created a small selection for you [here](../tutorials/r_basics.html#Help_with_ggplot).
 
 (aes(word, n)) constructs aesthetic mappings taking the column "word" as the x-axis and the number of times the word occurs "n" as the y-axis. We then add a bar graph by using + geom_col(). xlab(NULL) means that the x-axis label will take no value, it will be empty. coord_flip flips the whole graph 90 degrees so it's easier to read (note that n is now on the x-axis and word on the y-axis).
 
@@ -170,7 +170,7 @@ Miles_20 %>%
   ggplot(aes(word, n)) + geom_col() + xlab(NULL) + coord_flip()
 ```
 
-Before you go to work on the assignment, try to create a similar plot with one of the other musicians in the file. See if you can get rid of the stop words and, if you have time left, try to customize the plot with some additional ggplot functions. You can find resources on how to work with ggplot on the [data center website](../tutorial/r_basics.html#Help_with_ggplot). As always, you can also use the ? operator to learn more about the functions. See if you can change the theme, colors, or fonts. Perhaps you want to add a title or use the wesanderson package to use a color palette from one of his movies! 
+Before you go to work on the assignment, try to create a similar plot with one of the other musicians in the file. See if you can get rid of the stop words and, if you have time left, try to customize the plot with some additional ggplot functions. You can find resources on how to work with ggplot on the [data center website](../tutorials/r_basics.html#Help_with_ggplot). As always, you can also use the ? operator to learn more about the functions. See if you can change the theme, colors, or fonts. Perhaps you want to add a title or use the wesanderson package to use a color palette from one of his movies! 
 
 ## Extra: Word Cloud
 

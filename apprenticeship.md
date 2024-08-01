@@ -11,8 +11,8 @@ Apprenticeships are great etc. intro text here.
 
 # 2024 June
 
-Materials [here](apprenticeship_2024_2).
+Materials [here](apprenticeship_2024h2).
 
 # 2024 January
 
-Materials [here](apprenticeship_2024_1).
+Materials [here](apprenticeship_2024h1).

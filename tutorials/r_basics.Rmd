@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 ## First steps
 
 This tutorial assumes that you have already installed R and RStudio.
-If not, please follow [this installation tutorial](https://ucrdatacenter.github.io/tutorial/r_install.html).
+If not, please follow [this installation tutorial](../r_install).
 
 Some good resources to get a basic familiarity with the setup of R and some key definitions are [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf) and sections 1-4 of [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify)).
 

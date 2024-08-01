@@ -89,4 +89,4 @@ tok_length %>%
 
 # More materials
 
-You can find a list of helpful links for data manipulation and visualization [here](https://ucrdatacenter.github.io/tutorial/links.html).
+You can find a list of helpful links for data manipulation and visualization [here](https://ucrdatacenter.github.io/tutorials/links.html).

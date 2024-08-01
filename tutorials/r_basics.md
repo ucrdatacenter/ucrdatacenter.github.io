@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "R basics"
-date: "Last updated: 2024-01-02"
+date: "Last updated: 2024-08-01"
 output:
   md_document:
     variant: gfm
@@ -11,8 +11,7 @@ output:
 ## First steps
 
 This tutorial assumes that you have already installed R and RStudio. If
-not, please follow [this installation
-tutorial](https://ucrdatacenter.github.io/tutorial/r_install.html).
+not, please follow [this installation tutorial](../r_install).
 
 Some good resources to get a basic familiarity with the setup of R and
 some key definitions are [A (very) short introduction to

@@ -7,7 +7,7 @@ output:
     preserve_yaml: true
 ---
 
-<img src="assets/img/DC_logo.png" width="750" class="center"/>
+<img src="assets/img/DC_logo.png" width="550" class="center"/>
 
 ---
 

@@ -36,5 +36,5 @@ are still a work in progress and subject to frequent updates.
 Below you can find a list of external resources compiled by the Data
 Center that you may find helpful when working on your project:
 
-- [Basic data wrangling and visualization in R](../../tutorial/links)
-- [Useful data sources by discipline](../../tutorial/data)
+- [Basic data wrangling and visualization in R](../../tutorials/links)
+- [Useful data sources by discipline](../../tutorials/data)

@@ -29,9 +29,9 @@ output:
 
 Before the first workshop, please make sure that you have access to R
 and RStudio on your laptop. If you need help with the installation,
-please follow [this tutorial](../../../tutorial/r_install).
+please follow [this tutorial](../../../tutorials/r_install).
 
-In addition the [R basics tutorial](../../../tutorial/r_basics) on the
+In addition the [R basics tutorial](../../../tutorials/r_basics) on the
 Data Center website explains the RStudio interface, and shows how to
 create a new project and how to install packages.
 
@@ -89,7 +89,7 @@ sections.**
 
 # Other resources
 
-- [Data Center collection of resources](../../../tutorial/links/)
+- [Data Center collection of resources](../../../tutorials/links/)
 
 Note: a major advantage of using R is the ability to define custom
 functions. So if some of the methods and workflows used in RMET classes
