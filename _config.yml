@@ -20,13 +20,15 @@ author: UCR Data Center
 ###############################################
 
 navbar-links:
-  Apprenticeship: 
-    - 2024 January: "apprenticeship"
-    - 2024 June: "apprenticeship2"
+  Aubout us: "about"
   Tutorials: "tutorial"
   Courses:
-    - Ongoing: "index#ongoing-courses"
-    - Archive: "archive"
+    - Ongoing: "courses#ongoing"
+    - Archive: "courses#archive"
+  Apprenticeship: "apprenticeship"
+    - 2024 January: "apprenticeship_2024_1"
+    - 2024 June: "apprenticeship_2024_2"
+  Office hours: "contact"
 
 ################
 # --- Logo --- #
@@ -105,13 +107,13 @@ url-pretty: "ucrdatacenter.github.io"
 excerpt_length: 50
 
 # Whether or not to show an excerpt for every blog post in the feed page
-feed_show_excerpt: false
+feed_show_excerpt: true
 
 # Whether or not to show a list of tags below each post preview in the feed page
-feed_show_tags: false
+feed_show_tags: true
 
 # Add a search button to the navbar
-post_search: false
+post_search: true
 
 # Add a button in the footer to edit the current page. Only works if your website is hosted on GitHub
 edit_page_button: false
@@ -122,7 +124,7 @@ edit_page_button: false
 navbar-var-length: false
 
 # The keywords to associate with your website, for SEO purposes
-#keywords: "my,list,of,keywords"
+keywords: "data,data center,ucr,data science,university college roosevelt,liberal arts,tutorial"
 
 ######################################
 # --- Colours / background image --- #
@@ -254,7 +256,7 @@ date_format: "%B %-d, %Y"
 #################################################################################
 
 # Output options (more information on Jekyll's site)
-timezone: "America/Toronto"
+timezone: "Europe/Amsterdam"
 markdown: kramdown
 highlighter: rouge
 permalink: /:year-:month-:day-:title/
