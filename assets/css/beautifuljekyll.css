@@ -79,7 +79,7 @@ hr.small {
   content: "";
   display: block;
   height: 3.125rem; /* navbar height */
-  margin: -3.125rem 0 0;
+  margin: -4.125rem 0 0;
 }
 
 .hideme {
