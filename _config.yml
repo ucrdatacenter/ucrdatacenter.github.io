@@ -20,14 +20,12 @@ author: UCR Data Center
 ###############################################
 
 navbar-links:
-  Aubout us: "about"
+  About us: "about"
   Tutorials: "tutorial"
   Courses:
     - Ongoing: "courses#Ongoing/future courses"
     - Archive: "courses#Data encounter archives"
-  Apprenticeship: "apprenticeship"
-    - 2024 January: "apprenticeship_2024_1"
-    - 2024 June: "apprenticeship_2024_2"
+  Apprenticeships: "apprenticeship"
   Office hours: "contact"
 
 ################
