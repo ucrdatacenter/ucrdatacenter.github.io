@@ -12,7 +12,7 @@ Drop by to office hours if you're looking for some data science help, whether fo
 
 # Office hour schedule
 
-To be published.
+To be published in the coming semester.
 
 # Contact us
 
