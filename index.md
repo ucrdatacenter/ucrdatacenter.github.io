@@ -7,12 +7,12 @@ output:
     preserve_yaml: true
 ---
 
-<img style="float: left; padding: 100px 0px 40px 5px" src="assets/img/DC_logo.png" width="450"/>
+<img style="float: left; padding: 100px 0px 40px 5px" src="assets/img/DC_logo.png" width="480"/>
 
 ---
 
 <h1 align="center">UCR Data Center</h1>
-<h2 align="center">Welcome!</h2>
+<h2 align="center">Welcome to our website!</h2>
 
 [Learn more](about) about the Data Center, or check out our [general](tutorials) and [course-specific](courses) resources for improving your data science skills.
 
