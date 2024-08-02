@@ -11,7 +11,8 @@ output:
 
 ---
 
-<h1 align="center">Welcome to the website of the UCR Data Center!</h1>
+<h1 align="center">UCR Data Center</h1>
+<h2 align="center">Welcome!</h2>
 
 [Learn more](about) about the Data Center, or check out our [general](tutorials) and [course-specific](courses) resources for improving your data science skills.
 
