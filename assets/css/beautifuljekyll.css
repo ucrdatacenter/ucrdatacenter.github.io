@@ -458,7 +458,7 @@ footer .footer-custom-content {
 
 @media (min-width: 768px) {
   .post-preview {
-    padding: 2.1875rem 0;
+    padding: 1rem 0;
   }
 }
 
@@ -518,6 +518,7 @@ footer .footer-custom-content {
 }
 .post-preview .post-image {
   filter: grayscale(0%);
+  margin-top: -2.1875rem;
 }
 .post-preview .post-image:hover {
   filter: grayscale(0%);
@@ -527,7 +528,7 @@ footer .footer-custom-content {
   max-width: 100%;
 }
 .post-preview .post-image-short {
-  margin-top: -4.1875rem;
+  margin-top: -2.1875rem;
 }
 @media (max-width: 767px) {
   .post-preview .post-image {
