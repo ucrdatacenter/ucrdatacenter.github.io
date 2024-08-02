@@ -7,8 +7,6 @@ share-img: /assets/img/eSci.JPG
 tags: [news]
 ---
 
-<img style="float: right; padding: 10px" src="/assets/img/eSci.JPG" width="300"/>
-
 We are happy to announce that the the UCR Data Center's Graduate Fellow, [Tina Rozsos](https://www.ucr.nl/academics/academic-program/faculty/academic-staff/tina-rozsos-b-a/), has been selected one of the 2024--2025 eScience Fellows at the Netherlands eScience Center. 
 The eScience Center fellowship supports individuals who promote or improve the use of open and sustainable research software within their community. 
 [Tina's project](https://www.esciencecenter.nl/fellowship-programme/tina-rozsos/) focuses on improving the visibility of the Data Center and its activities.
