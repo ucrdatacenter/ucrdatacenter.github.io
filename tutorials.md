@@ -29,7 +29,7 @@ Any prerequisites are mentioned in the introduction of each tutorial.
 - Data visualization: relationships between variables
 - Data visualization: patterns over time
 
-# Topics for beginners
+# R topics for beginners
 If you're familiar with basic data cleaning and visualization, but want to learn more about specific topics that are relevant to your disciplinary background or interests.
 The tutorials in this section can be used independently of each other.
 
@@ -37,7 +37,7 @@ The tutorials in this section can be used independently of each other.
 - Working with text
 - Statistics in R
 
-# Advanced topics
+# Advanced R topics
 If you have more experience with R (e.g. ENGDATA101) and want to learn more.
 These tutorials are particularly useful for students in the Data Center Apprenticeship program.
 
@@ -48,6 +48,14 @@ These tutorials are particularly useful for students in the Data Center Apprenti
 - Interactive applications with Shiny
 - Writing your own functions
 - Advanced data types and functionals
+
+# Reproducible research workflows
+If you want to learn more about how to make your workflows more reproducible and efficient.
+
+- Version control with GitHub
+- Collaborating on GitHub
+- Compile documents with RMarkdown/Quarto
+- Write papers in LaTeX (with Overleaf)
 
 # Other
 
