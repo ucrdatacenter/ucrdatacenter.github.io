@@ -7,16 +7,49 @@ output:
     preserve_yaml: true
 ---
 
-# The basics of R
+# Setting up R
+Start here if you have never used R before.
 
 - [Installing R](r_install)
-- [R basics](r_basics)
+- [Getting started in RStudio](r_basics)
+- Objects and functions
 
-# More R
+# Introduction to R
+If you can find your way around R and RStudio, but want to learn more about the basics.
+Most of these tutorials can be used independently of each other.
+Any prerequisites are mentioned in the introduction of each tutorial.
 
-- [Useful links](links)
-- [Importing data](r_data)
+- Importing data
+- Data wrangling: filtering rows and selecting columns
+- Data wrangling: creating new variables
+- Data wrangling: summarizing data (within groups)
+- Pivoting: data in wide and long format
+- The tidy workflow
+- Data visualization: distributions
+- Data visualization: relationships between variables
+- Data visualization: patterns over time
+
+# Topics for beginners
+If you're familiar with basic data cleaning and visualization, but want to learn more about specific topics that are relevant to your disciplinary background or interests.
+The tutorials in this section can be used independently of each other.
+
+- Working with spatial data
+- Working with text
+- Statistics in R
+
+# Advanced topics
+If you have more experience with R (e.g. ENGDATA101) and want to learn more.
+These tutorials are particularly useful for students in the Data Center Apprenticeship program.
+
+- [More on importing data](r_data)
+- More on data visualization
+- Text analysis with regular expressions
+- Web and pdf scraping
+- Interactive applications with Shiny
+- Writing your own functions
+- Advanced data types and functionals
 
 # Other
 
 - [Useful data sources](data)
+- [Additional materials](links)
