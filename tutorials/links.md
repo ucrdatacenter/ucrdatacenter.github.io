@@ -19,6 +19,7 @@ on the Tutorials page and the individual course pages).
 
 # The basics of R
 
+-  [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf)
 - [Cheat sheet for importing
   data](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf)
 - [Cheat sheet for data
@@ -57,6 +58,7 @@ on the Tutorials page and the individual course pages).
   `ggplot`](https://github.com/rstudio/cheatsheets/blob/main/data-visualization-2.1.pdf)
 - [The R Graph Gallery (example plots, including full R
   scripts)](https://www.r-graph-gallery.com/)
+- [How to make any plot in ggplot2?](http://r-statistics.co/ggplot2-Tutorial-With-R.html#6.1\%20Make\%20a\%20time\%20series\%20plot\%20(using\%20ggfortify))
 - [More details on data
   visualization](https://mdsr-book.github.io/mdsr2e/ch-vizII.html#a-grammar-for-data-graphics)
 - [Saving plots with

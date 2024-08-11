@@ -1,0 +1,105 @@
+---
+layout: page
+title: "Pivoting: data in wide and long format"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+**This tutorial is not ready yet. Please come back later.**
+
+## Introduction
+
+Tabular data can be stored in different formats.
+In tidy data, every row is an observation and every column is a variable.
+But depending on what you define as your observations and variables, you might need to pivot your data from wide to long format or vice versa.
+
+This tutorial introduces the concepts of long and wide format, and shows you how to use the `pivot_longer()` and `pivot_wider()` functions from `tidyverse` on the `population` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
+
+Let's load the `tidyverse` package and have a look at the `population` dataset:
+
+```{r}  
+# load tidyverse
+library(tidyverse)
+
+# add diamonds to the environment
+data(population)
+```
+
+## Long and wide format
+
+Compare the following two simple datasets:
+
+Data A:
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE}
+library(tidyverse)
+test <- tibble(
+  year = rep(c(2022, 2023), each = 2),
+  country = rep(c("countryA", "countryB"), times = 2),
+  value = c(10, 12, 14, 15)
+)
+knitr::kable(test)
+```
+
+Data B:
+
+```{r, eval = TRUE, echo = FALSE, message = FALSE}
+test %>% 
+  pivot_wider(names_from = country, values_from = value) %>% 
+  knitr::kable()
+```
+
+Data A is in long format, and Data B is in wide format.
+The tables contain the same information, but sometimes one format is more convenient than the other.
+
+You can convert between these two forms using the `pivot_longer()` (wide to long) and `pivot_wider()` (long to wide) functions.
+To use `pivot_longer()` you need to specify which columns you'd like to turn into a single column: e.g. to go from Data B to Data A, you'd use the argument `cols = c(countryA, countryB)` (or equivalently, `cols = -year`).
+To use `pivot_wider()`, you need to specify which column to use for variable names, and which column for variable values: going from Data A to Data B would use the arguments `names_from = country, values_from = value`. 
+
+## Pivoting on the `population` data
+
+The `population` dataset contains the population of different countries over time.
+Currently it is in long format: the identifying variables are `country` and `year`, and the variable of interest is `population`.
+
+We can convert it to wide format where the unit of observation is the country, and we have different variables for the population in every year.
+
+```{r}
+# convert the data to wide format with country as the unit of observation
+pivot_wider(population, names_from = year, values_from = population)
+```
+
+Alternatively, we can say that the unit of observation is the year, and we have different variables for the population in every country in that year.
+
+```{r}
+# convert the data to wide format with year as the unit of observation
+pivot_wider(population, names_from = country, values_from = population)
+```
+
+These different formats can be useful for different types of analysis.
+
+To be able to work with this new dataset, you need to save it to a new object.
+Let's assign the result of the `pivot_wider()` function (with countries as the unit) to a new object called `population_wide`:
+
+```{r}
+# save the result to a new object
+population_wide <- pivot_wider(population, names_from = year, values_from = population)
+```
+
+Pivoting is reversible, so we can convert `population_wide` back to long format with the `pivot_longer()` function.
+We want to take the years as the variable names, and the population as the values -- instead of listing all years as the columns we want to convert, we can say that we want to pivot all columns except `country`.
+
+```{r}
+# convert the data back to long format
+pivot_longer(population_wide, cols = -country, names_to = "year", values_to = "population")
+```
+
+The `names_to` and `values_to` arguments are used to specify the names of the new columns that will be created; they are optional, but can be useful for clarity.
+
+## Video tutorial TBA

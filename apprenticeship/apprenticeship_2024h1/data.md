@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nWorking with external data"
 subtitle: "Spring 2024" 
-date: "Last updated: 2024-08-01"
+date: "Last updated: 2024-08-11"
 output:
   md_document:
     variant: gfm
@@ -40,9 +40,10 @@ into a single tibble.
 
 Start by reading the introduction to importing the most common file
 types (text files, Excel, SPSS, Stata)
-[here](../../../tutorials/r_data). It is good to be aware of the Import
-dataset button and use it when needed, but in the long run it is easier
-to be aware of the available import functions and use them directly.
+[here](../../../tutorials/r_adv_import). It is good to be aware of the
+Import dataset button and use it when needed, but in the long run it is
+easier to be aware of the available import functions and use them
+directly.
 
 The following gives more information and examples of importing data from
 different file formats and different levels of tidiness.

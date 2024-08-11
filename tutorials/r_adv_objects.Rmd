@@ -1,0 +1,15 @@
+---
+layout: page
+title: "Advanced data types and functionals"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+**This tutorial is not ready yet. Please come back later.**

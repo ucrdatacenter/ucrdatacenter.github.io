@@ -1,0 +1,96 @@
+---
+layout: page
+title: "Data wrangling: summarizing data (within groups)"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+**This tutorial is not ready yet. Please come back later.**
+
+## Introduction
+
+In some cases you might need to summarize your data to understand it better and to compare different groups.
+In this tutorial, we will show you how to summarize data within groups using the `group_by()` and `summarize()` functions from `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
+
+Let's load the `tidyverse` package and have a look at the `diamonds` dataset:
+
+```{r}  
+# load tidyverse
+library(tidyverse)
+
+# add diamonds to the environment
+data(diamonds)
+```
+
+## Default summary
+
+The `summary()` function provides a quick overview of the data, printed in the console. 
+For numeric variables, it shows the minimum, 1st quartile, median, mean, 3rd quartile, maximum, and the number of missing values.
+Let's use the `summary()` function to get an overview of the `diamonds` dataset:
+
+```{r}
+# get a summary of the diamonds dataset
+summary(diamonds)
+```
+
+## Summarizing the data
+
+The `summarize()` function can produce the same summary statistics as the `summary()` function and more, and it allows you to save the results to a new dataset.
+The `summarize()` function uses the argument structure `summarize(data, variable = expression)` where `data` is the dataset you want to summarize, `variable` is the name of the new variable, and `expression` is the calculation you want to perform.  (Note that it has the same argument structure as the `mutate()` function for creating new variables.
+The difference is that `mutate()` calculates one value per observation and `summarize()` calculates one value for the whole dataset.)  
+
+For example, let's calculate the mean price of diamonds:
+
+```{r}
+# calculate the mean price of diamonds
+summarize(diamonds, mean_price = mean(price))
+```
+
+You can also calculate multiple summary statistics at once by separating them with a comma (and as a good practice, a new line).
+
+Let's calculate the mean price and the number of observations in the dataset:
+
+```{r}
+# calculate the mean price and the number of observations
+summarize(diamonds,
+          mean_price = mean(price),
+          n = n())
+```
+
+To be able to work with this new dataset, you need to save it to a new object.
+Let's assign the result of the `summarize()` function to a new object called `diamonds_summary`:
+
+```{r}
+# save the result to a new object
+diamonds_summary <- summarize(diamonds,
+                               mean_price = mean(price),
+                               n = n())
+```
+
+## Summarizing data within groups
+
+The `group_by()` function is used to group the data by one or more variables.
+Then summary statistics can be calculated within each group using the `summarize()` function in the same way as before.
+This is useful when you want to compare different groups in your data, for example the mean price of diamonds by cut.
+
+Note that the following code uses the pipe operator `%>%` to chain the functions together.
+The pipe operator is used to pass the output of one function as the first input to the next function, making the code more readable.
+To read more about the pipe operator, see the tutorial on the [tidy workflow](../r_intro_workflow).
+
+```{r}
+# start with the diamonds tibble
+diamonds %>%
+  # group by cut
+  group_by(cut) %>%
+  # calculate the mean price within each group
+  summarize(mean_price = mean(price))
+```
+
+## Video tutorial TBA

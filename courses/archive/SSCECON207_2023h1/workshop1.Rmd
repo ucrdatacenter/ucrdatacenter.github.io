@@ -75,7 +75,7 @@ Every following step is the same, except that you do need to load the `readxl` p
 
 ## Other data formats
 
-If you are interested, more information on importing files with other data formats, and writing your own import code are shown in [this tutorial](https://ucrdatacenter.github.io/tutorial/r_data.html).
+If you are interested, more information on importing files with other data formats, and writing your own import code are shown in [this tutorial](https://ucrdatacenter.github.io/tutorial/r_adv_import.html).
 
 # Data cleaning and manipulation
 

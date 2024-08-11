@@ -1,0 +1,66 @@
+---
+layout: page
+title: "Data wrangling: creating new variables"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+**This tutorial is not ready yet. Please come back later.**
+
+## Introduction
+
+In some cases you might need to do additional calculations with your data.
+In this tutorial, we will show you how to define new variables and overwrite existing ones using the `mutate()` function from `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
+
+Let's load the `tidyverse` package and have a look at the `diamonds` dataset:
+
+```{r}  
+# load tidyverse
+library(tidyverse)
+
+# add diamonds to the environment
+data(diamonds)
+```
+
+## Creating new variables
+
+The `mutate()` function is used to create new variables in a dataset.
+The syntax is `mutate(data, variable = expression)`.
+The `data` argument is the dataset you want to modify, `variable` is the name of the new variable, and `expression` is the calculation you want to perform.
+If `variable` already exists in the dataset, `mutate()` will overwrite it.
+
+Let's create a new variable called `price_per_carat` that calculates the price per carat of each diamond:
+
+```{r}
+# create a new variable price_per_carat
+mutate(diamonds, price_per_carat = price / carat)
+```
+
+You can also create multiple variables at once by separating them with a comma.
+It is good practice to start each new variable on a new line to keep your code readable.
+
+Let's create a second variable: a logical (TRUE/FALSE) variable that checks if the diamond costs more than $10,000:
+
+```{r}
+# create two new variables
+mutate(diamonds,
+       price_per_carat = price / carat,
+       expensive = price > 10000)
+```
+
+To be able to work with this new dataset, you need to save it to a new object.
+Let's assign the result of the `mutate()` function to a new object called `diamonds_new`:
+
+```{r}
+# save the result to a new object
+diamonds_new <- mutate(diamonds,
+                        price_per_carat = price / carat,
+                        expensive = price > 10000)
+```
