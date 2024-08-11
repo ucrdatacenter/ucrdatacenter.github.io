@@ -18,12 +18,7 @@ There are many datasets that are loaded into R by default or when you load diffe
 If you start typing the name of a dataset that is loaded into R, RStudio will suggest the full name of the dataset; to see all options from loaded packages, type `data()` in the console.
 You can work with these datasets without any additional steps, as they are already loaded into R; just refer to the name of the dataset.
 
-For example, calling `iris` will display the first few rows of the `iris` dataset.
-```{r}
-iris
-```
-
-If you would like the dataset to be stored as an object in your environment, you can use the `data()` function or assign the dataset to a new object.
+You can use a pre-defined dataset by calling its name directy, but if you would like the dataset to be stored as an object in your environment, you can use the `data()` function or assign the dataset to a new object.
 
 ```{r}
 data(iris)
