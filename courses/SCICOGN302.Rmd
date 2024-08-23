@@ -1,0 +1,56 @@
+---
+layout: page
+title: "SCICOGN302<br>Psycholinguistics<br>Fall 2023"
+subtitle: "Fall 2024"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+    toc: true
+---
+
+# Introduction
+
+This page collects materials for the data-driven assignments in the Fall 2024 edition of Psycholinguistics at UCR.
+You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects).
+
+Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
+
+**This page is currently under construction. Please check back later for updates.**
+
+<!-- # Assignment guidelines -->
+
+<!-- ## Small homework assignment -->
+
+<!-- Use what you learned in the [first Data Center workshop](SCICOGN302_2023h2/workshop1) to complete the following assignment. -->
+
+<!-- *The CHILDES database provides data on the use of (mostly spoken) language of a large number of young children. Use parts of the dataset to explore how the spoken language (word choice or number of words, for instance) of children changes over time . Keep you question simple, focus on a small part of the dataset (one or a few children). The chosen variable and/or sample should be different than what is shown in the Data Center workshop. Make one clear visualization of your result and briefly report on (max 200 words) , the research question and your outcome. Also briefly discuss your result in the context of scientific literature. Cite at least two papers (the latter are not part of 200 words).* -->
+
+<!-- ## Final poster -->
+
+<!-- If you choose to use the CHILDES database for your final poster, you can find the poster guidelines [here](SCICOGN302_2023h2/poster_guidelines). -->
+
+<!-- # Data Center workshops -->
+
+<!-- ## First workshop -->
+
+<!-- The first Data Center workshop takes place on the Tuesday class of week 5. -->
+<!-- To prepare for the class, please complete the following: -->
+
+<!-- * install R and RStudio ([installation tutorial](https://ucrdatacenter.github.io/tutorials/r_install.html)) -->
+<!-- * read sections 2.3-2.5, 3.1-3.4, and 4-6 of [A (very) short introduction to R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf) -->
+<!-- * create a new R project for the Psycholinguistics course  -->
+<!-- * install the `tidyverse`, `tidytext` and `childesr` packages -->
+
+<!-- [This video (6:18)](https://vimeo.com/860596815/4a202dd077?share=copy) and [this tutorial](https://ucrdatacenter.github.io/tutorials/r_basics.html) explain the layout of RStudio, how to create a project, and how to install and load packages. -->
+<!-- If you have any questions after watching the video and reading the tutorial, please email [datacenter@ucr.nl](mailto:datacenter@ucr.nl) or attend office hours before the workshop. -->
+
+<!-- You can find the workshop handout [here](SCICOGN302_2023h2/workshop1), and additional workshop materials [here](SCICOGN302_2023h2/workshop1extra). -->
+
+<!-- ## Second workshop -->
+
+<!-- The second Data Center workshop takes place on the Friday class of week 5. -->
+<!-- It is mandatory for the group working on a data project for their final poster, and optional for the rest of the class. -->
+
+<!-- The case study discussed in the workshop is available [here](SCICOGN302_2023h2/workshop2). -->

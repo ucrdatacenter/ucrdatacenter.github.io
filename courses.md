@@ -10,6 +10,7 @@ output:
 # Current courses
 
 * [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
+* [SCICOGN302 - Psycholingustics](SCICOGN302)
 
 # Data encounter archive
 
