@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "SSCPOLI302<br>European Union Politics"
+title: "SSCPOLI302<br> European Union Politics"
 subtitle: "Fall 2024"
 date: "Last updated: 2024-08-27"
 output:
