@@ -1,16 +1,8 @@
----
-layout: page
-title: "Data encounters in UCR courses"
-output:
-  md_document:
-    variant: gfm
-    preserve_yaml: true
----
-
 # Current courses
 
-* [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
-* [SCICOGN302 - Psycholingustics](SCICOGN302)
+- [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
+- [SCICOGN302 - Psycholingustics](SCICOGN302)
+- [SSCPOLI302 - European Union Politics](SSCPOLI302)
 
 # Data encounter archive
 
