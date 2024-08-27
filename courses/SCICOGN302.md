@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "SCICOGN302<br>Psycholinguistics<br>Fall 2023"
+title: "SCICOGN302<br>Psycholinguistics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-08-23"
+date: "Last updated: 2024-08-27"
 output:
   md_document:
     variant: gfm
