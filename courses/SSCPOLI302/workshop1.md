@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "SSCPOLI302:<br>Analysis of MEPs (draft)"
+title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
 date: "Last updated: 2024-08-27"
 output:
