@@ -22,7 +22,9 @@ files directly on [Github](https://github.com/ucrdatacenter/projects).
 Data Center office hours will be announced soon; to schedule an
 individual meeting, please email <ucrdatacenter@ucr.nl>.
 
-# [Analysis of MEPs](EU_politics_lec1_draft)
+# Analysis of MEPs
+
+[Link](workshop1) to the draft materials.
 
 **This page is currently under construction. Please check back later for
 updates.**
