@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-08-27"
+date: "Last updated: 2024-09-08"
 output:
   md_document:
     variant: gfm
@@ -14,7 +14,9 @@ output:
 - [Exercise 1](#exercise-1)
 - [Exercise 2](#exercise-2)
 - [Exercise 3](#exercise-3)
+- [Exercise 3](#exercise-3-1)
 - [Exercise 4](#exercise-4)
+- [Exercise 5](#exercise-5)
 
 ## Loading libraries and data
 
@@ -59,7 +61,7 @@ Nr_of_MEPs <-
 Nationality representation
 
 ``` r
-#Ranking the nr of MEPs per country
+#Counting the nr of MEPs per country
 MEP_nationalities <-
     Meetings_compl |>
     group_by(country, member_id) |>
@@ -75,15 +77,17 @@ Country_MEPs <- pluck(MEP_nationalities, "n")
 #did not finish their term and was replaced by another, such as the case of
 #Liesje Schreinemacher
 
-#Timeline of Liesje Schreinemacher
+#Meetings Timeline of Liesje Schreinemacher
 Schreinemacher <-
     Meetings_compl |>
-    filter("member_name" == "SCHREINEMACHER Liesje") |>
+    filter(member_name == "SCHREINEMACHER Liesje") |>
     select(meeting_date, member_name, member_id) |>
+    group_by(meeting_date) |>
+    mutate(nr = n()) |>
     arrange(meeting_date)
 
 
-#Which countries have the most meetings?
+#Which nationalities are represented the most?
 Country_meetings <-
     Meetings_compl |>
     group_by(country) |>
@@ -91,8 +95,7 @@ Country_meetings <-
     arrange(desc(count))
 
 
-#To discover which country has been the most effective, 
-#we can compute the average number of meetings per MEP for each country.
+#We can compute the average number of meetings per MEP for each nationality.
 
 #Country_avg <-
     #Meetings_compl |>
@@ -103,7 +106,130 @@ Country_meetings <-
 
 ## Exercise 3
 
-Political groups distribution
+Visualising the results of exercise 2
+
+``` r
+#Graphing the nr of MEPs per country with a ggplot.
+ggplot(MEP_nationalities, mapping=aes(x = country, y = n)) +
+    geom_col()+
+    labs(title = "Nr of MEPs per country between 2019-2024", x = "Country", y = "Nr of Meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
+#As we can see, the current plot is very unorganised and hardly legible.
+#We can improve its quality by doing the following;
+
+#First we can organise the bars based on their number of meetings using the
+#reorder() command.
+
+ggplot(data = MEP_nationalities, mapping=aes(x = reorder(country, n), y = n)) +
+    geom_col()+
+    labs(title = "Nr of MEPs per country between 2019-2024", x = "Country", y = "Nr of Meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+
+``` r
+#In order to improve the precision of the graph, we can set custom intervals
+#for the y-axis using the scale_y_continuous() command.
+
+ggplot(data = MEP_nationalities, mapping=aes(x = reorder(country, n), y = n)) +
+    geom_col()+
+    scale_y_continuous(breaks = seq(0, 350, by = 20))+
+    labs(title = "Nr of MEPs per country between 2019-2024", x = "Country", y = "Nr of Meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-3.png)<!-- -->
+
+``` r
+#By default, the plot will put the country names on the x axis, by flipping the axes
+#with coord_flip, we can improve the quality of the plot.
+
+ggplot(data = MEP_nationalities, mapping=aes(x = reorder(country, n), y = n))+
+    geom_col()+
+     scale_y_continuous(breaks = seq(0, 350, by = 20))+
+    coord_flip()+
+    labs(title = "Nr of MEPs per country between 2019-2024", x = "Country", y = "Nr of Meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-4.png)<!-- -->
+
+``` r
+#Now we have a legible plot
+
+
+
+#In this case, we will visualise the meetings of Liesje Schreinemacher.
+#Plotting a meetings timeline can be done in multiple ways.
+#The first one is by making a scatterplot of the actual meetings
+ggplot(data = Schreinemacher, mapping = aes(x = meeting_date, y = nr))+
+    geom_point()
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-5.png)<!-- -->
+
+``` r
+#This plot is not very appealing though.
+
+
+#However, we can improve the visualisation by making
+#a density plot of the meeting dates.
+ggplot(data = Schreinemacher, mapping = aes(x = meeting_date))+
+    geom_density(fill = "lightblue", alpha = 0.5, kernel = "rectangular")+
+    labs(title = "Meeting activity of Liesje Schreinemacher during her
+         MEP career", x = "Date", y = "Density")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-6.png)<!-- -->
+
+``` r
+#However, we can also compare the density of Liesje Schreinemacher's
+#meetings to the overall meeting density of the EP.
+#We will do this by changing a few things within the code layout
+#and by adding a second density plot showing the overall EP activity.
+
+ggplot()+
+geom_density(data = Schreinemacher, mapping = aes(x = meeting_date),
+             fill = "lightblue", alpha = 0.5, kernel = "rectangular")+
+    geom_density(data = Meetings_compl, mapping = aes(x = meeting_date),
+                 fill = "orange", alpha = 0.25, kernel = "rectangular")+
+    labs(title = "Meeting density of Liesje Schreinemacher compared to
+         the European Parliament between 2019-2024",
+         x = "Date", y = "Density")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-7.png)<!-- -->
+
+``` r
+#Note that this graph does not show the amount of meetings. It just
+#displays how strong the density of the meeting activity is.
+#As we can see, Liesje Schreinemacher's activity stops about midway
+#through 2022, which is when she exited the EP.
+
+
+
+#Plotting the number of meetings per nationality is practically the same as the
+#one for the Nr of MEPS per country.
+#How does this plot differ from the order in the NR of MEPS?
+ggplot(Country_meetings, mapping=aes(x = country, y = count)) +
+    geom_col(aes(reorder(country, count)))+
+      scale_y_continuous(breaks = seq(0, 20000, by = 2000))+
+    coord_flip() +
+    labs(title = "Reported total meetings by nationality from 2019-2024", x = "Country", y = "Nr of Meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-4-8.png)<!-- -->
+
+``` r
+#graph more informative by avg nr of meetings per MEP by country/group >
+#dependent on earlier code fix.
+```
+
+## Exercise 3
+
+Analysing meetings per political group
 
 ``` r
 #calculating the number of MEPs per political group
@@ -141,6 +267,71 @@ Share_of_meetings <-
 
 ## Exercise 4
 
+Visualising the results of exercise 3
+
+``` r
+#Plotting the graph for the NR of MEPs per political group.
+
+ggplot(data = MEPs_per_group, mapping = aes(x = political_group, 
+                                            y = nr_of_MEP))+
+    geom_col(color = "black")+
+    labs(title = "Nr of MEPs per political group in May 2024",
+         x = "Political group", y = "Nr of MEPs")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+#The current plot is very bland and unorganised, so we can improve its quality
+#with a few steps.
+
+#By tweaking the x-scale again, we can organise the bars in the
+#ascending order of the NR of MEPs.
+
+ggplot(data = MEPs_per_group, mapping = aes(x = reorder(political_group, nr_of_MEP), 
+                                            y = nr_of_MEP))+
+    geom_col(color = "black")+
+    labs(title = "Nr of MEPs per political group in May 2024",
+         x = "Political group", y = "Nr of MEPs")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+
+``` r
+#Now the graph is more structured, but it's still boring to look at.
+#We can fix this by specifying the colours of the bars so that they match
+#those of their political groups
+
+ggplot(data = MEPs_per_group, mapping = aes(x = reorder(political_group, nr_of_MEP), 
+                                            y = nr_of_MEP, fill = political_group))+
+    scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    geom_col(color = "black")+
+    labs(title = "Nr of MEPs per political group in May 2024",
+         x = "Political group", y = "Nr of MEPs")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
+
+``` r
+#Plotting the seat averages per political group.
+ggplot(data = Avg_per_seat, mapping = aes(x = reorder(political_group, avg),
+                                          y = avg, fill = political_group))+
+    geom_col(color = "black")+
+    scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    labs(title = "Average nr of reported meetings per political group seat",
+         subtitle = "The average number of reported meetings per seat by
+         political group between June 2019 and June 2024",
+         x = "Political group", y = "Nr of MEPs")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->
+
+## Exercise 5
+
 Role distributions
 
 ``` r
@@ -151,7 +342,7 @@ roles <-
     group_by(member_capacity) |>
     summarize(nr = n())
 
-#Make the data more informative by incorporating the political groups
+#Make the data more informative by showing the role counts per political group
 group_roles <-
     Meetings_compl |>
     group_by(member_capacity, political_group) |>
@@ -179,3 +370,90 @@ Role_reference <-
     group_by(reference) |>
     arrange(desc(reference_percentage), .by_group = TRUE)
 ```
+
+\##Exercise 6
+
+Visualising the results of exercise 5
+
+``` r
+#If we want to visualise the reported meetings of different
+#member roles per political group, we can do the following:
+ggplot(data = group_roles, mapping = aes(x = member_capacity, y = nr, fill =
+                                             political_group))+
+    geom_col()+
+    scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+#Once again, the plot is not very nice. We can reuse the coord_flip() command
+#to make it better.
+
+ggplot(data = group_roles, mapping = aes(x = member_capacity, y = nr, fill =
+                                             political_group))+
+    geom_col()+
+    scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    coord_flip()
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
+
+``` r
+#Still this is not a very useful graph. We can use position = "dodge" to 
+#split the bars.
+
+ggplot(data = group_roles, mapping = aes(x = member_capacity, y = nr, fill =
+                                             political_group))+
+    geom_col(position = "dodge")+
+    scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    coord_flip()
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-3.png)<!-- -->
+
+``` r
+#Now that the bars have been split, it is a bit hard to see where one
+#group of bars ends and another begins. A solution could be to simply
+#give each role its own graph using the facet_wrap() function.
+#In order to do this, we also need to change variable represented in the
+#x-asis.
+
+ggplot(data = group_roles, mapping = aes(x = political_group, y = nr, fill =
+                                             political_group))+
+     scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    geom_col()+
+    coord_flip()+
+    facet_wrap("member_capacity")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-4.png)<!-- -->
+
+``` r
+#The final problem seems to be that the "Member" group is so large
+#that it dwarfs the values of other groups.
+#This can be fixed by changing the y-scale values to a log10 scale.
+#For extra tidyness, we can also reorder the x-axis based on the nr of meetings, 
+#as we have before.
+
+ggplot(data = group_roles, mapping = aes(x = reorder(political_group, nr), y = nr, fill =
+                                             political_group))+
+     scale_fill_manual(values = c("ECR" = "deepskyblue4", "EPP" = "deepskyblue", "S&D" = "red",
+                                 "Renew" = "gold", "Greens" = "forestgreen",
+                                 "the Left" = "darkred", "ID" = "darkblue", "Non-attached" = "grey"))+
+    geom_col()+
+    coord_flip()+
+    facet_wrap("member_capacity")+
+    scale_y_log10()+
+    labs(x = "Political group", y = "Nr of meetings")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-5.png)<!-- -->
