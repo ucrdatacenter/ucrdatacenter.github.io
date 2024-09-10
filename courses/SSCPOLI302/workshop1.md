@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-09"
+date: "Last updated: 2024-09-10"
 output:
   md_document:
     variant: gfm
@@ -18,6 +18,8 @@ output:
 - [Differences between political
   groups](#differences-between-political-groups)
 - [Role distributions](#role-distributions)
+- [References to legislative
+  dossiers](#references-to-legislative-dossiers)
 
 # Loading libraries and data
 
@@ -191,7 +193,7 @@ meetings |>
   labs(title = "Meeting activity of Liesje Schreinemacher during her
          MEP career", 
        x = "Date", 
-       y = "Density")
+       y = "Frequency of meetings")
 ```
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
@@ -213,7 +215,10 @@ meetings |>
                       "Liesje Schreinemacher",
                       "Other MEPs")) |>
   ggplot() +
-  geom_histogram(aes(x = meeting_date, fill = MEP), binwidth = 30)
+  geom_histogram(aes(x = meeting_date, fill = MEP), binwidth = 30) +
+  labs(title = "Meeting activity of Liesje Schreinemacher compared to other MEPs", 
+       x = "Date", 
+       y = "Frequency of meetings")
 ```
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
@@ -236,10 +241,9 @@ meetings |>
   ggplot() +
   geom_histogram(aes(x = meeting_date, y = after_stat(ncount), fill = MEP),
                  binwidth = 30, position = "dodge") +
-  labs(title = "Meeting distribtion of Liesje Schreinemacher compared to
-         the rest European Parliament between 2019-2024",
+    labs(title = "Meeting activity of Liesje Schreinemacher compared to other MEPs", 
        x = "Date", 
-       y = "Distribution of meetings")
+       y = "Frequency of meetings (rescaled)")
 ```
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
@@ -259,17 +263,17 @@ groups that saw many MEP replacements and thus have more MEPs than seats
 in their data.
 
 ``` r
-# define the number of seats per group (as of May 2024)
+# define the number of seats per group (as of May 2024) and the position of each group on the left-right spectrum
 seats <- tribble(
-  ~political_group, ~seats,
-  "EPP", 176,
-  "S&D", 139,
-  "Renew", 102,
-  "Greens", 72,
-  "ECR", 69,
-  "Non-attached", 61,
-  "ID", 49,
-  "the Left", 37)
+  ~political_group, ~seats, ~leftright,
+  "EPP", 176, 5,
+  "S&D", 139, 3,
+  "Renew", 102, 4,
+  "Greens", 72, 2,
+  "ECR", 69, 6,
+  "Non-attached", 61, 8,
+  "ID", 49, 7,
+  "the Left", 37, 1)
 
 # count the number of meetings per political group in the meeting data
 meetings_per_seat <- meetings |> 
@@ -296,11 +300,11 @@ meetings_per_seat |>
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-To improve the quality of the graph, we can again organize the bars in
-ascending order of the number of MEPs. In addition, we can specify the
-colors of the bars to match those of their political groups. We define
-these colors in a separate vector and use the `scale_fill_manual()`
-function to apply them to the plot.
+To improve the quality of the graph, we can organize the bars based on
+the political orientation of the political group. In addition, we can
+specify the colors of the bars to match those of their political groups.
+We define these colors in a separate vector and use the
+`scale_fill_manual()` function to apply them to the plot.
 
 ``` r
 # define political group colors
@@ -316,7 +320,7 @@ colors <- c("EPP" = "deepskyblue",
 # number of MEP seats per political group
 meetings_per_seat |> 
   ggplot() +
-  geom_col(aes(x = reorder(political_group, seats), y = seats, 
+  geom_col(aes(x = reorder(political_group, leftright), y = seats, 
                fill = political_group),
            # color the borders of the bars black and hide the legend
            color = "black", show.legend = FALSE) +
@@ -335,7 +339,7 @@ in each political group.
 # average number of meetings per seat per political group
 meetings_per_seat |> 
   ggplot() +
-  geom_col(aes(x = reorder(political_group, meetings_per_seat), 
+  geom_col(aes(x = reorder(political_group, leftright), 
                y = meetings_per_seat, fill = political_group),
            color = "black", show.legend = FALSE) +
   labs(title = "Average number of reported meetings per seat", 
@@ -407,26 +411,33 @@ meetings |>
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
-*Unclear what’s happening here, to be discussed*
+# References to legislative dossiers
+
+*Unclear what the purpose is, to be discussed*
+
+Optional extra; try to figure out which roles have linked a procedure
+reference. This is important for full transparency about the legislative
+dossier their meeting relates to.
+
+Computing which roles have added a reference with a case_when function.
+Afterwards computing what percentage of each role then referenced a
+file. Finally ranking the results by % within “yes” or “no”
+reference-groups.
 
 ``` r
-#Optional extra; try to figure out which roles have linked a procedure reference.
-#This is imporant for full transparency about the legislative dossier their
-#meeting relates to.
-
-
-#Computing which roles have added a reference with a case_when function.
-#Afterwards computing what percentage of each role then referenced a file.
-#Finally ranking the results by % within "yes" or "no" reference-groups.
-
-Role_reference <-
-    meetings |>
-    group_by(member_capacity) |>
-    mutate(reference = if_else(is.na(procedure_reference), "no", "yes")) |>
-    group_by(member_capacity, reference) |>
-    summarize(nr = n()) |>
-    mutate(role_total = sum(nr),
-           reference_percentage = ((nr/role_total)*100)) |>
-    group_by(reference) |>
-    arrange(desc(reference_percentage), .by_group = TRUE)
+meetings |> 
+  mutate(reference = !is.na(procedure_reference)) |>
+  count(member_capacity, reference) |> 
+  group_by(member_capacity) |>
+  mutate(reference_share = n / sum(n)) |> 
+  ggplot() +
+  geom_col(aes(x = reference_share, 
+               y = member_capacity, 
+               fill = reference)) +
+  labs(title = "Share of meetings with a reference to a legislative dossier", 
+       x = "Share of meetings",
+       y = "Role",
+       fill = "Linked reference")
 ```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
