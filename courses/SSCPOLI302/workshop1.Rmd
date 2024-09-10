@@ -291,9 +291,8 @@ meetings |>
 Optional extra; try to figure out which roles have linked a procedure reference.
 This is important for full transparency about the legislative dossier their meeting relates to.
 
-Computing which roles have added a reference with a case_when function.
-Afterwards computing what percentage of each role then referenced a file.
-Finally ranking the results by % within "yes" or "no" reference-groups.
+We first count the number of meetings with and without added references per member role.
+We divide these counts with the total number of meetings per role to get the share of meetings with a reference, and plot these results on a bar chart.
 
 ```{r}
 meetings |> 
