@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-10"
+date: "Last updated: 2024-09-11"
 output:
   md_document:
     variant: gfm
@@ -18,8 +18,6 @@ output:
 - [Differences between political
   groups](#differences-between-political-groups)
 - [Role distributions](#role-distributions)
-- [References to legislative
-  dossiers](#references-to-legislative-dossiers)
 
 # Loading libraries and data
 
@@ -394,35 +392,15 @@ meetings |>
     ## 10 the Left        Member             2013
     ## # ℹ 43 more rows
 
-This is a lot of information as a table, so let’s use a bar chart to
-show the distribution of political groups within each role.
+For our purposes the only relevant meetings are the ones attached to a
+legislative dossier. This is important for full transparency about the
+legislative dossier their meeting relates to.
 
-``` r
-meetings |> 
-  count(political_group, member_capacity) |> 
-  ggplot() +
-  geom_col(aes(x = n, y = member_capacity, fill = political_group)) +
-  labs(title = "Meeting frequency per role and political group", 
-       x = "Number of meetings",
-       y = "Role",
-       fill = "Political group") +
-  scale_fill_manual(values = colors)
-```
-
-![](workshop1_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
-
-# References to legislative dossiers
-
-*Unclear what the purpose is, to be discussed*
-
-Optional extra; try to figure out which roles have linked a procedure
-reference. This is important for full transparency about the legislative
-dossier their meeting relates to.
-
-We first count the number of meetings with and without added references
-per member role. We divide these counts with the total number of
-meetings per role to get the share of meetings with a reference, and
-plot these results on a bar chart.
+Let’s look at what share of meetings has a reference to a legislative
+dossier per role. We first count the number of meetings with and without
+added references per member role. We divide these counts with the total
+number of meetings per role to get the share of meetings with a
+reference, and plot these results on a bar chart.
 
 ``` r
 meetings |> 
@@ -438,6 +416,24 @@ meetings |>
        x = "Share of meetings",
        y = "Role",
        fill = "Linked reference")
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+Now let’s plot the distribution of political groups within each role,
+focusing only on meetings with a legislative dossier reference.
+
+``` r
+meetings |> 
+  drop_na(procedure_reference) |>
+  count(political_group, member_capacity) |>
+  ggplot() +
+  geom_col(aes(x = n, y = member_capacity, fill = political_group)) +
+  labs(title = "Meeting frequency per role and political group", 
+       x = "Number of meetings",
+       y = "Role",
+       fill = "Political group") +
+  scale_fill_manual(values = colors)
 ```
 
 ![](workshop1_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
