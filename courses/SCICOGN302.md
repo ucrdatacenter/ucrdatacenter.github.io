@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "SCICOGN302<br>Psycholinguistics"
+title: "SCICOGN302 <br>Psycholinguistics"
 subtitle: "Fall 2024"
 date: "Last updated: 2024-09-12"
 output:
@@ -11,7 +11,7 @@ output:
 ---
 
 - [Introduction](#introduction)
-  - [Data Center workshop](#data-center-workshop)
+- [Data Center workshop](#data-center-workshop)
 
 # Introduction
 
@@ -23,7 +23,7 @@ related files directly on
 Data Center office hours will be announced soon; to schedule an
 individual meeting, please email <ucrdatacenter@ucr.nl>.
 
-## Data Center workshop
+# Data Center workshop
 
 The first Data Center workshop takes place on the Tuesday class of week
 5 (24 September). You can find the workshop handout [here](workshop1).

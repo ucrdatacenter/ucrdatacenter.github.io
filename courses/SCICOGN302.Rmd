@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "SCICOGN302<br>Psycholinguistics"
+title: "SCICOGN302 <br>Psycholinguistics"
 subtitle: "Fall 2024"
 date: "Last updated: `r Sys.Date()`"
 output:
@@ -17,7 +17,7 @@ You can also access the related files directly on [Github](https://github.com/uc
 
 Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
 
-## Data Center workshop
+# Data Center workshop
 
 The first Data Center workshop takes place on the Tuesday class of week 5 (24 September).
 You can find the workshop handout [here](workshop1). Please note that the materials are currently under construction and subject to change.
