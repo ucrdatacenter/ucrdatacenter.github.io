@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302<br>Psycholinguistics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-08-27"
+date: "Last updated: 2024-09-12"
 output:
   md_document:
     variant: gfm
@@ -11,6 +11,7 @@ output:
 ---
 
 - [Introduction](#introduction)
+  - [Data Center workshop](#data-center-workshop)
 
 # Introduction
 
@@ -22,8 +23,21 @@ related files directly on
 Data Center office hours will be announced soon; to schedule an
 individual meeting, please email <ucrdatacenter@ucr.nl>.
 
-**This page is currently under construction. Please check back later for
-updates.**
+## Data Center workshop
+
+The first Data Center workshop takes place on the Tuesday class of week
+5 (24 September). You can find the workshop handout [here](workshop1).
+Please note that the materials are currently under construction and
+subject to change.
+
+To prepare for the class, please complete the following:
+
+- install R and RStudio ([installation
+  tutorial](https://ucrdatacenter.github.io/tutorials/r_install/))
+- follow the [R and RStudio setup
+  tutorial](https://ucrdatacenter.github.io/tutorials/r_basics/):
+  - create a new R project for the Psycholinguistics course
+  - install the `tidyverse`, `tidytext` and `childesr` packages
 
 <!-- # Assignment guidelines -->
 <!-- ## Small homework assignment -->

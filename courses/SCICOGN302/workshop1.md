@@ -1,0 +1,860 @@
+---
+layout: page
+title: "SCICOGN302:<br> Exploring the CHILDES dataset (draft)"
+subtitle: "Fall 2024"
+date: "Last updated: 2024-09-12"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+    toc: true
+---
+
+In this course, you will explore the childes data set in the data
+science assignments. It is important to get at least a little acquainted
+with the data set before you pick a research question, as there may not
+be a way to answer your research question using childes.
+
+In this example, we will go over one possible analysis that can be done
+within the data set - comparison of three children and their language
+development. We will also cover useful codes and some tips and tricks on
+how to work with this data set. This data exploration does not answer a
+specific question, but rather provides some insight into this data set
+and ways it can be used.
+
+``` r
+#First, download all the important libraries
+library(tidyverse)
+```
+
+    ## Warning: package 'ggplot2' was built under R version 4.3.3
+
+    ## Warning: package 'tidyr' was built under R version 4.3.3
+
+    ## Warning: package 'purrr' was built under R version 4.3.3
+
+    ## Warning: package 'dplyr' was built under R version 4.3.3
+
+    ## Warning: package 'stringr' was built under R version 4.3.3
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+library(tidytext)
+library(childesr)
+
+#Let's take a look at all the available corpora in the data set.
+corpora <- get_corpora()
+```
+
+    ## Using current database version: '2021.1'.
+
+``` r
+View(corpora)
+```
+
+We are going to work with tokens and utterances a lot, so first, a
+little explanation on what they actually are. Utterances are data
+elements from a recorded piece of conversation (such as “I had good
+dinner”). Tokens are specific pieces of utterances (“I”, “had”, “good”,
+“dinner”). Utterances are usually more useful when we look into the
+development of a child as a whole (syntax, semantics, context of the
+utterance), whereas with tokens you can look into the development of a
+child’s vocabulary (child’s vocabulary complexity and its development
+over time.)
+
+When picking a child/children for your research question, it is very
+important to make sure you have enough data (utterances and tokens) to
+work with. In a study done by MacWhinney, B., & Snow, C. (1990) you have
+a detailed overview of all the researchers who have added to the childes
+data set. There are some which follow a single child (Snow), some that
+look into the short-term speech of multiple children (Higginson), and
+some that follow the mothers and children as well (Howe).
+
+In this example, we will work with Brown’s addition to the data set
+(Brown’s corpora, specifically tokens) - data acquired from three
+children Adam, Eve and Sarah, collected by Roger Brown and his students.
+Adam was studied from 2;3 to 4;10; Eve from 1;6 to 2;3; and Sarah from
+2;3 to 5;1.
+
+``` r
+#Get the and tokens from this corpus.
+tokens_brown <- get_tokens(token = "*", collection = "Eng-NA",
+                  corpus = "Brown")
+```
+
+    ## Using current database version: '2021.1'.
+
+    ## Getting data from 3 children in 1 corpus ...
+
+If you view the data sets, you will notice that they are rather messy.
+We need to organize them based on which child is saying the utterance.
+Each token has a name attached to it, so it is recognizable. However, it
+will be easier for future mingling of data to have a data set with
+tokens only from Adam, another one only from Eve, and another one from
+Sarah. Luckily, this can be done quite easily.
+
+``` r
+adam_tokens <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Adam",corpus = "Brown", role = "target_child")
+```
+
+    ## Using current database version: '2021.1'.
+
+    ## Getting data from 1 child in 1 corpus ...
+
+``` r
+eve_tokens <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Eve", corpus = "Brown", role = "target_child")
+```
+
+    ## Using current database version: '2021.1'.
+    ## Getting data from 1 child in 1 corpus ...
+
+``` r
+sarah_tokens <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Sarah", corpus = "Brown", role = "target_child")
+```
+
+    ## Using current database version: '2021.1'.
+    ## Getting data from 1 child in 1 corpus ...
+
+Now we need to decide how to compare the development of these three
+children’s language. We will use an arbitrary scale, where 0 is a word
+that does not exist in an English dictionary, and 1 is a word that is
+present. This way, we can assign a value to every token, and then
+average it per certain time period. Afterwards, we can compare this
+value progression for all three children. Average values closer to zero
+would mean the child still has a lot of mumbling/incorrect pronunciation
+or misspoken words in their vocabulary, whereas a child with a score
+nearing 1 has a very developed vocabulary. This comparison does not look
+into syntax of the sentence, meaning that even a sentence “banana mango
+apples man” would score a 1 1 1 1, when in reality this sentence is
+nonsensical. Therefore our way of looking into the language development
+is one-dimensional but there will always be some sort of limitation to
+conducting research.
+
+``` r
+#First , let's create dictionary dataset.
+# install.packages("qdapDictionaries")
+library(qdapDictionaries)
+
+dictionary <- GradyAugmented
+
+# Let's check the total number of words in this dataset.
+length(GradyAugmented)
+```
+
+    ## [1] 122806
+
+It is suggested by multiple sources that we need approximately 3000
+words to be able to communicate our point in English without any
+problems (VocabularyFirst, 2019; Yang, 2016). This data set has 40 times
+that amount, so we can deem it appropriate for our purposes. Even though
+it’s not an exhaustive list of all English words, the chances that a
+child said a word that is correct and is not on the list above is close
+to zero.
+
+Now we need to compare the data sets of children’s tokens with the valid
+words in our English dictionary. For this we need to do some data
+mutating.
+
+``` r
+# Create a new column '_isvalid' in adam_tokens
+adam_tokens <- adam_tokens %>%
+  mutate(is_valid = adam_tokens[[2]] %in% GradyAugmented)
+
+# View the first few rows to verify
+head(adam_tokens)
+```
+
+    ## # A tibble: 6 × 29
+    ##       id gloss language token_order prefix part_of_speech stem  actual_phonology
+    ##    <int> <chr> <chr>          <int> <chr>  <chr>          <chr> <chr>           
+    ## 1 7.56e6 yeah  eng                1 ""     co             yeah  ""              
+    ## 2 7.56e6 choo… eng                1 ""     on             choo  ""              
+    ## 3 7.56e6 train eng                2 ""     n              train ""              
+    ## 4 7.56e6 there eng                1 ""     adv            there ""              
+    ## 5 7.56e6 water eng                2 ""     n              water ""              
+    ## 6 7.56e6 water eng                1 ""     n              water ""              
+    ## # ℹ 21 more variables: model_phonology <chr>, suffix <chr>,
+    ## #   num_morphemes <int>, english <chr>, clitic <chr>, utterance_type <chr>,
+    ## #   corpus_name <chr>, speaker_code <chr>, speaker_name <chr>,
+    ## #   speaker_role <chr>, target_child_name <chr>, target_child_age <dbl>,
+    ## #   target_child_sex <chr>, collection_name <chr>, collection_id <int>,
+    ## #   corpus_id <int>, speaker_id <int>, target_child_id <int>,
+    ## #   transcript_id <int>, utterance_id <int>, is_valid <lgl>
+
+``` r
+# Create a new column '_isvalid' in eve_tokens
+eve_tokens <- eve_tokens %>%
+  mutate(is_valid = eve_tokens[[2]] %in% GradyAugmented)
+```
+
+``` r
+# Create a new column '_isvalid' in sarah_tokens
+sarah_tokens <- sarah_tokens %>%
+  mutate(is_valid = sarah_tokens[[2]] %in% GradyAugmented)
+```
+
+Since these children are not studied from the time when they first start
+speaking and are therefore more likely to stutter or create their own
+words to fill in gaps in vocabulary, the number will be quite high and
+approaching 1. However, there will still be some slips, such as in row 2
+of adam_tokens, where we can see that Adam used the word choo-choo,
+which is not grammatically correct, probably to adress a train.
+
+Looking at these “slips” may show us how developed their language is. In
+reality, creating their own words and bridging gaps in their vocabulary
+is just a natural step in their language development, as it is
+experimentation with meaning, words structures and sounds (Michigan
+State University Extension, 2023, Social Sci LibreTexts, 2023). However,
+for us it shows how “far” a child is in their language development
+journey.
+
+Before we look into comparison, let’s create a graph where we can see
+the development over time.
+
+``` r
+# Adam
+
+adam_tokens$age_bracket <- floor(adam_tokens$target_child_age)
+
+# Calculate the average 'is_valid' value per age bracket
+average_is_valid_per_month_adam <- adam_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(average_is_valid = mean(is_valid))
+
+# View the result
+ggplot(data = average_is_valid_per_month_adam, aes(x = age_bracket, y = average_is_valid)) +
+  geom_line(color = "blue") +                # Line graph
+  labs(title = "Development of Average Valid Word Usage Over Time for Adam",
+       x = "Age (in months)",
+       y = "Average Valid Word Usage") +
+  theme_minimal() 
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+# Eve
+
+eve_tokens$age_bracket <- floor(eve_tokens$target_child_age)
+
+# Calculate the average 'is_valid' value per age bracket
+average_is_valid_per_month_eve <- eve_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(average_is_valid = mean(is_valid))
+
+# View the result
+ggplot(data = average_is_valid_per_month_eve, aes(x = age_bracket, y = average_is_valid)) +
+  geom_line(color = "green") +                # Line graph
+  labs(title = "Development of Average Valid Word Usage Over Time for Eve",
+       x = "Age (in months)",
+       y = "Average Valid Word Usage") +
+  theme_minimal() 
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+# Sarah
+
+sarah_tokens$age_bracket <- floor(sarah_tokens$target_child_age)
+
+# Calculate the average 'is_valid' value per age bracket
+average_is_valid_per_month_sarah <- sarah_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(average_is_valid = mean(is_valid))
+
+# View the result
+ggplot(data = average_is_valid_per_month_sarah, aes(x = age_bracket, y = average_is_valid)) +
+  geom_line(color = "brown") +                # Line graph
+  labs(title = "Development of Average Valid Word Usage Over Time for Sarah",
+       x = "Age (in months)",
+       y = "Average Valid Word Usage") +
+  theme_minimal()
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+After looking at the data we can see that initially, there is an
+increase of average valid word usage. However, there does not seem to be
+a stable trend, except for Eve, where there is a stable increase for
+period of 5 months. Her speech was recorded for shorter period of time
+than Adam and Sarah, so it’s not an entirely fair comparison with the
+other two. When we compare only Adam and Sarah, we can see that Sarah’s
+speech has stable results after the 40th month of her life of between
+80-90% average valid words in speech, while Adam performs somewhat
+higher, having an average of between 85-95% after the 30th month of his
+life.
+
+This way of analyzing tokens may be more suitable for children that are
+just learning how to speak, as all three data sets suggest that there is
+a certain development period of life when there is a rise of average
+valid use of words, and then the data becomes a bit messier, and the
+trends are harder to find.
+
+Another way we can analyse and compare their vocabulary development is
+to look into the uniqueness of words the children use. For this we will
+track “valid” words from their utterances, but compare it against the
+500 most common words in the English language to see how many words are
+NOT from this list (while still being valid words). We can do this as a
+count of less common words per month. Bear in mind that here we have to
+make sure we don’t count the same word twice in a month!
+
+First, let’s create a vector with the most common words according to
+english4today.com, as there is no data set directly in RStudio.
+
+Useful tip: you should not use ChatGPT for writing your code for you,
+but when it comes to formatting words/numbers into data sets and
+vectors, it can be quite helpful!
+
+``` r
+# Create a vector with the provided list of common words
+common_words <- c("the", "of", "to", "and", "a", "in", "is", "it", "you", "that", "he", 
+                  "was", "for", "on", "are", "with", "as", "I", "his", "they", "be", 
+                  "at", "one", "have", "this", "from", "or", "had", "by", "hot", "but", 
+                  "some", "what", "there", "we", "can", "out", "other", "were", "all", 
+                  "your", "when", "up", "use", "word", "how", "said", "an", "each", 
+                  "she", "which", "do", "their", "time", "if", "will", "way", "about", 
+                  "many", "then", "them", "would", "write", "like", "so", "these", 
+                  "her", "long", "make", "thing", "see", "him", "two", "has", "look", 
+                  "more", "day", "could", "go", "come", "did", "my", "sound", "no", 
+                  "most", "number", "who", "over", "know", "water", "than", "call", 
+                  "first", "people", "may", "down", "side", "been", "now", "find", 
+                  "any", "new", "work", "part", "take", "get", "place", "made", "live", 
+                  "where", "after", "back", "little", "only", "round", "man", "year", 
+                  "came", "show", "every", "good", "me", "give", "our", "under", "name", 
+                  "very", "through", "just", "form", "much", "great", "think", "say", 
+                  "help", "low", "line", "before", "turn", "cause", "same", "mean", 
+                  "differ", "move", "right", "boy", "old", "too", "does", "tell", 
+                  "sentence", "set", "three", "want", "air", "well", "also", "play", 
+                  "small", "end", "put", "home", "read", "hand", "port", "large", 
+                  "spell", "add", "even", "land", "here", "must", "big", "high", "such", 
+                  "follow", "act", "why", "ask", "men", "change", "went", "light", 
+                  "kind", "off", "need", "house", "picture", "try", "us", "again", 
+                  "animal", "point", "mother", "world", "near", "build", "self", 
+                  "earth", "father", "head", "stand", "own", "page", "should", "country", 
+                  "found", "answer", "school", "grow", "study", "still", "learn", 
+                  "plant", "cover", "food", "sun", "four", "thought", "let", "keep", 
+                  "eye", "never", "last", "door", "between", "city", "tree", "cross", 
+                  "since", "hard", "start", "might", "story", "saw", "far", "sea", 
+                  "draw", "left", "late", "run", "don't", "while", "press", "close", 
+                  "night", "real", "life", "few", "stop", "open", "seem", "together", 
+                  "next", "white", "children", "begin", "got", "walk", "example", "ease", 
+                  "paper", "often", "always", "music", "those", "both", "mark", "book", 
+                  "letter", "until", "mile", "river", "car", "feet", "care", "second", 
+                  "group", "carry", "took", "rain", "eat", "room", "friend", "began", 
+                  "idea", "fish", "mountain", "north", "once", "base", "hear", "horse", 
+                  "cut", "sure", "watch", "color", "face", "wood", "main", "enough", 
+                  "plain", "girl", "usual", "young", "ready", "above", "ever", "red", 
+                  "list", "though", "feel", "talk", "bird", "soon", "body", "dog", 
+                  "family", "direct", "pose", "leave", "song", "measure", "state", 
+                  "product", "black", "short", "numeral", "class", "wind", "question", 
+                  "happen", "complete", "ship", "area", "half", "rock", "order", "fire", 
+                  "south", "problem", "piece", "told", "knew", "pass", "farm", "top", 
+                  "whole", "king", "size", "heard", "best", "hour", "better", "true", 
+                  "during", "hundred", "am", "remember", "step", "early", "hold", "west", 
+                  "ground", "interest", "reach", "fast", "five", "sing", "listen", "six", 
+                  "table", "travel", "less", "morning", "ten", "simple", "several", 
+                  "vowel", "toward", "war", "lay", "against", "pattern", "slow", "center", 
+                  "love", "person", "money", "serve", "appear", "road", "map", "science", 
+                  "rule", "govern", "pull", "cold", "notice", "voice", "fall", "power", 
+                  "town", "fine", "certain", "fly", "unit", "lead", "cry", "dark", 
+                  "machine", "note", "wait", "plan", "figure", "star", "box", "noun", 
+                  "field", "rest", "correct", "able", "pound", "done", "beauty", "drive", 
+                  "stood", "contain", "front", "teach", "week", "final", "gave", "green", 
+                  "oh", "quick", "develop", "sleep", "warm", "free", "minute", "strong", 
+                  "special", "mind", "behind", "clear", "tail", "produce", "fact", 
+                  "street", "inch", "lot", "nothing", "course", "stay", "wheel", "full", 
+                  "force", "blue", "object", "decide", "surface", "deep", "moon", "island", 
+                  "foot", "yet", "busy", "test", "record", "boat", "common", "gold", 
+                  "possible", "plane", "age", "dry", "wonder", "laugh", "thousand", "ago", 
+                  "ran", "check", "game", "shape", "yes", "hot", "miss", "brought", "heat", 
+                  "snow", "bed", "bring", "sit", "perhaps", "fill", "east", "weight", 
+                  "language", "among")
+```
+
+Now let’s create a new variable in the three children’s data sets, that
+will count the number of less common valid words.
+
+``` r
+# Create the 'special_word' variable
+adam_tokens <- adam_tokens %>%
+  mutate(special_word = case_when(
+    is_valid == 1 & !(gloss %in% common_words) ~ 1,
+    TRUE ~ 0
+  ))
+
+# Do the same for eve_tokens and sarah_tokens
+eve_tokens <- eve_tokens %>%
+  mutate(special_word = case_when(
+    is_valid == 1 & !(gloss %in% common_words) ~ 1,
+    TRUE ~ 0
+  ))
+
+sarah_tokens <- sarah_tokens %>%
+  mutate(special_word = case_when(
+    is_valid == 1 & !(gloss %in% common_words) ~ 1,
+    TRUE ~ 0
+  ))
+```
+
+Now let’s count the number of special words per month for each child. We
+should also normalize this against all words said that month to have a
+resulting percentage.
+
+``` r
+#Adam 
+
+# Calculate tokens per month
+tokens_per_month_adam <- adam_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(tokens_per_month = n())
+
+# Calculate special word counts per month
+special_word_counts_per_age_bracket_adam <- adam_tokens %>%
+  filter(special_word == 1) %>%
+  group_by(age_bracket, gloss) %>%
+  summarise(count_per_word = n_distinct(gloss), .groups = 'drop') %>%
+  group_by(age_bracket) %>%
+  summarise(count_special_words = n(), .groups = 'drop')
+
+# Add tokens_per_month to special_word_counts_per_age_bracket_adam
+special_word_counts_per_age_bracket_adam <- special_word_counts_per_age_bracket_adam %>%
+  left_join(tokens_per_month_adam, by = "age_bracket") %>%
+  mutate(normalized_special_word_count = count_special_words / tokens_per_month)
+
+# Create the plot
+ggplot(special_word_counts_per_age_bracket_adam, aes(x = age_bracket, y = normalized_special_word_count)) +
+  geom_line(color = "blue") +                # Line graph
+  labs(title = "Count of Special Words per Age Bracket for Adam ",
+       x = "Age Bracket (Months)",
+       y = "Count of Special Words") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    axis.title.y = element_text(margin = margin(r = 10))
+  )
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+As we can see in the graph, there are too many special words, so we will
+enlarge the common_words data set to around 1500, which is 1000 words
+less than the typical vocabulary size of a 5 year old (according to
+Linguisystems Milestones Guide it should be between 2200-2500). Since
+these children are looked at from early age until approximately 5 years,
+I have decided to compare their vocabulary to the one of a 5 year old
+child. However, as each child is raised in a different environment,
+there are different words that are considered common around the house,
+which definitely has the impact on the uniqness of words.
+
+This data set includes common_words, as well as an additional circa 1000
+common words. Since I could not find the data that would include he most
+commonly spoken 2500 words (average 5 year old vocabulary size), I had
+to make smaller sized data set. Sometimes the investigation of a
+research question can be halted because of such reasons, so it’s very
+important to keep in mind the resources and data sets available on the
+internet. In this case, I included a data set made from two different
+websites, so there might be an overlap of words, which is why I had to
+remove duplicates. Furthermore, I put it in alphabetical order for my
+own convenience.
+
+``` r
+common_words_2000 <- c("the", "of", "to", "and", "a", "in", "is", "it", "you", "that", "he", "was", "for", 
+           "on", "are", "with", "as", "I", "his", "they", "be", "at", "one", "have", "this", 
+           "from", "or", "had", "by", "hot", "but", "some", "what", "there", "we", "can", "out", 
+           "other", "were", "all", "your", "when", "up", "use", "word", "how", "said", "an", 
+           "each", "she", "which", "do", "their", "time", "if", "will", "way", "about", "many", 
+           "then", "them", "would", "write", "like", "so", "these", "her", "long", "make", 
+           "thing", "see", "him", "two", "has", "look", "more", "day", "could", "go", "come", 
+           "did", "my", "sound", "no", "most", "number", "who", "over", "know", "water", "than", 
+           "call", "first", "people", "may", "down", "side", "been", "now", "find", "any", "new", 
+           "work", "part", "take", "get", "place", "made", "live", "where", "after", "back", 
+           "little", "only", "round", "man", "year", "came", "show", "every", "good", "me", 
+           "give", "our", "under", "name", "very", "through", "just", "form", "much", "great", 
+           "think", "say", "help", "low", "line", "before", "turn", "cause", "same", "mean", 
+           "differ", "move", "right", "boy", "old", "too", "does", "tell", "sentence", "set", 
+           "three", "want", "air", "well", "also", "play", "small", "end", "put", "home", "read", 
+           "hand", "port", "large", "spell", "add", "even", "land", "here", "must", "big", "high", 
+           "such", "follow", "act", "why", "ask", "men", "change", "went", "light", "kind", "off", 
+           "need", "house", "picture", "try", "us", "again", "animal", "point", "mother", "world", 
+           "near", "build", "self", "earth", "father", "head", "stand", "own", "page", "should", 
+           "country", "found", "answer", "school", "grow", "study", "still", "learn", "plant", 
+           "cover", "food", "sun", "four", "thought", "let", "keep", "eye", "never", "last", 
+           "door", "between", "city", "tree", "cross", "since", "hard", "start", "might", "story", 
+           "saw", "far", "sea", "draw", "left", "late", "run", "don't", "while", "press", "close", 
+           "night", "real", "life", "few", "stop", "open", "seem", "together", "next", "white", 
+           "children", "begin", "got", "walk", "example", "ease", "paper", "often", "always", 
+           "music", "those", "both", "mark", "book", "letter", "until", "mile", "river", "car", 
+           "feet", "care", "second", "group", "carry", "took", "rain", "eat", "room", "friend", 
+           "began", "idea", "fish", "mountain", "north", "once", "base", "hear", "horse", "cut", 
+           "sure", "watch", "color", "face", "wood", "main", "enough", "plain", "girl", "usual", 
+           "young", "ready", "above", "ever", "red", "list", "though", "feel", "talk", "bird", 
+           "soon", "body", "dog", "family", "direct", "pose", "leave", "song", "measure", "state", 
+           "product", "black", "short", "numeral", "class", "wind", "question", "happen", 
+           "complete", "ship", "area", "half", "rock", "order", "fire", "south", "problem", 
+           "piece", "told", "knew", "pass", "farm", "top", "whole", "king", "size", "heard", 
+           "best", "hour", "better", "true", "during", "hundred", "am", "remember", "step", 
+           "early", "hold", "west", "ground", "interest", "reach", "fast", "five", "sing", 
+           "listen", "six", "table", "travel", "less", "morning", "ten", "simple", "several", 
+           "vowel", "toward", "war", "lay", "against", "pattern", "slow", "center", "love", 
+           "person", "money", "serve", "appear", "road", "map", "science", "rule", "govern", 
+           "pull", "cold", "notice", "voice", "fall", "power", "town", "fine", "certain", 
+           "fly", "unit", "lead", "cry", "dark", "machine", "note", "wait", "plan", "figure", 
+           "star", "box", "noun", "field", "rest", "correct", "able", "pound", "done", 
+           "beauty", "drive", "stood", "contain", "front", "teach", "week", "final", "gave", 
+           "green", "oh", "quick", "develop", "sleep", "warm", "free", "minute", "strong", 
+           "special", "mind", "behind", "clear", "tail", "produce", "fact", "street", "inch", 
+           "lot", "nothing", "course", "stay", "wheel", "full", "force", "blue", "object", 
+           "decide", "surface", "deep", "moon", "island", "foot", "yet", "busy", "test", 
+           "record", "boat", "common", "gold", "possible", "plane", "age", "dry", "wonder", 
+           "laugh", "thousand", "ago", "ran", "check", "game", "shape", "yes", "hot", 
+           "miss", "brought", "heat", "snow", "bed", "bring", "sit", "perhaps", "fill", 
+           "east", "weight", "language", "among", "a", "abide", "ability", "able", "about", "above",
+    "abroad", "access", "accommodation",
+    "accomplish", "account", "accuracy", "accurate", "achieve", "achievement", "acknowledge",
+  "acquaintance", "acquire", "across", "act", "actual", "actually", "add", "additional",
+  "address", "advance", "advantage", "advertise", "advertisement", "advice", "advise",
+  "advocate", "affair", "affect", "afford", "affordable", "afraid", "after", "afternoon",
+  "afterwards", "again", "against", "age", "ago", "agree", "agreement", "ahead", "aid",
+  "aim", "albeit", "alike", "alive", "all", "allow", "allowance", "almost", "alone",
+  "along", "already", "also", "although", "always", "am", "amazing", "amend", "among",
+  "amount", "and", "anger", "angry", "ankle", "annoy", "annoyed", "annoying", "another",
+  "answer", "anxious", "any", "anymore", "anyone", "anything", "anyway", "apart", "apologize",
+  "appeal", "appear", "appearance", "apple", "application", "apply", "appointment", "appraisal",
+  "appreciate", "approach", "appropriate", "are", "area", "argue", "argument", "arise",
+  "arm", "around", "arrange", "arrangement", "array", "arrive", "art", "as", "ashamed",
+  "aside", "ask", "asleep", "assert", "assertive", "assess", "assessment", "asset",
+  "assignment", "assume", "assumption", "at", "Ate", "attach", "attached", "attempt",
+  "attend", "attention", "attitude", "audience", "aunt", "available", "average", "avoid",
+  "awake", "award", "aware", "awareness", "away", "awe", "awesome", "awful", "awkward",
+  "bachelor", "back", "background", "bad", "bag", "bake", "balance", "bald", "ball", "ban",
+  "band", "bank", "bar", "bare", "barely", "bargain", "bark", "base", "bass", "bat",
+  "batch", "be", "beach", "beam", "bear", "beard", "bearing", "beat", "beautiful", "because",
+  "become", "bed", "beef", "before", "beg", "begin", "beginning", "behave", "behavior",
+  "behind", "being", "belief", "believe", "belong", "below", "belt", "bench", "bend",
+  "beneath", "benefit", "beside", "besides", "best", "bet", "better", "between", "beyond",
+  "bias", "biased", "bid", "big", "bill", "bind", "binding", "bird", "birthday", "bit",
+  "bitch", "bite", "bitter", "blame", "blanket", "blast", "blend", "blind", "block",
+  "blood", "blow", "blue", "blunt", "board", "boast", "boat", "body", "bold", "bolt",
+  "bond", "book", "boost", "boot", "border", "bore", "bored", "boring", "born", "borrow",
+  "bossy", "both", "bother", "bottom", "bounce", "bound", "boundary", "bow", "bowl",
+  "box", "branch", "brand", "brave", "breach", "bread", "break", "breakdown", "breakfast",
+  "breakthrough", "breath", "breathe", "breed", "bridge", "brief", "bright", "bring",
+  "broad", "broadcast", "broke", "brother", "brown", "brush", "bucket", "budget", "bug",
+  "build", "building", "bulk", "bully", "bump", "bunch", "bundle", "burden", "burn",
+  "burst", "bush", "business", "bust", "busy", "but", "butt", "buy", "buzz", "by",
+  "cabbage", "cake", "calf", "call", "called", "calm", "can", "cap", "car", "care",
+  "career", "careful", "carefully", "caring", "carry", "case", "cast", "cat", "catch",
+  "cattle", "caught", "cause", "ceiling", "certain", "certainly", "chain", "chair",
+  "challenge", "challenging", "chance", "chandelier", "change", "character", "charge",
+  "charity", "charming", "chart", "chase", "cheap", "cheat", "check", "cheek", "cheeky",
+  "cheer", "cheerful", "chest", "chicken", "chief", "child", "childhood", "chill",
+  "chin", "choice", "choose", "chop", "church", "city", "claim", "class", "clay",
+  "clean", "clear", "clerk", "clever", "cliff", "climb", "close", "clue", "clumsy",
+  "cluster", "coach", "coal", "coat", "cold", "colleague", "collect", "college", "come",
+  "comfortable", "commit", "commitment", "committed", "common", "commute", "company",
+  "compelling", "complain", "complaint", "complete", "compliance", "comply", "compound",
+  "comprehensive", "compulsory", "computer", "concern", "concerned", "conduct",
+  "confidence", "confident", "consider", "consist", "consistent", "constraint", "contact",
+  "contain", "content", "control", "convenient", "convey", "cook", "cool", "cope", "core",
+  "correct", "cost", "costume", "couch", "cough", "could", "count", "counter", "country",
+  "couple", "course", "court", "cousin", "cover", "crack", "craft", "crap", "crash",
+  "crawl", "crazy", "create", "creep", "creepy", "crew", "crop", "cross", "crowd",
+  "crowded", "crush", "cry", "cuddle", "cue", "culture", "cup", "cupboard", "curb",
+  "currency", "current", "currently", "curse", "custom", "customer", "cut", "cute",
+  "daily", "damage", "damn", "damp", "dance", "dangerous", "dare", "dark", "dash",
+  "data", "date", "daughter", "dawn", "day", "dead", "deadline", "deal", "dear", "death",
+  "deceive", "decide", "decision", "deck", "decline", "decrease", "deed", "deem",
+  "deep", "deer", "default", "defeat", "definitely", "degree", "delay", "delight",
+  "delighted", "deliver", "delivery", "demand", "demanding", "deny", "depict", "deploy",
+  "depth", "deserve", "design", "desire", "desk", "despite", "dessert", "determined",
+  "develop", "development", "device", "dictionary", "die", "different", "difficult",
+  "dig", "dim", "dinner", "dip", "dire", "dirty", "disappointed", "disclosure",
+  "discover", "discuss", "disease", "disguise", "dish", "dismiss", "display", "distress",
+  "ditch", "dive", "dizzy", "do", "doctor", "does", "dog", "done", "door", "doubt",
+  "down", "draft", "drag", "drain", "draw", "drawback", "drawer", "drawing", "drawn",
+  "dread", "dreadful", "dream", "dress", "drift", "drill", "drink", "drive", "drop",
+  "drought", "drown", "drug", "drunk", "dry", "duck", "dust", "duty", "each", "ear",
+  "early", "earn", "earnings", "earth", "ease", "easier", "easily", "east", "easy",
+  "eat", "eclectic", "edge", "educate", "education", "effect", "effective", "effort",
+  "either", "element", "elevate", "elite", "else", "embarrassed", "embrace", "emotion",
+  "emotional", "employ", "employee", "employer", "enact", "end", "enemy", "energy",
+  "engage", "engagement", "engine", "enough", "enrich", "enroll", "ensure", "enter",
+  "entire", "environment", "equal", "equally", "error", "escape", "especially", "essence",
+  "establish", "estimate", "even", "event", "eventually", "ever", "every", "everybody",
+  "everyone", "everything", "evidence", "evolve", "exact", "exactly", "example", "excellent",
+  "excited", "exciting", "exercise", "exhibit", "exist", "expect", "expensive", "experience",
+  "expert", "explain", "expose", "extend", "extra", "eye", "fable", "face", "fact",
+  "factory", "fail", "fair", "fall", "fame", "family", "famous", "fan", "far", "fare",
+  "fast", "fate", "fault", "fear", "feature", "feel", "feeling", "few", "fight", "file",
+  "fill", "final", "find", "fine", "finish", "fire", "firm", "first", "fish", "fit",
+  "fix", "flame", "flash", "flat", "flee", "flight", "flip", "floor", "flow", "flower",
+  "fly", "focus", "fold", "follow", "food", "force", "forget", "form", "formal", "format",
+  "fort", "fortune", "found", "four", "fragile", "frame", "free", "freedom", "fresh",
+  "friend", "friendly", "frighten", "from", "front", "fruit", "full", "function", "fund",
+  "future", "gain", "game", "gap", "garbage", "garden", "gas", "gather", "gave", "general",
+  "generally", "generate", "gentle", "get", "gift", "give", "glass", "goal", "god", "gold",
+  "good", "government", "grand", "grant", "grass", "great", "green", "greet", "ground",
+  "group", "grow", "growth", "guarantee", "guard", "guess", "guest", "guide", "guilt",
+  "habit", "happy", "hard", "hardly", "harmony", "harsh", "hate", "have", "he", "head",
+  "health", "heart", "heat", "help", "her", "here", "hesitate", "hi", "high", "hill",
+  "his", "history", "hit", "hold", "hole", "home", "honest", "honey", "hope", "horrible",
+  "host", "hot", "house", "how", "huge", "human", "humor", "hungry", "hurry", "hurt",
+  "ice", "idea", "identify", "if", "ignore", "ill", "image", "imagine", "impact", "implement",
+  "important", "improve", "in", "include", "income", "increase", "influence", "inform",
+  "information", "inspire", "instead", "interest", "into", "invest", "involve", "is", "issue",
+  "it", "item", "jack", "job", "join", "joke", "judge", "juice", "just", "keep", "kind",
+  "king", "kiss", "knee", "know", "knowledge", "lack", "lady", "land", "language", "large",
+  "last", "late", "lately", "laugh", "lawn", "lead", "learn", "lesson", "let", "letter",
+  "lie", "life", "likely", "limit", "line", "list", "listen", "live", "load", "local",
+  "lock", "long", "look", "loose", "loud", "love", "luck", "lucky", "mad", "mail",
+  "main", "make", "man", "many", "market", "married", "mass", "master", "match", "matter",
+  "mean", "meaning", "measure", "medicine", "meet", "member", "memory", "mention",
+  "merry", "message", "middle", "might", "mind", "mine", "minute", "miss", "mistake",
+  "mix", "model", "money", "more", "most", "mother", "move", "much", "must", "myself",
+  "name", "nature", "near", "need", "negative", "network", "never", "new", "news", "nice",
+  "night", "none", "normal", "not", "note", "nothing", "now", "number", "object",
+  "obtain", "obvious", "occasion", "off", "offer", "office", "often", "on", "one",
+  "only", "open", "opportunity", "order", "organization", "others", "out", "over", "own",
+  "pack", "pain", "part", "party", "pass", "path", "patient", "pay", "peace", "pen",
+  "people", "perfect", "perhaps", "period", "place", "plan", "play", "point", "policy",
+  "poor", "position", "possible", "potential", "power", "prepare", "present", "press",
+  "price", "private", "problem", "process", "produce", "product", "professional", "profit",
+  "progress", "project", "promise", "proper", "protect", "public", "purpose", "quality",
+  "question", "quick", "quiet", "raise", "rate", "read", "ready", "real", "reality",
+  "reason", "receive", "recent", "record", "reduce", "reflect", "refuse", "regard",
+  "region", "regret", "relate", "relationship", "release", "rely", "remain", "remember",
+  "remove", "rent", "reply", "report", "represent", "request", "require", "research",
+  "resource", "respond", "result", "return", "reveal", "rich", "right", "risk", "road",
+  "role", "room", "rule", "run", "safe", "same", "save", "school", "score", "search",
+  "season", "see", "self", "sell", "sense", "serve", "service", "set", "share", "short",
+  "show", "side", "sign", "simple", "since", "site", "size", "social", "some", "soon",
+  "sort", "space", "special", "spend", "stand", "start", "state", "status", "stay",
+  "step", "still", "store", "strategy", "study", "stuff", "success", "such", "suggest",
+  "support", "sure", "table", "take", "task", "team", "tell", "term", "test", "than",
+  "that", "their", "them", "then", "there", "these", "they", "thing", "this", "time",
+  "to", "today", "together", "tomorrow", "too", "total", "touch", "toward", "trade",
+  "train", "transport", "travel", "try", "turn", "type", "understand", "union", "unit",
+  "until", "up", "use", "value", "very", "view", "visit", "wait", "walk", "want",
+  "warm", "way", "we", "well", "what", "when", "where", "which", "while", "who",
+  "why", "wide", "will", "win", "with", "work", "world", "worry", "write", "year",
+  "young", "your", "yourself")
+
+# Remove duplicates
+common_words_unique <- unique(common_words_2000)
+
+# Sort alphabetically
+common_words_sorted <- sort(common_words_unique)
+```
+
+Now let’s create a new variable in the three children’s data sets, that
+will count the number of less common valid words.
+
+``` r
+# Create the 'special_word' variable
+adam_tokens <- adam_tokens %>%
+  mutate(special_word_2000 = case_when(
+    is_valid == 1 & !(gloss %in% common_words_unique) ~ 1,
+    TRUE ~ 0
+  ))
+
+# Do the same for eve_tokens and sarah_tokens
+eve_tokens <- eve_tokens %>%
+  mutate(special_word_2000 = case_when(
+    is_valid == 1 & !(gloss %in% common_words_unique) ~ 1,
+    TRUE ~ 0
+  ))
+
+sarah_tokens <- sarah_tokens %>%
+  mutate(special_word_2000 = case_when(
+    is_valid == 1 & !(gloss %in% common_words_unique) ~ 1,
+    TRUE ~ 0
+  ))
+```
+
+Now let’s do the same analysis.
+
+``` r
+#Adam 
+
+# Ensure each special word is counted only once per month
+special_word_counts_per_age_bracket_adam_2000 <- adam_tokens %>%
+  filter(special_word_2000 == 1) %>%
+  group_by(age_bracket, gloss) %>%
+  summarise(count_per_word = n_distinct(gloss), .groups = 'drop') %>%
+  group_by(age_bracket) %>%
+  summarise(count_special_words_2000 = n(), .groups = 'drop')
+
+# Add tokens_per_month to special_word_counts_per_age_bracket_adam_2000
+special_word_counts_per_age_bracket_adam_2000 <- special_word_counts_per_age_bracket_adam_2000 %>%
+  left_join(tokens_per_month_adam, by = "age_bracket") %>%
+  mutate(normalized_special_word_count_2000 = count_special_words_2000 / tokens_per_month)
+
+
+# Create the plot
+ggplot(special_word_counts_per_age_bracket_adam_2000, aes(x = age_bracket, y = normalized_special_word_count_2000)) +
+  geom_line(color = "blue") +                # Line graph
+  labs(title = "Count of Special Words per Age Bracket for Adam",
+       x = "Age Bracket (Months)",
+       y = "Count of Special Words") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    axis.title.y = element_text(margin = margin(r = 10))
+  )
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+Let’s do the same for Eve and Sarah.
+
+``` r
+#Eve
+
+# Ensure each special word is counted only once per month
+special_word_counts_per_age_bracket_eve_2000 <- eve_tokens %>%
+  filter(special_word_2000 == 1) %>%
+  group_by(age_bracket, gloss) %>%
+  summarise(count_per_word = n_distinct(gloss), .groups = 'drop') %>%
+  group_by(age_bracket) %>%
+  summarise(count_special_words_2000 = n(), .groups = 'drop')
+
+# Calculate tokens per month
+tokens_per_month_eve <- eve_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(tokens_per_month = n())
+
+# Add tokens_per_month to special_word_counts_per_age_bracket_eve_2000
+special_word_counts_per_age_bracket_eve_2000 <- special_word_counts_per_age_bracket_eve_2000 %>%
+  left_join(tokens_per_month_eve, by = "age_bracket") %>%
+  mutate(normalized_special_word_count_2000 = count_special_words_2000 / tokens_per_month)
+
+# Create the plot
+ggplot(special_word_counts_per_age_bracket_eve_2000, aes(x = age_bracket, y = normalized_special_word_count_2000)) +
+  geom_line(color = "green") +                # Line graph with specified color
+  labs(title = "Count of Special Words per Age Bracket for Eve",
+       x = "Age Bracket (Months)",
+       y = "Count of Special Words") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    axis.title.y = element_text(margin = margin(r = 10))
+  )
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+
+``` r
+#Sarah
+
+special_word_counts_per_age_bracket_sarah_2000 <- sarah_tokens %>%
+  filter(special_word_2000 == 1) %>%
+  group_by(age_bracket, gloss) %>%
+  summarise(count_per_word = n_distinct(gloss), .groups = 'drop') %>%
+  group_by(age_bracket) %>%
+  summarise(count_special_words_2000 = n(), .groups = 'drop')
+
+# Calculate tokens per month
+tokens_per_month_sarah <- sarah_tokens %>%
+  group_by(age_bracket) %>%
+  summarise(tokens_per_month = n())
+
+# Add tokens_per_month to special_word_counts_per_age_bracket_sarah_2000
+special_word_counts_per_age_bracket_sarah_2000 <- special_word_counts_per_age_bracket_sarah_2000 %>%
+  left_join(tokens_per_month_sarah, by = "age_bracket") %>%
+  mutate(normalized_special_word_count_2000 = count_special_words_2000 / tokens_per_month)
+
+
+# Create the plot
+ggplot(special_word_counts_per_age_bracket_sarah_2000, aes(x = age_bracket, y = normalized_special_word_count_2000)) +
+  geom_line(color = "brown") +                # Line graph with specified color
+  labs(title = "Count of Special Words per Age Bracket for Sarah",
+       x = "Age Bracket (Months)",
+       y = "Count of Special Words") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.title.x = element_text(margin = margin(t = 10)),
+    axis.title.y = element_text(margin = margin(r = 10))
+  )
+```
+
+![](workshop1_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+
+After looking at the graphs, we can see that all three children use
+language that is developed and also contains more unique words. However,
+that does not tell us directly whether their other language skills such
+as syntax are also on par with where they should be with their language
+development.
+
+When it comes to their vocabulary specifically, we can see the use of a
+more developed language, compared to an average 5 year old, or even a
+little more advanced than that. That is true for all of them even from a
+younger age, where they use less common words. This may be explainable
+by their environment - if the child’s father is a doctor, they may come
+in contact with more advanced words from the medical field, simply due
+to existing in the same household. What can also be the case is that
+they do know some more advanced words, but lack in basics.
+
+Once again, we can’t really fully compare Eve with Adam and Sarah, as
+she does not have data coverage over extended periods of time. However,
+when we compare the special words Adam has, we can notice that Eve has
+the higher unique words usage, which suggests her vocabulary is more
+advanced. This finding is interesting, as Adam has a higher average of
+valid words used over time compared with Eve. Sarah’s data are rather
+inconclusive, as she shows very high usage of unique words at first, and
+then it drops below 60%. Overall, these data don’t show as much of a
+trend as we’d hope for an investigation. It’s key to play around with
+data and find good tools to reach more definite conclusion.
+
+To conclude, we looked into three children’s tokens, and did two
+analyses - one that looked into their average usage of valid words over
+time using an English vocabulary, and a second one that looked into
+special words usage per month. We can conclude that Eve does not have
+enough data to be compared with Sarah and Adam, but all of them have
+enough data to be analysed independently. Furthermore, Adam shows more
+advancements compared to Sarah when it comes to average valid word
+usage, but Eve has higher unique word usage.
+
+List of sources: Hsu, M.-L. (2013). Language play: The development of
+linguistic consciousness and creative speech in early childhood
+education. In Advances in early education and day care (Vol. 17,
+pp. 127–139). Emerald Group Publishing Limited.
+\[<https://doi.org/10.1108/S0270-4021(2013)0000012007>\]\[<https://doi.org/10.1108/S0270-4021(2013)0000012007>\]{.uri}
+
+The Education Hub. (n.d.). Effective vocabulary instruction. The
+Education Hub.
+<https://theeducationhub.org.nz/effective-vocabulary-instruction/>
+
+Childes-db. (2019). Childes-db: A flexible and reproducible interface to
+the child language data exchange system. Journal of Child Language, 51,
+1928–1941. <https://doi.org/10.1017/s0305000900013866>
+
+WordReference. (n.d.). Top 2000 English words. WordReference.
+<https://lists.wordreference.com/show/Top-2000-English-words.1/>
+
+VocabularyFirst. (2019). How many words do I need to speak English
+language? VocabularyFirst.
+<https://www.vocabularyfirst.com/how-many-words-do-i-need-to-know/>
+
+Yang, D. (2016). How many words do you need to know to be fluent in
+English? Day Translations.
+<https://www.daytranslations.com/blog/how-many-words-to-be-fluent-in-english/>
+
+Social Sci LibreTexts. (2023). Language Development in Early Childhood.
+
+Michigan State University Extension. (2023). Language development – Part
+2: Principles that are the stem and branch of speech.
