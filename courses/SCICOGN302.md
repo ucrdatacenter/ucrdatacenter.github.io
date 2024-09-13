@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 <br>Psycholinguistics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-12"
+date: "Last updated: 2024-09-13"
 output:
   md_document:
     variant: gfm
@@ -12,6 +12,7 @@ output:
 
 - [Introduction](#introduction)
 - [Data Center workshop](#data-center-workshop)
+- [Office hours](#office-hours)
 
 # Introduction
 
@@ -38,6 +39,12 @@ To prepare for the class, please complete the following:
   tutorial](https://ucrdatacenter.github.io/tutorials/r_basics/):
   - create a new R project for the Psycholinguistics course
   - install the `tidyverse`, `tidytext` and `childesr` packages
+
+# Office hours
+
+The Data Center offers office hours to help prepare for the workshops
+and complete the assignments. Please see the schedule
+[here](../../contact).
 
 <!-- # Assignment guidelines -->
 <!-- ## Small homework assignment -->

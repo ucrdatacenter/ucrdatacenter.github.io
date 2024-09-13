@@ -28,6 +28,11 @@ To prepare for the class, please complete the following:
 * follow the [R and RStudio setup tutorial](https://ucrdatacenter.github.io/tutorials/r_basics/):
   * create a new R project for the Psycholinguistics course 
   * install the `tidyverse`, `tidytext` and `childesr` packages
+  
+# Office hours
+
+The Data Center offers office hours to help prepare for the workshops and complete the assignments.
+Please see the schedule [here](../../contact).
 
 <!-- # Assignment guidelines -->
 

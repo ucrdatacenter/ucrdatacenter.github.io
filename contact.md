@@ -12,7 +12,11 @@ Drop by to office hours if you're looking for some data science help, whether fo
 
 # Office hour schedule
 
-To be published in the coming semester.
+Office hours are held in the Data Center's office (Anne ground floor) on the following days:
+
+- 17 September, 17:00-19:00
+- 27 September, 17:00-19:00
+- 1 October, 17:00-19:00
 
 # Contact us
 
