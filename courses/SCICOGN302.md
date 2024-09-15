@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 <br>Psycholinguistics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-13"
+date: "Last updated: 2024-09-15"
 output:
   md_document:
     variant: gfm
@@ -11,8 +11,10 @@ output:
 ---
 
 - [Introduction](#introduction)
-- [Data Center workshop](#data-center-workshop)
+- [First workshop](#first-workshop)
+- [Second workshop](#second-workshop)
 - [Office hours](#office-hours)
+- [Additional materials](#additional-materials)
 
 # Introduction
 
@@ -24,21 +26,26 @@ related files directly on
 Data Center office hours will be announced soon; to schedule an
 individual meeting, please email <ucrdatacenter@ucr.nl>.
 
-# Data Center workshop
+# First workshop
 
 The first Data Center workshop takes place on the Tuesday class of week
 5 (24 September). You can find the workshop handout [here](workshop1).
-Please note that the materials are currently under construction and
-subject to change.
+Some extra materials that may or may not be covered in the workshop are
+available [here](workshop1extra).
 
 To prepare for the class, please complete the following:
 
-- install R and RStudio ([installation
-  tutorial](https://ucrdatacenter.github.io/tutorials/r_install/))
-- follow the [R and RStudio setup
-  tutorial](https://ucrdatacenter.github.io/tutorials/r_basics/):
+- read the “Setting up R” tutorial series ([link](../../tutorials))
+- using the tutorials:
+  - install R and RStudio
   - create a new R project for the Psycholinguistics course
-  - install the `tidyverse`, `tidytext` and `childesr` packages
+  - install the `tidyverse`, `tidytext`, `childesr`, and
+    `qdapDictionaries` packages
+
+# Second workshop
+
+The second Data Center workshop takes place on the Tuesday class of week
+6 (1 October). You can find the workshop handout [here](workshop2).
 
 # Office hours
 
@@ -46,6 +53,21 @@ The Data Center offers office hours to help prepare for the workshops
 and complete the assignments. Please see the schedule
 [here](../../contact).
 
+# Additional materials
+
+You can find a more advanced case study that combines text analysis with
+regular expressions, summary statistic calculation, and data
+visualization [here](../archive/SCICOGN302_2023h2/workshop2).
+
+<!-- Of the general tutorials by the Data Center, the most relevant for this course are: -->
+<!-- - [Data wrangling: filtering rows and selecting columns](../../tutorials/r_intro_subset) -->
+<!-- - [Data wrangling: creating new variables](../../tutorials/r_intro_mutate) -->
+<!-- - [Data wrangling: summarizing data (within groups)](../../tutorials/r_intro_summarize) -->
+<!-- - [The tidy workflow](r_intro_pipe) -->
+<!-- - [Data visualization: introduction to ggplot2](../../tutorials/r_ggplot_intro) -->
+<!-- - [Data visualization: distributions](r_ggplot_univariate) -->
+<!-- - [Data visualization: patterns over time](r_ggplot_timeseries) -->
+<!-- - [Working with text](r_text) -->
 <!-- # Assignment guidelines -->
 <!-- ## Small homework assignment -->
 <!-- Use what you learned in the [first Data Center workshop](SCICOGN302_2023h2/workshop1) to complete the following assignment. -->

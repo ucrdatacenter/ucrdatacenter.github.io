@@ -1,0 +1,92 @@
+---
+layout: page
+title: "SCICOGN302 workshop I: <br>Additional material"
+subtitle: "Fall 2024"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
+# Introduction
+
+This tutorial shows you how you can use the `mutate()`, `group_by()` and `summarize()` functions to compute more complex measures of linguistic development than what was shown in the Data Center workshop.
+
+If you have not done so yet, load the three packages we used in the workshop, and load Amy's transcript data in the token-based format.
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(childesr)
+
+tok <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Amy",
+                  corpus = "VanKleeck", role = "target_child")
+```
+
+# Computing new variables
+
+## `mutate()`
+
+The `mutate()` function is useful when you want to create new variables or overwrite existing ones.
+For instance, you can calculate the length of each word Amy used by using the `str_length()` function, and assign the result to a new variable called `length`.
+I use the `select()` function to display only a subset of the variables, and the `head()` function to display only the first 10 observations.
+
+```{r}
+tok_length <- tok %>% 
+  mutate(length = str_length(gloss)) 
+
+tok_length %>% 
+  select(id, gloss, stem, length) %>% 
+  head(10)
+```
+
+You can also use mutate to create indicator variables: the next example uses a logical expression that is true if the word is a noun.
+
+```{r}
+tok %>% 
+  mutate(noun = part_of_speech == "n") %>% 
+  select(id, gloss, stem, noun) %>% 
+  head(10)
+```
+
+## `group_by()` and `summarize()`
+
+While `mutate()` creates a new variable for each row of the data, `summarize()` collapses the data to a smaller dimension by applying a function (e.g. `sum()` or `mean()`) to the data.
+
+For instance, if you use `mutate()` to get the length of each word, you can use `summarize()` to find the mean word length of all observations:
+
+```{r}
+tok_length %>% 
+  summarize(length = mean(length))
+```
+
+Amy's average word in this data is almost 4 letters long.
+
+You can also do more complex operations rather than averages.
+The following example uses the indicator variable for nouns to calculate the total fraction of nouns in Amy's speech: we can use the `sum()` function to get the total number of nouns (the TRUE/FALSE indicator is treated as 1/0), and divide that by the total number of observations `n()`.
+
+```{r}
+tok %>% 
+  mutate(noun = part_of_speech == "n") %>% 
+  summarize(noun_prop = sum(noun)/n())
+```
+So approximately 12% of Amy's words were nouns.
+
+Sometimes you don't want to aggregate the full dataset, but get summaries per group, e.g. the average word length per transcript.
+You can accomplish that by specifying one or more grouping variables with the `group_by()` function before calling `summarize()`.
+
+```{r}
+tok_length %>% 
+  group_by(transcript_id) %>% 
+  summarize(length = mean(length))
+```
+
+# More materials
+
+You can find a list of helpful links for data manipulation and visualization [here](https://ucrdatacenter.github.io/tutorials/links.html).
