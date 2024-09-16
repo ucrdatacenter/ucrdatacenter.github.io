@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 workshop I:<br> Introduction to the CHILDES dataset"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-15"
+date: "Last updated: 2024-09-16"
 output:
   md_document:
     variant: gfm
@@ -40,12 +40,11 @@ This tutorial assumes that you completed the preparatory steps listed
 
 If you get stuck at any point, check the help files of functions (access
 by running `?functionname`), look at more extensive [Data Center
-tutorials](https://ucrdatacenter.github.io/tutorial), try googling your
-question, attend Data Center office hours (TBA) or email
-<datacenter@ucr.nl>.
+tutorials](../../../tutorials), try googling your question, attend Data
+Center office hours (TBA) or email <datacenter@ucr.nl>.
 
 The code used in this tutorial is also available on
-[Github](https://github.com/ucrdatacenter/projects/blob/main/SCICOGN302/2023h2/workshop1code.R).
+[Github](https://github.com/ucrdatacenter/projects/blob/main/SCICOGN302/2024h2/workshop1code.R).
 
 # Getting data from the CHILDES database
 
@@ -56,30 +55,6 @@ from within R.
 
 ``` r
 library(tidyverse)
-```
-
-    ## Warning: package 'ggplot2' was built under R version 4.3.3
-
-    ## Warning: package 'tidyr' was built under R version 4.3.3
-
-    ## Warning: package 'purrr' was built under R version 4.3.3
-
-    ## Warning: package 'dplyr' was built under R version 4.3.3
-
-    ## Warning: package 'stringr' was built under R version 4.3.3
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.1.4     ✔ readr     2.1.4
-    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.2     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
 library(tidytext)
 library(childesr)
 ```
@@ -117,19 +92,10 @@ token-based and utterance-based datasets as follows:
 ``` r
 tokens <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Amy",
                      corpus = "VanKleeck", role = "target_child")
-```
 
-    ## Using current database version: '2021.1'.
-
-    ## Getting data from 1 child in 1 corpus ...
-
-``` r
 utterances <- get_utterances(collection = "Eng-NA", target_child = "Amy",
                              corpus = "VanKleeck", role = "target_child")
 ```
-
-    ## Using current database version: '2021.1'.
-    ## Getting data from 1 child in 1 corpus ...
 
 Some notes for using different samples:
 
@@ -150,7 +116,7 @@ Some notes for using different samples:
 You can view the downloaded dataframes by calling the `View()` function
 or clicking on the name of the dataframes in the Environment tab.
 
-The key variables of `tok` (token-based dataframe) are
+The key variables of `tokens` (token-based dataframe) are
 
 - gloss: token(/word) as used in the speech
 - stem: stem of the word in gloss
@@ -158,7 +124,7 @@ The key variables of `tok` (token-based dataframe) are
 - language, corpus\_…, collection\_… speaker\_…, target_child\_…:
   transcript metadata
 
-The key variables of `utt` (utterance-based dataframe) are
+The key variables of `utterances` (utterance-based dataframe) are
 
 - gloss: utterance (built from tokens) as used in the speech
 - stem: stem of each word in the utterance
@@ -261,14 +227,15 @@ likely say a lot.
 ## Tidy workflows
 
 Instead of going through the previous previous two steps by assigning
-each intermediate result to a new object (see `tok_filtered`), you can
-write a linear worflow where you start with your original data, apply
-each data manipulation step-by-step until you reach your final result.
+each intermediate result to a new object (see `tokens_filtered`), you
+can write a linear worflow where you start with your original data,
+apply each data manipulation step-by-step until you reach your final
+result.
 
 To create such a workflow, you need the pipe operator (`%>%`): using it
 at the end of a line means that the next function uses the previous
-result as an input. In the following case, it takes the object `tok` as
-the first argument of the `filter()` function, and then takes the
+result as an input. In the following case, it takes the object `tokens`
+as the first argument of the `filter()` function, and then takes the
 resulting filtered data as the first argument of the `count()` function.
 
 ``` r
@@ -395,8 +362,6 @@ utterances %>%
   theme_light()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 From this plot we can see that while there are some particularly long
@@ -420,8 +385,6 @@ utterances %>%
   theme_light()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 This plot tells us that the second transcript seems to have a slightly
@@ -429,7 +392,7 @@ larger MLU, mainly because most of the particularly long utterances
 occurred in the second conversation.
 
 We can also use regular expressions to look for particular patterns. For
-instance, we can check which types of pronouns (denoted pro:type) Amy
+instance, we can check which types of pronouns (denoted `pro:type`) Amy
 uses the most.
 
 ``` r

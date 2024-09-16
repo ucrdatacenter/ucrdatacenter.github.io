@@ -10,6 +10,10 @@ output:
     toc: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
 # Learning outcomes
 
 In this tutorial you learn the steps needed to calculate and visualize some measures of languages development over time for three children, using R and the CHILDES database of child language development.
@@ -21,7 +25,7 @@ You learn how to import data into R with the `childesr` package, how to use basi
 
 This tutorial assumes that you completed the [first Data Center workshop](../workshop1) and its prerequisites.
 
-Note that if you get stuck at any point, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](../../tutorials), try googling your question, attend Data Center office hours ([schedule](../../contact)) or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
+Note that if you get stuck at any point, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](../../../tutorials), try googling your question, attend Data Center office hours ([schedule](../../../contact)) or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
 The code used in this tutorial is also available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SCICOGN302/2024h2/workshop2code.R).
 
@@ -62,7 +66,7 @@ One way to measure the development of the children's language using token-level 
 We can introduce a variable for whether the each word is present in an English dictionary. 
 This variable will be a logical vector, with `TRUE` and `FALSE` as possible values.
 The computer treats `TRUE` values as 1 and `FALSE` values as 0, so you can use mathematical operations such as averages on logical data.
-Then the average of the variable over a certain time period can be interpreted as the share of words that are present in an English dictionary: average values closer to zero would mean the child still has a lot of mumbling/incorrect pronunciation or misspoken words in their vocabulary, whereas a child with a score nearing 1 has a very developed vocabulary.
+Then the average of the variable over a certain time period can be interpreted as the share of words that are present in an English dictionary: average values closer to zero would mean the child still has a lot of mumbling/incorrect pronunciation or misspoken words in their vocabulary, whereas a child with a score near 1 has a very developed vocabulary.
 This way, we can assign a value to every token, and then average it per certain time period. Afterwards, we can compare this value progression for all three children. This comparison does not look into syntax of the sentence, meaning that even a sentence "banana mango apples man" would be evaluated as entirely correct, when in reality this sentence is nonsensical. So this method certainly has its limitations, but is nevertheless interesting to look at.
 
 In order to find out which words exist in an English dictionary, we need to choose a dictionary.
@@ -84,17 +88,19 @@ We call the new variable `is_valid` to reflect whether the token in each row is 
 valid_tokens <- tokens %>%
   mutate(is_valid = gloss %in% GradyAugmented)
 
-# View the first few rows to check the results
-head(tokens)
+# View the first few rows of gloss and is_valid to check the results
+valid_tokens |> 
+  select(gloss, is_valid) |>
+  head()
 ```
 
-Since these children are not studied from the time when they first start speaking and are more likely to stutter or create their own words to fill in gaps in vocabulary, most tokens are valid words.
-However, there will still be some slips, such as when Adam used the word choo-choo, cprobably to adress a train.
+Since these children are not studied from the time when they first start speaking and are therefore more likely to stutter or create their own words to fill in gaps in vocabulary, most tokens are valid words.
+However, there will still be some slips, such as when Adam used the word choo-choo, probably to adress a train.
 
 Looking at these "slips" may show us how developed a child's language is. In reality, creating their own words and bridging gaps in their vocabulary is just a natural step in language development, as it is experimentation with meaning, words structures and sounds (Michigan State University Extension, 2023, Social Sci LibreTexts, 2023). However, for us it shows how "far" a child is in their language development journey.
 
 In order to get some statistics over time, let's aggregate the data per child and age bracket, and calculate the share of valid words in each period.
-We use the `floor()` function to round the age to the nearest month, and then group by the child's name and age bracket to calcuate the average of the `is_valid` variable.
+We use the `floor()` function to round the age to the nearest month, and then group by the child's name and age bracket to calculate the average of the `is_valid` variable.
 
 ```{r}
 valid_tokens <- tokens |> 
@@ -117,9 +123,9 @@ valid_tokens |>
 ```
 
 
-After looking at the data we can see that initially, there is an increase of average valid word usage. However, there does not seem to be a stable trend, except for Eve, where there is a stable increase for period of 5 months. Her speech was recorded for shorter period of time than Adam and Sarah, so it's not an entirely fair comparison with the other two. When we compare only Adam and Sarah, we can see that Sarah's speech has stable results after the 40th month of her life of between 80-90% average valid words in speech, while Adam performs somewhat higher, having an average of between 85-95% after the 30th month of his life.
+After looking at the data we can see that initially, there is an increase of average valid word usage, especially for Sarah. However, there does not seem to be a stable trend, except for Eve, where there is a stable increase for period of 5 months. Her speech was recorded for shorter period of time than Adam and Sarah and at a younger age, so it's not an entirely fair comparison with the other two. When we compare only Adam and Sarah, we can see that Adam started with a much higher average valid word usage, but Sarah caught up to Adam over time, and from about the age of 50 months, they have similar average valid word usage (85--90% of all tokens).
 
-This way of analyzing tokens may be more suitable for children that are just learning how to speak, as the figure suggests that there is a certain development period of life when there is a rise of average valid use of words, and then the data becomes a bit messier, and the trends are harder to find.
+This way of analyzing tokens may be more suitable for children that are just learning how to speak, as the figure suggests that there is a certain development period of life when there is a rise of average valid use of words, and then the trends flatten out as the vast majority of spoken tokens are valid words beyind a certain age.
 
 # Share of uncommon words
 
@@ -233,8 +239,13 @@ special_tokens |>
   theme_minimal()
 ```
 
+Thisp plot shows us that the share of special words is quite volatile over time, with little clear trends.
+For Eve, the share of special words decreases over time from above 30% to 25%, while for Adam there is a peak above 45% at around 30 months, followed by fluctuations around 25%.
+Sarah's special word usage also fluctuates around 25%, with a slight dip to 20% at around 33 months.
+This result is not what we might have expected, as we might have thought that the share of special words would increase over time as the children expand their vocabulary.
+
 A potential issue with this measure is that it counts every time a word is repeated.
-So we don't know if a child uses 100 different special words or the same word 100 times.
+So we don't know if a child uses 100 different words or the same word 100 times.
 
 As an alternative measure, we can consider the share of unique special words out of the total number of unique words.
 So e.g. if a child says 1000 unique tokens in a month, out of which 200 are valid but not common words, the share of unique special words would be 200/1000=20%, no matter how many times each unique token is used.
@@ -262,9 +273,14 @@ unique_special_tokens |>
   theme_minimal()
 ```
 
+This plot looks very different than the previous one, but it doesn't look much more informative.
+For all three children, the lines are very volatile with no clear trends over time.
+But if we compare the children, we see that up to the age of 50 months, Adam has a higher share of unique special words than Sarah, which is similar to the previous finding that in that age perid Adam also has a higher share of valid words.
+
 Both of these methods have the limitation that we restrict the definition of common words to the 500 most common words.
 According to Linguisystems Milestones Guide the typical vocabulary size of a 5-year-old is between 2200-2500.
 So our definition of common words is quite restrictive, and we might miss some words that are common in the context of the children's environment.
+These differences in environment might also explain the large fluctuations between transcript recordings.
 Of course, you can always look for a more extensive list of common words, or even create your own list based on the data you have.
 You can try to redefine the list of common words, rerun the analysis. and see if the results change.
 

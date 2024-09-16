@@ -10,6 +10,10 @@ output:
     toc: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
+```
+
 # Learning outcomes
 
 In this tutorial you learn the steps needed to conduct basic text analysis in R using the CHILDES database of child language development.
@@ -21,9 +25,9 @@ You learn how to import data into R with the `childesr` package, how to use basi
 
 This tutorial assumes that you completed the preparatory steps listed [here](../SCICOGN302.html#First_workshop).
 
-If you get stuck at any point, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](https://ucrdatacenter.github.io/tutorial), try googling your question, attend Data Center office hours (TBA) or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
+If you get stuck at any point, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](../../../tutorials), try googling your question, attend Data Center office hours (TBA) or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
-The code used in this tutorial is also available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SCICOGN302/2023h2/workshop1code.R).
+The code used in this tutorial is also available on [Github](https://github.com/ucrdatacenter/projects/blob/main/SCICOGN302/2024h2/workshop1code.R).
 
 # Getting data from the CHILDES database
 
@@ -70,14 +74,14 @@ Some notes for using different samples:
 
 You can view the downloaded dataframes by calling the `View()` function or clicking on the name of the dataframes in the Environment tab.
 
-The key variables of `tok` (token-based dataframe) are
+The key variables of `tokens` (token-based dataframe) are
 
 * gloss: token(/word) as used in the speech
 * stem: stem of the word in gloss
 * part_of_speech: syntactic function of the word
 * language, corpus_..., collection_... speaker_..., target_child_...: transcript metadata
 
-The key variables of `utt` (utterance-based dataframe) are
+The key variables of `utterances` (utterance-based dataframe) are
 
 * gloss: utterance (built from tokens) as used in the speech
 * stem: stem of each word in the utterance
@@ -134,10 +138,10 @@ These words are less generic, and actually look like words that children likely 
 
 ## Tidy workflows
 
-Instead of going through the previous previous two steps by assigning each intermediate result to a new object (see `tok_filtered`), you can write a linear worflow where you start with your original data, apply each data manipulation step-by-step until you reach your final result.
+Instead of going through the previous previous two steps by assigning each intermediate result to a new object (see `tokens_filtered`), you can write a linear worflow where you start with your original data, apply each data manipulation step-by-step until you reach your final result.
 
 To create such a workflow, you need the pipe operator (` %>% `): using it at the end of a line means that the next function uses the previous result as an input.
-In the following case, it takes the object `tok` as the first argument of the `filter()` function, and then takes the resulting filtered data as the first argument of the `count()` function.
+In the following case, it takes the object `tokens` as the first argument of the `filter()` function, and then takes the resulting filtered data as the first argument of the `count()` function.
 
 ```{r}
 n_filtered <- tokens %>% 
@@ -241,7 +245,7 @@ utterances %>%
 This plot tells us that the second transcript seems to have a slightly larger MLU, mainly because most of the particularly long utterances occurred in the second conversation.
 
 We can also use regular expressions to look for particular patterns.
-For instance, we can check which types of pronouns (denoted pro:type) Amy uses the most.
+For instance, we can check which types of pronouns (denoted `pro:type`) Amy uses the most.
 
 ```{r}
 tokens %>% 

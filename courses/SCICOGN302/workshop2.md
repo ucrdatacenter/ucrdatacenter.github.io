@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 workshop II:<br> Some measures of language development"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-15"
+date: "Last updated: 2024-09-16"
 output:
   md_document:
     variant: gfm
@@ -38,8 +38,8 @@ workshop](../workshop1) and its prerequisites.
 
 Note that if you get stuck at any point, check the help files of
 functions (access by running `?functionname`), look at more extensive
-[Data Center tutorials](../../tutorials), try googling your question,
-attend Data Center office hours ([schedule](../../contact)) or email
+[Data Center tutorials](../../../tutorials), try googling your question,
+attend Data Center office hours ([schedule](../../../contact)) or email
 <datacenter@ucr.nl>.
 
 The code used in this tutorial is also available on
@@ -59,40 +59,11 @@ them by running `install.packages("packagename")`.
 ``` r
 # load packages
 library(tidyverse)
-```
-
-    ## Warning: package 'ggplot2' was built under R version 4.3.3
-
-    ## Warning: package 'tidyr' was built under R version 4.3.3
-
-    ## Warning: package 'purrr' was built under R version 4.3.3
-
-    ## Warning: package 'dplyr' was built under R version 4.3.3
-
-    ## Warning: package 'stringr' was built under R version 4.3.3
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.1.4     ✔ readr     2.1.4
-    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.2     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
 library(childesr)
 library(qdapDictionaries)
 
 # look at all the available corpora in the data set
 corpora <- get_corpora()
-```
-
-    ## Using current database version: '2021.1'.
-
-``` r
 View(corpora)
 ```
 
@@ -126,10 +97,6 @@ tokens <- get_tokens(token = "*", collection = "Eng-NA",
                      corpus = "Brown", role = "target_child")
 ```
 
-    ## Using current database version: '2021.1'.
-
-    ## Getting data from 3 children in 1 corpus ...
-
 # Share of valid words
 
 One way to measure the development of the children’s language using
@@ -145,15 +112,15 @@ averages on logical data. Then the average of the variable over a
 certain time period can be interpreted as the share of words that are
 present in an English dictionary: average values closer to zero would
 mean the child still has a lot of mumbling/incorrect pronunciation or
-misspoken words in their vocabulary, whereas a child with a score
-nearing 1 has a very developed vocabulary. This way, we can assign a
-value to every token, and then average it per certain time period.
-Afterwards, we can compare this value progression for all three
-children. This comparison does not look into syntax of the sentence,
-meaning that even a sentence “banana mango apples man” would be
-evaluated as entirely correct, when in reality this sentence is
-nonsensical. So this method certainly has its limitations, but is
-nevertheless interesting to look at.
+misspoken words in their vocabulary, whereas a child with a score near 1
+has a very developed vocabulary. This way, we can assign a value to
+every token, and then average it per certain time period. Afterwards, we
+can compare this value progression for all three children. This
+comparison does not look into syntax of the sentence, meaning that even
+a sentence “banana mango apples man” would be evaluated as entirely
+correct, when in reality this sentence is nonsensical. So this method
+certainly has its limitations, but is nevertheless interesting to look
+at.
 
 In order to find out which words exist in an English dictionary, we need
 to choose a dictionary. The `qdapDictionaries` package contains the
@@ -187,32 +154,27 @@ row is a valid word.
 valid_tokens <- tokens %>%
   mutate(is_valid = gloss %in% GradyAugmented)
 
-# View the first few rows to check the results
-head(tokens)
+# View the first few rows of gloss and is_valid to check the results
+valid_tokens |> 
+  select(gloss, is_valid) |>
+  head()
 ```
 
-    ## # A tibble: 6 × 28
-    ##       id gloss language token_order prefix part_of_speech stem  actual_phonology
-    ##    <int> <chr> <chr>          <int> <chr>  <chr>          <chr> <chr>           
-    ## 1 7.56e6 yeah  eng                1 ""     co             yeah  ""              
-    ## 2 7.56e6 choo… eng                1 ""     on             choo  ""              
-    ## 3 7.56e6 train eng                2 ""     n              train ""              
-    ## 4 7.56e6 there eng                1 ""     adv            there ""              
-    ## 5 7.56e6 water eng                2 ""     n              water ""              
-    ## 6 7.56e6 water eng                1 ""     n              water ""              
-    ## # ℹ 20 more variables: model_phonology <chr>, suffix <chr>,
-    ## #   num_morphemes <int>, english <chr>, clitic <chr>, utterance_type <chr>,
-    ## #   corpus_name <chr>, speaker_code <chr>, speaker_name <chr>,
-    ## #   speaker_role <chr>, target_child_name <chr>, target_child_age <dbl>,
-    ## #   target_child_sex <chr>, collection_name <chr>, collection_id <int>,
-    ## #   corpus_id <int>, speaker_id <int>, target_child_id <int>,
-    ## #   transcript_id <int>, utterance_id <int>
+    ## # A tibble: 6 × 2
+    ##   gloss     is_valid
+    ##   <chr>     <lgl>   
+    ## 1 yeah      TRUE    
+    ## 2 choo_choo FALSE   
+    ## 3 train     TRUE    
+    ## 4 there     TRUE    
+    ## 5 water     TRUE    
+    ## 6 water     TRUE
 
 Since these children are not studied from the time when they first start
-speaking and are more likely to stutter or create their own words to
-fill in gaps in vocabulary, most tokens are valid words. However, there
-will still be some slips, such as when Adam used the word choo-choo,
-cprobably to adress a train.
+speaking and are therefore more likely to stutter or create their own
+words to fill in gaps in vocabulary, most tokens are valid words.
+However, there will still be some slips, such as when Adam used the word
+choo-choo, probably to adress a train.
 
 Looking at these “slips” may show us how developed a child’s language
 is. In reality, creating their own words and bridging gaps in their
@@ -225,7 +187,7 @@ journey.
 In order to get some statistics over time, let’s aggregate the data per
 child and age bracket, and calculate the share of valid words in each
 period. We use the `floor()` function to round the age to the nearest
-month, and then group by the child’s name and age bracket to calcuate
+month, and then group by the child’s name and age bracket to calculate
 the average of the `is_valid` variable.
 
 ``` r
@@ -235,9 +197,6 @@ valid_tokens <- tokens |>
   group_by(target_child_name, age) %>%
   summarise(valid_share = mean(is_valid))
 ```
-
-    ## `summarise()` has grouped output by 'target_child_name'. You can override using
-    ## the `.groups` argument.
 
 Once we have the data where each row corresponds to one child in one
 month, we can visualize the data with a line chart, coloring the lines
@@ -256,21 +215,21 @@ valid_tokens |>
 ![](workshop2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 After looking at the data we can see that initially, there is an
-increase of average valid word usage. However, there does not seem to be
-a stable trend, except for Eve, where there is a stable increase for
-period of 5 months. Her speech was recorded for shorter period of time
-than Adam and Sarah, so it’s not an entirely fair comparison with the
-other two. When we compare only Adam and Sarah, we can see that Sarah’s
-speech has stable results after the 40th month of her life of between
-80-90% average valid words in speech, while Adam performs somewhat
-higher, having an average of between 85-95% after the 30th month of his
-life.
+increase of average valid word usage, especially for Sarah. However,
+there does not seem to be a stable trend, except for Eve, where there is
+a stable increase for period of 5 months. Her speech was recorded for
+shorter period of time than Adam and Sarah and at a younger age, so it’s
+not an entirely fair comparison with the other two. When we compare only
+Adam and Sarah, we can see that Adam started with a much higher average
+valid word usage, but Sarah caught up to Adam over time, and from about
+the age of 50 months, they have similar average valid word usage (85–90%
+of all tokens).
 
 This way of analyzing tokens may be more suitable for children that are
 just learning how to speak, as the figure suggests that there is a
 certain development period of life when there is a rise of average valid
-use of words, and then the data becomes a bit messier, and the trends
-are harder to find.
+use of words, and then the trends flatten out as the vast majority of
+spoken tokens are valid words beyind a certain age.
 
 # Share of uncommon words
 
@@ -383,12 +342,7 @@ special_tokens <- tokens |>
          age = floor(target_child_age)) |> 
   group_by(target_child_name, age) |> 
   summarize(special_share = mean(is_special))
-```
 
-    ## `summarise()` has grouped output by 'target_child_name'. You can override using
-    ## the `.groups` argument.
-
-``` r
 # create the plot
 special_tokens |> 
   ggplot(aes(x = age, y = special_share, color = target_child_name)) +
@@ -401,9 +355,18 @@ special_tokens |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
+Thisp plot shows us that the share of special words is quite volatile
+over time, with little clear trends. For Eve, the share of special words
+decreases over time from above 30% to 25%, while for Adam there is a
+peak above 45% at around 30 months, followed by fluctuations around 25%.
+Sarah’s special word usage also fluctuates around 25%, with a slight dip
+to 20% at around 33 months. This result is not what we might have
+expected, as we might have thought that the share of special words would
+increase over time as the children expand their vocabulary.
+
 A potential issue with this measure is that it counts every time a word
-is repeated. So we don’t know if a child uses 100 different special
-words or the same word 100 times.
+is repeated. So we don’t know if a child uses 100 different words or the
+same word 100 times.
 
 As an alternative measure, we can consider the share of unique special
 words out of the total number of unique words. So e.g. if a child says
@@ -424,12 +387,7 @@ unique_special_tokens <- tokens |>
   distinct(target_child_name, age, gloss, is_special) |> 
   group_by(target_child_name, age) |> 
   summarize(special_share = mean(is_special))
-```
 
-    ## `summarise()` has grouped output by 'target_child_name'. You can override using
-    ## the `.groups` argument.
-
-``` r
 # create the line plot
 unique_special_tokens |> 
   ggplot(aes(x = age, y = special_share, color = target_child_name)) +
@@ -442,15 +400,25 @@ unique_special_tokens |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
+This plot looks very different than the previous one, but it doesn’t
+look much more informative. For all three children, the lines are very
+volatile with no clear trends over time. But if we compare the children,
+we see that up to the age of 50 months, Adam has a higher share of
+unique special words than Sarah, which is similar to the previous
+finding that in that age perid Adam also has a higher share of valid
+words.
+
 Both of these methods have the limitation that we restrict the
 definition of common words to the 500 most common words. According to
 Linguisystems Milestones Guide the typical vocabulary size of a
 5-year-old is between 2200-2500. So our definition of common words is
 quite restrictive, and we might miss some words that are common in the
-context of the children’s environment. Of course, you can always look
-for a more extensive list of common words, or even create your own list
-based on the data you have. You can try to redefine the list of common
-words, rerun the analysis. and see if the results change.
+context of the children’s environment. These differences in environment
+might also explain the large fluctuations between transcript recordings.
+Of course, you can always look for a more extensive list of common
+words, or even create your own list based on the data you have. You can
+try to redefine the list of common words, rerun the analysis. and see if
+the results change.
 
 # Conclusion
 

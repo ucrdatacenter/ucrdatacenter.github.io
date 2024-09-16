@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 workshop I: <br>Additional material"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-15"
+date: "Last updated: 2024-09-16"
 output:
   md_document:
     variant: gfm
@@ -30,8 +30,8 @@ library(tidyverse)
 library(tidytext)
 library(childesr)
 
-tok <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Amy",
-                  corpus = "VanKleeck", role = "target_child")
+tokens <- get_tokens(token = "*", collection = "Eng-NA", target_child = "Amy",
+                     corpus = "VanKleeck", role = "target_child")
 ```
 
 # Computing new variables
@@ -46,10 +46,10 @@ function to display only a subset of the variables, and the `head()`
 function to display only the first 10 observations.
 
 ``` r
-tok_length <- tok %>% 
+token_length <- tokens %>% 
   mutate(length = str_length(gloss)) 
 
-tok_length %>% 
+token_length %>% 
   select(id, gloss, stem, length) %>% 
   head(10)
 ```
@@ -72,7 +72,7 @@ You can also use mutate to create indicator variables: the next example
 uses a logical expression that is true if the word is a noun.
 
 ``` r
-tok %>% 
+tokens %>% 
   mutate(noun = part_of_speech == "n") %>% 
   select(id, gloss, stem, noun) %>% 
   head(10)
@@ -102,7 +102,7 @@ For instance, if you use `mutate()` to get the length of each word, you
 can use `summarize()` to find the mean word length of all observations:
 
 ``` r
-tok_length %>% 
+token_length %>% 
   summarize(length = mean(length))
 ```
 
@@ -120,7 +120,7 @@ to get the total number of nouns (the TRUE/FALSE indicator is treated as
 1/0), and divide that by the total number of observations `n()`.
 
 ``` r
-tok %>% 
+tokens %>% 
   mutate(noun = part_of_speech == "n") %>% 
   summarize(noun_prop = sum(noun)/n())
 ```
@@ -138,7 +138,7 @@ can accomplish that by specifying one or more grouping variables with
 the `group_by()` function before calling `summarize()`.
 
 ``` r
-tok_length %>% 
+token_length %>% 
   group_by(transcript_id) %>% 
   summarize(length = mean(length))
 ```
@@ -152,5 +152,4 @@ tok_length %>%
 # More materials
 
 You can find a list of helpful links for data manipulation and
-visualization
-[here](https://ucrdatacenter.github.io/tutorials/links.html).
+visualization [here](../../../tutorials/links).
