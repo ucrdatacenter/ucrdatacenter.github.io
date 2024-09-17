@@ -1,5 +1,5 @@
 ---
-title: "Data Center Apprenticeship program: Call for proposals for faculty and staff"
+title: "Apprenticeship call for proposals for faculty and staff"
 subtitle: "January 2025"
 date: "Last updated: 2024-09-17"
 output:

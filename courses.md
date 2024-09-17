@@ -1,4 +1,4 @@
-# Current courses
+# Data encounters in UCR courses
 
 - [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
 - [SCICOGN302 - Psycholingustics](SCICOGN302)
