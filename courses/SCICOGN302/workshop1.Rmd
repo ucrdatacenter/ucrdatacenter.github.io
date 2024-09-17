@@ -23,7 +23,7 @@ You learn how to import data into R with the `childesr` package, how to use basi
 
 # First steps
 
-This tutorial assumes that you completed the preparatory steps listed [here](../SCICOGN302.html#First_workshop).
+This tutorial assumes that you completed the preparatory steps listed [here](../../SCICOGN302.html#First_workshop).
 
 If you get stuck at any point, check the help files of functions (access by running `?functionname`), look at more extensive [Data Center tutorials](../../../tutorials), try googling your question, attend Data Center office hours (TBA) or email [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
 
@@ -259,4 +259,4 @@ tokens %>%
 
 Subjective and personal pronouns (I, you, etc.) are clearly dominating Amy's speech, however, she uses a wide range of different pronouns.
 
-If you would like a brief introduction to some more useful functions in calculating measures of linguistic development, have a look at the workshop [additional materials](workshop1extra).
+If you would like a brief introduction to some more useful functions in calculating measures of linguistic development, have a look at the workshop [additional materials](../workshop1extra).

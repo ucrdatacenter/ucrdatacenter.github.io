@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 workshop II:<br> Some measures of language development"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-16"
+date: "Last updated: 2024-09-17"
 output:
   md_document:
     variant: gfm
@@ -331,7 +331,7 @@ special_tokens <- tokens |>
 ```
 
 Now we can aggregate and plot the data the same way as before, this time
-calculating the sahre of special words per month for each child.
+calculating the share of special words per month for each child.
 
 ``` r
 # share of special words per month
@@ -414,11 +414,11 @@ Linguisystems Milestones Guide the typical vocabulary size of a
 5-year-old is between 2200-2500. So our definition of common words is
 quite restrictive, and we might miss some words that are common in the
 context of the children’s environment. These differences in environment
-might also explain the large fluctuations between transcript recordings.
-Of course, you can always look for a more extensive list of common
-words, or even create your own list based on the data you have. You can
-try to redefine the list of common words, rerun the analysis. and see if
-the results change.
+might also esxplain the large fluctuations between transcript
+recordings. Of course, you can always look for a more extensive list of
+common words, or even create your own list based on the data you have.
+You can try to redefine the list of common words, rerun the analysis.
+and see if the results change.
 
 # Conclusion
 
