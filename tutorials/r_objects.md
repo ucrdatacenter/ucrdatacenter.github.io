@@ -151,5 +151,3 @@ operator or the help() function, for example by typing `?sum` (or
 equivalently, `?sum()`). It is good practice to request help files from
 your console and not you R script, since there is no need to save these
 queries for the future.
-
-## Video tutorial TBA

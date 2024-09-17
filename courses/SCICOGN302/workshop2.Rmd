@@ -258,7 +258,7 @@ unique_special_tokens <- tokens |>
          is_common = gloss %in% common_words,
          is_special = is_valid & !is_common,
          age = floor(target_child_age)) |> 
-  # keep only unique tokens per child and are bracket
+  # keep only unique tokens per child and age bracket
   distinct(target_child_name, age, gloss, is_special) |> 
   group_by(target_child_name, age) |> 
   summarize(special_share = mean(is_special))

@@ -29,6 +29,7 @@ To prepare for the class, please complete the following:
   + install R and RStudio
   + create a new R project for the Psycholinguistics course
   + install the `tidyverse`, `tidytext`, `childesr`, and `qdapDictionaries` packages
+* bring your fully charged laptop to class
   
 # Second workshop 
 

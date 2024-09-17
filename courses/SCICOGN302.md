@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 <br>Psycholinguistics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-15"
+date: "Last updated: 2024-09-17"
 output:
   md_document:
     variant: gfm
@@ -41,6 +41,7 @@ To prepare for the class, please complete the following:
   - create a new R project for the Psycholinguistics course
   - install the `tidyverse`, `tidytext`, `childesr`, and
     `qdapDictionaries` packages
+- bring your fully charged laptop to class
 
 # Second workshop
 
