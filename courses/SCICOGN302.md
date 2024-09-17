@@ -15,6 +15,8 @@ output:
 - [Second workshop](#second-workshop)
 - [Office hours](#office-hours)
 - [Additional materials](#additional-materials)
+- [Assignment guidelines](#assignment-guidelines)
+  - [Homework assignment](#homework-assignment)
 
 # Introduction
 
@@ -69,10 +71,24 @@ visualization [here](../archive/SCICOGN302_2023h2/workshop2).
 <!-- - [Data visualization: distributions](r_ggplot_univariate) -->
 <!-- - [Data visualization: patterns over time](r_ggplot_timeseries) -->
 <!-- - [Working with text](r_text) -->
-<!-- # Assignment guidelines -->
-<!-- ## Small homework assignment -->
-<!-- Use what you learned in the [first Data Center workshop](SCICOGN302_2023h2/workshop1) to complete the following assignment. -->
-<!-- *The CHILDES database provides data on the use of (mostly spoken) language of a large number of young children. Use parts of the dataset to explore how the spoken language (word choice or number of words, for instance) of children changes over time . Keep you question simple, focus on a small part of the dataset (one or a few children). The chosen variable and/or sample should be different than what is shown in the Data Center workshop. Make one clear visualization of your result and briefly report on (max 200 words) , the research question and your outcome. Also briefly discuss your result in the context of scientific literature. Cite at least two papers (the latter are not part of 200 words).* -->
+
+# Assignment guidelines
+
+## Homework assignment
+
+Use what you learned in the Data Center workshops to complete the
+following assignment.
+
+*The CHILDES database provides data on the use of (mostly spoken)
+language of a large number of young children. Use parts of the dataset
+to explore how the spoken language (word choice or number of words, for
+instance) of children changes over time . Keep your question simple,
+focus on a small part of the dataset (one or a few children). Make one
+clear visualization of your result and briefly report on (max 300 words)
+the research question and your outcome. Also briefly discuss your result
+in the context of scientific literature. Cite at least two papers (the
+latter are not part of 300 words).*
+
 <!-- ## Final poster -->
 <!-- If you choose to use the CHILDES database for your final poster, you can find the poster guidelines [here](SCICOGN302_2023h2/poster_guidelines). -->
 <!-- # Data Center workshops -->
