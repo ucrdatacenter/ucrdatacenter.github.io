@@ -19,6 +19,13 @@ If you have a project idea that could benefit from the help of a data science ap
 **For students:**
 If you're interested in becoming an apprentice, please email us at [datacenter@ucr.nl](datacenter@ucr.nl), describing your academic background and the kinds of projects you would be interested in.
 
+# 2025 January
+
+The call for project proposals for the January 2025 Apprenticeship program is now open! Faculty, staff, and students are encouraged to submit their project ideas by 18 October 2024 to [datacenter@ucr.nl](datacenter@ucr.nl).
+
+* [Call for proposals for faculty and staff](call_fas)
+* [Call for proposals for students](call_students)
+
 # 2024 June
 
 After a successful pilot, the second iteration of the Apprenticeship program took place in June 2024.
