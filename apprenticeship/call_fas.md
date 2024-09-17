@@ -8,6 +8,9 @@ output:
     preserve_yaml: true
 ---
 
+- [Call for proposals](#call-for-proposals)
+- [Application form](#application-form)
+
 ## Call for proposals 
 
 We are pleased to invite applications for the UCR Data Center Apprenticeship Program. This initiative falls under the Data Science and AI theme and aims to support faculty and staff in integrating the tools of data science and AI in their teaching, research, and administrative processes. 

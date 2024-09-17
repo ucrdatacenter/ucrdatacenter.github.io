@@ -10,7 +10,7 @@ output:
 The Data Center Apprenticeship program is designed to help faculty and staff integrate data science and AI tools into teaching, research, and administrative processes.
 Students work together with UCR a member of faculty or staff to develop ways to incorporate data science tools into the UCR curriculum, faculty research, or university-wide administrative processes.
 
-Apprenticeship programs take place in January and June, and consist of a 4-week intensive training program tailored to the needs of the projects that the apprentices will be working on.
+Apprenticeship programs take place in January and June, and consist of a 2-week intensive training program tailored to the needs of the projects that the apprentices will be working on.
 The participating students are expected to attend these workshops, and have until the end of the following semester to complete their projects; participation in the Apprenticeship program counts as an academic internship and earns students one course's worth of credits (7.5 ECTS).
 
 **For faculty and staff:**
