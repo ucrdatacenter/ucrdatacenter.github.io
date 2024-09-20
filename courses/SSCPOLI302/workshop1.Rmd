@@ -10,6 +10,34 @@ output:
     toc: true
 ---
 
+# Preparation
+
+## Before the workshop
+
+To prepare for the class, please complete the following:
+
+* read the "Setting up R" tutorial series ([link](../../../tutorials))
+* using the tutorials:
+  + install R and RStudio
+  + create a new R project for the EU Politics course
+  + install the `tidyverse` package
+* bring your fully charged laptop and headphones to class
+
+## During the workshop
+
+The Data Center workshops in this course have two components. 
+First, you'll follow a series of general tutorials that present the R skills you'll need for the course. 
+Second, you'll apply these skills to a specific case study related to the course content.
+
+Before you proceed to the case study below, please follow along with these tutorials:
+
+1. [Data wrangling: filtering rows and selecting columns](../../../tutorials/r_intro_subset)
+1. [Data wrangling: creating new variables](../../../tutorials/r_intro_mutate)
+1. [Data wrangling: summarizing data (within groups)](../../../tutorials/r_intro_summarize)
+1. [The tidy workflow](../../../tutorials/r_intro_pipe)
+1. [Data visualization: introduction to `ggplot`](../../../tutorials/r_ggplot_intro)
+1. [Data visualization: distributions](../../../tutorials/r_ggplot_univariate)
+
 # Loading libraries and data
 
 ```{r setup, include=FALSE}
