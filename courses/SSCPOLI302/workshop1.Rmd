@@ -50,7 +50,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 library(tidyverse)
 library(rio)
 
-meetings <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/Meetings_compl.xlsx", setclass = "tbl_df") |> 
+meetings <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/meetings.xlsx", setclass = "tbl_df") |> 
   mutate(meeting_date = as.Date(meeting_date))
 ```
 

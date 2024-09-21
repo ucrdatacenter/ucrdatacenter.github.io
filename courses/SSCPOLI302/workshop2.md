@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of a legislative dossier (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-20"
+date: "Last updated: 2024-09-21"
 output:
   md_document:
     variant: gfm
@@ -10,187 +10,216 @@ output:
     toc: true
 ---
 
-- [Dossier overview](#dossier-overview)
-- [File of interest](#file-of-interest)
-- [Preparation and download](#preparation-and-download)
-- [Importing file back into R](#importing-file-back-into-r)
-- [Main analysis](#main-analysis)
+- [Preparation for the workshop](#preparation-for-the-workshop)
+- [Analyzing legislative dossiers in
+  R](#analyzing-legislative-dossiers-in-r)
+  - [Loading the data](#loading-the-data)
+  - [MEP characteristics](#mep-characteristics)
+  - [Attendee characteristics](#attendee-characteristics)
+  - [Meeting timeline](#meeting-timeline)
+
+# Preparation for the workshop
+
+In the last Data Center workshop, each group will analyze the meetings
+related to a specific legislative dossier. You can find a list of the
+dossiers and the number of corresponding meetings
+[here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/procedure_reference_list.csv).
+
+You can find the full meeting data
+[here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/meetings_per_attendee.xlsx).
+This file is almost the same as the file you worked with in the first
+workshop, except that it only includes meetings with a linked
+legislative dossier, and if the meeting listed multiple attendees, each
+attendee is listed on a separate row. We will work with this dataset for
+the rest of this example.
+
+Unfortunately, the data is not standardized, and the attendees are not
+always reported in the same format. Therefore, you will need to clean
+the data to make it usable for analysis. To help you with this task, we
+have created files that list the unique attendee names that occur for
+each legislative dossier.
+
+Once you know which legislative dossier your group will analyze, you can
+download the file containing the relevant attendee names from
+[GitHub](https://github.com/ucrdatacenter/projects/tree/main/SSCPOLI302/2024h2/attendees)
+(click on the file, then click the “View Raw” button to download the
+file). Download the file to your project directory, open it in Excel.
+
+You can find instructions for how to clean and standardize the data in
+Excel in [this
+tutorial](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/Data%20cleaning%20instructions.pdf).
+Please follow the instructions carefully and have your cleaned data file
+ready for the workshop. If you get stuck or have any questions, please
+attend the Data Center’s office hours ([schedule](../../../contact)) or
+email us at <datacenter@ucr.nl>.
+
+# Analyzing legislative dossiers in R
+
+## Loading the data
+
+Once you have cleaned the data, you can start analyzing it in R. Below
+is a template for the analysis using for the dossier 2018/0902(NLE),
+which is about the “Existence of a clear risk of a serious breach by
+Hungary of the values on which the Union is founded” (Legislative
+Observatory, 2024). Our cleaned data is stored in our project directory
+and is called “2018_0902_NLE_clean.xlsx”.
+
+In this first code chunk, you only need to change the file name and the
+dossier reference (see comments) to match your data. This code will load
+the meeting data, filter it for the dossier of interest, load the
+cleaned list of attendees, and combine the two datasets. So in the data
+we will have not only the meetings related to the dossier 2018/0902(NLE)
+as declared in the original data, but also the standardized attendee
+names and categories.
 
 ``` r
+# load the necessary libraries (install if needed)
 library(tidyverse)
-library(tidytext)
-library(writexl)
-library(readxl)
 library(rio)
 
-Meetings_compl <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/Meetings_compl.xlsx", setclass = "tbl_df") |> 
+# load the meeting data and filter for the dossier of interest
+meetings_raw <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/meetings_per_attendee.xlsx", setclass = "tbl_df") |> 
   mutate(meeting_date = as.Date(meeting_date))
+
+# load the cleaned list of attendees (change the file name to match your data)
+attendees <- import("2018_0902_NLE_clean.xlsx", setclass = "tbl_df")
+
+# combine the two datasets
+meetings <- meetings_raw |> 
+  # filter for dossier of interest (change the reference to match your dossier)
+  filter(procedure_reference == "2018/0902(NLE)") |> 
+  left_join(attendees, by = "attendees")
 ```
 
-## Dossier overview
-
-We will now proceed with the second part of the analysis by looking at
-lobbying activity regarding specific legislative files. First we are
-going to examine the size of the overall files to see which dossiers are
-the most heavily referenced.
-
-``` r
-dossier <-
-    Meetings_compl |>
-    group_by(procedure_reference) |>
-    summarize(total_references = n()) |>
-    arrange(desc(total_references))
-```
-
-## File of interest
-
-Based on the overview, we want to get a better look at our file of
-interest. In this case, I have picked file code 2018/0902(NLE), which is
-about the “Existence of a clear risk of a serious breach by Hungary of
-the values on which the Union is founded” (Legislative Observatory,
-2024).
-
-``` r
-#Filtering the file from the overall data
-#At times, multiple attendees have been reported in the same row. In order to
-#deal with most of these cases, we unnest the tokens for specified separators.
-#This tells R to split these attendees into multiple rows.
-Test_dossier <-
-    Meetings_compl |>
-    filter(procedure_reference == "2018/0902(NLE)") |>
-    unnest_tokens(attendees, attendees, token = "regex", pattern = "\\||\\+", to_lower = FALSE) |>
-    filter(attendees != "(at staff level)")
-```
-
-## Preparation and download
-
-As we can see, the current database is still quite messy. A lot of MEPs
-have not reported their attendees in one single format, hindering our
-analysis. Therefore, we will need to manually fix these cases in Excel.
-
-``` r
-#Grouping the attendees by name and downloading the file
-Attendees_test_dossier <-
-    Test_dossier |>
-    group_by(attendees) |>
-    summarize()
-
-    write_xlsx(Attendees_test_dossier, path = "Attendees_test_dossier.xlsx", col_names= TRUE, format_headers = TRUE)
-```
-
-## Importing file back into R
-
-After we have created the new file table, we can import it back into R.
-Make sure the file is in the correct folder. If all goes well, we can
-then join it into the original data to create a new, improved dataset of
-the legislative file.
-
-``` r
-#Importing Excel table
-Import_test <-
-    read_xlsx("Attendees_test_dossier_fixed.xlsx")
-
-#Joining data for complete overview
-Test_complete <-
-    Test_dossier |>
-    left_join(Import_test)
-```
-
-## Main analysis
+## MEP characteristics
 
 The main analysis of the file will largely follow the same steps as the
-ones for the complete EP dataset.
+ones for the complete EP dataset. We mainly use the `count()` function
+to learn more about the distribution of MEP and attendee characteristics
+at the meetings related to the dossier.
+
+First, we can look at the distribution of MEPs by their political group
+and role – this is very similar to the analysis we did in the previous
+workshop, except now we restrict the sample to a legislative dossier. We
+can reuse the code from the previous workshop to create a bar chart for
+member role and color the bars by political groups.
 
 ``` r
-#Counting how many unique attendees were involved and how many times
-#they were reported by grouping the attendees based on their fixed names.
-Unique_attendee_count <-
-    Test_complete |>
-    group_by(fixed_names) |>
-    summarize(count = n()) |>
-    arrange(desc(count))
+# define political group colors
+colors <- c("EPP" = "deepskyblue", 
+            "S&D" = "red",
+            "Renew" = "gold", 
+            "Greens" = "forestgreen",
+            "ECR" = "deepskyblue4", 
+            "ID" = "darkblue", 
+            "the Left" = "darkred", 
+            "Non-attached" = "grey")
 
-#Examining political group and role distribution
-Group_roles_file <-
-    Test_complete |>
-    group_by(political_group, member_capacity) |>
-    summarize(count = n())
-
-#Examining nationalities and roles involved
-Nationality_roles_file <-
-    Test_complete |>
-    group_by(country, member_capacity) |>
-    summarize(count = n())
-
-#Data should be supported by visualisations similar to those of the first lectures
+# count how many meetings each MEP attended by political group and role
+meetings |> 
+  count(political_group, member_capacity, sort = TRUE) |> 
+  ggplot() +
+  geom_col(aes(x = n, y = member_capacity, fill = political_group)) +
+  scale_fill_manual(values = colors) +
+  labs(title = "Characteristics of MEPs attending meetings between 2019-2024", 
+       x = "Member role", 
+       y = "Number of meetings",
+       fill = "Political group")
 ```
 
-However, with our improved dataset we can also do some additional
-analyses by looking at the nature of the actors that were involved.
+![](workshop2_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+Another MEP characteristic we can look at is their nationality. Let’s
+add both nationalities and member roles to a bar chart.
 
 ``` r
-#Improving the overview of our attendee list by adding their class & structure
-Classstruc_attendee_count <-
-    Test_complete |>
-    group_by(fixed_names, class, structure) |>
-    summarize(count = n()) |>
-    arrange(desc(count))
-
-#Counting how many attendees of different classes & structures were involved
-Classstruc_file <-
-    Test_complete |>
-    group_by(class, structure) |>
-    summarize(count = n()) |>
-    arrange(desc(count))
-
-#Additionally, we can also apply these variables to our examination of 
-#nationalities and political groups. This way we not only get a picture of how
-#many times a group/nationality was lobbied, but also of the types of actors 
-#that were involved.
-Group_classstruc_file <-
-    Test_complete |>
-    group_by(political_group, class, structure) |>
-    summarize(count = n())
-    
-Nationality_classstruc_file <-
-    Test_complete |>
-    group_by(country, class, structure) |>
-    summarize(count = n())
-
-#Data should be supported by visualisations similar to those of the first lectures
-
-
-#How do these results relate to theories of interest representation and access
-#to the European Parliament?
+# count the MEP nationalities in the data
+meetings |> 
+  count(country, member_capacity, sort = TRUE) |> 
+  ggplot() +
+  geom_col(aes(x = n, y = country, fill = member_capacity)) +
+  labs(title = "Nationalities of MEPs attending meetings between 2019-2024", 
+       x = "Country", 
+       y = "Number of meetings",
+       fill = "Member role")
 ```
+
+![](workshop2_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+## Attendee characteristics
+
+With our improved dataset we can also do some additional analyses by
+looking at the nature of the actors that were involved.
+
+First, let’s look at who the attendees are and how many meetings they
+each attended.
+
+``` r
+# count how many meetings each attendee attended (using the fixed names)
+meetings |> 
+  count(fixed_names, sort = TRUE) |> 
+  ggplot() +
+  geom_col(aes(x = n, y = fixed_names)) +
+  labs(title = "Number of meetings per attendee between 2019-2024", 
+       x = "Attendee", 
+       y = "Number of meetings")
+```
+
+![](workshop2_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+As we also defined some additional categories for the attendees, we can
+also look at the distribution of these categories.
+
+``` r
+# count attendee class and structure
+meetings |> 
+  count(class, structure, sort = TRUE) |> 
+  ggplot() +
+  geom_col(aes(x = n, y = class, fill = structure)) +
+  labs(title = "Distribution of attendees by class and structure", 
+       x = "Class", 
+       y = "Number of attendees",
+       fill = "Structure")
+```
+
+![](workshop2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+You can also try different combinations of variables – e.g. combine
+attendee and MEP characteristics on one plot – to see if there are any
+interesting patterns.
+
+## Meeting timeline
 
 Lastly, we can look at the timeline of the lobbying activity to see if
 there are patterns related to events during the file’s legislative
 procedure.
 
 ``` r
-#Plotting the meeting timeline
- ggplot(Test_dossier) +
-  geom_histogram(aes(x = meeting_date), position = "dodge") +
-    labs(title = "Reported meeting activity regarding legislative file 2018/0902(NLE)", 
+# meeting timeline for the dossier
+meetings |>
+  ggplot() +
+  geom_histogram(aes(x = meeting_date), binwidth = 30) +
+  labs(title = "Meeting activity related to legislative file 2018/0902(NLE)", 
        x = "Date", 
        y = "Frequency of meetings")
 ```
 
-![](workshop2_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](workshop2_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-``` r
-#We can see a few peaks around specific dates. These are worth examining further.
-#Using external sources, we can try to uncover what events took place at this point.
-#Examples if influential events may be the appointments of committees, parliament votes, 
-#amendments, court verdicts or the emergence of major crises/scandals.
-#https://www.europarl.europa.eu/legislative-train/schedule
-#https://oeil.secure.europarl.europa.eu/oeil/home/home.do
-#https://parltrack.org/dossier/2018/0902(NLE)#/general
+We can see a few peaks around specific dates. These are worth examining
+further. Using external sources, we can try to uncover what events took
+place at this point. Examples if influential events may be the
+appointments of committees, parliament votes, amendments, court verdicts
+or the emergence of major crises/scandals.
 
+<https://www.europarl.europa.eu/legislative-train/schedule>
 
-#Optionally, we can also look at whether these attendees met with European
-#Institutions besides the EP. This could signify a larger strategy and could
-#tell us more about access to European institutions
-#https://transparency-register.europa.eu/searchregister-or-update/search-register_en
-```
+<https://oeil.secure.europarl.europa.eu/oeil/home/home.do>
+
+<https://parltrack.org/dossier/2018/0902(NLE)#/general>
+
+Optionally, we can also look at whether these attendees met with
+European Institutions besides the EP. This could signify a larger
+strategy and could tell us more about access to European institutions.
+
+<https://transparency-register.europa.eu/searchregister-or-update/search-register_en>
