@@ -93,9 +93,9 @@ meetings |>
   ggplot() +
   geom_col(aes(x = n, y = member_capacity, fill = political_group)) +
   scale_fill_manual(values = colors) +
-  labs(title = "Characteristics of MEPs attending meetings between 2019-2024", 
-       x = "Member role", 
-       y = "Number of meetings",
+  labs(title = "Characteristics of MEPs attending meetings", 
+       y = "Member role", 
+       x = "Number of meetings",
        fill = "Political group")
 ```
 
@@ -107,12 +107,14 @@ Let's add both nationalities and member roles to a bar chart.
 meetings |> 
   count(country, member_capacity, sort = TRUE) |> 
   ggplot() +
-  geom_col(aes(x = n, y = country, fill = member_capacity)) +
-  labs(title = "Nationalities of MEPs attending meetings between 2019-2024", 
-       x = "Country", 
-       y = "Number of meetings",
+  geom_col(aes(x = n, y = reorder(country, n), fill = member_capacity)) +
+  labs(title = "Nationalities of MEPs attending meetings", 
+       y = "Country", 
+       x = "Number of meetings",
        fill = "Member role")
 ```
+
+These plots will be more interesting if you look at a dossier for which more than one MEP declared meetings.
 
 ## Attendee characteristics
 
@@ -125,10 +127,10 @@ First, let's look at who the attendees are and how many meetings they each atten
 meetings |> 
   count(fixed_names, sort = TRUE) |> 
   ggplot() +
-  geom_col(aes(x = n, y = fixed_names)) +
-  labs(title = "Number of meetings per attendee between 2019-2024", 
-       x = "Attendee", 
-       y = "Number of meetings")
+  geom_col(aes(x = n, y = reorder(fixed_names, n))) +
+  labs(title = "Number of meetings per attendee", 
+       y = "Attendee", 
+       x = "Number of meetings")
 ```
 
 As we also defined some additional categories for the attendees, we can also look at the distribution of these categories.
@@ -138,10 +140,10 @@ As we also defined some additional categories for the attendees, we can also loo
 meetings |> 
   count(class, structure, sort = TRUE) |> 
   ggplot() +
-  geom_col(aes(x = n, y = class, fill = structure)) +
+  geom_col(aes(x = n, y = reorder(class, n), fill = structure)) +
   labs(title = "Distribution of attendees by class and structure", 
-       x = "Class", 
-       y = "Number of attendees",
+       y = "Class", 
+       x = "Number of attendees",
        fill = "Structure")
 ```
 
