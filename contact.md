@@ -14,9 +14,12 @@ Drop by to office hours if you're looking for some data science help, whether fo
 
 Office hours are held in the Data Center's office (Anne ground floor) on the following days:
 
-- 17 September, 17:00-19:00
-- 27 September, 12:00-14:00
-- 1 October, 17:00-19:00
+- 17 September, 17:00-19:00 (SCICOGN302)
+- 27 September, 12:00-14:00 (SCICOGN302)
+- 1 October, 17:00-19:00 (SCICOGN302)
+- 3 October, 17:00-19:00 (SSCPOLI302)
+- 10 October, 17:00-19:00 (SSCPOLI302)
+- 17 October, 17:00-19:00 (SSCPOLI302)
 
 # Contact us
 
