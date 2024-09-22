@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Getting started with R and RStudio"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
@@ -16,6 +16,9 @@ not, please follow [this installation tutorial](../r_install).
 A good resource to get a basic familiarity with the setup of R and some
 key definitions is [A (very) short introduction to
 R](https://github.com/ClaudiaBrauer/A-very-short-introduction-to-R/blob/master/documents/A%20(very)%20short%20introduction%20to%20R.pdf).
+
+Please watch [this](https://vimeo.com/1011759671/826f89f9aa) video
+(4:17), then read and follow along with the written tutorial below.
 
 ## Creating a project in RStudio
 

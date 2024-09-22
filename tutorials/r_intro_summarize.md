@@ -8,6 +8,13 @@ output:
     preserve_yaml: true
 ---
 
+## Video tutorial
+
+Please watch [this](https://vimeo.com/1011768227/2f3d24644f) video
+(3:34), then read and follow along with the written tutorial below.
+Compare your own output to what you see printed below to make sure all
+of your code runs as expected.
+
 ## Introduction
 
 In some cases you might need to summarize your data – that is, collapse

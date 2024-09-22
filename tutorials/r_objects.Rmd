@@ -17,6 +17,8 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 This tutorial assumes that you have already installed R and RStudio and are familiar with how to run code in RStudio.
 If not, please follow [this installation tutorial](../r_install) and [this introduction to R and RStudio](../r_basics).
 
+Please watch [this](https://vimeo.com/1011760990/6d3b5deec3) video (6:01), then read and follow along with the written tutorial below.
+
 ## Objects in R
 
 One of the most basic types of objects in R is a vector. 

@@ -12,6 +12,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
+## Video tutorial
+
+Please watch [this](https://vimeo.com/1011770499/c07ee2b5c7) video (4:03), then read and follow along with the written tutorial below.
+Compare your own output to what you see printed below to make sure all of your code runs as expected.
+
 ## Introduction
 
 In this tutorial, we introduce you to the tidy workflow, a set of principles and tools that help you work with data in a structured and efficient way.

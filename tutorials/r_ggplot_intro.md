@@ -8,6 +8,13 @@ output:
     preserve_yaml: true
 ---
 
+## Introduction
+
+In this tutorial you won’t make any plots, but you will learn the logic
+that builds up all plots in R. So please use this explanation together
+with another data visualization tutorial that shows the types of plots
+most relevant to your data.
+
 ## The logic of `ggplot`
 
 `ggplot2` is a powerful R package for creating figures. It is a part of

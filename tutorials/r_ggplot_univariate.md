@@ -8,6 +8,13 @@ output:
     preserve_yaml: true
 ---
 
+# Video tutorial
+
+Please watch [this](https://vimeo.com/1011773578/3fc4a9fa21) video
+(4:40), then read and follow along with the written tutorial below.
+Compare your own output to what you see printed below to make sure all
+of your code runs as expected.
+
 # Introduction
 
 Before you proceed, make sure you’re familiar with the logic of
@@ -67,7 +74,8 @@ ggplot(diamonds, aes(x = price)) +
 ```
 
 ![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-4.png)<!-- -->
-\# The distribution of a discrete variable
+
+# The distribution of a discrete variable
 
 To compare the frequencies of discrete variables, you can use a bar
 plot.
@@ -116,7 +124,5 @@ ggplot(diamonds, aes(x = cut)) +
 ![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 To learn more about other geoms and customization options, have a look
-at our [advanced visualization tutorial](../r_adv_ggplot) and
-[additional resources](../links#Help%20with%20%60ggplot%60).
-
-<!-- ## Video tutorial TBA -->
+at our [other tutorials](../) and [additional
+resources](../links#Help%20with%20%60ggplot%60).

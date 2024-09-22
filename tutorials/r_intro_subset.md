@@ -8,6 +8,13 @@ output:
     preserve_yaml: true
 ---
 
+## Video tutorial
+
+Please watch [this](https://vimeo.com/1011762380/2e33856231) video
+(4:45), then read and follow along with the written tutorial below.
+Compare your own output to what you see printed below to make sure all
+of your code runs as expected.
+
 ## Introduction
 
 Often you don’t need all the data in your dataset, but only a subset of
@@ -240,5 +247,3 @@ object called `diamonds_filtered`:
 # save the result to a new object
 diamonds_filtered <- filter(diamonds, cut %in% c("Ideal", "Premium"))
 ```
-
-<!-- ## Video tutorial TBA -->

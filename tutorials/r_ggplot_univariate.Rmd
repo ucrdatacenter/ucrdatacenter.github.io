@@ -12,6 +12,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
+# Video tutorial
+
+Please watch [this](https://vimeo.com/1011773578/3fc4a9fa21) video (4:40), then read and follow along with the written tutorial below.
+Compare your own output to what you see printed below to make sure all of your code runs as expected.
+
 # Introduction
 
 Before you proceed, make sure you're familiar with the logic of `ggplot`, as explained in our [introduction to `ggplot` tutorial](../r_ggplot_intro).
@@ -51,6 +56,7 @@ ggplot(diamonds, aes(x = price)) +
 ggplot(diamonds, aes(x = price)) +
   geom_boxplot()
 ```
+
 # The distribution of a discrete variable
 
 To compare the frequencies of discrete variables, you can use a bar plot.
@@ -86,6 +92,4 @@ ggplot(diamonds, aes(x = cut)) +
        y = "Number of diamonds")
 ```
 
-To learn more about other geoms and customization options, have a look at our [advanced visualization tutorial](../r_adv_ggplot) and [additional resources](../links#Help with `ggplot`).
-
-<!-- ## Video tutorial TBA -->
+To learn more about other geoms and customization options, have a look at our [other tutorials](../) and [additional resources](../links#Help with `ggplot`).
