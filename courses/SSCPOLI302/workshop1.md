@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
@@ -10,6 +10,9 @@ output:
     toc: true
 ---
 
+- [Preparation](#preparation)
+  - [Before the workshop](#before-the-workshop)
+  - [During the workshop](#during-the-workshop)
 - [Loading libraries and data](#loading-libraries-and-data)
 - [Describing the MEPs in the data](#describing-the-meps-in-the-data)
 - [Differences between member
@@ -19,15 +22,61 @@ output:
   groups](#differences-between-political-groups)
 - [Role distributions](#role-distributions)
 
+# Preparation
+
+## Before the workshop
+
+To prepare for the class, please complete the following:
+
+- read the “Setting up R” tutorial series ([link](../../../tutorials))
+- using the tutorials:
+  - install R and RStudio
+  - create a new R project for the EU Politics course
+  - install the `tidyverse` package
+- bring your fully charged laptop and headphones to class
+
+## During the workshop
+
+The Data Center workshops in this course have two components. First,
+you’ll follow a series of general tutorials that present the R skills
+you’ll need for the course. Second, you’ll apply these skills to a
+specific case study related to the course content.
+
+Before you proceed to the case study below, please follow along with
+these tutorials:
+
+1.  [Data wrangling: filtering rows and selecting
+    columns](../../../tutorials/r_intro_subset)
+2.  [Data wrangling: creating new
+    variables](../../../tutorials/r_intro_mutate)
+3.  [Data wrangling: summarizing data (within
+    groups)](../../../tutorials/r_intro_summarize)
+4.  [The tidy workflow](../../../tutorials/r_intro_pipe)
+5.  [Data visualization: introduction to
+    `ggplot`](../../../tutorials/r_ggplot_intro)
+6.  [Data visualization:
+    distributions](../../../tutorials/r_ggplot_univariate)
+
 # Loading libraries and data
 
+The data for this workshop is stored in an Excel file on the Data
+Center’s GitHub repository
+([link](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/meetings.xlsx)).
+The `import()` function from the `rio` package allows us to import an
+Excel file directly into R from a URL, without needing to download the
+file. Unfortunately during the importing the data, the `meeting_date`
+column is not automatically recognized as a date, therefore we need to
+convert it to a date format using the `as.Date()` function.
+
 ``` r
+# install and load the necessary packages
 # install.packages("tidyverse")
 # install.packages("rio")
 library(tidyverse)
 library(rio)
 
-meetings <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/Meetings_compl.xlsx", setclass = "tbl_df") |> 
+# load the meeting data from GitHub
+meetings <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPOLI302/2024h2/meetings.xlsx", setclass = "tbl_df") |> 
   mutate(meeting_date = as.Date(meeting_date))
 ```
 
