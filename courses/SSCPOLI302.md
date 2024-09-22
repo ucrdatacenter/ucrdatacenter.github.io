@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302<br> European Union Politics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-20"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
@@ -12,7 +12,7 @@ output:
 
 - [Introduction](#introduction)
 - [Analysis of MEPs](#analysis-of-meps)
-- [Analysis of legislabive dossiers](#analysis-of-legislabive-dossiers)
+- [Analysis of legislative dossiers](#analysis-of-legislative-dossiers)
 
 # Introduction
 
@@ -27,7 +27,7 @@ individual meeting, please email <ucrdatacenter@ucr.nl>.
 
 [Link](workshop1) to the draft materials.
 
-# Analysis of legislabive dossiers
+# Analysis of legislative dossiers
 
 [Link](workshop2) to the draft materials.
 
