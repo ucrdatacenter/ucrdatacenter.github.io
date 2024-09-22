@@ -1,18 +1,16 @@
 ---
 layout: page
 title: "The tidy workflow"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
-In this tutorial, we will introduce you to the tidy workflow, a set of
+In this tutorial, we introduce you to the tidy workflow, a set of
 principles and tools that help you work with data in a structured and
 efficient way. This workflow allows you to combine different steps of
 the data cleaning process into a single pipeline, making your code more
@@ -54,7 +52,7 @@ and price of these diamonds.
 ## The tidy workflow
 
 A useful tool to keep in mind when planning your data cleaning is the
-pipe operator `%>%` (keyboard shortcut: Ctrl/Command+Shift+M). The base
+pipe operator `|>` (keyboard shortcut: Ctrl/Command+Shift+M). The base
 pipe operator `|>` does the same as the tidyverse pipe operator `%>%` –
 you can use either one.
 
@@ -73,11 +71,11 @@ first argument that we replace with the pipe here.
 
 ``` r
 # start with the diamonds tibble
-diamonds_new <- diamonds %>%
+diamonds_new <- diamonds |>
   # filter the data for Ideal cut diamonds
-  filter(cut == "Ideal") %>%
+  filter(cut == "Ideal") |>
   # select only the carat and price variables
-  select(carat, price) %>%
+  select(carat, price) |>
   # calculate the price per carat
   mutate(price_per_carat = price / carat)
 ```
@@ -98,4 +96,4 @@ diamonds_new <- mutate(diamonds_selected, price_per_carat = price / carat)
 The tidy workflow allows you to combine these steps into a single
 pipeline, so you don’t need to create intermediate objects.
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

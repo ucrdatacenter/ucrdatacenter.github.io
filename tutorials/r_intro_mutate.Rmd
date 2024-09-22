@@ -12,12 +12,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
 In some cases you might need to do additional calculations with your data.
-In this tutorial, we will show you how to define new variables and overwrite existing ones using the `mutate()` function from `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
+In this tutorial, we show you how to define new variables and overwrite existing ones using the `mutate()` function from `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
 
 Let's load the `tidyverse` package and have a look at the `diamonds` dataset:
 
@@ -46,7 +44,8 @@ mutate(diamonds, price_per_carat = price / carat)
 You can also create multiple variables at once by separating them with a comma.
 It is good practice to start each new variable on a new line to keep your code readable.
 
-Let's create a second variable: a logical (TRUE/FALSE) variable that checks if the diamond costs more than $10,000:
+Let's create a second variable: a logical (TRUE/FALSE) variable that checks if the diamond costs more than $10,000.
+In this case, the expression is a logical condition.
 
 ```{r}
 # create two new variables

@@ -1,23 +1,21 @@
 ---
 layout: page
 title: "Data wrangling: filtering rows and selecting columns"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
 Often you don’t need all the data in your dataset, but only a subset of
-it. This can be because you are only interested in a specific subset of
-observations or because you only need a subset of variables. In this
-tutorial, we will show you how to filter rows and select columns from a
-tibble using `tidyverse` functions and the `diamonds` dataset (which
-comes pre-loaded with `tidyverse` so you don’t need to import it).
+it. Maybe you are only interested in a specific subset of observations
+or you only need a subset of variables. In this tutorial, we show you
+how to filter rows and select columns from a tibble using `tidyverse`
+functions and the `diamonds` dataset (which comes pre-loaded with
+`tidyverse` so you don’t need to import it).
 
 Let’s load the `tidyverse` package and have a look at the `diamonds`
 dataset:
@@ -79,6 +77,32 @@ select(diamonds, -price, -carat)
     ##  9 Fair      E     VS2      65.1    61  3.87  3.78  2.49
     ## 10 Very Good H     VS1      59.4    61  4     4.05  2.39
     ## # ℹ 53,930 more rows
+
+If you use the `distinct()` function instead of `select()`, you not only
+select the listed variables, but keep only unique rows based on these
+variables. If you use the `distinct()` function without specifying any
+variables, you remove all duplicates from the dataset, keeping all
+variables.
+
+``` r
+# keep only unique rows based on the variables price and carat
+distinct(diamonds, price, carat)
+```
+
+    ## # A tibble: 28,988 × 2
+    ##    price carat
+    ##    <int> <dbl>
+    ##  1   326  0.23
+    ##  2   326  0.21
+    ##  3   327  0.23
+    ##  4   334  0.29
+    ##  5   335  0.31
+    ##  6   336  0.24
+    ##  7   337  0.26
+    ##  8   337  0.22
+    ##  9   338  0.23
+    ## 10   339  0.3 
+    ## # ℹ 28,978 more rows
 
 Especially if you want to combine datasets from different sources, you
 may want variable names to be consistent across datasets or convenient
@@ -217,4 +241,4 @@ object called `diamonds_filtered`:
 diamonds_filtered <- filter(diamonds, cut %in% c("Ideal", "Premium"))
 ```
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

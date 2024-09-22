@@ -1,14 +1,12 @@
 ---
 layout: page
 title: "Data visualization: distributions"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
-
-**This tutorial is not ready yet. Please come back later.**
 
 # Introduction
 
@@ -28,7 +26,7 @@ library(tidyverse)
 data(diamonds)
 ```
 
-# Univariate plots
+# The distribution of a continuous variable
 
 You can plot a single continuous variable with a histogram, a density
 plot, or a boxplot. Other than the name of the dataset and the variable
@@ -69,6 +67,7 @@ ggplot(diamonds, aes(x = price)) +
 ```
 
 ![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-4.png)<!-- -->
+\# The distribution of a discrete variable
 
 To compare the frequencies of discrete variables, you can use a bar
 plot.
@@ -79,6 +78,29 @@ ggplot(diamonds, aes(x = cut)) +
 ```
 
 ![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+If you want R to automatically count the frequencies of your variable,
+use `geom_bar()` with only an `x` aesthetic. If you have a separate
+variable that contains the frequencies (e.g. as the result of a
+`count()` function), you can use `geom_col()` with both an `x` and `y`
+aesthetic.
+
+Note that the following code uses the pipe operator `|>` to chain the
+functions together. The pipe operator is used to pass the output of one
+function as the first input to the next function, making the code more
+readable. To read more about the pipe operator, see the tutorial on the
+[tidy workflow](../r_intro_workflow).
+
+``` r
+diamonds |> 
+  count(cut) |> 
+  ggplot(aes(x = cut, y = n)) +
+  geom_col()
+```
+
+![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+# Adding labels
 
 Whenever you make a plot, make sure to use clear labels and titles with
 the `labs()` function to make your visualization easy to understand.
@@ -91,10 +113,10 @@ ggplot(diamonds, aes(x = cut)) +
        y = "Number of diamonds")
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 To learn more about other geoms and customization options, have a look
 at our [advanced visualization tutorial](../r_adv_ggplot) and
 [additional resources](../links#Help%20with%20%60ggplot%60).
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

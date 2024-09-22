@@ -1,23 +1,21 @@
 ---
 layout: page
 title: "Data wrangling: summarizing data (within groups)"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
-In some cases you might need to summarize your data to understand it
-better and to compare different groups. In this tutorial, we will show
-you how to summarize data within groups using the `group_by()` and
-`summarize()` functions from `tidyverse` functions and the `diamonds`
-dataset (which comes pre-loaded with `tidyverse` so you don’t need to
-import it).
+In some cases you might need to summarize your data – that is, collapse
+a lot of information into a few key statistics– to understand it better
+and to compare different groups. In this tutorial, we show you how to
+summarize data within groups using the `group_by()` and `summarize()`
+functions from `tidyverse` functions and the `diamonds` dataset (which
+comes pre-loaded with `tidyverse` so you don’t need to import it).
 
 Let’s load the `tidyverse` package and have a look at the `diamonds`
 dataset:
@@ -118,8 +116,8 @@ object called `diamonds_summary`:
 ``` r
 # save the result to a new object
 diamonds_summary <- summarize(diamonds,
-                               mean_price = mean(price),
-                               n = n())
+                              mean_price = mean(price),
+                              n = n())
 ```
 
 ## Summarizing data within groups
@@ -130,7 +128,7 @@ using the `summarize()` function in the same way as before. This is
 useful when you want to compare different groups in your data, for
 example the mean price of diamonds by cut.
 
-Note that the following code uses the pipe operator `%>%` to chain the
+Note that the following code uses the pipe operator `|>` to chain the
 functions together. The pipe operator is used to pass the output of one
 function as the first input to the next function, making the code more
 readable. To read more about the pipe operator, see the tutorial on the
@@ -138,9 +136,9 @@ readable. To read more about the pipe operator, see the tutorial on the
 
 ``` r
 # start with the diamonds tibble
-diamonds %>%
+diamonds |> 
   # group by cut
-  group_by(cut) %>%
+  group_by(cut) |> 
   # calculate the mean price within each group
   summarize(mean_price = mean(price))
 ```
@@ -154,4 +152,4 @@ diamonds %>%
     ## 4 Premium        4584.
     ## 5 Ideal          3458.
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

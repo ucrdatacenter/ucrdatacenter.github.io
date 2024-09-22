@@ -12,8 +12,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 # Introduction
 
 Before you proceed, make sure you're familiar with the logic of `ggplot`, as explained in our [introduction to `ggplot` tutorial](../r_ggplot_intro).
@@ -28,7 +26,7 @@ library(tidyverse)
 data(diamonds)
 ```
 
-# Univariate plots
+# The distribution of a continuous variable
 
 You can plot a single continuous variable with a histogram, a density plot, or a boxplot.
 Other than the name of the dataset and the variable that you want to plot, no additional arguments need to be specified; but you can customize the plot by adding arguments to the `geom_` functions.
@@ -53,6 +51,7 @@ ggplot(diamonds, aes(x = price)) +
 ggplot(diamonds, aes(x = price)) +
   geom_boxplot()
 ```
+# The distribution of a discrete variable
 
 To compare the frequencies of discrete variables, you can use a bar plot.
 
@@ -60,6 +59,22 @@ To compare the frequencies of discrete variables, you can use a bar plot.
 ggplot(diamonds, aes(x = cut)) +
   geom_bar()
 ```
+
+If you want R to automatically count the frequencies of your variable, use `geom_bar()` with only an `x` aesthetic.
+If you have a separate variable that contains the frequencies (e.g. as the result of a `count()` function), you can use `geom_col()` with both an `x` and `y` aesthetic.
+
+Note that the following code uses the pipe operator `|>` to chain the functions together.
+The pipe operator is used to pass the output of one function as the first input to the next function, making the code more readable.
+To read more about the pipe operator, see the tutorial on the [tidy workflow](../r_intro_workflow).
+
+```{r}
+diamonds |> 
+  count(cut) |> 
+  ggplot(aes(x = cut, y = n)) +
+  geom_col()
+```
+
+# Adding labels
 
 Whenever you make a plot, make sure to use clear labels and titles with the `labs()` function to make your visualization easy to understand.
 
@@ -73,4 +88,4 @@ ggplot(diamonds, aes(x = cut)) +
 
 To learn more about other geoms and customization options, have a look at our [advanced visualization tutorial](../r_adv_ggplot) and [additional resources](../links#Help with `ggplot`).
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

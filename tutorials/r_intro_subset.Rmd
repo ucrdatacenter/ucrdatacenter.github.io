@@ -12,13 +12,11 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
 Often you don't need all the data in your dataset, but only a subset of it.
-This can be because you are only interested in a specific subset of observations or because you only need a subset of variables.
-In this tutorial, we will show you how to filter rows and select columns from a tibble using `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
+Maybe you are only interested in a specific subset of observations or you only need a subset of variables.
+In this tutorial, we show you how to filter rows and select columns from a tibble using `tidyverse` functions and the `diamonds` dataset (which comes pre-loaded with `tidyverse` so you don't need to import it).
 
 Let's load the `tidyverse` package and have a look at the `diamonds` dataset:
 
@@ -43,6 +41,14 @@ select(diamonds, price, carat)
 
 # remove variables price and carat
 select(diamonds, -price, -carat)
+```
+
+If you use the `distinct()` function instead of `select()`, you not only select the listed variables, but keep only unique rows based on these variables.
+If you use the `distinct()` function without specifying any variables, you remove all duplicates from the dataset, keeping all variables.
+
+```{r}
+# keep only unique rows based on the variables price and carat
+distinct(diamonds, price, carat)
 ```
 
 Especially if you want to combine datasets from different sources, you may want variable names to be consistent across datasets or convenient to work with.
@@ -91,4 +97,4 @@ Let's assign the result of the `mutate()` function to a new object called `diamo
 diamonds_filtered <- filter(diamonds, cut %in% c("Ideal", "Premium"))
 ```
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

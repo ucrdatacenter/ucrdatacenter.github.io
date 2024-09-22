@@ -12,8 +12,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## The logic of `ggplot`
 
 `ggplot2` is a powerful R package for creating figures.

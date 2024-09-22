@@ -1,19 +1,17 @@
 ---
 layout: page
 title: "Data wrangling: creating new variables"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
 In some cases you might need to do additional calculations with your
-data. In this tutorial, we will show you how to define new variables and
+data. In this tutorial, we show you how to define new variables and
 overwrite existing ones using the `mutate()` function from `tidyverse`
 functions and the `diamonds` dataset (which comes pre-loaded with
 `tidyverse` so you don’t need to import it).
@@ -65,7 +63,8 @@ comma. It is good practice to start each new variable on a new line to
 keep your code readable.
 
 Let’s create a second variable: a logical (TRUE/FALSE) variable that
-checks if the diamond costs more than \$10,000:
+checks if the diamond costs more than \$10,000. In this case, the
+expression is a logical condition.
 
 ``` r
 # create two new variables

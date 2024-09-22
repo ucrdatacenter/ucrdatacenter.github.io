@@ -12,11 +12,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 ## Introduction
 
-In this tutorial, we will introduce you to the tidy workflow, a set of principles and tools that help you work with data in a structured and efficient way.
+In this tutorial, we introduce you to the tidy workflow, a set of principles and tools that help you work with data in a structured and efficient way.
 This workflow allows you to combine different steps of the data cleaning process into a single pipeline, making your code more readable and easier to maintain.
 
 This tutorial shows you an example of how to use the tidy workflow on the `diamonds` dataset, which comes pre-loaded with the `tidyverse` package.
@@ -43,7 +41,7 @@ Our goal now is to look at only Ideal cut diamonds and compare the carat and pri
 
 ## The tidy workflow
 
-A useful tool to keep in mind when planning your data cleaning is the pipe operator `%>%` (keyboard shortcut: Ctrl/Command+Shift+M).
+A useful tool to keep in mind when planning your data cleaning is the pipe operator `|>` (keyboard shortcut: Ctrl/Command+Shift+M).
 The base pipe operator `|>` does the same as the tidyverse pipe operator `%>%` -- you can use either one.
 
 Using it in a workflow means that the next function uses the previous result as an input, and helps you work in a linear fashion.
@@ -54,11 +52,11 @@ The `filter()`, `select()`, and `mutate()` functions are data cleaning functions
 
 ```{r}
 # start with the diamonds tibble
-diamonds_new <- diamonds %>%
+diamonds_new <- diamonds |>
   # filter the data for Ideal cut diamonds
-  filter(cut == "Ideal") %>%
+  filter(cut == "Ideal") |>
   # select only the carat and price variables
-  select(carat, price) %>%
+  select(carat, price) |>
   # calculate the price per carat
   mutate(price_per_carat = price / carat)
 ```
@@ -78,4 +76,4 @@ diamonds_new <- mutate(diamonds_selected, price_per_carat = price / carat)
 
 The tidy workflow allows you to combine these steps into a single pipeline, so you don't need to create intermediate objects.
 
-## Video tutorial TBA
+<!-- ## Video tutorial TBA -->

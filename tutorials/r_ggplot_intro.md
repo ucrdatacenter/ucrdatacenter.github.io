@@ -1,14 +1,12 @@
 ---
 layout: page
 title: "Data visualization: introduction to `ggplot`"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-09-22"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
-
-**This tutorial is not ready yet. Please come back later.**
 
 ## The logic of `ggplot`
 
