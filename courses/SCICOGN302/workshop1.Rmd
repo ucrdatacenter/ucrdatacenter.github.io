@@ -110,21 +110,34 @@ In addition, the second most common token is blank (i.e. no intelligible word).
 
 ## Filtering the data
 
-To make our results more useful, we should filter the dataset first with the `filter()` function, which specifies the criteria that the data should meet in order to remain in the filtered dataset using logical expressions.
+To make our results more useful, we should filter the dataset first to keep only relevant observations.
+One way to do that is with the `filter()` function, which specifies the criteria that the data should meet in order to remain in the filtered dataset using logical expressions.
 For text analysis the most important logical operators are 
 
-* `==` to mean an exact match (e.g. `gloss == "apple"` would only keep observations where Amy said "apple")
-* `%in%` to mean that the value matches one of multiple options (e.g. `gloss %in% c("apple", "orange")` would keep observations where Amy said "apple" OR "orange")
+* `==` to mean an exact match (e.g. `gloss == "cake"` would only keep observations where Amy said "cake")
+* `%in%` to mean that the value matches one of multiple options (e.g. `gloss %in% c("cake", "presents")` would keep observations where Amy said "cake" OR "presents")
 * `!` which negates whatever statement it precedes (for exact matches the negated operator becomes `!=`).
 
 You can also combine logical statements with `&` (and) and `|` (or) connectors.
-For instance, `gloss %in% c("apple", "orange")` is equivalent to `gloss == "apple" | gloss == "orange"`.
-
-In this case, we also use the pre-defined dataset `stop_words` from the `stopwords` package to get a list of stopwords.
-This function creates a dataframe which has a variable `word` that serves as a list of stopwords, so we can filter for words that are not in the stopword list and are not blanks.
+For instance, `gloss %in% c("cake", "presents")` is equivalent to `gloss == "cake" | gloss == "presents"`.
+Used inside a `filter()` function, this would keep observations where Amy said "cake" OR "presents".
 
 ```{r}
-tokens_filtered <- filter(tokens, !(stem %in% stop_words$word) & stem != "")
+filter(tokens, gloss %in% c("cake", "presents"))
+```
+
+Another way to filter a dataset is to use the `anti_join()` function.
+With this function, you can remove all observations that also occur in a different dataset.
+This function can be especially useful if you want to exclude particular combinations of multiple variables, but it can also be used to remove stopwords from your dataset.
+
+We can use the pre-defined dataset `stop_words` from the `stopwords` package to get a list of stopwords.
+This function creates a dataframe which has a variable `word` that serves as a list of stopwords.
+We can use the `anti_join()` function to keep only the words in `tokens` that are not in the stopword list.
+We need to specify the variables that we want to compare in the `by` argument.
+In our case, the `word` variable in the stop_words dataframe corresponds to the `stem` variable in the tokens dataframe.
+
+```{r}
+tokens_filtered <- anti_join(tokens, stop_words, by = c("stem" = "word"))
 ```
 
 Now we can use the `count()` function on our filtered data, and the results are very different than before.
@@ -141,11 +154,12 @@ These words are less generic, and actually look like words that children likely 
 Instead of going through the previous previous two steps by assigning each intermediate result to a new object (see `tokens_filtered`), you can write a linear worflow where you start with your original data, apply each data manipulation step-by-step until you reach your final result.
 
 To create such a workflow, you need the pipe operator (` %>% `): using it at the end of a line means that the next function uses the previous result as an input.
-In the following case, it takes the object `tokens` as the first argument of the `filter()` function, and then takes the resulting filtered data as the first argument of the `count()` function.
+In the following case, it takes the object `tokens` as the first argument of the `anti_join()` function, then introduces an additional filter to remove words where the stem is blank, and finally takes the resulting filtered data as the first argument of the `count()` function.
 
 ```{r}
 n_filtered <- tokens %>% 
-  filter(!(stem %in% stop_words$word) & stem != "") %>% 
+  anti_join(stop_words, by = c("stem" = "word")) %>%
+  filter(stem != "") %>% 
   count(stem, sort = TRUE)
 ```
 

@@ -172,31 +172,61 @@ so-called stopwords. In addition, the second most common token is blank
 
 ## Filtering the data
 
-To make our results more useful, we should filter the dataset first with
-the `filter()` function, which specifies the criteria that the data
-should meet in order to remain in the filtered dataset using logical
+To make our results more useful, we should filter the dataset first to
+keep only relevant observations. One way to do that is with the
+`filter()` function, which specifies the criteria that the data should
+meet in order to remain in the filtered dataset using logical
 expressions. For text analysis the most important logical operators are
 
-- `==` to mean an exact match (e.g. `gloss == "apple"` would only keep
-  observations where Amy said “apple”)
+- `==` to mean an exact match (e.g. `gloss == "cake"` would only keep
+  observations where Amy said “cake”)
 - `%in%` to mean that the value matches one of multiple options
-  (e.g. `gloss %in% c("apple", "orange")` would keep observations where
-  Amy said “apple” OR “orange”)
+  (e.g. `gloss %in% c("cake", "presents")` would keep observations where
+  Amy said “cake” OR “presents”)
 - `!` which negates whatever statement it precedes (for exact matches
   the negated operator becomes `!=`).
 
 You can also combine logical statements with `&` (and) and `|` (or)
-connectors. For instance, `gloss %in% c("apple", "orange")` is
-equivalent to `gloss == "apple" | gloss == "orange"`.
-
-In this case, we also use the pre-defined dataset `stop_words` from the
-`stopwords` package to get a list of stopwords. This function creates a
-dataframe which has a variable `word` that serves as a list of
-stopwords, so we can filter for words that are not in the stopword list
-and are not blanks.
+connectors. For instance, `gloss %in% c("cake", "presents")` is
+equivalent to `gloss == "cake" | gloss == "presents"`. Used inside a
+`filter()` function, this would keep observations where Amy said “cake”
+OR “presents”.
 
 ``` r
-tokens_filtered <- filter(tokens, !(stem %in% stop_words$word) & stem != "")
+filter(tokens, gloss %in% c("cake", "presents"))
+```
+
+    ## # A tibble: 3 × 28
+    ##       id gloss language token_order prefix part_of_speech stem  actual_phonology
+    ##    <int> <chr> <chr>          <int> <chr>  <chr>          <chr> <chr>           
+    ## 1 3.50e6 cake  eng                2 ""     n              cake  ""              
+    ## 2 3.50e6 pres… eng                1 ""     n              pres… ""              
+    ## 3 3.50e6 cake  eng                4 ""     n              cake  ""              
+    ## # ℹ 20 more variables: model_phonology <chr>, suffix <chr>,
+    ## #   num_morphemes <int>, english <chr>, clitic <chr>, utterance_type <chr>,
+    ## #   corpus_name <chr>, speaker_code <chr>, speaker_name <chr>,
+    ## #   speaker_role <chr>, target_child_name <chr>, target_child_age <dbl>,
+    ## #   target_child_sex <chr>, collection_name <chr>, collection_id <int>,
+    ## #   corpus_id <int>, speaker_id <int>, target_child_id <int>,
+    ## #   transcript_id <int>, utterance_id <int>
+
+Another way to filter a dataset is to use the `anti_join()` function.
+With this function, you can remove all observations that also occur in a
+different dataset. This function can be especially useful if you want to
+exclude particular combinations of multiple variables, but it can also
+be used to remove stopwords from your dataset.
+
+We can use the pre-defined dataset `stop_words` from the `stopwords`
+package to get a list of stopwords. This function creates a dataframe
+which has a variable `word` that serves as a list of stopwords. We can
+use the `anti_join()` function to keep only the words in `tokens` that
+are not in the stopword list. We need to specify the variables that we
+want to compare in the `by` argument. In our case, the `word` variable
+in the stop_words dataframe corresponds to the `stem` variable in the
+tokens dataframe.
+
+``` r
+tokens_filtered <- anti_join(tokens, stop_words, by = c("stem" = "word"))
 ```
 
 Now we can use the `count()` function on our filtered data, and the
@@ -208,18 +238,18 @@ head(n_filtered, 10)
 ```
 
     ## # A tibble: 10 × 2
-    ##    stem         n
-    ##    <chr>    <int>
-    ##  1 I           51
-    ##  2 uhhuh       10
-    ##  3 blow         7
-    ##  4 play         7
-    ##  5 uhuh         6
-    ##  6 yum          6
-    ##  7 house        5
-    ##  8 yeah         5
-    ##  9 all_gone     3
-    ## 10 bye          3
+    ##    stem           n
+    ##    <chr>      <int>
+    ##  1 "I"           51
+    ##  2 ""            30
+    ##  3 "uhhuh"       10
+    ##  4 "blow"         7
+    ##  5 "play"         7
+    ##  6 "uhuh"         6
+    ##  7 "yum"          6
+    ##  8 "house"        5
+    ##  9 "yeah"         5
+    ## 10 "all_gone"     3
 
 These words are less generic, and actually look like words that children
 likely say a lot.
@@ -235,12 +265,15 @@ result.
 To create such a workflow, you need the pipe operator (`%>%`): using it
 at the end of a line means that the next function uses the previous
 result as an input. In the following case, it takes the object `tokens`
-as the first argument of the `filter()` function, and then takes the
-resulting filtered data as the first argument of the `count()` function.
+as the first argument of the `anti_join()` function, then introduces an
+additional filter to remove words where the stem is blank, and finally
+takes the resulting filtered data as the first argument of the `count()`
+function.
 
 ``` r
 n_filtered <- tokens %>% 
-  filter(!(stem %in% stop_words$word) & stem != "") %>% 
+  anti_join(stop_words, by = c("stem" = "word")) %>%
+  filter(stem != "") %>% 
   count(stem, sort = TRUE)
 ```
 
@@ -340,7 +373,7 @@ n_filtered %>%
   labs(x = "Frequency", y = "")
 ```
 
-![](workshop1_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](workshop1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 To observe language development, it is interesting to look at how
 various measures change with age. Since we only observe Amy at one age,
@@ -362,7 +395,7 @@ utterances %>%
   theme_light()
 ```
 
-![](workshop1_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](workshop1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 From this plot we can see that while there are some particularly long
 utterances Amy made during the conversations, there is no clear pattern
@@ -385,7 +418,7 @@ utterances %>%
   theme_light()
 ```
 
-![](workshop1_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](workshop1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 This plot tells us that the second transcript seems to have a slightly
 larger MLU, mainly because most of the particularly long utterances
@@ -405,7 +438,7 @@ tokens %>%
   theme_light()
 ```
 
-![](workshop1_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](workshop1_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 Subjective and personal pronouns (I, you, etc.) are clearly dominating
 Amy’s speech, however, she uses a wide range of different pronouns.
