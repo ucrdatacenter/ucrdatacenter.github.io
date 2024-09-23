@@ -26,6 +26,8 @@ The call for project proposals for the January 2025 Apprenticeship program is no
 * [Call for proposals for faculty and staff](call_fas)
 * [Call for proposals for students](call_students)
 
+You can access the draft schedule and workshop materials (to be updated) [here](apprenticeship_2025h1).
+
 # 2024 June
 
 After a successful pilot, the second iteration of the Apprenticeship program took place in June 2024.
