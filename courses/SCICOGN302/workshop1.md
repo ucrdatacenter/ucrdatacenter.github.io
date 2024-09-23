@@ -2,7 +2,7 @@
 layout: page
 title: "SCICOGN302 workshop I:<br> Introduction to the CHILDES dataset"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-17"
+date: "Last updated: 2024-09-23"
 output:
   md_document:
     variant: gfm
@@ -36,7 +36,7 @@ the `ggplot2` package.
 # First steps
 
 This tutorial assumes that you completed the preparatory steps listed
-[here](../../SCICOGN302.html#First_workshop).
+[here](../../SCICOGN302#first_workshop).
 
 If you get stuck at any point, check the help files of functions (access
 by running `?functionname`), look at more extensive [Data Center
