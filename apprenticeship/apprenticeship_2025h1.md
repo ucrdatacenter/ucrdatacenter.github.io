@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship program"
-subtitle: "Spring 2024 (June)"
-date: "Last updated: 2024-06-18"
+subtitle: "January 2025"
+date: "Last updated: 2024-09-24"
 output:
   md_document:
     variant: gfm
