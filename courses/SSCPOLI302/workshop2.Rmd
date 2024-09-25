@@ -121,15 +121,11 @@ First, let's look at who the attendees are and how many meetings they each atten
 ```{r}
 # count how many meetings each attendee attended (using the fixed names)
 meetings |> 
-  count(fixed_names, sort = TRUE) |> 
-  ggplot() +
-  geom_col(aes(x = n, y = reorder(fixed_names, n))) +
-  labs(title = "Number of meetings per attendee", 
-       y = "Attendee", 
-       x = "Number of meetings")
+  count(fixed_names, sort = TRUE)
 ```
 
-As we also defined some additional categories for the attendees, we can also look at the distribution of these categories.
+This list contains too many different entities to create a readable plots, so let's try to group the attendees by their class and structure, which we previously defined manually.
+Then we can plot the distribution of these categories.
 
 ```{r}
 # count attendee class and structure

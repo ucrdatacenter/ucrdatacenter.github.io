@@ -156,18 +156,28 @@ each attended.
 ``` r
 # count how many meetings each attendee attended (using the fixed names)
 meetings |> 
-  count(fixed_names, sort = TRUE) |> 
-  ggplot() +
-  geom_col(aes(x = n, y = reorder(fixed_names, n))) +
-  labs(title = "Number of meetings per attendee", 
-       y = "Attendee", 
-       x = "Number of meetings")
+  count(fixed_names, sort = TRUE)
 ```
 
-![](workshop2_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+    ## # A tibble: 372 × 2
+    ##    fixed_names                                                                 n
+    ##    <chr>                                                                   <int>
+    ##  1 McDonald’s Global Franchising Limited (MGFL) - Transparency Register N…    20
+    ##  2 European Paper Packaging Alliance (EPPA) - Transparency Register Numbe…    18
+    ##  3 Huhtamäki Oyj                                                              18
+    ##  4 European Environmental Bureau (EEB) - Transparency Register Number: 06…    17
+    ##  5 Nestlé S.A.                                                                17
+    ##  6 The European Organisation for Packaging and the Environment (EUROPEN) …    15
+    ##  7 The Coca-Cola Company                                                      14
+    ##  8 Zero Waste Europe (ZWE) - Transparency Register Number: 47806848200-34     14
+    ##  9 FoodDrinkEurope - Transparency Register Number: 75818824519-45             13
+    ## 10 Seda International Packaging Group                                         13
+    ## # ℹ 362 more rows
 
-As we also defined some additional categories for the attendees, we can
-also look at the distribution of these categories.
+This list contains too many different entities to create a readable
+plots, so let’s try to group the attendees by their class and structure,
+which we previously defined manually. Then we can plot the distribution
+of these categories.
 
 ``` r
 # count attendee class and structure
