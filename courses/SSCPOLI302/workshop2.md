@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of a legislative dossier (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-21"
+date: "Last updated: 2024-09-25"
 output:
   md_document:
     variant: gfm
@@ -58,17 +58,16 @@ email us at <datacenter@ucr.nl>.
 ## Loading the data
 
 Once you have cleaned the data, you can start analyzing it in R. Below
-is a template for the analysis using for the dossier 2018/0902(NLE),
-which is about the “Existence of a clear risk of a serious breach by
-Hungary of the values on which the Union is founded” (Legislative
-Observatory, 2024). Our cleaned data is stored in our project directory
-and is called “2018_0902_NLE_clean.xlsx”.
+is a template for the analysis using for the dossier 2022/0396(COD),
+which is regulating packaging and packaging waste. Our cleaned data is
+stored in our project directory and is called
+“2022_0396_COD_clean.xlsx”.
 
 In this first code chunk, you only need to change the file name and the
 dossier reference (see comments) to match your data. This code will load
 the meeting data, filter it for the dossier of interest, load the
 cleaned list of attendees, and combine the two datasets. So in the data
-we will have not only the meetings related to the dossier 2018/0902(NLE)
+we will have not only the meetings related to the dossier 2022/0396(COD)
 as declared in the original data, but also the standardized attendee
 names and categories.
 
@@ -82,12 +81,12 @@ meetings_raw <- import("https://github.com/ucrdatacenter/projects/raw/main/SSCPO
   mutate(meeting_date = as.Date(meeting_date))
 
 # load the cleaned list of attendees (change the file name to match your data)
-attendees <- import("2018_0902_NLE_clean.xlsx", setclass = "tbl_df")
+attendees <- import("2022_0396_COD_clean.xlsx", setclass = "tbl_df")
 
 # combine the two datasets
 meetings <- meetings_raw |> 
   # filter for dossier of interest (change the reference to match your dossier)
-  filter(procedure_reference == "2018/0902(NLE)") |> 
+  filter(procedure_reference == "2022/0396(COD)") |> 
   left_join(attendees, by = "attendees")
 ```
 
@@ -146,9 +145,6 @@ meetings |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
-These plots will be more interesting if you look at a dossier for which
-more than one MEP declared meetings.
-
 ## Attendee characteristics
 
 With our improved dataset we can also do some additional analyses by
@@ -202,7 +198,7 @@ procedure.
 meetings |>
   ggplot() +
   geom_histogram(aes(x = meeting_date), binwidth = 30) +
-  labs(title = "Meeting activity related to legislative file 2018/0902(NLE)", 
+  labs(title = "Meeting activity related to legislative file 2022/0396(COD)", 
        x = "Date", 
        y = "Frequency of meetings")
 ```
@@ -219,7 +215,7 @@ or the emergence of major crises/scandals.
 
 <https://oeil.secure.europarl.europa.eu/oeil/home/home.do>
 
-<https://parltrack.org/dossier/2018/0902(NLE)#/general>
+<https://parltrack.org/dossier/2022/0396(COD)#/general>
 
 Optionally, we can also look at whether these attendees met with
 European Institutions besides the EP. This could signify a larger
