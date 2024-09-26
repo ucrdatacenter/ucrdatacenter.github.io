@@ -15,14 +15,22 @@ output:
 This page collects materials for the data-driven assignments in the Fall 2024 edition of EU Politics at UCR.
 You can also access the related files directly on [Github](https://github.com/ucrdatacenter/projects).
 
-Data Center office hours will be announced soon; to schedule an individual meeting, please email [ucrdatacenter@ucr.nl](mailto:ucrdatacenter@ucr.nl).
+# First workshop: analysis of MEPs
 
-# Analysis of MEPs
+The first Data Center workshop takes place on the Friday class of week 6 (4 October).
+You can find the workshop handout [here](workshop1).
+The same materials will be used during the Tuesday class of week 7 (8 October).
 
-[Link](workshop1) to the draft materials.
+To prepare for the first workshop, please complete the preparatory instructions listed at the top of the workshop handout.
 
-# Analysis of legislative dossiers
+# Second workshop: analysis of legislative dossiers
 
-[Link](workshop2) to the draft materials.
+The last Data Center workshop takes place on the Friday class of week 6 (11 October).
+You can find the workshop handout [here](workshop2).
 
-**This page is currently under construction. Please check back later for updates.**
+To prepare for the workshop, please follow the preparatory instructions listed at the top of the workshop handout. 
+
+# Office hours
+
+The Data Center offers office hours to help prepare for the workshops and complete the assignments.
+Please see the schedule [here](../../contact).

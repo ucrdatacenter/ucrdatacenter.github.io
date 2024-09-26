@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of a legislative dossier (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-25"
+date: "Last updated: 2024-09-26"
 output:
   md_document:
     variant: gfm

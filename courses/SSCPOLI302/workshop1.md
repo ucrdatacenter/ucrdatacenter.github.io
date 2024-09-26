@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302:<br> Analysis of MEPs (draft)"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-09-26"
 output:
   md_document:
     variant: gfm
