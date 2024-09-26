@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FAL
 # Preparation for the workshop
 
 In the last Data Center workshop, each group will analyze the meetings related to a specific legislative dossier.
-You can find a list of the dossiers and the number of corresponding meetings [here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/procedure_reference_list.csv).
+You can find a list of the dossiers and the number of corresponding meetings and attendees [here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/List%20of%20legislative%20files.pdf).
 
 You can find the full meeting data [here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/meetings_per_attendee.xlsx).
 This file is almost the same as the file you worked with in the first workshop, except that it only includes meetings with a linked legislative dossier, and if the meeting listed multiple attendees, each attendee is listed on a separate row.
@@ -27,7 +27,7 @@ Unfortunately, the data is not standardized, and the attendees are not always re
 Therefore, you will need to clean the data to make it usable for analysis.
 To help you with this task, we have created files that list the unique attendee names that occur for each legislative dossier.
 
-Once you know which legislative dossier your group will analyze, you can download the  file containing the relevant attendee names from [GitHub](https://github.com/ucrdatacenter/projects/tree/main/SSCPOLI302/2024h2/attendees) (click on the file, then click the "View Raw" button to download the file).
+Once you know which legislative dossier your group will analyze, you can download the file containing the relevant attendee names from [GitHub](https://github.com/ucrdatacenter/projects/tree/main/SSCPOLI302/2024h2/attendees) (click on the file, then click the "View Raw" button to download the file).
 Download the file to your project directory, open it in Excel.
 
 You can find instructions for how to clean and standardize the data in Excel in [this tutorial](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/Data%20cleaning%20instructions.pdf).

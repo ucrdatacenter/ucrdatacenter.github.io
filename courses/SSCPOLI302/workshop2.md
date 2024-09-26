@@ -22,8 +22,8 @@ output:
 
 In the last Data Center workshop, each group will analyze the meetings
 related to a specific legislative dossier. You can find a list of the
-dossiers and the number of corresponding meetings
-[here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/procedure_reference_list.csv).
+dossiers and the number of corresponding meetings and attendees
+[here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/List%20of%20legislative%20files.pdf).
 
 You can find the full meeting data
 [here](https://github.com/ucrdatacenter/projects/blob/main/SSCPOLI302/2024h2/meetings_per_attendee.xlsx).
