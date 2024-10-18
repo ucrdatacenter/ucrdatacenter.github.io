@@ -25,10 +25,15 @@ To prepare for the first workshop, please complete the preparatory instructions 
 
 # Second workshop: analysis of legislative dossiers
 
-The last Data Center workshop takes place on the Friday class of week 6 (11 October).
+The last Data Center workshop takes place on the Tuesday class of week 7 (15 October).
 You can find the workshop handout [here](workshop2).
 
 To prepare for the workshop, please follow the preparatory instructions listed at the top of the workshop handout. 
+
+# Third workshop: further analysis of legislative dossiers
+
+The last Data Center workshop takes place on the Friday class of week 7 (18 October).
+You can find the workshop handout [here](workshop3).
 
 # Office hours
 

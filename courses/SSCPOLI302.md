@@ -2,7 +2,7 @@
 layout: page
 title: "SSCPOLI302<br> European Union Politics"
 subtitle: "Fall 2024"
-date: "Last updated: 2024-09-26"
+date: "Last updated: 2024-10-18"
 output:
   md_document:
     variant: gfm
@@ -14,6 +14,8 @@ output:
 - [First workshop: analysis of MEPs](#first-workshop-analysis-of-meps)
 - [Second workshop: analysis of legislative
   dossiers](#second-workshop-analysis-of-legislative-dossiers)
+- [Third workshop: further analysis of legislative
+  dossiers](#third-workshop-further-analysis-of-legislative-dossiers)
 - [Office hours](#office-hours)
 
 # Introduction
@@ -34,11 +36,16 @@ instructions listed at the top of the workshop handout.
 
 # Second workshop: analysis of legislative dossiers
 
-The last Data Center workshop takes place on the Friday class of week 6
-(11 October). You can find the workshop handout [here](workshop2).
+The last Data Center workshop takes place on the Tuesday class of week 7
+(15 October). You can find the workshop handout [here](workshop2).
 
 To prepare for the workshop, please follow the preparatory instructions
 listed at the top of the workshop handout.
+
+# Third workshop: further analysis of legislative dossiers
+
+The last Data Center workshop takes place on the Friday class of week 7
+(18 October). You can find the workshop handout [here](workshop3).
 
 # Office hours
 
