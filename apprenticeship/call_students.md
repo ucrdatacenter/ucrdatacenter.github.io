@@ -26,12 +26,12 @@ Another type of projects we have experience with concerns UCR's marketing and re
 
 Finally, we also welcome projects in which students support faculty in their research, as well as other projects we have not thought of. 
 
-If you have an interest in any of these types of projects, or have an idea of your own, please email us at [datacenter@ucr.nl](mailto:datacenter@ucr.nl) by October 18, 2024.
+If you have an interest in any of these types of projects, or have an idea of your own, please email us at [datacenter@ucr.nl](mailto:datacenter@ucr.nl) by November 18, 2024.
 If possible, please discuss your idea beforehand with a faculty or staff member who could supervise your project, but you are also welcome to apply without a faculty member in mind.
 If you would like to discuss your ideas and interests with us before applying, you are welcome to. 
 
 We cannot guarantee that we will be able to match you with a faculty or staff member, but we will do our best to do so.
-We will inform you by November 1, 2024 about whether you are accepted to the apprenticeship program and what your project will be.
+We will inform you by December 1, 2024 about whether you are accepted to the apprenticeship program and what your project will be.
 
 The application form (at the bottom of this call) asks you to briefly describe the types of projects you would be interested in. 
 If you have a specific project in mind, please describe it. 
