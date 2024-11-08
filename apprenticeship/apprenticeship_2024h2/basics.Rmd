@@ -61,7 +61,7 @@ library(tidyverse)
 
 ### [Data visualization with `ggplot2`](ggplot)
 
-## [Hypothesis testing / modelling](stats)
+## [Hypothesis testing / modelling](tests)
 
 # Other resources
 

@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nR basics"
 subtitle: "June 2024" 
-date: "Last updated: 2024-08-01"
+date: "Last updated: 2024-11-08"
 output:
   md_document:
     variant: gfm
@@ -85,7 +85,7 @@ sections.**
 
 ### [Data visualization with `ggplot2`](ggplot)
 
-## [Hypothesis testing / modelling](stats)
+## [Hypothesis testing / modelling](tests)
 
 # Other resources
 
