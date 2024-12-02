@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Data wrangling: filtering rows and selecting columns"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
@@ -10,10 +10,10 @@ output:
 
 ## Video tutorial
 
-Please watch [this](https://vimeo.com/1011762380/2e33856231) video
-(4:45), then read and follow along with the written tutorial below.
-Compare your own output to what you see printed below to make sure all
-of your code runs as expected.
+Please watch [this video
+(4:45)](https://vimeo.com/1011762380/2e33856231), then read and follow
+along with the written tutorial below. Compare your own output to what
+you see printed below to make sure all of your code runs as expected.
 
 ## Introduction
 

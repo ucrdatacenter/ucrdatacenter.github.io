@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Web and pdf scraping"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
@@ -163,12 +163,12 @@ table below gives some of the main examples. However, you don’t actually
 need to remember any of these, but instead you can use selector tools to
 extract the information you need.
 
-| selector      | example           | Selects                                                |
-|---------------|-------------------|--------------------------------------------------------|
-| element/tag   | `table`           | **all** `<table>` elements                             |
-| class         | `.someTable`      | **all** elements with `class="someTable"`              |
-| id            | `#steve`          | **unique** element with `id="steve"`                   |
-| element.class | `tr.headerRow`    | **all** `<tr>` elements with the `headerRow` class     |
+| selector | example | Selects |
+|----|----|----|
+| element/tag | `table` | **all** `<table>` elements |
+| class | `.someTable` | **all** elements with `class="someTable"` |
+| id | `#steve` | **unique** element with `id="steve"` |
+| element.class | `tr.headerRow` | **all** `<tr>` elements with the `headerRow` class |
 | class1.class2 | `.someTable.blue` | **all** elements with the `someTable` AND `blue` class |
 
 Instead of going through the raw HTML and trying to match up the code to
@@ -370,7 +370,7 @@ factsheet <- tibble(label, value)
 factsheet
 ```
 
-    ## # A tibble: 29 × 2
+    ## # A tibble: 28 × 2
     ##    label                 value                                                  
     ##    <chr>                 <chr>                                                  
     ##  1 Motto                 "Terras Irradient (Latin)"                             
@@ -379,11 +379,11 @@ factsheet
     ##  4 Established           "1821; 203 years ago (1821)"                           
     ##  5 Accreditation         "NECHE"                                                
     ##  6 Academic affiliations ".mw-parser-output .hlist dl,.mw-parser-output .hlist …
-    ##  7 Endowment             "$3.3 billion (2023)[2]"                               
+    ##  7 Endowment             "$3.78 billion (2022)[2]"                              
     ##  8 President             "Michael A. Elliott"                                   
     ##  9 Academic staff        "307 (Fall 2021)[3]"                                   
     ## 10 Undergraduates        "1,971 (Fall 2021)[4]"                                 
-    ## # ℹ 19 more rows
+    ## # ℹ 18 more rows
 
 ## Find and clean the school color values
 
@@ -705,7 +705,7 @@ done.
 pdf[1]
 ```
 
-    ## [1] "Members\n             Mika AALTOLA\n             Group of the European People's Party (Christian Democrats)\n             Finland Kansallinen Kokoomus\n\n             Maravillas ABADÍA JOVER\n             Group of the European People's Party (Christian Democrats)\n             Spain Partido Popular\n\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Georgios AFTIAS\n             Group of the European People's Party (Christian Democrats)\n             Greece Nea Demokratia\n\n             Oihane AGIRREGOITIA MARTÍNEZ\n             Renew Europe Group\n             Spain Partido Nacionalista Vasco\n\n             Peter AGIUS\n             Group of the European People's Party (Christian Democrats)\n             Malta Partit Nazzjonalista\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Galato ALEXANDRAKI\n             European Conservatives and Reformists Group\n             Greece Elliniki Lusi-Greek Solution\n\n             Grégory ALLIONE\n             Renew Europe Group\n             France Renaissance\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n             Nikolaos ANADIOTIS\n             Non-attached Members\n             Greece Dimokratikó Patriotikó Kínima\n\n             Christine ANDERSON\n             Europe of Sovereign Nations Group\n             Germany Alternative für Deutschland\n\n             Li ANDERSSON\n             The Left group in the European Parliament - GUE/NGL\n             Finland Vasemmistoliitto\n\n\n\n\n11/08/2024                                                                                              1\n"
+    ## [1] "Members\n             Mika AALTOLA\n             Group of the European People's Party (Christian Democrats)\n             Finland Kansallinen Kokoomus\n\n             Maravillas ABADÍA JOVER\n             Group of the European People's Party (Christian Democrats)\n             Spain Partido Popular\n\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Georgios AFTIAS\n             Group of the European People's Party (Christian Democrats)\n             Greece Nea Demokratia\n\n             Oihane AGIRREGOITIA MARTÍNEZ\n             Renew Europe Group\n             Spain Partido Nacionalista Vasco\n\n             Peter AGIUS\n             Group of the European People's Party (Christian Democrats)\n             Malta Partit Nazzjonalista\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Galato ALEXANDRAKI\n             European Conservatives and Reformists Group\n             Greece Elliniki Lusi-Greek Solution\n\n             Grégory ALLIONE\n             Renew Europe Group\n             France Renaissance\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n             Nikolaos ANADIOTIS\n             Non-attached Members\n             Greece Dimokratikó Patriotikó Kínima «NIKI»\n\n             Christine ANDERSON\n             Europe of Sovereign Nations Group\n             Germany Alternative für Deutschland\n\n             Li ANDERSSON\n             The Left group in the European Parliament - GUE/NGL\n             Finland Vasemmistoliitto\n\n\n\n\n02/12/2024                                                                                              1\n"
 
 ``` r
 cat(pdf[1])
@@ -754,7 +754,7 @@ cat(pdf[1])
     ## 
     ##              Nikolaos ANADIOTIS
     ##              Non-attached Members
-    ##              Greece Dimokratikó Patriotikó Kínima
+    ##              Greece Dimokratikó Patriotikó Kínima «NIKI»
     ## 
     ##              Christine ANDERSON
     ##              Europe of Sovereign Nations Group
@@ -767,7 +767,7 @@ cat(pdf[1])
     ## 
     ## 
     ## 
-    ## 11/08/2024                                                                                              1
+    ## 02/12/2024                                                                                              1
 
 If we actually want to work with the data contained in the document, we
 need to clean it. Currently the vector `pdf` is broken up based on page

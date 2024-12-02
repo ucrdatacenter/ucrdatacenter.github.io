@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "The tidy workflow"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm

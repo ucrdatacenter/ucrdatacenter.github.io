@@ -23,7 +23,7 @@ You can use a pre-defined dataset by calling its name directy, but if you would 
 ```{r}
 data(iris)
 mydata <- iris
-````
+```
 
 These default datasets are useful for learning and practicing, but they are not always relevant to your research.
 Most of the time, you will be working with your own data, which you need to import into R from a file on your computer or the internet.

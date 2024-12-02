@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Interactive applications with Shiny"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm

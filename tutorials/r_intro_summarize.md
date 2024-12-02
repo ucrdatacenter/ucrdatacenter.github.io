@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Data wrangling: summarizing data (within groups)"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
@@ -10,10 +10,10 @@ output:
 
 ## Video tutorial
 
-Please watch [this](https://vimeo.com/1011768227/2f3d24644f) video
-(3:34), then read and follow along with the written tutorial below.
-Compare your own output to what you see printed below to make sure all
-of your code runs as expected.
+Please watch [this video
+(3:34)](https://vimeo.com/1011768227/2f3d24644f), then read and follow
+along with the written tutorial below. Compare your own output to what
+you see printed below to make sure all of your code runs as expected.
 
 ## Introduction
 

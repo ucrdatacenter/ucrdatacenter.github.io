@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Data wrangling: creating new variables"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
@@ -10,10 +10,10 @@ output:
 
 ## Video tutorial
 
-Please watch [this](https://vimeo.com/1011766337/7659d00d22) video
-(2:46), then read and follow along with the written tutorial below.
-Compare your own output to what you see printed below to make sure all
-of your code runs as expected.
+Please watch [this video
+(2:46)](https://vimeo.com/1011766337/7659d00d22), then read and follow
+along with the written tutorial below. Compare your own output to what
+you see printed below to make sure all of your code runs as expected.
 
 ## Introduction
 
