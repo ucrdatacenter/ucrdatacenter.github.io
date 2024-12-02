@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Objects and functions in R"
-date: "Last updated: 2024-09-22"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
@@ -15,8 +15,9 @@ are familiar with how to run code in RStudio. If not, please follow
 [this installation tutorial](../r_install) and [this introduction to R
 and RStudio](../r_basics).
 
-Please watch [this](https://vimeo.com/1011760990/6d3b5deec3) video
-(6:01), then read and follow along with the written tutorial below.
+Please watch [this video
+(6:01)](https://vimeo.com/1011760990/6d3b5deec3), then read and follow
+along with the written tutorial below.
 
 ## Objects in R
 
@@ -154,5 +155,3 @@ operator or the help() function, for example by typing `?sum` (or
 equivalently, `?sum()`). It is good practice to request help files from
 your console and not you R script, since there is no need to save these
 queries for the future.
-
-## Video tutorial TBA

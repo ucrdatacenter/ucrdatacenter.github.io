@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Installing R and RStudio"
-date: "Last updated: 2024-01-02"
+date: "Last updated: 2024-12-02"
 output:
   md_document:
     variant: gfm
