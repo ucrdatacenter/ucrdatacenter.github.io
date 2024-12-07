@@ -1,3 +1,13 @@
+---
+title: "Data Center Apprenticeship program"
+subtitle: "January 2024"
+date: "Last updated: 2024-12-07"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
 # Introduction
 
 Welcome to the **January 2025 Data Center Apprenticeship Program**! This
@@ -100,19 +110,6 @@ preparatory steps at least a week before the first workshop.
 3.  Sign in to your GitHub account in RStudio if prompted.
 4.  Follow any on-screen setup instructions to connect GitHub Copilot to
     your workspace.
-
-# Why Attend?
-
-- **Hands-On Learning:** Gain practical experience with real-world data
-  sets.
-- **Comprehensive Topics:** From AI-powered R techniques to workflows
-  and spatial analysis.
-- **Supportive Environment:** Learn in a collaborative and inclusive
-  setting.
-- **Expert Instructors:** Our sessions are led by seasoned data
-  scientists and educators.
-- **Networking Opportunities:** Connect with peers, faculty, and
-  industry experts.
 
 # Final Presentations and Wrap-Up
 
