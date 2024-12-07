@@ -7,11 +7,11 @@ share-img: /assets/img/apprenticeship_2025h1.png
 tags: [events]
 ---
 
-<img style="float: left; padding: 10px 0px 10px 0px" src="assets/img/apprenticeship_2025h1.png" width="40%"/>
-
 The [schedule](../apprenticeship/apprenticeship_2025h1/#workshop-schedule) for the January 2025 Data Center Apprenticeship program is now available!
 Join us for hands-on workshops on R programming from the basics to advanced topics, optimizing your data analysis workflows, and more.
 In particular, all workshops will feature AI-assisted coding using GitHub Copilot, so you can learn how to make the most of this new tool in your own projects.
+
+<img style="float: left; padding: 10px 0px 10px 0px" src="../assets/img/apprenticeship_2025h1.png" width="60%"/>
 
 Workshops will take place every day between January 13 and January 24, 2025, and everybody is welcome to participate in some or all of the workshops.
 No registration is required, just show up with your laptop.
