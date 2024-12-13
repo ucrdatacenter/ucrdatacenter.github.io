@@ -41,8 +41,10 @@ steps in the following section, the workshops have little to no
 additional prerequisites. “Basic R skills” refers to either attending
 the first three workshops, having taken ENGDATA101, having participated
 in a UCR course with a data encounter, or equivalent experience. Exact
-times and location will be announced soon; workshop materials will be
+times will be announced soon; workshop materials will be
 added gradually.
+
+All workshops will take place in classroom **F-13**, unless stated otherwise.
 
 | Date | Topic | Prerequisites |
 |----|----|----|
