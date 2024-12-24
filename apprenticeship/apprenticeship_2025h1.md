@@ -70,6 +70,10 @@ RStudio installed on your computer. If you don’t have these programs
 installed, please follow [this installation
 tutorial](../../tutorials/r_install).
 
+In addition the [R basics tutorial](../../../tutorials/r_basics) on the 
+Data Center website explains the RStudio interface, and shows how to create 
+a new project and how to install packages.
+
 ## GitHub Copilot
 
 Throughout the workshops, we will be working with RStudio’s GitHub
