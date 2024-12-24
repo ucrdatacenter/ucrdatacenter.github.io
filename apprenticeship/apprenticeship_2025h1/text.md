@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nText analysis in R"
 subtitle: "January 2025" 
-date: "Last updated: `r Sys.Date()`"
+date: "Last updated: 2024-12-24"
 output:
   md_document:
     variant: gfm
@@ -9,18 +9,33 @@ output:
     toc: true
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
-```
+- [Introduction](#introduction)
+- [Representing text as data](#representing-text-as-data)
+  - [Tidy text format](#tidy-text-format)
+  - [Term frequency](#term-frequency)
+  - [Term frequency - inverse document frequency
+    (tf-idf)](#term-frequency---inverse-document-frequency-tf-idf)
+  - [Document-term matrix](#document-term-matrix)
+- [Text analysis](#text-analysis)
+  - [Visualize word frequencies](#visualize-word-frequencies)
+  - [Bigrams, n-grams](#bigrams-n-grams)
+  - [Sentiment analysis](#sentiment-analysis)
+  - [Topic modelling](#topic-modelling)
 
 # Introduction
 
-This tutorial is based on multiple chapters of ["Text Mining with R: A Tidy Approach"](https://www.tidytextmining.com/) by Julia Silge and David Robinson.
+This tutorial is based on multiple chapters of [“Text Mining with R: A
+Tidy Approach”](https://www.tidytextmining.com/) by Julia Silge and
+David Robinson.
 
-Throughout this tutorial, we will use the `tidytext` package to analyze text data, in particular the contents of Alice in Wonderland and Winnie-the-Pooh.
-This book and many others are available via the `gutenberg_download()` function in the `gutenbergr` package, which provides access to the Project Gutenberg collection of public domain books.
+Throughout this tutorial, we will use the `tidytext` package to analyze
+text data, in particular the contents of Alice in Wonderland and
+Winnie-the-Pooh. This book and many others are available via the
+`gutenberg_download()` function in the `gutenbergr` package, which
+provides access to the Project Gutenberg collection of public domain
+books.
 
-```{r}
+``` r
 # install.packages("tidytext")
 # install.packages("gutenbergr")
 library(tidyverse)
@@ -37,13 +52,19 @@ books <- gutenberg_download(c(19033, 67098))
 
 ## Tidy text format
 
-Currently in the `books` tibble, each row represents a line of text from one of the books.
-It is often useful to represent text data in a tidy format, where each row represents a word or token, as then we can apply data wrangling operations on the word level.
-We can use the `unnest_tokens()` function from the `tidytext` package to easily split the text into words, or into other levels of analysis such as characters, sentences or paragraphs.
-This function also takes care of removing punctuation, converting words to lowercase, and dropping empty rows.
-Before tokenizing, we may want to remove the contents of the titlepage, as the actual book contents only start on line 38 for Alice in Wonderland and line 79 for Winnie-the-Pooh.
+Currently in the `books` tibble, each row represents a line of text from
+one of the books. It is often useful to represent text data in a tidy
+format, where each row represents a word or token, as then we can apply
+data wrangling operations on the word level. We can use the
+`unnest_tokens()` function from the `tidytext` package to easily split
+the text into words, or into other levels of analysis such as
+characters, sentences or paragraphs. This function also takes care of
+removing punctuation, converting words to lowercase, and dropping empty
+rows. Before tokenizing, we may want to remove the contents of the
+titlepage, as the actual book contents only start on line 38 for Alice
+in Wonderland and line 79 for Winnie-the-Pooh.
 
-```{r}
+``` r
 # remove title page and add book title variable
 books_content <- books |> 
   # add book title
@@ -59,10 +80,11 @@ words <- books_content |>
   unnest_tokens(output = word, input = text)
 ```
 
-You may notice that not all words are completely clean or relevant: some are surrounded by underscores and some are numbers.
-We can clean these up manually with regular expressions.
+You may notice that not all words are completely clean or relevant: some
+are surrounded by underscores and some are numbers. We can clean these
+up manually with regular expressions.
 
-```{r}
+``` r
 words <- words |> 
   mutate(word = str_remove_all(word, "_")) |>
   filter(!str_detect(word, "^\\d+$"))
@@ -70,10 +92,12 @@ words <- words |>
 
 ## Term frequency
 
-The term frequency (tf) of a word is the number of times it appears in a document, divided by the total number of words in the document.
-It is simply the result of counting the number of times a word appears in the document.
+The term frequency (tf) of a word is the number of times it appears in a
+document, divided by the total number of words in the document. It is
+simply the result of counting the number of times a word appears in the
+document.
 
-```{r}
+``` r
 tf <- words |> 
   # count the number of times each word appears in each book
   count(book_title, word) |>
@@ -85,13 +109,18 @@ tf <- words |>
 
 ## Term frequency - inverse document frequency (tf-idf)
 
-The inverse document frequency (idf) of a word is the logarithm of the total number of documents divided by the number of documents that contain the word.
-It is a measure of how unique or rare a word is across the entire corpus.
-The intuition for why idf matters is that words that appear in many documents are less informative than words that appear in only a few documents.
-Therefore we often combine tf and idf into a single metric called term frequency-inverse document frequency (tf-idf), which is the product of tf and idf.
-The `bind_tf_idf()` function from the `tidytext` package can be used to calculate tf-idf values (the function also generates tf and idf separately).
+The inverse document frequency (idf) of a word is the logarithm of the
+total number of documents divided by the number of documents that
+contain the word. It is a measure of how unique or rare a word is across
+the entire corpus. The intuition for why idf matters is that words that
+appear in many documents are less informative than words that appear in
+only a few documents. Therefore we often combine tf and idf into a
+single metric called term frequency-inverse document frequency (tf-idf),
+which is the product of tf and idf. The `bind_tf_idf()` function from
+the `tidytext` package can be used to calculate tf-idf values (the
+function also generates tf and idf separately).
 
-```{r}
+``` r
 tf_idf <- words |> 
   count(book_title, word) |>
   bind_tf_idf(word, book_title, n)
@@ -99,14 +128,19 @@ tf_idf <- words |>
 
 ## Document-term matrix
 
-Documents (in out case, books) can be represented as a document-term matrix, where each row represents a document and each column represents a word.
-The value in each cell is equal to the frequency of the word in the document.
-This matrix is sometimes called the bag-of-words representation of the text data (although sometimes that contains 0/1 values based on whether the word appears in the document), because it ignores the ordering of the words in the text.
-These matrices can be created using the `cast_dtm()` function from the `tidytext` package.
-Note that these matrices can get very large depending on the size of the vocabulary and the number of documents.
-Our data has less than 3000 unique words and 2 documents, so it is manageable.
+Documents (in out case, books) can be represented as a document-term
+matrix, where each row represents a document and each column represents
+a word. The value in each cell is equal to the frequency of the word in
+the document. This matrix is sometimes called the bag-of-words
+representation of the text data (although sometimes that contains 0/1
+values based on whether the word appears in the document), because it
+ignores the ordering of the words in the text. These matrices can be
+created using the `cast_dtm()` function from the `tidytext` package.
+Note that these matrices can get very large depending on the size of the
+vocabulary and the number of documents. Our data has less than 3000
+unique words and 2 documents, so it is manageable.
 
-```{r}
+``` r
 # DTM with pivot_wider() (generic tibble)
 dtm <- words |> 
   count(book_title, word) |>
@@ -122,10 +156,13 @@ dtm <- words |>
 
 ## Visualize word frequencies
 
-The easiest way to represent the contents of a document is to show the most frequent words.
-We can use a bar chart to show the words with highest term frequency in each book, or use a word cloud where the size of the word is proportional to its frequency (using the `ggwordcloud` package).
+The easiest way to represent the contents of a document is to show the
+most frequent words. We can use a bar chart to show the words with
+highest term frequency in each book, or use a word cloud where the size
+of the word is proportional to its frequency (using the `ggwordcloud`
+package).
 
-```{r}
+``` r
 library(ggwordcloud)
 
 # Most frequent words
@@ -138,7 +175,11 @@ tf_idf |>
   scale_y_reordered() +
   labs(x = "Term frequency", y = NULL, title = "Most frequent words") + 
   theme_minimal()
-  
+```
+
+![](text_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+``` r
 # Word cloud
 tf |> 
   group_by(book_title) |> 
@@ -149,10 +190,15 @@ tf |>
   theme_minimal()
 ```
 
-Using simple word frequencies is often uninformative because common words like "the" or "and" will dominate the results.
-One way to address this problem is to display the words with highest tf-idf values: in the case of two books, this will show the words that are unique to each book, as words that show up in all document have idf=tf-idf=0.
+![](text_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
 
-```{r}
+Using simple word frequencies is often uninformative because common
+words like “the” or “and” will dominate the results. One way to address
+this problem is to display the words with highest tf-idf values: in the
+case of two books, this will show the words that are unique to each
+book, as words that show up in all document have idf=tf-idf=0.
+
+``` r
 tf_idf |> 
   group_by(book_title) |> 
   slice_max(tf_idf, n = 20) |> 
@@ -164,10 +210,14 @@ tf_idf |>
   theme_minimal()
 ```
 
-An alternative method is to remove common words (called stopwords) from the analysis, using a stopword list.
-`tidytext` provides a list of stopwords with the `get_stopwords()` function, which can be used to filter out common words from the analysis.
+![](text_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-```{r}
+An alternative method is to remove common words (called stopwords) from
+the analysis, using a stopword list. `tidytext` provides a list of
+stopwords with the `get_stopwords()` function, which can be used to
+filter out common words from the analysis.
+
+``` r
 stopwords <- get_stopwords() |> pull(word)
 
 tf_idf |> 
@@ -183,20 +233,26 @@ tf_idf |>
   theme_minimal()
 ```
 
+![](text_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
 ## Bigrams, n-grams
 
-Bigrams are pairs of words that appear next to each other in a document; n-grams are sequences of n words.
-They can be useful to capture the context in which words appear, as the meaning of a word can depend on the words that surround it.
-By specifying the `token` argument in the `unnest_tokens()` function, we can split the text into bigrams or n-grams.
+Bigrams are pairs of words that appear next to each other in a document;
+n-grams are sequences of n words. They can be useful to capture the
+context in which words appear, as the meaning of a word can depend on
+the words that surround it. By specifying the `token` argument in the
+`unnest_tokens()` function, we can split the text into bigrams or
+n-grams.
 
-```{r}
+``` r
 bigrams <- books_content |> 
   unnest_tokens(bigram, text, token = "ngrams", n = 2)
 ```
 
-We can visualize the most common bigrams the same way we did for unigrams (single words).
+We can visualize the most common bigrams the same way we did for
+unigrams (single words).
 
-```{r}
+``` r
 bigrams |> 
   drop_na() |> 
   count(book_title, bigram) |> 
@@ -210,12 +266,18 @@ bigrams |>
   theme_minimal()
 ```
 
-In addition, we can make use of the extra context information provided by bigrams, and visualize which words are most likely to appear after a given word.
-For that, we need to separate the bigrams into two columns, one for the first word and one for the second word.
-To keep the vocabulary relatively small, we will only consider bigrams where neither of the words is a stopword.
-We can use these frequencies to create a network visualization of the most common bigrams with the `igraph` and `ggraph` packages.
+![](text_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
-```{r}
+In addition, we can make use of the extra context information provided
+by bigrams, and visualize which words are most likely to appear after a
+given word. For that, we need to separate the bigrams into two columns,
+one for the first word and one for the second word. To keep the
+vocabulary relatively small, we will only consider bigrams where neither
+of the words is a stopword. We can use these frequencies to create a
+network visualization of the most common bigrams with the `igraph` and
+`ggraph` packages.
+
+``` r
 library(igraph)
 library(ggraph)
 
@@ -242,15 +304,21 @@ ggraph(bigram_graph, layout = "fr") +
   theme_void()
 ```
 
+![](text_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+
 ## Sentiment analysis
 
-Sentiment analysis is the process of determining the sentiment of a piece of text, i.e. whether it is positive, negative, or neutral.
-One way to do this is to use a sentiment lexicon, which is a list of words and their associated sentiment scores.
-There are multiple different sentiment lexicons available, such as Bing, AFINN, and NRC.
-These differ in their training data and the sentiment categories they use, but are all available with the `get_sentiments()` function.
-So we can use the tidy words tibble and merge it with the sentiment lexicon to assign sentiment scores to each word.
+Sentiment analysis is the process of determining the sentiment of a
+piece of text, i.e. whether it is positive, negative, or neutral. One
+way to do this is to use a sentiment lexicon, which is a list of words
+and their associated sentiment scores. There are multiple different
+sentiment lexicons available, such as Bing, AFINN, and NRC. These differ
+in their training data and the sentiment categories they use, but are
+all available with the `get_sentiments()` function. So we can use the
+tidy words tibble and merge it with the sentiment lexicon to assign
+sentiment scores to each word.
 
-```{r}
+``` r
 # get sentiment lexicons
 bing <- get_sentiments("bing")
 afinn <- get_sentiments("afinn")
@@ -267,7 +335,11 @@ words |>
   labs(x = "Frequency", y = NULL) +
   facet_wrap(~book_title, scales = "free") +
   theme_minimal()
+```
 
+![](text_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+
+``` r
 # calculate sentiment scores per book with the AFINN lexicon
 words |> 
   count(book_title, word) |>
@@ -279,20 +351,34 @@ words |>
   summarize(score = sum(value_n) / sum(n))
 ```
 
+    ## # A tibble: 1 × 2
+    ##   book_title score
+    ##   <chr>      <dbl>
+    ## 1 Alice      0.124
+
 ## Topic modelling
 
-Topic modelling is a method to discover the topics that are present in a collection of documents.
-It is an unsupervised learning method, meaning that it does not require labeled data.
-One popular topic modelling method is latent Dirichlet allocation (LDA), which assumes that each document is a mixture of different topics, and each topic is a mixture of words.
-The `LDA()` function from the `topicmodels` package can be used to fit an LDA model to a document-term matrix.
-The function requires a document-term matrix as created by `cast_dtm()`, so first we should create a clean version of our previous `dtm` object (remove stopwords).
+Topic modelling is a method to discover the topics that are present in a
+collection of documents. It is an unsupervised learning method, meaning
+that it does not require labeled data. One popular topic modelling
+method is latent Dirichlet allocation (LDA), which assumes that each
+document is a mixture of different topics, and each topic is a mixture
+of words. The `LDA()` function from the `topicmodels` package can be
+used to fit an LDA model to a document-term matrix. The function
+requires a document-term matrix as created by `cast_dtm()`, so first we
+should create a clean version of our previous `dtm` object (remove
+stopwords).
 
-Before we fit a model, we need to decide how many topics to use.
-If we have previous expectations about what results we want to see, we can choose a specific number of topics, otherwise we can try multiple values until we find sensible results.
-The model also includes a random initialization step, so it is a good idea to set a seed to ensure that we get the same results every time.
-In this case, we might try to fit a model with 2 topics if we hope that the model can separate the topics of the two documents.
+Before we fit a model, we need to decide how many topics to use. If we
+have previous expectations about what results we want to see, we can
+choose a specific number of topics, otherwise we can try multiple values
+until we find sensible results. The model also includes a random
+initialization step, so it is a good idea to set a seed to ensure that
+we get the same results every time. In this case, we might try to fit a
+model with 2 topics if we hope that the model can separate the topics of
+the two documents.
 
-```{r}
+``` r
 library(topicmodels)
 
 dtm <- words |> 
@@ -304,19 +390,25 @@ dtm <- words |>
 lda <- LDA(dtm, k = 2, control = list(seed = 1))
 ```
 
-When interpreting LDA results, we consider two sets of parameters: the document-topic matrix and the topic-word matrix.
-The document-topic matrix tells us how much of each topic is present in each document, while the topic-word matrix tells us which words are associated with each topic.
-We can use the `tidy()` function from the `topicmodels` package to extract these matrices into a tidy format, specifying `matrix = "beta"` for the topic-word matrix and `matrix = "gamma"` for the document-topic matrix.
+When interpreting LDA results, we consider two sets of parameters: the
+document-topic matrix and the topic-word matrix. The document-topic
+matrix tells us how much of each topic is present in each document,
+while the topic-word matrix tells us which words are associated with
+each topic. We can use the `tidy()` function from the `topicmodels`
+package to extract these matrices into a tidy format, specifying
+`matrix = "beta"` for the topic-word matrix and `matrix = "gamma"` for
+the document-topic matrix.
 
-```{r}
+``` r
 topic_word <- tidy(lda, matrix = "beta")
 document_topic <- tidy(lda, matrix = "gamma")
 ```
 
-The topic-word matrix helps us give meaning to the topics by showing which words are the most strongly associated with each topic.
-We can plot these word probabilities to visualize the topics.
+The topic-word matrix helps us give meaning to the topics by showing
+which words are the most strongly associated with each topic. We can
+plot these word probabilities to visualize the topics.
 
-```{r}
+``` r
 topic_word |> 
   group_by(topic) |> 
   slice_max(beta, n = 10) |> 
@@ -328,69 +420,69 @@ topic_word |>
   theme_minimal()
 ```
 
-It seems like the topics can separate the two books well, although it might not succeed with a different random seed.
+![](text_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
-The per-document-per-topic probabilities confirm that the the documents are clearly split into topics, with each having a near-1 probability for one topic and near-0 for the other.
+It seems like the topics can separate the two books well, although it
+might not succeed with a different random seed.
 
-```{r}
+The per-document-per-topic probabilities confirm that the the documents
+are clearly split into topics, with each having a near-1 probability for
+one topic and near-0 for the other.
+
+``` r
 document_topic |> 
   pivot_wider(names_from = topic, values_from = gamma)
 ```
 
-Nevertheless, topic modelling can be very useful for larger collections of documents, where it can help to identify the main themes present in the corpus.
+    ## # A tibble: 1 × 3
+    ##   document   `1`   `2`
+    ##   <chr>    <dbl> <dbl>
+    ## 1 Alice    0.528 0.472
+
+Nevertheless, topic modelling can be very useful for larger collections
+of documents, where it can help to identify the main themes present in
+the corpus.
 
 <!-- ## Word embeddings -->
-
 <!-- Word embeddings are a way to represent words as vectors in a high-dimensional space, where words with similar meanings are close to each other. -->
 <!-- There are pre-trained models (such as GloVe or BERT), that were trained on large corpora of text data, but we can also create our own word embeddings from our own data, which will be specific to the context at hand. -->
 <!-- One popular method to create our own word embeddings is word2vec, which is implemented in the `word2vec` package. -->
 <!-- word2vec is the simplest type of embedding model, but more complex, more contextualized embeddings form the basis of the current large language models. -->
-
 <!-- `word2vec()` takes a character vector containing the full text, so let's create a 2-element vector where each element corresponds to the full text of one of the books, using the cleaned version of the text from `words`. -->
 <!-- We can specify a lot of model parameters, such as the dimension of the word vectors (the length of the vector associated with a word) or the context window (the number of words around each word to consider as the context), but we can also go with the default settings. -->
 <!-- The numerical values of the embeddings aren't informative, the information is in the similarities and differences between different words. -->
-
 <!-- ```{r} -->
 <!-- library(word2vec) -->
-
 <!-- text <- words |>  -->
 <!--   group_by(book_title) |> -->
 <!--   # collapse words into a single string -->
 <!--   summarize(text = paste(word, collapse = " ")) |>  -->
 <!--   # extract the text as a vector -->
 <!--   pull(text) -->
-
 <!-- # create word embeddings -->
 <!-- embeddings <- word2vec(text) -->
-
 <!-- # view word embeddings -->
 <!-- predict(embeddings, words$word, type = "embedding")[1:6, 1:6] -->
 <!-- ``` -->
-
 <!-- Embeddings are useful for evaluating which words are the most similar to a particular word. -->
 <!-- In this case, similarity doesn't necessarily mean similarity in meaning, but rather that the words could replace each other in a sentence or occur near each other. -->
 <!-- We can use the generic `predict()` function to find the most similar words to a given word. -->
-
 <!-- ```{r} -->
 <!-- # most similar words to "alice" and "pooh" -->
 <!-- predict(embeddings, c("alice", "pooh"), type = "nearest", top_n = 5) |>  -->
 <!--   bind_rows() -->
 <!-- ``` -->
-
 <!-- A more systematic way to evaluate the embeddings is to use them to visualize the words in a lower-dimensional space. -->
 <!-- We can use principal component analysis (PCA) to reduce the dimensionality of the embeddings to 2 dimensions, and then plot the words in this space. -->
 <!-- You don't need to understand how PCA works, other than that it takes the initial high-dimensional data, and basically tries to find the directions in which the data varies the most, by looking for combinations of the original variables. -->
 <!-- So the first two dimensions capture as much variation in the embedding space as possible in two dimensions. -->
-
 <!-- To get the visualization, we first get all the embedding vectors with the `predict()` function used above, then use the `prcomp()` function to perform PCA, and predict the first two components with the `predict()` function again. -->
 <!-- We can limit the visualization to the 100 words with the highest tf-idf values to keep the plot readable and remove overlapping to keep the plot readable. -->
-
 <!-- ```{r} -->
 <!-- # get embedding vectors -->
 <!-- vectors <- predict(embeddings, words$word, type = "embedding") |>  -->
 <!--   as.data.frame() |>  -->
 <!--   drop_na() -->
-
 <!-- # get PCA dimensions -->
 <!-- prcomp(vectors) |>  -->
 <!--   # predict the first two components -->
@@ -403,7 +495,6 @@ Nevertheless, topic modelling can be very useful for larger collections of docum
 <!--   geom_text(size = 3, check_overlap = TRUE) + -->
 <!--   theme_void() -->
 <!-- ``` -->
-
 <!-- Apparently, the most different words in the two books are "balloon" and "forest" along one dimension, while "christopher" and "robin" are very different from all other words. -->
 <!-- It doesn't seem like the results make much sense, which is probably because we trained the model on a small sample. -->
 <!-- The model can perform much better on larger datasets, and indeed much of the power of state-of-the-art language models comes from the large amounts of data they are trained on (together with a very large number of model parameters). -->
