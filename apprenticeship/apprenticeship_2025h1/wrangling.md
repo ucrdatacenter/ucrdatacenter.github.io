@@ -1,6 +1,6 @@
 ---
-title: "Data Center Apprenticeship:\nR basics: Introduction to R"
-subtitle: "June 2024" 
+title: "Data Center Apprenticeship: Introduction to data wrangling in R"
+subtitle: "January 2025" 
 date: "Last updated: 2024-12-24"
 output:
   md_document:
@@ -231,7 +231,7 @@ can read URL file paths that `readr` and `readxl` can’t.
 
 In the following, we’ll work with some example data of student
 characteristics and grades. First, download
-[this](https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2025h1/data)
+[this](https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2025h1/student_data)
 zip-file from GitHub, and extract it into a data folder within your
 apprenticeship project directory. We now import each file, explaining
 the packages, functions, and function arguments used. These files are

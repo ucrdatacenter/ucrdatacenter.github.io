@@ -46,19 +46,20 @@ added gradually.
 
 All workshops will take place in classroom **F-13**, unless stated otherwise.
 
-| Date | Topic | Prerequisites |
-|----|----|----|
-| 13-Jan | R with AI: Data Wrangling | None |
-| 14-Jan | R with AI: Visualization | None |
-| 15-Jan | R with AI: Statistics and Functions | None |
-| 16-Jan | Workflows: GitHub, RMarkdown, and Quarto | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
-| 17-Jan | Spatial Data Analysis in R | Basic R skills |
-| 20-Jan | Character Strings and Regular Expressions (Regex) | None |
-| 21-Jan | Text Analysis in R | Basic R skills, Regex |
-| 22-Jan | Data Scraping: Web and PDFs | Basic R skills, Regex |
-| 22-Jan | Faculty Workshop | None |
-| 23-Jan | TBA |  |
-| 24-Jan | Final Presentations and Program Evaluation |  |
+| Date   | Time       | Topic                                         | Prerequisites |
+|--------|------------|-----------------------------------------------|---------------|
+| 13-Jan | 9:00-17:00 | [R with AI: Data Wrangling](wrangling)        | None          |
+| 14-Jan | 9:00-17:00 | [R with AI: Visualization](visualization)     | None          |
+| 15-Jan | 9:00-17:00 | [R with AI: Statistics and Functions](statistics) | None          |
+| 16-Jan | 9:00-17:00 | [Workflows: GitHub, RMarkdown, and Quarto](workflows) | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
+| 17-Jan | 9:00-17:00 | [Spatial Data Analysis in R](spatial)         | Basic R skills |
+| 20-Jan | 9:00-17:00 | [Character Strings and Regular Expressions (Regex)](strings) | None          |
+| 21-Jan | 9:00-17:00 | [Text Analysis in R](text)                   | Basic R skills, Regex |
+| 22-Jan | 9:00-17:00 | [Data Scraping: Web and PDFs](scraping)      | Basic R skills, Regex |
+| 22-Jan | 9:00-17:00 | Faculty Workshop                             | None          |
+| 23-Jan | 9:00-17:00 | TBA                                          |               |
+| 24-Jan | 9:00-17:00 | Final Presentations and Program Evaluation   |               |
+
 
 # Preparation for All Workshops
 
