@@ -44,21 +44,24 @@ in a UCR course with a data encounter, or equivalent experience. Exact
 times will be announced soon; workshop materials will be
 added gradually.
 
-All workshops will take place in classroom **F-13**, unless stated otherwise.
+Workshops will take place either in classroom **F-13** or in various rooms of the Zeeuwse Bibliotheek.
+Please see the schedule below for the exact location of each workshop.
+Workshop times are currently tentative.
 
-| Date   | Time       | Topic                                         | Prerequisites |
-|--------|------------|-----------------------------------------------|---------------|
-| 13-Jan | 9:00-17:00 | [R with AI: Data Wrangling](wrangling)        | None          |
-| 14-Jan | 9:00-17:00 | [R with AI: Visualization](visualization)     | None          |
-| 15-Jan | 9:00-17:00 | [R with AI: Statistics and Functions](statistics) | None          |
-| 16-Jan | 9:00-17:00 | [Workflows: GitHub, RMarkdown, and Quarto](workflows) | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
-| 17-Jan | 9:00-17:00 | [Spatial Data Analysis in R](spatial)         | Basic R skills |
-| 20-Jan | 9:00-17:00 | [Character Strings and Regular Expressions (Regex)](strings) | None          |
-| 21-Jan | 9:00-17:00 | [Text Analysis in R](text)                   | Basic R skills, Regex |
-| 22-Jan | 9:00-17:00 | [Data Scraping: Web and PDFs](scraping)      | Basic R skills, Regex |
-| 22-Jan | 9:00-17:00 | Faculty Workshop                             | None          |
-| 23-Jan | 9:00-17:00 | TBA                                          |               |
-| 24-Jan | 9:00-17:00 | Final Presentations and Program Evaluation   |               |
+| Date   | Time       | Location                                  | Topic                                         | Prerequisites |
+|--------|------------|-------------------------------------------|-----------------------------------------------|---------------|
+| 13-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [R with AI: Data Wrangling](wrangling)        | None          |
+| 14-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [R with AI: Visualization](visualization)     | None          |
+| 15-Jan | 10:00-14:00 | Werkplaats - De ZB                        | [R with AI: Statistics and Functions](statistics) | None          |
+| 16-Jan | 10:00-14:00 | Johanna Kruitzaal, waterzijde - De ZB     | [Workflows: GitHub, RMarkdown, and Quarto](workflows) | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
+| 17-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [Spatial Data Analysis in R](spatial)         | Basic R skills |
+| 20-Jan | 9:00-17:00 | F-13                                      | [Character Strings and Regular Expressions (Regex)](strings) | None          |
+| 21-Jan | 9:00-17:00 | F-13                                      | [Text Analysis in R](text)                   | Basic R skills, Regex |
+| 22-Jan | 9:00-13:00 | F-13                                      | [Data Scraping: Web and PDFs](scraping)      | Basic R skills, Regex |
+| 22-Jan | 14:00-17:00 | F-13                                      | Faculty Workshop                             | None          |
+| 23-Jan | 9:00-17:00 | F-13                                      | TBA                                          |               |
+| 24-Jan | 9:00-17:00 | F-13                                      | Final Presentations and Program Evaluation   |               |
+
 
 
 # Preparation for All Workshops
