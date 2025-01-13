@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship: Introduction to data wrangling in R"
 subtitle: "January 2025" 
-date: "Last updated: 2024-12-24"
+date: "Last updated: 2025-01-13"
 output:
   md_document:
     variant: gfm
@@ -103,8 +103,8 @@ convenient features that dataframes don’t, but for the most part,
 differences are minor and for the most part it does not matter whether
 you work with tibbles or dataframes.
 
-A simple example of creating a tibble is (make sure to load
-`tidyverse first`):
+A simple example of creating a tibble is (make sure to load `tidyverse`
+first):
 
 ``` r
 library(tidyverse)
@@ -231,7 +231,7 @@ can read URL file paths that `readr` and `readxl` can’t.
 
 In the following, we’ll work with some example data of student
 characteristics and grades. First, download
-[this](https://github.com/ucrdatacenter/projects/tree/main/apprenticeship/2025h1/student_data)
+[this](https://github.com/ucrdatacenter/projects/raw/refs/heads/main/apprenticeship/2025h1/student_data.zip)
 zip-file from GitHub, and extract it into a data folder within your
 apprenticeship project directory. We now import each file, explaining
 the packages, functions, and function arguments used. These files are
@@ -667,7 +667,7 @@ student |>
   # create new variables
   mutate(Daily_Study_Hours = Weekly_Study_Hours / 5,
          Class_Participation = Reading == "Yes" | Listening_in_Class == "Yes" | Notes == "Yes",
-         Scholarship_num =parse_number(Scholarship)) |> 
+         Scholarship_num = parse_number(Scholarship)) |> 
   # show only ID and the new variables
   select(Id, Daily_Study_Hours, Class_Participation, Scholarship_num)
 ```
@@ -800,13 +800,15 @@ to numeric and logical, and rename the relevant variables to convenient
 data <- student |> 
   mutate(scholarship = parse_number(Scholarship),
          sex = factor(Sex),
-         # ifelse contains a logical condition, a value if TRUE, and a value if FALSE
-         additional_work = ifelse(Additional_Work == "Yes", TRUE, FALSE),
-         reading = ifelse(Reading == "Yes", TRUE, FALSE),
-         notes = ifelse(Notes == "Yes", TRUE, FALSE),
-         listening = ifelse(Listening_in_Class == "Yes", TRUE, FALSE),
-         # case_when is an expansion of ifelse: it allows multiple conditions
+         # testing a logical condition: creates a logical vector
+         additional_work = Additional_Work == "Yes",
+         reading = Reading == "Yes",
+         notes = Notes == "Yes",
+         listening = Listening_in_Class == "Yes",
+         # case_when is an expanded if/else case: it allows multiple conditions
          # the value after the tilde (~) is the value if the condition is TRUE
+         # the function goes through each condition one by one, and stops at the first TRUE one
+         # if no condition is TRUE, the variable value is missing
          grade = case_when(
            Grade == "Fail" ~ 0,
            Grade == "DD" ~ 1,
