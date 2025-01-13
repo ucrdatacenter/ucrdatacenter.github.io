@@ -51,10 +51,10 @@ Workshop times are currently tentative.
 | Date   | Time       | Location                                  | Topic                                         | Prerequisites |
 |--------|------------|-------------------------------------------|-----------------------------------------------|---------------|
 | 13-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [R with AI: Data Wrangling](wrangling)        | None          |
-| 14-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [R with AI: Visualization](visualization)     | None          |
-| 15-Jan | 10:00-14:00 | Werkplaats - De ZB                        | [R with AI: Statistics and Functions](statistics) | None          |
-| 16-Jan | 10:00-14:00 | Johanna Kruitzaal, waterzijde - De ZB     | [Workflows: GitHub, RMarkdown, and Quarto](workflows) | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
-| 17-Jan | 10:00-14:00 | Wim Hofmanzaal - De ZB                    | [Spatial Data Analysis in R](spatial)         | Basic R skills |
+| 14-Jan | 10:00-14:00 | F-13                    | [R with AI: Visualization](visualization)     | None          |
+| 15-Jan | 10:00-14:00 | F-13                        | [R with AI: Statistics and Functions](statistics) | None          |
+| 16-Jan | 10:00-14:00 | F-13     | [Workflows: GitHub, RMarkdown, and Quarto](workflows) | create [GitHub account](https://github.com/), install [GitHub Desktop](https://desktop.github.com/download/) |
+| 17-Jan | 10:00-14:00 | F-13                    | [Spatial Data Analysis in R](spatial)         | Basic R skills |
 | 20-Jan | 10:00-14:00 | F-13                                      | [Character Strings and Regular Expressions (Regex)](strings) | None          |
 | 21-Jan | 10:00-14:00 | F-13                                      | [Text Analysis in R](text)                   | Basic R skills, Regex |
 | 22-Jan | 9:00-13:00 | F-13                                      | [Data Scraping: Web and PDFs](scraping)      | Basic R skills, Regex |
