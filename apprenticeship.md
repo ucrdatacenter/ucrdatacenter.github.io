@@ -21,12 +21,9 @@ If you're interested in becoming an apprentice, please email us at [datacenter@u
 
 # 2025 January
 
-The call for project proposals for the January 2025 Apprenticeship program is now open! Faculty, staff, and students are encouraged to submit their project ideas by 18 October 2024 to [datacenter@ucr.nl](datacenter@ucr.nl).
-
-* [Call for proposals for faculty and staff](call_fas)
-* [Call for proposals for students](call_students)
-
-You can access the draft schedule and workshop materials (to be updated) [here](apprenticeship_2025h1).
+The January 2025 Apprenticeship program is now running! 
+All are welcome to join our daily workshops.
+You can access the schedule and workshop materials [here](apprenticeship_2025h1).
 
 # 2024 June
 
