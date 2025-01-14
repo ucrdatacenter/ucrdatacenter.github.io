@@ -30,6 +30,8 @@ data <- read_csv("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/
 
 # Descriptive statistics
 
+## Summaries in the R Console
+
 To get a descriptive statistic of a single variable in a tibble, we can use that variable as an argument to a relevant function (using `$` to refer to a variable in a tibble).
 
 ```{r}
@@ -61,33 +63,56 @@ The easiest way to get summary statistics of all variables in a tibble is with t
 summary(data)
 ```
 
+## Publication-ready summaries with `gtsummary`
+
 The `summary()` function is useful for viewing the data in the Console, but doesn't export to outside of R nicely.
-There are a few packages available for generating simple summary statistics tables that contain information about the central tendencies and dispersion of the data, such as `vtable` or `stargazer` (with many more available).
-These packages all have different default settings, output types, and customization options.
+There are a few packages available for generating simple summary statistics tables that contain information about the central tendencies and dispersion of the data that also export nicely, such as `gtsummary`.
 
 ```{r}
-library(vtable)
-library(stargazer)
+library(gtsummary)
 
-# vtable
-
-data |> 
-  # by default creates HTML table; out = "csv" returns a dataframe
-  # can change which descriptives to keep
-  # can report group-level descriptives
-  sumtable(out = "csv", group = "reading")
-
-# stargazer
-
-data |> 
-  # input needs to be a data.frame, not tibble
-  as.data.frame() |> 
-  # default output is LaTeX table
-  # can be exported with the out argument or a following write() function
-  # can change which descriptives to keep or omit
-  # limited to numeric variables
-  stargazer(type = "text")
+# tbl_summary() creates a summary table of the data
+tbl_summary(data)
 ```
+
+You can stratify your summary by a grouping variable using the `by` argument:
+
+```{r}
+tbl_summary(data, by = sex)
+
+# add p-value of difference between groups
+tbl_summary(data, by = sex) |> 
+  add_p()
+```
+
+You can also customize the appearance of the table.
+
+```{r}
+tbl_summary(data, by = sex) |> 
+  modify_header(label ~ "Variable") |> 
+  modify_caption("Summary Table by Sex")
+```  
+
+To export the table as a Word document, use the `gtsave()` function.
+Note that we first use the `as_gt()` function to convert the `tbl_summary()` output to a `gt` object, and load the `gt` package in order to use the Word export function defined for the `gt` package.
+
+```{r, eval=FALSE}
+library(gt)
+
+tbl_summary(data, by = sex) |> 
+  as_gt() %>%
+  gtsave("summary_table.docx")
+```
+
+If you use LaTeX, you can also export as a LaTeX table, also relying on the `gt` package.
+
+```{r, eval=FALSE}
+tbl_summary(data, by = sex) |> 
+  as_gt() %>%
+  gtsave("summary_table.tex")
+```    
+
+## Creating custom summary tables
 
 Alternatively, we can define our own summary statistics with the `dplyr` functions `group_by()` and `summarize()`, which also easily allows the calculation of more complex descriptive statistics, including grouped statistics based on categorical variables.
 The `across()` helper function in the `summarize()` function can be used to apply the same calculation to multiple variables at once: it requires the first argument as the list of variables (potentially with the help of selector functions) and the function we'd like to apply.
@@ -127,18 +152,18 @@ The list of helper functions that can be used instead of listing which variables
 
 To export a descriptive statistics table, we can use the relevant `write...()` function shown in the data importing section (e.g. `write_csv()` for tibbles, general `write()` for HTML, plain text, LaTeX, other general types).
 CSV tables already copy nicely into e.g. MS Word.
-If using LaTeX or RMarkdown, the `knitr` package contains the `kable()` function that directly improves on the design of the table without needing formatting afterwards.
+Altenatively, the `gt` package can be used to export the table as a Word or LaTeX document the same way as before.
 
 ```{r, eval=FALSE}
 data |> 
   count(reading, listening) |> 
   write_csv("table1.csv")
 ```
-```{r}
+```{r, eval=FALSE}
 data |> 
   count(reading, listening) |> 
-  # knitr:: allows using function from the package without library(knitr)
-  knitr::kable()
+  gt() |> 
+  gtsave("table1.docx")
 ```
 
 # Hypothesis testing
@@ -161,20 +186,15 @@ Additional options include specifying the alternative hypothesis, the confidence
 Helper functions such as `tidy()` convert the Console output to an easy-to-export tibble of results.
 
 ```{r}
-library(broom) # for tidy() function
-
 # simple t-test (H0: mean=mu)
 t.test(data$scholarship, mu = 50)
 
-# use data argument instead of data$... to work in pipe workflows
-data |> 
-  # grade ~ reading is formula specification: variable ~ group
-  # _ is placeholder if the pipe input is not the first argument of the next function
-  t.test(grade ~ reading, alternative = "greater", data = _)
+# can also use data argument instead of data$...
+# grade ~ reading is formula specification: variable ~ group
+t.test(grade ~ reading, alternative = "greater", data = data)
 
-data |> 
-  t.test(grade ~ reading, alternative = "greater", data = _) |> 
-  tidy()
+# tidy() function turns results into a tibble
+t.test(grade ~ reading, alternative = "greater", data = data) |> tidy()
 ```
 
 ## Correlation test
@@ -185,10 +205,8 @@ Again, the function supports various specifications: `x` and `y` arguments, form
 ```{r}
 cor.test( ~ grade + age, data = data)
 
-# assign the outcome to an object
-cor_result <- cor.test( ~ grade + age, data = data)
-# tibble of results
-tidy(cor_result)
+# tidy() function turns results into a tibble
+cor.test( ~ grade + age, data = data) |> tidy()
 ```
 
 ## Simple regression
@@ -197,7 +215,7 @@ A key building block of statistical analysis is linear regression.
 The `lm()` function fits a linear model to the data, with a wide range of specifications, passed as the formula argument (first argument if unnamed).
 The formula syntax is `y ~ x`, where `y` is the dependent variable and `x` is the independent variable.
 Again, optional function arguments allow for a lot of customization, but the default settings are sufficient for most applications.
-Helper functions such as `tidy()` and `summary()` provide extensive summaries of the model fit and coefficients, and `stargazer()` creates neat tables of the results.
+Helper functions such as `tidy()` and `summary()` provide extensive summaries of the model fit and coefficients, and `tbl_regression()` from the `gtsummary` package creates neat tables of the results.
 Assigning the result of a model to an object saves computational time, as then we can work with the results without having to re-run the analysis every time.
 
 ```{r}
@@ -210,9 +228,8 @@ fit |> summary()
 # tidy coefficients
 fit |> tidy()
 
-# display-ready table
-fit |> 
-  stargazer(type = "text", title = "Grade - agre regression results")
+# display-ready table with gtsummary
+tbl_regression(fit)
 ```
 
 ## Multiple regression
@@ -299,10 +316,8 @@ logit_fit <- glm(reading ~ age, data = data, family = "binomial")
 logit_fit |> summary()
 logit_fit |> tidy()
 
-# display-ready table
-stargazer(logit_fit, type = "text", 
-          title = "Relationship between doing the reading and age")
-
+# display-ready table with gtsummary
+tbl_regression(logit_fit)
 ```
 
 ## Non-parametric tests
