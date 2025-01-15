@@ -9,6 +9,11 @@ output:
     toc: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
 # Introduction
 
 In this tutorial, we will explore how to use GitHub and Quarto to streamline your workflows, improve collaboration, and create professional, reproducible documents. 
@@ -45,7 +50,10 @@ When working on a project, you can create a new repository to manage your files 
 On the GitHub home page, click the `New` button on the left hand sidebar to create a new repository.
 Doing so will open a new page where you can initialize the repo by entering the repository name and other details.
 
-![Creating a new repository on GitHub](workflows_files/new_repo.png)
+```{r}
+knitr::include_graphics("workflows_files/new_repo.png")
+```
+
 Generally, you'll want to create repos in your personal account (i.e. you are the owner).
 The repository name should be descriptive and relevant to the project you are working on, and ideally as short as possible.
 Public repos are visible to everyone on the internet, while private repos are only visible to you and any collaborators you invite.
@@ -90,7 +98,10 @@ Steps:
 3. Choose the repository you want to clone from the list (refresh the list if needed). **Note:** when cloning forked repos, make sure to clone your fork, i.e. the repository in your account, not the original repository in the DC organization.
 4. Choose a local path where the repository will be saved and click `Clone`. It is a good practice to create a `GitHub` folder in your main documents directory, and clone all repos there.
 
-![Cloning a repository in GitHub Desktop](workflows_files/clone.png)
+```{r}
+knitr::include_graphics("workflows_files/clone.png")
+```
+
 
 ### Making Commits and Pushing Changes
 
@@ -108,9 +119,13 @@ Commits and pushes are essential for maintaining a history of changes and sharin
 They also allow you to go back to previous versions without difficulty if needed.
 Note that a commit is a local operation, i.e. it's tracked locally, but not shared on GitHub or with any of your collaborators until you push the changes.
 
-![Committing changes in GitHub Desktop](workflows_files/commit.png)
+```{r}
+knitr::include_graphics("workflows_files/commit.png")
+```
 
-![Pushing changes to GitHub](workflows_files/push.png)
+```{r}
+knitr::include_graphics("workflows_files/push.png")
+```
 
 
 ### Creating a Pull Request
@@ -128,7 +143,10 @@ Steps:
 
 Pull requests are valuable for collaborative projects, as they allow for feedback and discussion before changes are finalized.
 
-![Creating a pull request on GitHub](workflows_files/pr.png)
+```{r}
+knitr::include_graphics("workflows_files/pr.png")
+```
+
 
 **Note:** creating a pull request does not notify the repo owners, so if you want them to merge your pull request, you need to inform them that you made a request.
 For DC repos, the easiest way to do so is to send an email to [datacenter@ucr.nl](mailto:datacenter@ucr.nl).

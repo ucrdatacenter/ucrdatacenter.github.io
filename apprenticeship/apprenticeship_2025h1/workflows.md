@@ -98,7 +98,8 @@ On the GitHub home page, click the `New` button on the left hand sidebar
 to create a new repository. Doing so will open a new page where you can
 initialize the repo by entering the repository name and other details.
 
-![Creating a new repository on GitHub](workflows_files/new_repo.png)
+![](workflows_files/new_repo.png)<!-- -->
+
 Generally, you’ll want to create repos in your personal account
 (i.e. you are the owner). The repository name should be descriptive and
 relevant to the project you are working on, and ideally as short as
@@ -148,10 +149,6 @@ Forking is especially beneficial for collaboration. It ensures you can
 test and develop features independently before proposing changes to the
 main project.
 
-``` r
-knitr::include_graphics("workflows_files/fork.png")
-```
-
 ![](workflows_files/fork.png)<!-- -->
 
 ## Cloning a repository
@@ -174,12 +171,7 @@ Steps:
     `Clone`. It is a good practice to create a `GitHub` folder in your
     main documents directory, and clone all repos there.
 
-<figure>
-<img src="workflows_files/clone.png"
-alt="Cloning a repository in GitHub Desktop" />
-<figcaption aria-hidden="true">Cloning a repository in GitHub
-Desktop</figcaption>
-</figure>
+![](workflows_files/clone.png)<!-- -->
 
 ### Making Commits and Pushing Changes
 
@@ -205,17 +197,9 @@ previous versions without difficulty if needed. Note that a commit is a
 local operation, i.e. it’s tracked locally, but not shared on GitHub or
 with any of your collaborators until you push the changes.
 
-<figure>
-<img src="workflows_files/commit.png"
-alt="Committing changes in GitHub Desktop" />
-<figcaption aria-hidden="true">Committing changes in GitHub
-Desktop</figcaption>
-</figure>
+![](workflows_files/commit.png)<!-- -->
 
-<figure>
-<img src="workflows_files/push.png" alt="Pushing changes to GitHub" />
-<figcaption aria-hidden="true">Pushing changes to GitHub</figcaption>
-</figure>
+![](workflows_files/push.png)<!-- -->
 
 ### Creating a Pull Request
 
@@ -240,12 +224,7 @@ Steps:
 Pull requests are valuable for collaborative projects, as they allow for
 feedback and discussion before changes are finalized.
 
-<figure>
-<img src="workflows_files/pr.png"
-alt="Creating a pull request on GitHub" />
-<figcaption aria-hidden="true">Creating a pull request on
-GitHub</figcaption>
-</figure>
+![](workflows_files/pr.png)<!-- -->
 
 **Note:** creating a pull request does not notify the repo owners, so if
 you want them to merge your pull request, you need to inform them that
@@ -341,11 +320,6 @@ Code chunks allow you to embed and execute code within the document.
 They are enclosed by triple backticks with a language specifier:
 
 ```` markdown
-
-``` r
-# Example of an R code chunk
-summary(iris)
-```
 
 ```
 ##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
