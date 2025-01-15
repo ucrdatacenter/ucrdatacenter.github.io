@@ -75,8 +75,6 @@ Forking is especially beneficial for collaboration. It ensures you can test and 
 
 ![Forking a repository on GitHub](workflows_files/fork.png)
 
----
-
 ## Cloning a repository
 
 Cloning a repository is useful when you want to work on an existing project (whether a new or forked repo) locally.
@@ -90,8 +88,6 @@ Steps:
 4. Choose a local path where the repository will be saved and click `Clone`. It is a good practice to create a `GitHub` folder in your main documents directory, and clone all repos there.
 
 ![Cloning a repository in GitHub Desktop](workflows_files/clone.png)
-
----
 
 ### Making Commits and Pushing Changes
 
@@ -113,7 +109,6 @@ Note that a commit is a local operation, i.e. it's tracked locally, but not shar
 
 ![Pushing changes to GitHub](workflows_files/push.png)
 
----
 
 ### Creating a Pull Request
 
@@ -147,7 +142,6 @@ If you are familiar with LaTeX, Markdown is a simpler alternative for creating d
 
 If you are familiar with RMarkdown, you can think of Quarto as RMarkdown with a lot of additional features.
 
----
 
 ## Creating a Quarto Document
 
@@ -235,14 +229,12 @@ A special feature of Quarto is fenced divs, which allow you to create custom blo
 Some are pre-defined, such as `callout-note`, `callout-warning`, and `callout-tip`, which create callout boxes with different styles.
 You can also define your own custom divs for specific content.
 
-```markdown
+````markdown
 :::: {.callout-note}
 ## Note
 This is a callout box.
 ::::
-```
-
----
+````
 
 ## Rendering the Document
 

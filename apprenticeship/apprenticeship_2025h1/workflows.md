@@ -155,8 +155,6 @@ alt="Forking a repository on GitHub" />
 GitHub</figcaption>
 </figure>
 
-------------------------------------------------------------------------
-
 ## Cloning a repository
 
 Cloning a repository is useful when you want to work on an existing
@@ -183,8 +181,6 @@ alt="Cloning a repository in GitHub Desktop" />
 <figcaption aria-hidden="true">Cloning a repository in GitHub
 Desktop</figcaption>
 </figure>
-
-------------------------------------------------------------------------
 
 ### Making Commits and Pushing Changes
 
@@ -221,8 +217,6 @@ Desktop</figcaption>
 <img src="workflows_files/push.png" alt="Pushing changes to GitHub" />
 <figcaption aria-hidden="true">Pushing changes to GitHub</figcaption>
 </figure>
-
-------------------------------------------------------------------------
 
 ### Creating a Pull Request
 
@@ -278,8 +272,6 @@ documentation.
 
 If you are familiar with RMarkdown, you can think of Quarto as RMarkdown
 with a lot of additional features.
-
-------------------------------------------------------------------------
 
 ## Creating a Quarto Document
 
@@ -433,8 +425,6 @@ content.
 This is a callout box.
 ::::
 ```
-
-------------------------------------------------------------------------
 
 ## Rendering the Document
 
