@@ -73,7 +73,10 @@ Steps of forking a repository:
 
 Forking is especially beneficial for collaboration. It ensures you can test and develop features independently before proposing changes to the main project.
 
-![Forking a repository on GitHub](workflows_files/fork.png)
+```{r}
+knitr::include_graphics("workflows_files/fork.png")
+```
+
 
 ## Cloning a repository
 

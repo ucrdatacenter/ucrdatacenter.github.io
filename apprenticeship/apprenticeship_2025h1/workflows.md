@@ -148,12 +148,11 @@ Forking is especially beneficial for collaboration. It ensures you can
 test and develop features independently before proposing changes to the
 main project.
 
-<figure>
-<img src="workflows_files/fork.png"
-alt="Forking a repository on GitHub" />
-<figcaption aria-hidden="true">Forking a repository on
-GitHub</figcaption>
-</figure>
+``` r
+knitr::include_graphics("workflows_files/fork.png")
+```
+
+![](workflows_files/fork.png)<!-- -->
 
 ## Cloning a repository
 
