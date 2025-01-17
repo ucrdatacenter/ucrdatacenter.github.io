@@ -1,7 +1,7 @@
 ---
 title: "Data Center Apprenticeship:\nText analysis in R"
 subtitle: "January 2025" 
-date: "Last updated: 2024-12-24"
+date: "Last updated: 2025-01-17"
 output:
   md_document:
     variant: gfm
@@ -45,7 +45,7 @@ library(gutenbergr)
 # Download books based on their Gutenberg ID
 # https://gutenberg.org/ebooks/19033
 # https://gutenberg.org/ebooks/67098
-books <- gutenberg_download(c(19033, 67098))
+books <- gutenberg_download(c(19033, 67098), mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg/")
 ```
 
 # Representing text as data
@@ -351,10 +351,11 @@ words |>
   summarize(score = sum(value_n) / sum(n))
 ```
 
-    ## # A tibble: 1 × 2
+    ## # A tibble: 2 × 2
     ##   book_title score
     ##   <chr>      <dbl>
     ## 1 Alice      0.124
+    ## 2 Winnie     0.810
 
 ## Topic modelling
 
@@ -434,10 +435,11 @@ document_topic |>
   pivot_wider(names_from = topic, values_from = gamma)
 ```
 
-    ## # A tibble: 1 × 3
-    ##   document   `1`   `2`
-    ##   <chr>    <dbl> <dbl>
-    ## 1 Alice    0.528 0.472
+    ## # A tibble: 2 × 3
+    ##   document        `1`        `2`
+    ##   <chr>         <dbl>      <dbl>
+    ## 1 Alice    0.00000788 1.00      
+    ## 2 Winnie   1.00       0.00000338
 
 Nevertheless, topic modelling can be very useful for larger collections
 of documents, where it can help to identify the main themes present in

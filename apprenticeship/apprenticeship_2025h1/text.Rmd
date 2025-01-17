@@ -30,7 +30,7 @@ library(gutenbergr)
 # Download books based on their Gutenberg ID
 # https://gutenberg.org/ebooks/19033
 # https://gutenberg.org/ebooks/67098
-books <- gutenberg_download(c(19033, 67098))
+books <- gutenberg_download(c(19033, 67098), mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg/")
 ```
 
 # Representing text as data
