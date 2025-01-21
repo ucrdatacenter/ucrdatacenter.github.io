@@ -60,7 +60,7 @@ Workshop times are currently tentative.
 | 22-Jan | 9:00-13:00 | F-13                                      | [Data Scraping: Web and PDFs](scraping)      | Basic R skills, Regex |
 | 22-Jan | 14:00-17:00 | F-13                                      | [Faculty Workshop](faculty)                          | None          |
 | 23-Jan |           |                                       | *No workshop* - Finish your presentations      |               |
-| 24-Jan | 9:00-13:00 | F-13                                      | Final Presentations and Program Evaluation   |               |
+| 24-Jan | 10:00-14:00 | F-13                                      | LLMs in R with `tidyprompt`; Final Presentations and Program Evaluation   |               |
 
 
 
