@@ -17,6 +17,10 @@ To download RStudio, go to [rstudio.com/products/rstudio/download](https://www.r
 
 When installing, you can always stick to the default settings, unless you have different preferences.
 
+**For UCR faculty:** 
+If you are using a UCR-managed laptop, you will need to go to the Helpdesk to have R and RStudio installed, as you don't have administrative rights to install software on your computer.
+You can download the installation files on your own, but running the installation will ask for admin credentials, which Helpdesk can provide.
+
 In case you get stuck at any point, or would like more guidance in the installation process, feel free to check out any of the following links:
 
 * [Tutorial: Getting Started with R and RStudio](https://www.dataquest.io/blog/tutorial-getting-started-with-r-and-rstudio/)

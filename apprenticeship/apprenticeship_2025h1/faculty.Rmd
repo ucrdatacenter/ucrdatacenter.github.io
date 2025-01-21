@@ -72,11 +72,6 @@ tibble(
   name = c("Alice", "Bob", "Chris"),
   height = c(165, 180, 175)
 )
-
-# define the vectors first, then combine them into a tibble
-name <- c("Alice", "Bob", "Chris")
-height <- c(165, 180, 175)
-tibble(name, height)
 ```
 
 ## Functions in R
@@ -93,7 +88,7 @@ For example, `sum(x)` will display the sum of the elements of the vector `x`, bu
 x <- c(1, 5, 6, 2, 1, 8)
 
 sum(x)
-sum <- sum(x)
+result <- sum(x)
 ```
 
 Some important functions on vectors are
@@ -266,7 +261,7 @@ Other than the name of the dataset and the variable, no additional arguments nee
 
 ```{r}
 # binwidth or bins determine the number of bins
-# qith binwidth = 1, each bin is 1 year wide
+# with binwidth = 1, each bin is 1 year wide
 ggplot(data, aes(x = age)) +
   geom_histogram(binwidth = 1, color = "black", fill = "lightblue")
 
@@ -284,7 +279,7 @@ ggplot(data, aes(x = additional_work)) +
   geom_bar()
 ```
 
-# Bivariate plots
+## Bivariate plots
 
 You can plot two continuous variables with a scatter plot.
 For example, you can plot the relationship between age and grade by specifying these variables as the x and y aesthetics:
@@ -338,17 +333,6 @@ ggplot(data, aes(x = reading, fill = notes)) +
 # to put the bars next to each other instead of on top, specify the position
 ggplot(data, aes(x = reading, fill = notes)) +
   geom_bar(position = "dodge")
-```
-
-Alternatively, you can use the `count()` function to count the number of observations in each possible combination of the two variables, and plot the results on a heatmap where lighter colors correspond to larger frequencies.
-To make the plot more readable, you can add the observed counts to the tiles with a `geom_text()` function, which requires an extra aesthetic `label`.
-
-```{r}
-data |> 
-  count(reading, notes) |> 
-  ggplot(aes(x = reading, y = notes, fill = n)) +
-  geom_tile(color = "white") +
-  geom_text(aes(label = n), color = "white")
 ```
 
 ## Customizing plot features 
@@ -441,7 +425,8 @@ library(gt)
 
 # create a summary table of the data
 tbl_summary(data)
-
+```
+```{r, eval = FALSE}
 # the by argument allows for stratification by a variable
 tbl_summary(data, by = sex) |> 
   # convert to gt object for export
