@@ -12,10 +12,7 @@ Drop by to office hours if you're looking for some data science help, whether fo
 
 # Office hour schedule
 
-Office hours are held in the Data Center's office (Anne ground floor) on the following days:
-
-- every Tuesday until week 15, 17:00-19:00
-- 17 October, 17:00-19:00 (SSCPOLI302)
+Office hours are held in the Data Center's office (Anne ground floor). The schedule will be published soon.
 
 # Contact us
 
