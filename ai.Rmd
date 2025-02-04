@@ -11,9 +11,7 @@ output:
 
 # Introduction
 
-The January 2025 Apprenticeship program is now running! 
-All are welcome to join our daily workshops.
-You can access the schedule and workshop materials [here](apprenticeship_2025h1).
+TBA
 
 # Workshop schedule
 
