@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Data visualization: distributions"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm
@@ -46,7 +46,7 @@ ggplot(diamonds, aes(x = price)) +
   geom_histogram()
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 ``` r
 # custom binwidth or bins determine the number of bins
@@ -56,7 +56,7 @@ ggplot(diamonds, aes(x = price)) +
   geom_histogram(binwidth = 1000, color = "black", fill = "lightblue")
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-2-2.png)<!-- -->
 
 ``` r
 # density plot
@@ -65,7 +65,7 @@ ggplot(diamonds, aes(x = price)) +
   geom_density(fill = "lightblue", alpha = 0.5)
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-3.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-2-3.png)<!-- -->
 
 ``` r
 # boxplot
@@ -73,7 +73,7 @@ ggplot(diamonds, aes(x = price)) +
   geom_boxplot()
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-2-4.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-2-4.png)<!-- -->
 
 # The distribution of a discrete variable
 
@@ -85,7 +85,7 @@ ggplot(diamonds, aes(x = cut)) +
   geom_bar()
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 If you want R to automatically count the frequencies of your variable,
 use `geom_bar()` with only an `x` aesthetic. If you have a separate
@@ -106,7 +106,7 @@ diamonds |>
   geom_col()
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 # Adding labels
 
@@ -121,7 +121,7 @@ ggplot(diamonds, aes(x = cut)) +
        y = "Number of diamonds")
 ```
 
-![](r_ggplot_univariate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~3/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 To learn more about other geoms and customization options, have a look
 at our [other tutorials](../) and [additional

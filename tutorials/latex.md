@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Statistics in R"
+title: "Write papers in LaTeX (with Overleaf)"
 date: "Last updated: 2025-02-04"
 output:
   md_document:
@@ -8,4 +8,4 @@ output:
     preserve_yaml: true
 ---
 
-**This tutorial is not ready yet. Please come back later.**
+**This tutorial is not ready yet. Please come back later.**s

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Data visualization: patterns over time"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm
@@ -42,7 +42,7 @@ ggplot(population, aes(x = year, y = population)) +
   geom_line()
 ```
 
-![](r_ggplot_timeseries_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~2/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 The plot does not make sense, because in every year we have observations
 for multiple countries, and by default `geom_line()` connects all of the
@@ -56,7 +56,7 @@ ggplot(filter(population, country == "Netherlands"),
   geom_line()
 ```
 
-![](r_ggplot_timeseries_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~2/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 If you’re familiar with the pipe operator `%>%` (see our [tidy workflow
 tutorial](../r_intro_pipe)), you can use it to make the code more
@@ -69,7 +69,7 @@ population %>%
   geom_line()
 ```
 
-![](r_ggplot_timeseries_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~2/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 You can compare the evolution of the population by adding multiple lines
 to the plot and differentiating them by their color. To make it clearer
@@ -88,7 +88,7 @@ population %>%
   geom_point()
 ```
 
-![](r_ggplot_timeseries_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~2/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 Whenever you make a plot, make sure to use clear labels and titles with
 the `labs()` function to make your visualization easy to understand.
@@ -103,7 +103,7 @@ population %>%
        y = "Population")
 ```
 
-![](r_ggplot_timeseries_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~2/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 To learn more about other geoms and customization options, have a look
 at our [advanced visualization tutorial](../r_adv_ggplot) and

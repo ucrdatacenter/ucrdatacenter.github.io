@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "More on data visualization"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Installing R and RStudio"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm
@@ -19,6 +19,12 @@ scroll down and download the file recommended for your operating system.
 
 When installing, you can always stick to the default settings, unless
 you have different preferences.
+
+**For UCR faculty:** If you are using a UCR-managed laptop, you will
+need to go to the Helpdesk to have R and RStudio installed, as you don’t
+have administrative rights to install software on your computer. You can
+download the installation files on your own, but running the
+installation will ask for admin credentials, which Helpdesk can provide.
 
 In case you get stuck at any point, or would like more guidance in the
 installation process, feel free to check out any of the following links:

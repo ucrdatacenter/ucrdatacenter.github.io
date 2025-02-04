@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Text analysis with regular expressions"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm

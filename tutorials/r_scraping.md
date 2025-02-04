@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Web and pdf scraping"
-date: "Last updated: 2024-12-02"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm
@@ -370,20 +370,20 @@ factsheet <- tibble(label, value)
 factsheet
 ```
 
-    ## # A tibble: 28 × 2
-    ##    label                 value                                                  
-    ##    <chr>                 <chr>                                                  
-    ##  1 Motto                 "Terras Irradient (Latin)"                             
-    ##  2 Motto in English      "Let them enlighten the lands[1]"                      
-    ##  3 Type                  "Private liberal arts college"                         
-    ##  4 Established           "1821; 203 years ago (1821)"                           
-    ##  5 Accreditation         "NECHE"                                                
-    ##  6 Academic affiliations ".mw-parser-output .hlist dl,.mw-parser-output .hlist …
-    ##  7 Endowment             "$3.78 billion (2022)[2]"                              
-    ##  8 President             "Michael A. Elliott"                                   
-    ##  9 Academic staff        "307 (Fall 2021)[3]"                                   
-    ## 10 Undergraduates        "1,971 (Fall 2021)[4]"                                 
-    ## # ℹ 18 more rows
+    ## # A tibble: 29 × 2
+    ##    label                 value                                                                                                         
+    ##    <chr>                 <chr>                                                                                                         
+    ##  1 Motto                 "Terras Irradient (Latin)"                                                                                    
+    ##  2 Motto in English      "Let them enlighten the lands[1]"                                                                             
+    ##  3 Type                  "Private liberal arts college"                                                                                
+    ##  4 Established           "1821; 204 years ago (1821)"                                                                                  
+    ##  5 Accreditation         "NECHE"                                                                                                       
+    ##  6 Academic affiliations ".mw-parser-output .hlist dl,.mw-parser-output .hlist ol,.mw-parser-output .hlist ul{margin:0;padding:0}.mw-p…
+    ##  7 Endowment             "$3.78 billion (2022)[2]"                                                                                     
+    ##  8 President             "Michael A. Elliott"                                                                                          
+    ##  9 Academic staff        "307 (fall 2021)[3]"                                                                                          
+    ## 10 Undergraduates        "1,971 (fall 2021)[4]"                                                                                        
+    ## # ℹ 19 more rows
 
 ## Find and clean the school color values
 
@@ -547,9 +547,9 @@ get_school_color("https://en.wikipedia.org/wiki/Amherst_College")
 ```
 
     ## # A tibble: 1 × 2
-    ##   url                                           value                           
-    ##   <chr>                                         <chr>                           
-    ## 1 https://en.wikipedia.org/wiki/Amherst_College .mw-parser-output .legend{page-…
+    ##   url                                           value                                                                                  
+    ##   <chr>                                         <chr>                                                                                  
+    ## 1 https://en.wikipedia.org/wiki/Amherst_College .mw-parser-output .legend{page-break-inside:avoid;break-inside:avoid-column}.mw-parser…
 
 ``` r
 amherst_color <- get_school_color("https://en.wikipedia.org/wiki/Amherst_College")
@@ -705,7 +705,7 @@ done.
 pdf[1]
 ```
 
-    ## [1] "Members\n             Mika AALTOLA\n             Group of the European People's Party (Christian Democrats)\n             Finland Kansallinen Kokoomus\n\n             Maravillas ABADÍA JOVER\n             Group of the European People's Party (Christian Democrats)\n             Spain Partido Popular\n\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Georgios AFTIAS\n             Group of the European People's Party (Christian Democrats)\n             Greece Nea Demokratia\n\n             Oihane AGIRREGOITIA MARTÍNEZ\n             Renew Europe Group\n             Spain Partido Nacionalista Vasco\n\n             Peter AGIUS\n             Group of the European People's Party (Christian Democrats)\n             Malta Partit Nazzjonalista\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Galato ALEXANDRAKI\n             European Conservatives and Reformists Group\n             Greece Elliniki Lusi-Greek Solution\n\n             Grégory ALLIONE\n             Renew Europe Group\n             France Renaissance\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n             Nikolaos ANADIOTIS\n             Non-attached Members\n             Greece Dimokratikó Patriotikó Kínima «NIKI»\n\n             Christine ANDERSON\n             Europe of Sovereign Nations Group\n             Germany Alternative für Deutschland\n\n             Li ANDERSSON\n             The Left group in the European Parliament - GUE/NGL\n             Finland Vasemmistoliitto\n\n\n\n\n02/12/2024                                                                                              1\n"
+    ## [1] "Members\n             Mika AALTOLA\n             Group of the European People's Party (Christian Democrats)\n             Finland Kansallinen Kokoomus\n\n             Maravillas ABADÍA JOVER\n             Group of the European People's Party (Christian Democrats)\n             Spain Partido Popular\n\n             Magdalena ADAMOWICZ\n             Group of the European People's Party (Christian Democrats)\n             Poland Independent\n\n             Georgios AFTIAS\n             Group of the European People's Party (Christian Democrats)\n             Greece Nea Demokratia\n\n             Oihane AGIRREGOITIA MARTÍNEZ\n             Renew Europe Group\n             Spain Partido Nacionalista Vasco\n\n             Peter AGIUS\n             Group of the European People's Party (Christian Democrats)\n             Malta Partit Nazzjonalista\n\n             Alex AGIUS SALIBA\n             Group of the Progressive Alliance of Socialists and Democrats in the European Parliament\n             Malta Partit Laburista\n\n             Galato ALEXANDRAKI\n             European Conservatives and Reformists Group\n             Greece Elliniki Lusi-Greek Solution\n\n             Grégory ALLIONE\n             Renew Europe Group\n             France Renaissance\n\n             Abir AL-SAHLANI\n             Renew Europe Group\n             Sweden Centerpartiet\n\n             Nikolaos ANADIOTIS\n             Non-attached Members\n             Greece Dimokratikó Patriotikó Kínima «NIKI»\n\n             Christine ANDERSON\n             Europe of Sovereign Nations Group\n             Germany Alternative für Deutschland\n\n             Li ANDERSSON\n             The Left group in the European Parliament - GUE/NGL\n             Finland Vasemmistoliitto\n\n\n\n\n04/02/2025                                                                                              1\n"
 
 ``` r
 cat(pdf[1])
@@ -767,7 +767,7 @@ cat(pdf[1])
     ## 
     ## 
     ## 
-    ## 02/12/2024                                                                                              1
+    ## 04/02/2025                                                                                              1
 
 If we actually want to work with the data contained in the document, we
 need to clean it. Currently the vector `pdf` is broken up based on page
@@ -852,4 +852,4 @@ ggplot(pdf_data, aes(y = country, fill = eu_group)) +
   theme(legend.position = "bottom")
 ```
 
-![](r_scraping_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_SCRA~1/figure-gfm/unnamed-chunk-20-1.png)<!-- -->

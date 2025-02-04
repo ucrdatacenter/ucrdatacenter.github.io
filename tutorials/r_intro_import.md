@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Importing data"
-date: "Last updated: 2024-08-11"
+date: "Last updated: 2025-02-04"
 output:
   md_document:
     variant: gfm
