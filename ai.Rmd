@@ -12,9 +12,10 @@ output:
 # Introduction
 
 AI is transforming the way we work, think, and create—but are you making the most of it? 
-Our **Gen AI Workshop Series**, led by Dr. Alexei Karas, is designed to help you integrate AI into your daily tasks with **practical, hands-on sessions**. 
+Our **Gen AI Workshop Series**, led by Dr. Alexei Karas and Lina Mooren, is designed to help you integrate AI into your daily tasks with **practical, hands-on sessions**. 
 One lunch time a week from now until Week 15, we will be exploring a **new AI use case**—from writing emails and brainstorming ideas to enhancing research, automating workflows, and more. 
 Whether you’re a beginner or already experimenting with AI, these sessions will give you the tools to **work smarter, save time, and boost your creativity**. 
+Sessions will be hybrid—attendees can join in-person or via the Teams link provided in the table below, no sign-ups necessary. 
 We hope to see you there!
 
 # Workshop schedule
@@ -22,8 +23,12 @@ We hope to see you there!
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, error = FALSE}
 library(tidyverse)
 rio::import("https://docs.google.com/spreadsheets/d/1qY-Fj_ck1O-hV2BS-Oc789CcATXvCXApenSRjfyliqk/edit?gid=525811222#gid=525811222", sheet = "Schedule") |> 
-  mutate(across(everything(), ~str_remove(., ".*\\?") |> 
-                  str_replace("^\\s*$", "TBA"))) |> 
+  mutate(across(-`Teams Meeting Link`, ~str_remove(., ".*\\?") |> 
+                  str_replace("^\\s*$", "TBA")),
+         `Teams Meeting Link` = map(`Teams Meeting Link`, 
+                                    ~htmltools::a(href = .x, "Link")),
+         `Teams Meeting Link` = map(`Teams Meeting Link`, 
+                                    ~gt::html(as.character(.x)))) |> 
   gt::gt() 
 ```
 
