@@ -1,8 +1,8 @@
-# Data encounters in UCR courses
+# Ongoing data encounters in UCR courses
 
-- [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
-- [SCICOGN302 - Psycholingustics](SCICOGN302)
-- [SSCPOLI302 - European Union Politics](SSCPOLI302)
+- [AH-ANTQ103 Introduction to Archeology](AH-ANTQ103)
+- [AH-RHET101 Introdiction to Rhetoric and Argumentation](AH-RHET101)
+- [SCIBIOM303 Mechanisms of Disease](SCIBIOM303)
 
 # Data encounter archive
 
@@ -14,6 +14,7 @@
   - [Fall 2023](archive/SCIBIOM303_2024h1)
 - SCICOGN302 Psycholinguistics:
   - [Fall 2023](archive/SCICOGN302_2023h2)
+  - [Fall 2024](archive/SCICOGN302_2024h2)
 - SCIENVI Ecology & Topics in Ecology:
   - [Spring 2022](archive/SCIENVI201_2022h1)
   - [Spring 2023](archive/SCIENVI_2023h1)
@@ -26,3 +27,8 @@
   - [Fall 2022](archive/SSCECON307_2022h2)
 - SSCPOLI302 European Union Politics:
   - [Fall 2023](archive/SSCPOLI302_2023h2)
+  - [Fall 2024](archive/SSCPOLI302_2024h2)
+
+# Other developed data encounters
+
+- [AH-FTME101 - Introduction to Film, Theatre, and Media](AH-FTME101)
