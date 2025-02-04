@@ -1,8 +1,8 @@
 # Ongoing data encounters in UCR courses
 
-- [AH-ANTQ103 Introduction to Archeology](AH-ANTQ103)
-- [AH-RHET101 Introdiction to Rhetoric and Argumentation](AH-RHET101)
-- [SCIBIOM303 Mechanisms of Disease](SCIBIOM303)
+- [AH-ANTQ103 - Introduction to Archeology](AH-ANTQ103)
+- [AH-RHET101 - Introdiction to Rhetoric and Argumentation](AH-RHET101)
+- [SCIBIOM303 - Mechanisms of Disease](SCIBIOM303)
 
 # Data encounter archive
 
