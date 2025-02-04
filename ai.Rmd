@@ -11,7 +11,11 @@ output:
 
 # Introduction
 
-TBA
+AI is transforming the way we work, think, and create—but are you making the most of it? 
+Our **Gen AI Workshop Series**, led by Dr. Alexei Karas, is designed to help you integrate AI into your daily tasks with **practical, hands-on sessions**. 
+One lunch time a week from now until Week 15, we will be exploring a **new AI use case**—from writing emails and brainstorming ideas to enhancing research, automating workflows, and more. 
+Whether you’re a beginner or already experimenting with AI, these sessions will give you the tools to **work smarter, save time, and boost your creativity**. 
+We hope to see you there!
 
 # Workshop schedule
 
