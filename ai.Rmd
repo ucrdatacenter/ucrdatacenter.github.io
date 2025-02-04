@@ -1,0 +1,27 @@
+---
+layout: page
+title: "Generative AI"
+subtitle: "AI in your daily life"
+date: "Last updated: `r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+# Introduction
+
+The January 2025 Apprenticeship program is now running! 
+All are welcome to join our daily workshops.
+You can access the schedule and workshop materials [here](apprenticeship_2025h1).
+
+# Workshop schedule
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, error = FALSE}
+library(tidyverse)
+rio::import("https://docs.google.com/spreadsheets/d/1qY-Fj_ck1O-hV2BS-Oc789CcATXvCXApenSRjfyliqk/edit?gid=525811222#gid=525811222", sheet = "Schedule") |> 
+  mutate(across(everything(), ~str_remove(., ".*\\?") |> 
+                  str_replace("^\\s*$", "TBA"))) |> 
+  gt::gt() 
+```
+

@@ -39,6 +39,8 @@ In addition, the [R basics tutorial](../../../tutorials/r_basics) on the
 Data Center website explains the RStudio interface, and shows how to
 create a new project and how to install packages.
 
+Please bring your fully charged laptop to all Data Center workshops.
+
 # Workshop materials
 
 **To be added.**
