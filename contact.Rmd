@@ -1,0 +1,50 @@
+---
+layout: page
+title: "Contact us"
+output:
+  md_document:
+    variant: gfm
+    preserve_yaml: true
+---
+
+The Data Center student fellows hold office hours in the Data Center's office (Anne ground floor) to answer questions and help with assignments.
+Drop by to office hours if you're looking for some data science help, whether for a data encounter in a course, another UCR course, or your SEPR!
+
+# Office hour schedule
+
+Office hours are held in the Data Center's office (Anne ground floor).
+You are welcome to drop by any time during the office hours, no appointment needed.
+
+Office hours are with the current Data Center interns; you can learn more about their specific expertise below the schedule.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE,error=FALSE}
+library(tidyverse)
+library(gt)
+read_csv("assets/oa.csv") |> 
+  rename(" " = 1) |> 
+  # mutate(across(everything(), ~ifelse(is.na(.), "", .))) |> 
+  gt() |> 
+  data_color(
+    columns = -1,
+    colors = scales::col_factor(
+      palette = "salmon",
+      domain = NULL,
+      na.color = "transparent"
+    )) |> 
+  sub_missing(missing_text = "") |> 
+  tab_style(style = list(cell_borders(), cell_text(align = "center")), 
+            locations = list(cells_body(), cells_column_labels())) |> 
+  tab_style(style = cell_text(weight = "bold"), locations = cells_column_labels()) |> 
+  tab_style(style = cell_text(weight = "bold"), locations = cells_body(columns = 1))
+```
+
+- **Clement:** Spatial data, rasters, maps, Ecology
+- **Gabriela:** R, Python, Stata, SQL (soon), statistics, visualization, data tidying and transformation, data import/export, spatial data
+- **Julia:** R, data cleaning and wrangling, data visualization, statistics
+- **Mare:** Basic R and Python; Working with Corpora / Text analysis
+
+# Contact us
+
+If you would like to request an individual consultation, or would like to know more about becoming an intern for the Data Center, feel free to send an email to [datacenter@ucr.nl](mailto:datacenter@ucr.nl).
+
+Make sure to check this website for news and updates, and follow us on Instagram!
