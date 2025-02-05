@@ -41,6 +41,7 @@ read_csv("assets/oa.csv") |>
 - **Clement:** Spatial data, rasters, maps, Ecology
 - **Gabriela:** R, Python, Stata, SQL (soon), statistics, visualization, data tidying and transformation, data import/export, spatial data
 - **Julia:** R, data cleaning and wrangling, data visualization, statistics
+- **Lili:** R, text analysis, character strings
 - **Mare:** Basic R and Python; Working with Corpora / Text analysis
 - **Michel:** Data Science in R: Data wrangling, spatial data, data visualizations and simple text analysis
 
