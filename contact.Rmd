@@ -12,7 +12,7 @@ Drop by to office hours if you're looking for some data science help, whether fo
 
 # Office hour schedule
 
-Office hours are held in the Data Center's office (Anne ground floor).
+Office hours are held in the Data Center's office (Anne ground floor), every week during the semester between week 4 and week 15.
 You are welcome to drop by any time during the office hours, no appointment needed.
 
 Office hours are with the current Data Center interns; you can learn more about their specific expertise below the schedule.
