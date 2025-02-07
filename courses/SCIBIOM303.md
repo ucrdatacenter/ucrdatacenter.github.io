@@ -2,7 +2,7 @@
 layout: page
 title: "SCIBIOM303<br> Mechanisms of Disease"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-04"
+date: "Last updated: 2025-02-07"
 output:
   md_document:
     variant: gfm
@@ -15,6 +15,11 @@ output:
 - [Preparation for Data Center
   workshops](#preparation-for-data-center-workshops)
 - [Workshop materials](#workshop-materials)
+  - [First workshop: introduction to
+    R](#first-workshop-introduction-to-r)
+- [Second workshop: heatstroke-related ambulance dispatches in
+  Japan](#second-workshop-heatstroke-related-ambulance-dispatches-in-japan)
+- [Assignment](#assignment)
 
 # Introduction
 
@@ -43,4 +48,23 @@ Please bring your fully charged laptop to all Data Center workshops.
 
 # Workshop materials
 
-**To be added.**
+## First workshop: introduction to R
+
+The first Data Center workshop takes place on the Monday class of week 3
+(10 February). You can find the workshop handout [here](workshop1).
+
+To prepare for the first workshop, please complete the preparatory
+instructions listed above.
+
+# Second workshop: heatstroke-related ambulance dispatches in Japan
+
+The second Data Center workshop takes place on the Thursday class of
+week 3 (13 February). You can find the workshop handout
+[here](workshop2).
+
+# Assignment
+
+Following the Data Center workshop, you will work on your own projects
+in groups. Further details are available in the course outline. You can
+download all datasets from
+[GitHub](https://github.com/ucrdatacenter/projects/tree/main/SCIBIOM303/2025h1/data).

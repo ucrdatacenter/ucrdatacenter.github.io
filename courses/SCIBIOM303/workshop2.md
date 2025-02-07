@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "SCIBIOM303<br> Workshop 2"
+title: "SCIBIOM303 Workshop 2: Temperature and Heatstroke-related Ambulance Dispatches"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-06"
+date: "Last updated: 2025-02-07"
 output:
   md_document:
     variant: gfm
@@ -10,56 +10,43 @@ output:
     toc: true
 ---
 
-- [Temperature and Heatstroke-related Ambulance
-  Dispatches](#temperature-and-heatstroke-related-ambulance-dispatches)
-  - [Loading packages](#loading-packages)
-  - [Importing data sets](#importing-data-sets)
-  - [Merging the two data sets](#merging-the-two-data-sets)
-  - [Choosing a prefecture and a
-    year](#choosing-a-prefecture-and-a-year)
-  - [Creating a plot with Tempmax and
-    HSAD](#creating-a-plot-with-tempmax-and-hsad)
-  - [Creating a plot with Tempmax and
-    Date](#creating-a-plot-with-tempmax-and-date)
-  - [Linear regression analysis](#linear-regression-analysis)
-  - [Comparing two prefectures](#comparing-two-prefectures)
-  - [Comparing the days of the week](#comparing-the-days-of-the-week)
-  - [Creating heat index](#creating-heat-index)
-  - [Creating a plot with Heat_Index_C and
-    HSAD](#creating-a-plot-with-heat_index_c-and-hsad)
-  - [Linear regression analysis](#linear-regression-analysis-1)
+- [Introduction](#introduction)
+- [Loading packages](#loading-packages)
+- [Importing data sets](#importing-data-sets)
+- [Merging the two data sets](#merging-the-two-data-sets)
+- [Choosing a prefecture and a year](#choosing-a-prefecture-and-a-year)
+- [Creating a plot with Tempmax and
+  HSAD](#creating-a-plot-with-tempmax-and-hsad)
+- [Creating a plot with Tempmax and
+  Date](#creating-a-plot-with-tempmax-and-date)
+- [Linear regression analysis](#linear-regression-analysis)
+- [Comparing two prefectures](#comparing-two-prefectures)
+- [Comparing the days of the week](#comparing-the-days-of-the-week)
+- [Creating heat index](#creating-heat-index)
+- [Creating a plot with Heat_Index_C and
+  HSAD](#creating-a-plot-with-heat_index_c-and-hsad)
+- [Linear regression analysis](#linear-regression-analysis-1)
 
-## Temperature and Heatstroke-related Ambulance Dispatches
+# Introduction
 
 In this encounter, we will investigate and analyze the relationship
 between temperature and heatstroke-related ambulance dispatches using
 data from Japan. This data offers information about the maximum
 temperature measured per day in all 47 prefectures from 2015 to 2019.
 
-### Loading packages
+# Loading packages
 
-First, we load the `tidyverse` and `rio` packages.
+First, we load the `tidyverse` and `rio` packages. Make sure that all
+packages are installed before running the code.
 
 ``` r
+# install.packages("tidyverse")
+# install.packages("rio")
 library(tidyverse)
-```
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-    ## ✔ purrr     1.0.2     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
 library(rio)
 ```
 
-### Importing data sets
+# Importing data sets
 
 We import the data sets for the encounter.
 
@@ -68,7 +55,7 @@ hsad <- import("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/SC
 temp <- import("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/SCIBIOM303/2025h1/data/temperature.csv")
 ```
 
-### Merging the two data sets
+# Merging the two data sets
 
 We merge the two data sets together. We can do this by using the
 function `left_join()`, which enables us to merge all the columns from
@@ -85,7 +72,7 @@ merged <- left_join(temp, hsad, by = c("Date", "Prefecturename")) |>
   rename("Prefecture" = Prefecturename)
 ```
 
-### Choosing a prefecture and a year
+# Choosing a prefecture and a year
 
 Now we can investigate the relationship between maximum temperature and
 heatstroke-related ambulance dispatches (hsad) per day in one prefecture
@@ -102,7 +89,7 @@ hiroshima_2015 <- merged |>
   mutate(Date = ymd(Date)) 
 ```
 
-### Creating a plot with Tempmax and HSAD
+# Creating a plot with Tempmax and HSAD
 
 Now we can create a scatter plot by using the function geom_point() to
 showcase the relationship between the maximum temperature (Tempmax) and
@@ -120,11 +107,9 @@ ggplot(hiroshima_2015, aes(x = Tempmax, y = HSAD)) +
   theme_minimal()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-### Creating a plot with Tempmax and Date
+# Creating a plot with Tempmax and Date
 
 Now we can create a scatter plot to showcase the trends in the maximum
 temperature (Tempmax) over time (Date) in Hiroshima in 2015.
@@ -139,11 +124,9 @@ ggplot(hiroshima_2015, aes(x = Date, y = Tempmax)) +
   theme_minimal()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-### Linear regression analysis
+# Linear regression analysis
 
 We can perform a linear regression analysis to analyze if there is a
 relationship between maximum temperature (Tempmax) and
@@ -181,7 +164,7 @@ of the variability in HSAD is explained by Tempmax. This indicates a
 moderate to strong positive relationship between temperature and heat
 stroke-related ambulance dispatches.
 
-### Comparing two prefectures
+# Comparing two prefectures
 
 Now we can compare the relationship in two prefectures in the same year.
 We can choose Hiroshima and Kyoto in 2015. We can do this by creating a
@@ -200,11 +183,9 @@ merged |>
   theme_minimal()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop2_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-### Comparing the days of the week
+# Comparing the days of the week
 
 Now we can investigate whether there is a difference between the number
 of dispatches during the week and during the weekend. We can use
@@ -226,7 +207,7 @@ hiroshima_2015 |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-### Creating heat index
+# Creating heat index
 
 Now we can create a new variable called heat index. This measure is
 calculated from temperature and humidity. First we need to convert the
@@ -251,7 +232,7 @@ hiroshima_lr_data <- hiroshima_2015 %>%
     Heat_Index_C = (Heat_Index_F - 32) * 5 / 9)
 ```
 
-### Creating a plot with Heat_Index_C and HSAD
+# Creating a plot with Heat_Index_C and HSAD
 
 Now we can create a plot to show the relationship between the heat index
 and HSAD. We use the same code as in the first plot, but we use the
@@ -268,11 +249,9 @@ ggplot(hiroshima_lr_data, aes(x = Heat_Index_C, y = HSAD)) +
   theme_minimal()
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-
 ![](workshop2_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
-### Linear regression analysis
+# Linear regression analysis
 
 We can perform a linear regression analysis to analyze if there is a
 relationship between the heat index (Heat_Index_C) and
