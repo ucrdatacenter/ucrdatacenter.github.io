@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, error=FALSE)
 ```
 
 # Introduction
-In this encounter, we will investigate and analyze the relationship between temperature and heatstroke-related ambulance dispatches using data from Japan. This data offers information about the maximum temperature measured per day in all 47 prefectures from 2015 to 2019.
+In this encounter, we will investigate and analyze the relationship between temperature and heatstroke-related ambulance dispatches using data from Japan. This data offers information about the maximum temperature and relative humidity measured per day in all 47 prefectures from 2015 to 2019.
 
 # Loading packages
 
@@ -50,7 +50,7 @@ merged <- left_join(temp, hsad, by = c("Date", "Prefecturename")) |>
 
 # Choosing a prefecture and a year
 
-Now we can investigate the relationship between maximum temperature and heatstroke-related ambulance dispatches (hsad) per day in one prefecture in one year. We can choose Hiroshima, and the year 2015. We also change the variable 'Date' from character to a proper date format to better visualize it later. We do this by creating a pipeline using the function filter() to filter for the selected parameters, and mutate() to change the variable 'Date'.
+Now we can investigate the relationship between maximum temperature and heatstroke-related ambulance dispatches (HSAD) per day in one prefecture in one year. We can choose Hiroshima, and the year 2015. We also change the variable 'Date' from character to a proper date format to better visualize it later. We do this by creating a pipeline using the function filter() to filter for the selected parameters, and mutate() to change the variable 'Date'.
 
 ```{r}
 hiroshima_2015 <- merged |> 
@@ -61,17 +61,19 @@ hiroshima_2015 <- merged |>
 
 # Creating a plot with Tempmax and HSAD
 
-Now we can create a scatter plot by using the function geom_point() to showcase the relationship between the maximum temperature (Tempmax) and heatstroke-related ambulance dispatches (HSAD). We also add geom_smooth() to showcase a trend line. We can add names of the axis and a title of the graph.
+Now we can create a scatter plot by using the function geom_point() to showcase the relationship between the maximum temperature (Tempmax) and heatstroke-related ambulance dispatches (HSAD). We also add geom_smooth() to showcase a trend line. We can add names of the axes and a title of the graph.
 
 ```{r}
 ggplot(hiroshima_2015, aes(x = Tempmax, y = HSAD)) +
   geom_point() +
   geom_smooth(se = FALSE) +
   labs(title = "Temperature and Heatstroke-related Ambulance Dispatches in Hiroshima in 2015",
-       x = "Maximal Temperature",
+       x = "Maximum Temperature",
        y = "Heatstroke-related Ambulance Dispatches") +
   theme_minimal()
 ```
+
+We can see that HSAD is consistently near 0 degrees Celsius between temperatures 20-25, and after 30 degrees Celsius, it increases steeply, almost in a linear way. This is as expected, as being in environments with higher temperature leads to a rise in core body temperature, which can lead to the development of heatstroke ([source](https://www.mayoclinic.org/diseases-conditions/heat-stroke/symptoms-causes/syc-20353581)). 
 
 # Creating a plot with Tempmax and Date
 
@@ -83,9 +85,11 @@ ggplot(hiroshima_2015, aes(x = Date, y = Tempmax)) +
   geom_smooth(se = FALSE) +
   labs(title = "Temperature Over Time in Hiroshima in 2015",
        x = "Date",
-       y = "Maximal Temperature") +
+       y = "Maximum Temperature") +
   theme_minimal()
 ```
+
+We can see that the temperature starts rising in June and peaks in August (>35 degrees Celsius), and then declines again until October. This is what we would expect, as this is the typical pattern in temperature in Hiroshima across these months ([source](https://www.climatestotravel.com/climate/japan/hiroshima)).
 
 # Linear regression analysis
 
@@ -109,14 +113,16 @@ merged |>
   ggplot() +
   geom_smooth(aes(x = Tempmax, y = HSAD, color = Prefecture), se = FALSE) +
   labs(title = "Temperature and Heatstroke-related Ambulance Dispatches (2015)",
-       x = "Maximal Temperature",
+       x = "Maximum Temperature",
        y = "Heatstroke-related Ambulance Dispatches") +
   theme_minimal()
 ```
 
+This graphs shows similar trends in the relationship between temperature and heatstroke-related ambulance dispatches in both prefectures. While specific studies comparing Hiroshima and Kyoto are limited, research suggests a consistent relationship between higher temperatures and increased heatstroke-related ambulance dispatches across various regions in Japan ([source](https://doi.org/10.3961/jpmph.2012.45.5.309)).
+
 # Comparing the days of the week
 
-Now we can investigate whether there is a difference between the number of dispatches during the week and during the weekend. We can use Hiroshima in 2015 as an example. We create a pipeline; we use the group_by() function to group rows by the Dow (day of the week) variable. Next, within summarize(), which reduces multiple rows in each group to a single summary value, we apply mean() to calculate the average number of heatstroke-related ambulance dispatches for each day of the week. Then we can create a bar chart to show the average number of dispatches per day during the week.
+Now we can investigate whether there is a difference between the number of dispatches during the week and during the weekend. We can use Hiroshima in 2015 as an example. We create a pipeline; we use the group_by() function to group rows by the day of the week variable (Dow). Next, within summarize(), which reduces multiple rows in each group to a single summary value, we apply mean() to calculate the average number of heatstroke-related ambulance dispatches for each day of the week. Then we can create a bar chart to show the average number of dispatches per day during the week.
 
 ```{r}
 hiroshima_2015 |>
@@ -125,6 +131,8 @@ hiroshima_2015 |>
   ggplot(aes(x = Dow, y = HSAD)) +
   geom_col()
 ```
+
+We can see that there are more cases of HSAD on days 1 and 7, which refer to Sunday and Saturday, respectively. These results are as expected, as more cases of heatstroke occur most commonly on weekends, especially on Sundays when people tend to take part in sporting or outdoor activities ([source](https://www.channelnewsasia.com/today/ground-up/heatstroke-heat-related-illnesses-dangers-risks-take-precautions-misconceptions-4647621)).
 
 # Creating heat index
 
@@ -159,6 +167,8 @@ ggplot(hiroshima_lr_data, aes(x = Heat_Index_C, y = HSAD)) +
        y = "Heatstroke-related Ambulance Dispatches") +
   theme_minimal()
 ```
+
+We can see that heat index is consistently near 0 between temperatures 20-30, and after 30 degrees Celsius, it increases sharply in an almost linear way. This is as expected, as the heat index positively correlates with the rate of onset for heat stroke ([source](https://doi.org/10.1186/s40779-015-0056-z)).
 
 # Linear regression analysis
 

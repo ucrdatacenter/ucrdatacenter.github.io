@@ -17,8 +17,8 @@ output:
 - [Workshop materials](#workshop-materials)
   - [First workshop: introduction to
     R](#first-workshop-introduction-to-r)
-- [Second workshop: heatstroke-related ambulance dispatches in
-  Japan](#second-workshop-heatstroke-related-ambulance-dispatches-in-japan)
+  - [Second workshop: heatstroke-related ambulance dispatches in
+    Japan](#second-workshop-heatstroke-related-ambulance-dispatches-in-japan)
 - [Assignment](#assignment)
 
 # Introduction
@@ -56,7 +56,7 @@ The first Data Center workshop takes place on the Monday class of week 3
 To prepare for the first workshop, please complete the preparatory
 instructions listed above.
 
-# Second workshop: heatstroke-related ambulance dispatches in Japan
+## Second workshop: heatstroke-related ambulance dispatches in Japan
 
 The second Data Center workshop takes place on the Thursday class of
 week 3 (13 February). You can find the workshop handout
