@@ -1,14 +1,12 @@
 ---
 layout: page
 title: "Data visualization: relationships between variables"
-date: "Last updated: 2025-02-04"
+date: "Last updated: 2025-02-07"
 output:
   md_document:
     variant: gfm
     preserve_yaml: true
 ---
-
-**This tutorial is not ready yet. Please come back later.**
 
 # Introduction
 
@@ -40,7 +38,7 @@ ggplot(diamonds, aes(x = price, y = carat)) +
   geom_point()
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 Fitting a smooth curve or a linear regression line to the scatter plot
 can help you see the overall trend in the data.
@@ -52,7 +50,7 @@ ggplot(diamonds, aes(x = price, y = carat)) +
   geom_smooth()
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # scatter plot with linear regression line
@@ -62,7 +60,7 @@ ggplot(diamonds, aes(x = price, y = carat)) +
   geom_smooth(method = "lm", se = FALSE)
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-3-2.png)<!-- -->
 
 Categorical variables can be used to show the distribution of continuous
 variables by group. You can put a categorical variable on one of the
@@ -80,7 +78,7 @@ ggplot(diamonds, aes(x = price, y = cut)) +
   geom_boxplot()
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
 # density plot of price by cut
@@ -88,7 +86,7 @@ ggplot(diamonds) +
   geom_density(aes(x = price, fill = cut), alpha = 0.5)
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
 
 To plot two categorical variables, you can use a bar plot with an extra
 grouping argument. For example, we can plot the number of diamonds with
@@ -99,7 +97,7 @@ ggplot(diamonds, aes(x = cut, fill = color)) +
   geom_bar()
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 ``` r
 # to put the bars next to each other instead of on top, specify the position
@@ -107,7 +105,7 @@ ggplot(diamonds, aes(x = cut, fill = color)) +
   geom_bar(position = "dodge")
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
 
 Whenever you make a plot, make sure to use clear labels and titles with
 the `labs()` function to make your visualization easy to understand.
@@ -120,10 +118,8 @@ ggplot(diamonds, aes(x = price, y = carat)) +
        y = "Carat of diamond")
 ```
 
-![](C:\Users\tro224\ONEDRI~1\DOCUME~1\GitHub\UCRDAT~1.IO\TUTORI~1\R_GGPL~1/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](r_ggplot_bivariate_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 To learn more about other geoms and customization options, have a look
 at our [advanced visualization tutorial](../r_adv_ggplot) and
 [additional resources](../links#Help%20with%20%60ggplot%60).
-
-## Video tutorial TBA

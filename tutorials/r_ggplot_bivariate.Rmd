@@ -12,8 +12,6 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
-
 # Introduction
 
 Before you proceed, make sure you're familiar with the logic of `ggplot`, as explained in our [introduction to `ggplot` tutorial](../r_ggplot_intro).
@@ -93,4 +91,3 @@ ggplot(diamonds, aes(x = price, y = carat)) +
 
 To learn more about other geoms and customization options, have a look at our [advanced visualization tutorial](../r_adv_ggplot) and [additional resources](../links#Help with `ggplot`).
 
-## Video tutorial TBA

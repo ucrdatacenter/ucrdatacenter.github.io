@@ -12,4 +12,206 @@ output:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, error = FALSE)
 ```
 
-**This tutorial is not ready yet. Please come back later.**
+# Introduction
+
+This document provides an overview of the basic statistical functions in R, including descriptive statistics and summary tables.
+
+This tutorial shows you examples of using statistical methods on the `diamonds` dataset, which comes pre-loaded with the `tidyverse` package.
+
+Let's load the `tidyverse` package and have a look at the `diamonds` dataset:
+
+```{r}
+library(tidyverse)
+data(diamonds)
+```
+
+# Descriptive statistics
+
+## Summaries in the R Console
+
+To get a descriptive statistic of a single variable in a tibble, we can use that variable as an argument to a relevant function (using `$` to refer to a variable in a tibble).
+
+```{r}
+mean(diamonds$price)
+median(diamonds$price)
+sd(diamonds$price)
+```
+
+To get the frequencies of a categorical variable, we can use the `count()` function, with the `sort = TRUE` argument returning the values in descending frequency.
+`count()` is a tidy function that works well with pipe workflows and can count the joint frequencies of multiple variables.
+
+```{r}
+# frequencies of a single variable
+count(diamonds, cut)
+
+# joint frequency distribution
+count(diamonds, cut, color)
+```
+
+To get the correlation coefficient between two variables, we can use the `cor()` function in the same way we used other descriptives such as `mean()`.
+
+```{r}
+cor(diamonds$price, diamonds$carat)
+```
+
+The easiest way to get summary statistics of all variables in a tibble is with the `summary()` function: this function shows the distribution of numeric variables, the frequencies of categorical variables, and the number of missing values for each variable.
+
+```{r}
+summary(diamonds)
+```
+
+## Publication-ready summaries with `gtsummary`
+
+The `summary()` function is useful for viewing the data in the Console, but doesn't export to outside of R nicely.
+There are a few packages available for generating simple summary statistics tables that contain information about the central tendencies and dispersion of the data that also export nicely, such as `gtsummary`.
+
+```{r}
+library(gtsummary)
+
+# tbl_summary() creates a summary table of the data
+tbl_summary(diamonds)
+```
+
+You can stratify your summary by a grouping variable using the `by` argument:
+
+```{r}
+tbl_summary(diamonds, by = cut)
+
+# add p-value of difference between groups
+tbl_summary(diamonds, by = cut) |> 
+  add_p()
+```
+
+You can also customize the appearance of the table.
+
+```{r}
+tbl_summary(diamonds, by = cut) |> 
+  modify_header(label ~ "Variable") |> 
+  modify_caption("Summary Table by Cut")
+```  
+
+To export the table as a Word document, use the `gtsave()` function.
+Note that we first use the `as_gt()` function to convert the `tbl_summary()` output to a `gt` object, and load the `gt` package in order to use the Word export function defined for the `gt` package.
+
+```{r, eval=FALSE}
+library(gt)
+
+tbl_summary(diamonds, by = cut) |> 
+  as_gt() |> 
+  gtsave("summary_table.docx")
+```
+
+If you use LaTeX, you can also export as a LaTeX table, also relying on the `gt` package.
+
+```{r, eval=FALSE}
+tbl_summary(diamonds, by = cut) |> 
+  as_gt() |> 
+  gtsave("summary_table.tex")
+```    
+
+# Hypothesis testing
+
+Most of the simple statistical tests are from base R, so they don't rely on tidy principles, but many are compatible with tidy workflows to at least some extent.
+In the following we'll cover some of the key methods that show up in methods and statistics courses at UCR.
+In addition, the `tidy()` function from the `broom` package converts most text output into simple tibbles, which are useful for exporting and visualizing results.
+
+```{r}
+library(broom)
+```
+
+## t-tests
+
+We can run one and two samples t-tests to evaluate group means with the `t.test()` function.
+The function supports various options and model specifications: a simple one-sample t-test only requires specifying the variable of interest, either with `x = data$variable` or `x = variable, data = data` syntax.
+For two-sample t-tests, we can use the formula syntax `y ~ x` to specify the dependent and independent variables or the `x` and `y` (and optionally `data`) arguments.
+Additional options include specifying the alternative hypothesis, the confidence level, the value of $\mu$, and whether we want a paired t-test and assume equal variances.
+Helper functions such as `tidy()` convert the Console output to an easy-to-export tibble of results.
+
+To demonstrate two-sample t-tests, we define a subset of the data that contains only two possible values of `cut`.
+
+```{r}
+# simple t-test (H0: mean=mu)
+t.test(diamonds$carat, mu = 1)
+
+# define data subsample of fair and good diamonds to have only two groups of cut
+diamonds_sub <- diamonds |> 
+  filter(cut %in% c("Fair", "Good"))
+
+# can also use data argument instead of data$...
+# price ~ cut is formula specification: variable ~ group
+# H0: fair and good diamonds have the same average price
+t.test(price ~ cut, alternative = "greater", data = diamonds_sub)
+
+# tidy() function turns results into a tibble
+t.test(price ~ cut, alternative = "greater", data = diamonds_sub) |> tidy()
+```
+
+## Correlation test
+
+The `cor.test()` function calculates the correlation between two variables.
+Again, the function supports various specifications: `x` and `y` arguments, formula syntax (see below for an example), and the `data` argument.
+
+```{r}
+cor.test( ~ price + carat, data = diamonds)
+
+# tidy() function turns results into a tibble
+cor.test( ~ price + carat, data = diamonds) |> tidy()
+```
+
+## Simple regression
+
+A key building block of statistical analysis is linear regression.
+The `lm()` function fits a linear model to the data, with a wide range of specifications, passed as the formula argument (first argument if unnamed).
+The formula syntax is `y ~ x`, where `y` is the dependent variable and `x` is the independent variable.
+Again, optional function arguments allow for a lot of customization, but the default settings are sufficient for most applications.
+Helper functions such as `tidy()` and `summary()` provide extensive summaries of the model fit and coefficients, and `tbl_regression()` from the `gtsummary` package creates neat tables of the results.
+Assigning the result of a model to an object saves computational time, as then we can work with the results without having to re-run the analysis every time.
+
+```{r}
+# assign outcome to object
+fit <- lm(price ~ carat, data = diamonds)
+
+# extensive result summary
+fit |> summary()
+
+# tidy coefficients
+fit |> tidy()
+
+# display-ready table with gtsummary
+tbl_regression(fit)
+```
+
+## Multiple regression
+
+Multiple regression extends simple regression to multiple independent variables.
+The only difference is the formula specification, which now connects multiple independent variables with `+` signs.
+The formula specification also allows for interactions between variables, which can be specified with `*` (if the main effects should be included) or `:` (for only the interaction term).
+The `DV ~ .~` syntax includes all variables in the data except the dependent variable as independent variables.
+
+```{r}
+lm(price ~ x + y + z + table + depth, data = diamonds) |> summary()
+
+# all variables in data
+lm(price ~ ., data = diamonds) |> summary()
+
+# interactions
+lm(price ~ x * y, data = diamonds) |> summary()
+```
+
+## ANOVA
+
+Analysis of variance (ANOVA) is a generalization of the t-test to multiple groups.
+The `aov()` function fits an ANOVA model to the data, with the formula syntax `y ~ x`, where `y` is the dependent variable and `x` is the independent variable.
+The same helper functions as with `lm()` can be used to summarize the results.
+
+Note that ANOVA is a specific case of a linear regression model, so the results are equivalent to those of a linear regression model with a categorical independent variable.
+
+```{r}
+anova_fit <- aov(price ~ cut, data = diamonds)
+
+summary(anova_fit)
+tidy(anova_fit)
+
+# equivalent regression
+lm(price ~ cut, data = diamonds) |> summary()
+```
