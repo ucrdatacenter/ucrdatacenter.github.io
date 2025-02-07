@@ -223,7 +223,11 @@ hiroshima_2015 |>
   group_by(Dow) |>
   summarize(HSAD = mean(HSAD)) |>
   ggplot(aes(x = Dow, y = HSAD)) +
-  geom_col()
+  geom_col() +
+  labs(title = "Heatstroke-related Ambulance Dispatches by Day of the Week (2015)",
+       x = "Day of the week",
+       y = "Heatstroke-related Ambulance Dispatches") +
+  theme_minimal()
 ```
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->

@@ -129,7 +129,11 @@ hiroshima_2015 |>
   group_by(Dow) |>
   summarize(HSAD = mean(HSAD)) |>
   ggplot(aes(x = Dow, y = HSAD)) +
-  geom_col()
+  geom_col() +
+  labs(title = "Heatstroke-related Ambulance Dispatches by Day of the Week (2015)",
+       x = "Day of the week",
+       y = "Heatstroke-related Ambulance Dispatches") +
+  theme_minimal()
 ```
 
 We can see that there are more cases of HSAD on days 1 and 7, which refer to Sunday and Saturday, respectively. These results are as expected, as more cases of heatstroke occur most commonly on weekends, especially on Sundays when people tend to take part in sporting or outdoor activities ([source](https://www.channelnewsasia.com/today/ground-up/heatstroke-heat-related-illnesses-dangers-risks-take-precautions-misconceptions-4647621)).
