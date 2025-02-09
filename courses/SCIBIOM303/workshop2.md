@@ -2,7 +2,7 @@
 layout: page
 title: "SCIBIOM303 Workshop 2: Temperature and Heatstroke-related Ambulance Dispatches"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-07"
+date: "Last updated: 2025-02-09"
 output:
   md_document:
     variant: gfm
@@ -61,16 +61,14 @@ temp <- import("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/SC
 We merge the two data sets together. We can do this by using the
 function `left_join()`, which enables us to merge all the columns from
 both data sets together. We join them by the columns ‘Date’ and
-‘Prefecturename’ which are the same in both data sets to avoid having
-double values. Then, to make it easier to work with the columns, we
-remove a column called ‘Prefecture’, as it only refers to the ID number
-of each prefecture. We then rename the column ‘Prefecturename’ to
-‘Prefecture’.
+‘Prefecture’ which are the same in both data sets to avoid having double
+values. We then use the `mutate()` function to convert the Date variable
+to a proper date format with the `dmy()` function, which looks for a
+character string in a day-month-year format.
 
 ``` r
-merged <- left_join(temp, hsad, by = c("Date", "Prefecturename")) |> 
-  select(-Prefecture) |> 
-  rename("Prefecture" = Prefecturename)
+merged <- left_join(temp, hsad, by = c("Date", "Prefecture")) |> 
+  mutate(Date = dmy(Date)) 
 ```
 
 # Choosing a prefecture and a year
@@ -80,14 +78,12 @@ heatstroke-related ambulance dispatches (HSAD) per day in one prefecture
 in one year. We can choose Hiroshima, and the year 2015. We also change
 the variable ‘Date’ from character to a proper date format to better
 visualize it later. We do this by creating a pipeline using the function
-filter() to filter for the selected parameters, and mutate() to change
-the variable ‘Date’.
+filter() to filter for the selected parameters.
 
 ``` r
 hiroshima_2015 <- merged |> 
   filter(Prefecture == "Hiroshima") |> 
-  filter(Year == 2015) |> 
-  mutate(Date = ymd(Date)) 
+  filter(Year == 2015)
 ```
 
 # Creating a plot with Tempmax and HSAD
