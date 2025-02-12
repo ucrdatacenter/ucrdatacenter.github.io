@@ -2,7 +2,7 @@
 layout: page
 title: "SCIBIOM303 Workshop 2: Temperature and Heatstroke-related Ambulance Dispatches"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-09"
+date: "Last updated: 2025-02-12"
 output:
   md_document:
     variant: gfm
@@ -12,32 +12,31 @@ output:
 
 - [Introduction](#introduction)
 - [Loading packages](#loading-packages)
-- [Importing data sets](#importing-data-sets)
-- [Merging the two data sets](#merging-the-two-data-sets)
-- [Choosing a prefecture and a year](#choosing-a-prefecture-and-a-year)
-- [Creating a plot with Tempmax and
-  HSAD](#creating-a-plot-with-tempmax-and-hsad)
-- [Creating a plot with Tempmax and
-  Date](#creating-a-plot-with-tempmax-and-date)
-- [Linear regression analysis](#linear-regression-analysis)
-- [Comparing two prefectures](#comparing-two-prefectures)
-- [Comparing the days of the week](#comparing-the-days-of-the-week)
-- [Creating heat index](#creating-heat-index)
-- [Creating a plot with Heat_Index_C and
-  HSAD](#creating-a-plot-with-heat_index_c-and-hsad)
-- [Linear regression analysis](#linear-regression-analysis-1)
+- [Importing Data](#importing-data)
+- [Merging the Data](#merging-the-data)
+- [Analyzing Data for a Specific Prefecture and
+  Year](#analyzing-data-for-a-specific-prefecture-and-year)
+- [Visualizing the Data](#visualizing-the-data)
+- [Trends Over Time](#trends-over-time)
+- [Linear Regression Analysis](#linear-regression-analysis)
+- [Comparing Two Prefectures](#comparing-two-prefectures)
+- [Dispatches by Day of the Week](#dispatches-by-day-of-the-week)
+- [Creating the Heat Index](#creating-the-heat-index)
+- [Visualizing Heat Index and Ambulance
+  Dispatches](#visualizing-heat-index-and-ambulance-dispatches)
+- [Linear Regression with Heat
+  Index](#linear-regression-with-heat-index)
 
 # Introduction
 
-In this encounter, we will investigate and analyze the relationship
-between temperature and heatstroke-related ambulance dispatches using
-data from Japan. This data offers information about the maximum
-temperature and relative humidity measured per day in all 47 prefectures
-from 2015 to 2019.
+In this encounter, we will explore the relationship between temperature
+and heatstroke-related ambulance dispatches using data from Japan. The
+data contains daily records of maximum temperature and relative humidity
+across all 47 prefectures from 2015 to 2019.
 
 # Loading packages
 
-First, we load the `tidyverse` and `rio` packages. Make sure that all
+We will start by loading the tidyverse and rio packages. Ensure these
 packages are installed before running the code.
 
 ``` r
@@ -47,38 +46,32 @@ library(tidyverse)
 library(rio)
 ```
 
-# Importing data sets
+# Importing Data
 
-We import the data sets for the encounter.
+We will import two data sets: one for heatstroke-related ambulance
+dispatches (HSAD) and one for temperature data.
 
 ``` r
 hsad <- import("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/SCIBIOM303/2025h1/data/HSAD.csv")
 temp <- import("https://github.com/ucrdatacenter/projects/raw/refs/heads/main/SCIBIOM303/2025h1/data/temperature.csv")
 ```
 
-# Merging the two data sets
+# Merging the Data
 
-We merge the two data sets together. We can do this by using the
-function `left_join()`, which enables us to merge all the columns from
-both data sets together. We join them by the columns ‘Date’ and
-‘Prefecture’ which are the same in both data sets to avoid having double
-values. We then use the `mutate()` function to convert the Date variable
-to a proper date format with the `dmy()` function, which looks for a
-character string in a day-month-year format.
+To analyze the relationship between temperature and heatstroke-related
+ambulance dispatches, we will merge the two data sets using the
+left_join() function. We will join them on the columns Date and
+Prefecture. Next, we convert the Date column into a date format.
 
 ``` r
 merged <- left_join(temp, hsad, by = c("Date", "Prefecture")) |> 
   mutate(Date = dmy(Date)) 
 ```
 
-# Choosing a prefecture and a year
+# Analyzing Data for a Specific Prefecture and Year
 
-Now we can investigate the relationship between maximum temperature and
-heatstroke-related ambulance dispatches (HSAD) per day in one prefecture
-in one year. We can choose Hiroshima, and the year 2015. We also change
-the variable ‘Date’ from character to a proper date format to better
-visualize it later. We do this by creating a pipeline using the function
-filter() to filter for the selected parameters.
+We will focus on Hiroshima in 2015 to study the relationship between
+daily maximum temperature and heatstroke-related ambulance dispatches.
 
 ``` r
 hiroshima_2015 <- merged |> 
@@ -86,13 +79,11 @@ hiroshima_2015 <- merged |>
   filter(Year == 2015)
 ```
 
-# Creating a plot with Tempmax and HSAD
+# Visualizing the Data
 
-Now we can create a scatter plot by using the function geom_point() to
-showcase the relationship between the maximum temperature (Tempmax) and
-heatstroke-related ambulance dispatches (HSAD). We also add
-geom_smooth() to showcase a trend line. We can add names of the axes and
-a title of the graph.
+We will create a scatter plot to visualize the relationship between
+maximum temperature and heatstroke-related ambulance dispatches. A trend
+line is added to show the overall pattern.
 
 ``` r
 ggplot(hiroshima_2015, aes(x = Tempmax, y = HSAD)) +
@@ -106,17 +97,16 @@ ggplot(hiroshima_2015, aes(x = Tempmax, y = HSAD)) +
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
-We can see that HSAD is consistently near 0 degrees Celsius between
-temperatures 20-25, and after 30 degrees Celsius, it increases steeply,
-almost in a linear way. This is as expected, as being in environments
-with higher temperature leads to a rise in core body temperature, which
-can lead to the development of heatstroke
+The number of heatstroke-related ambulance dispatches increases
+significantly when the temperature exceeds 30°C. This trend aligns with
+what we expect because higher temperatures can cause a rapid rise in
+core body temperature, leading to heatstroke
 ([source](https://www.mayoclinic.org/diseases-conditions/heat-stroke/symptoms-causes/syc-20353581)).
 
-# Creating a plot with Tempmax and Date
+# Trends Over Time
 
-Now we can create a scatter plot to showcase the trends in the maximum
-temperature (Tempmax) over time (Date) in Hiroshima in 2015.
+We will create another plot to show how maximum temperature changes over
+time in Hiroshima in 2015.
 
 ``` r
 ggplot(hiroshima_2015, aes(x = Date, y = Tempmax)) +
@@ -130,20 +120,14 @@ ggplot(hiroshima_2015, aes(x = Date, y = Tempmax)) +
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-We can see that the temperature starts rising in June and peaks in
-August (\>35 degrees Celsius), and then declines again until October.
-This is what we would expect, as this is the typical pattern in
-temperature in Hiroshima across these months
+The temperature rises in June, peaks in August (above 35°C), and then
+decreases in October. This seasonal pattern is typical for Hiroshima
 ([source](https://www.climatestotravel.com/climate/japan/hiroshima)).
 
-# Linear regression analysis
+# Linear Regression Analysis
 
-We can perform a linear regression analysis to analyze if there is a
-relationship between maximum temperature (Tempmax) and
-heatstroke-related ambulance dispatches (HSAD) in Hiroshima in 2015. We
-can do this by simply using the functions lm(), to perform the linear
-regression analysis, and then summary(), to summarize and show the
-results of the analysis.
+To quantify the relationship between temperature and heatstroke-related
+ambulance dispatches, we perform a linear regression analysis.
 
 ``` r
 lr <- lm(HSAD ~ Tempmax, data = hiroshima_2015)
@@ -169,17 +153,15 @@ summary(lr)
     ## Multiple R-squared:  0.6193, Adjusted R-squared:  0.6161 
     ## F-statistic:   192 on 1 and 118 DF,  p-value: < 2.2e-16
 
-The results show that R-squared = 0.6193; this means that about 61.93%
-of the variability in HSAD is explained by Tempmax. This indicates a
-moderate to strong positive relationship between temperature and heat
-stroke-related ambulance dispatches.
+The R-squared value of 0.6193 indicates that about 61.93% of the
+variability in ambulance dispatches can be explained by the maximum
+temperature. This suggests a strong positive relationship between HSAD
+and temperature.
 
-# Comparing two prefectures
+# Comparing Two Prefectures
 
-Now we can compare the relationship in two prefectures in the same year.
-We can choose Hiroshima and Kyoto in 2015. We can do this by creating a
-pipeline using our merged data set. We filter for the two prefectures
-and the year, and then we make a line graph using geom_smooth().
+Next, we will compare the relationship between temperature and ambulance
+dispatches in Hiroshima and Kyoto in 2015 using a line graph.
 
 ``` r
 merged |> 
@@ -195,24 +177,14 @@ merged |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-This graphs shows similar trends in the relationship between temperature
-and heatstroke-related ambulance dispatches in both prefectures. While
-specific studies comparing Hiroshima and Kyoto are limited, research
-suggests a consistent relationship between higher temperatures and
-increased heatstroke-related ambulance dispatches across various regions
-in Japan ([source](https://doi.org/10.3961/jpmph.2012.45.5.309)).
+Both prefectures show similar trends, with the number of dispatches
+increasing as temperature rises
+([source](https://doi.org/10.3961/jpmph.2012.45.5.309)).
 
-# Comparing the days of the week
+# Dispatches by Day of the Week
 
-Now we can investigate whether there is a difference between the number
-of dispatches during the week and during the weekend. We can use
-Hiroshima in 2015 as an example. We create a pipeline; we use the
-group_by() function to group rows by the day of the week variable (Dow).
-Next, within summarize(), which reduces multiple rows in each group to a
-single summary value, we apply mean() to calculate the average number of
-heatstroke-related ambulance dispatches for each day of the week. Then
-we can create a bar chart to show the average number of dispatches per
-day during the week.
+We can also analyze the average number of dispatches by the day of the
+week.
 
 ``` r
 hiroshima_2015 |>
@@ -228,21 +200,24 @@ hiroshima_2015 |>
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-We can see that there are more cases of HSAD on days 1 and 7, which
-refer to Sunday and Saturday, respectively. These results are as
-expected, as more cases of heatstroke occur most commonly on weekends,
-especially on Sundays when people tend to take part in sporting or
-outdoor activities
+There are more dispatches on days 1 and 7, which correspond to Sunday
+and Saturday, respectively. This is expected, as heatstroke cases are
+more frequent on weekends, especially on Sundays when people engage in
+outdoor or sporting activities
 ([source](https://www.channelnewsasia.com/today/ground-up/heatstroke-heat-related-illnesses-dangers-risks-take-precautions-misconceptions-4647621)).
 
-# Creating heat index
+# Creating the Heat Index
 
-Now we can create a new variable called heat index. This measure is
-calculated from temperature and humidity. First we need to convert the
-temperature from Celsius to Fahrenheit and create a new variable called
-Temp_F; then we calculate the heat index in Fahrenheit (Heat_Index_F),
-and then we convert it to Celsius (Heat_Index_C). To do this, we use the
-function mutate() to create these new variables.
+The heat index, also known as the “feels-like” temperature, is
+calculated using temperature and humidity to reflect how hot it feels to
+the human body. This formula was developed by Robert G. Steadman in 1979
+and later adapted by the National Weather Service. It accounts for the
+reduced ability of the body to cool itself through sweating in
+high-humidity conditions, making it a crucial indicator for heat-related
+health risks ([source](https://www.weather.gov/ama/heatindex)).
+
+We first convert the temperature to Fahrenheit to calculate the heat
+index, then convert it back to Celsius.
 
 ``` r
 hiroshima_lr_data <- hiroshima_2015 %>%
@@ -260,12 +235,10 @@ hiroshima_lr_data <- hiroshima_2015 %>%
     Heat_Index_C = (Heat_Index_F - 32) * 5 / 9)
 ```
 
-# Creating a plot with Heat_Index_C and HSAD
+# Visualizing Heat Index and Ambulance Dispatches
 
-Now we can create a plot to show the relationship between the heat index
-and HSAD. We use the same code as in the first plot, but we use the
-hiroshima_lr_data and instead of maximum temperature, we use the heat
-index in Celsius (Heat_Index_C) on the x-axis.
+We will create a plot to show the relationship between the heat index
+and ambulance dispatches.
 
 ``` r
 ggplot(hiroshima_lr_data, aes(x = Heat_Index_C, y = HSAD)) +
@@ -279,17 +252,15 @@ ggplot(hiroshima_lr_data, aes(x = Heat_Index_C, y = HSAD)) +
 
 ![](workshop2_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
-We can see that heat index is consistently near 0 between temperatures
-20-30, and after 30 degrees Celsius, it increases sharply in an almost
-linear way. This is as expected, as the heat index positively correlates
-with the rate of onset for heat stroke
+The number of dispatches rises sharply after the heat index exceeds
+30°C, confirming that the heat index is a strong predictor of
+heat-related emergencies
 ([source](https://doi.org/10.1186/s40779-015-0056-z)).
 
-# Linear regression analysis
+# Linear Regression with Heat Index
 
-We can perform a linear regression analysis to analyze if there is a
-relationship between the heat index (Heat_Index_C) and
-heatstroke-related ambulance dispatches (HSAD) in Hiroshima in 2015.
+Finally, we perform a linear regression analysis using the heat index to
+predict ambulance dispatches.
 
 ``` r
 lr2 <- lm(HSAD ~ Heat_Index_C, data = hiroshima_lr_data)
@@ -315,7 +286,6 @@ summary(lr2)
     ## Multiple R-squared:  0.7222, Adjusted R-squared:  0.7198 
     ## F-statistic: 306.8 on 1 and 118 DF,  p-value: < 2.2e-16
 
-The results show that R-squared = 0.7222; this means that about 72.22%
-of the variability in HSAD is explained by the heat index. This
-indicates an even stronger positive relationship between the heat index
-and heat stroke-related ambulance dispatches.
+The R-squared value is 0.7222, meaning that 72.22% of the variability in
+dispatches can be explained by the heat index. This suggests the heat
+index is an even stronger predictor than temperature alone.
