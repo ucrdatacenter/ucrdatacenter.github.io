@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Save the Date: DataFest 2025
+title: Save the Date of DataFest 2025
 subtitle: Use Data Science to Tackle Global Challenges
 thumbnail-img: /assets/img/datafest.jpg
 share-img: /assets/img/datafest.jpg
