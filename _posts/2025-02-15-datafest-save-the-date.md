@@ -15,3 +15,5 @@ Do you want to know more about what DataFest looks like?
 Have a look at the [DataFest](https://jrczdatafest.com/) website about the 2024 and 2023 editions!
 
 Stay tuned for more information, including the topic of the dataset and registration details!
+
+![DataFest 2025](/assets/img/datafest.jpg)
