@@ -29,6 +29,7 @@ rio::import("https://docs.google.com/spreadsheets/d/1qY-Fj_ck1O-hV2BS-Oc789CcATX
                                     ~htmltools::a(href = .x, "Link")),
          `Teams Meeting Link` = map(`Teams Meeting Link`, 
                                     ~gt::html(as.character(.x)))) |> 
+  filter(!Week %in% 4:7) |> 
   gt::gt() 
 ```
 
