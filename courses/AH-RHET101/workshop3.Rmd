@@ -29,7 +29,7 @@ The first workshop will cover the following topics (each topic links to a separa
 1. [Objects and functions](../../../tutorials/r_objects)
 1. [Data wrangling: filtering rows and selecting columns](../../../tutorials/r_intro_subset) (`filter()` only)
 1. [The tidy workflow](../../../tutorials/r_intro_pipe)
-1. [Text analysis in R](../../../tutorias/r_text)
+1. [Text analysis in R](../../../tutorials/r_text)
 1. [Data visualization: introduction to `ggplot`](../../../tutorials/r_ggplot_intro)
 1. [Data visualization: relationships between variables](../../../tutorials/r_ggplot_bivariate) (bar charts only)
 

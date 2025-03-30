@@ -28,7 +28,7 @@ a separate tutorial with additional details and a video explanation):
 2.  [Data wrangling: filtering rows and selecting
     columns](../../../tutorials/r_intro_subset) (`filter()` only)
 3.  [The tidy workflow](../../../tutorials/r_intro_pipe)
-4.  [Text analysis in R](../../../tutorias/r_text)
+4.  [Text analysis in R](../../../tutorials/r_text)
 5.  [Data visualization: introduction to
     `ggplot`](../../../tutorials/r_ggplot_intro)
 6.  [Data visualization: relationships between
