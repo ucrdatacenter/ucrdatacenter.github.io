@@ -2,7 +2,7 @@
 layout: page
 title: "AH-RHET101<br> Introduction to Rhetoric and Argumentation"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-04"
+date: "Last updated: 2025-03-30"
 output:
   md_document:
     variant: gfm
@@ -15,6 +15,13 @@ output:
 - [Preparation for Data Center
   workshops](#preparation-for-data-center-workshops)
 - [Workshop materials](#workshop-materials)
+  - [Workshops 1 (Digital Humanities) and 2 (Sketch
+    Engine)](#workshops-1-digital-humanities-and-2-sketch-engine)
+  - [Workshop 3: Introduction to R](#workshop-3-introduction-to-r)
+  - [Workshop 4: Sentiment analysis in
+    R](#workshop-4-sentiment-analysis-in-r)
+- [Homework assignment after workshop
+  4](#homework-assignment-after-workshop-4)
 
 # Introduction
 
@@ -44,4 +51,18 @@ Please bring your fully charged laptop to all Data Center workshops.
 
 # Workshop materials
 
-**To be added.**
+## Workshops 1 (Digital Humanities) and 2 (Sketch Engine)
+
+Please see the course Moodle page.
+
+## Workshop 3: Introduction to R
+
+Please find the workshop handout [here](workshop3).
+
+## Workshop 4: Sentiment analysis in R
+
+Please find the workshop handout [here](workshop4).
+
+# Homework assignment after workshop 4
+
+TBA
