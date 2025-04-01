@@ -2,7 +2,7 @@
 layout: page
 title: "Generative AI"
 subtitle: "AI in your daily life"
-date: "Last updated: 2025-03-17"
+date: "Last updated: 2025-04-01"
 output:
   md_document:
     variant: gfm
@@ -25,20 +25,20 @@ sign-ups necessary. We hope to see you there!
 
 # Workshop schedule
 
-<div id="bucijndnzi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bucijndnzi table {
+<div id="blkzzhvvxy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#blkzzhvvxy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#bucijndnzi thead, #bucijndnzi tbody, #bucijndnzi tfoot, #bucijndnzi tr, #bucijndnzi td, #bucijndnzi th {
+&#10;#blkzzhvvxy thead, #blkzzhvvxy tbody, #blkzzhvvxy tfoot, #blkzzhvvxy tr, #blkzzhvvxy td, #blkzzhvvxy th {
   border-style: none;
 }
-&#10;#bucijndnzi p {
+&#10;#blkzzhvvxy p {
   margin: 0;
   padding: 0;
 }
-&#10;#bucijndnzi .gt_table {
+&#10;#blkzzhvvxy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -63,11 +63,11 @@ sign-ups necessary. We hope to see you there!
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_caption {
+&#10;#blkzzhvvxy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#bucijndnzi .gt_title {
+&#10;#blkzzhvvxy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -78,7 +78,7 @@ sign-ups necessary. We hope to see you there!
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#bucijndnzi .gt_subtitle {
+&#10;#blkzzhvvxy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -89,7 +89,7 @@ sign-ups necessary. We hope to see you there!
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#bucijndnzi .gt_heading {
+&#10;#blkzzhvvxy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -100,12 +100,12 @@ sign-ups necessary. We hope to see you there!
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_bottom_border {
+&#10;#blkzzhvvxy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_col_headings {
+&#10;#blkzzhvvxy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -119,7 +119,7 @@ sign-ups necessary. We hope to see you there!
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_col_heading {
+&#10;#blkzzhvvxy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -138,7 +138,7 @@ sign-ups necessary. We hope to see you there!
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#bucijndnzi .gt_column_spanner_outer {
+&#10;#blkzzhvvxy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -149,13 +149,13 @@ sign-ups necessary. We hope to see you there!
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#bucijndnzi .gt_column_spanner_outer:first-child {
+&#10;#blkzzhvvxy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#bucijndnzi .gt_column_spanner_outer:last-child {
+&#10;#blkzzhvvxy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#bucijndnzi .gt_column_spanner {
+&#10;#blkzzhvvxy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -166,10 +166,10 @@ sign-ups necessary. We hope to see you there!
   display: inline-block;
   width: 100%;
 }
-&#10;#bucijndnzi .gt_spanner_row {
+&#10;#blkzzhvvxy .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#bucijndnzi .gt_group_heading {
+&#10;#blkzzhvvxy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -194,7 +194,7 @@ sign-ups necessary. We hope to see you there!
   vertical-align: middle;
   text-align: left;
 }
-&#10;#bucijndnzi .gt_empty_group_heading {
+&#10;#blkzzhvvxy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -208,13 +208,13 @@ sign-ups necessary. We hope to see you there!
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#bucijndnzi .gt_from_md > :first-child {
+&#10;#blkzzhvvxy .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#bucijndnzi .gt_from_md > :last-child {
+&#10;#blkzzhvvxy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#bucijndnzi .gt_row {
+&#10;#blkzzhvvxy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -232,7 +232,7 @@ sign-ups necessary. We hope to see you there!
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#bucijndnzi .gt_stub {
+&#10;#blkzzhvvxy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -244,7 +244,7 @@ sign-ups necessary. We hope to see you there!
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#bucijndnzi .gt_stub_row_group {
+&#10;#blkzzhvvxy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -257,13 +257,13 @@ sign-ups necessary. We hope to see you there!
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#bucijndnzi .gt_row_group_first td {
+&#10;#blkzzhvvxy .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#bucijndnzi .gt_row_group_first th {
+&#10;#blkzzhvvxy .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#bucijndnzi .gt_summary_row {
+&#10;#blkzzhvvxy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -272,14 +272,14 @@ sign-ups necessary. We hope to see you there!
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#bucijndnzi .gt_first_summary_row {
+&#10;#blkzzhvvxy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_first_summary_row.thick {
+&#10;#blkzzhvvxy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#bucijndnzi .gt_last_summary_row {
+&#10;#blkzzhvvxy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -288,7 +288,7 @@ sign-ups necessary. We hope to see you there!
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_grand_summary_row {
+&#10;#blkzzhvvxy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -297,7 +297,7 @@ sign-ups necessary. We hope to see you there!
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#bucijndnzi .gt_first_grand_summary_row {
+&#10;#blkzzhvvxy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -306,7 +306,7 @@ sign-ups necessary. We hope to see you there!
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_last_grand_summary_row_top {
+&#10;#blkzzhvvxy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -315,10 +315,10 @@ sign-ups necessary. We hope to see you there!
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_striped {
+&#10;#blkzzhvvxy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#bucijndnzi .gt_table_body {
+&#10;#blkzzhvvxy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -326,7 +326,7 @@ sign-ups necessary. We hope to see you there!
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_footnotes {
+&#10;#blkzzhvvxy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -339,7 +339,7 @@ sign-ups necessary. We hope to see you there!
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_footnote {
+&#10;#blkzzhvvxy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -347,7 +347,7 @@ sign-ups necessary. We hope to see you there!
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#bucijndnzi .gt_sourcenotes {
+&#10;#blkzzhvvxy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -360,64 +360,64 @@ sign-ups necessary. We hope to see you there!
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#bucijndnzi .gt_sourcenote {
+&#10;#blkzzhvvxy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#bucijndnzi .gt_left {
+&#10;#blkzzhvvxy .gt_left {
   text-align: left;
 }
-&#10;#bucijndnzi .gt_center {
+&#10;#blkzzhvvxy .gt_center {
   text-align: center;
 }
-&#10;#bucijndnzi .gt_right {
+&#10;#blkzzhvvxy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#bucijndnzi .gt_font_normal {
+&#10;#blkzzhvvxy .gt_font_normal {
   font-weight: normal;
 }
-&#10;#bucijndnzi .gt_font_bold {
+&#10;#blkzzhvvxy .gt_font_bold {
   font-weight: bold;
 }
-&#10;#bucijndnzi .gt_font_italic {
+&#10;#blkzzhvvxy .gt_font_italic {
   font-style: italic;
 }
-&#10;#bucijndnzi .gt_super {
+&#10;#blkzzhvvxy .gt_super {
   font-size: 65%;
 }
-&#10;#bucijndnzi .gt_footnote_marks {
+&#10;#blkzzhvvxy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#bucijndnzi .gt_asterisk {
+&#10;#blkzzhvvxy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#bucijndnzi .gt_indent_1 {
+&#10;#blkzzhvvxy .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#bucijndnzi .gt_indent_2 {
+&#10;#blkzzhvvxy .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#bucijndnzi .gt_indent_3 {
+&#10;#blkzzhvvxy .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#bucijndnzi .gt_indent_4 {
+&#10;#blkzzhvvxy .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#bucijndnzi .gt_indent_5 {
+&#10;#blkzzhvvxy .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#bucijndnzi .katex-display {
+&#10;#blkzzhvvxy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#bucijndnzi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#blkzzhvvxy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -449,19 +449,19 @@ sign-ups necessary. We hope to see you there!
 <td headers="Theme" class="gt_row gt_left">Writing in Collaboration with AI</td>
 <td headers="Teams Meeting Link" class="gt_row gt_center"><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZjExNWYyMjUtYmU3OS00NjZmLWIwNTYtZmVjMDk4ODM5NDJh%40thread.v2/0?context=%7b%22Tid%22%3a%2263817156-fe48-40a1-8277-19db53d4dc59%22%2c%22Oid%22%3a%22990a9d0c-2360-44a5-a12a-7400af696e17%22%7d">Link</a></td></tr>
     <tr><td headers="Week" class="gt_row gt_right">9</td>
-<td headers="Date" class="gt_row gt_left">TBA</td>
-<td headers="Day" class="gt_row gt_left">TBA</td>
+<td headers="Date" class="gt_row gt_left">4 Apr</td>
+<td headers="Day" class="gt_row gt_left">Friday</td>
 <td headers="Time" class="gt_row gt_right">13:10-13:35</td>
 <td headers="Room" class="gt_row gt_left">A-21</td>
-<td headers="Theme" class="gt_row gt_left">TBA</td>
-<td headers="Teams Meeting Link" class="gt_row gt_center"><a href="">Link</a></td></tr>
+<td headers="Theme" class="gt_row gt_left">Marketing with AI</td>
+<td headers="Teams Meeting Link" class="gt_row gt_center"><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZGExYTEyNDEtOTdlOS00NDdhLWE2ZDQtNjEyODdhNDZiNTg3%40thread.v2/0?context=%7b%22Tid%22%3a%2263817156-fe48-40a1-8277-19db53d4dc59%22%2c%22Oid%22%3a%22990a9d0c-2360-44a5-a12a-7400af696e17%22%7d">Link</a></td></tr>
     <tr><td headers="Week" class="gt_row gt_right">10</td>
-<td headers="Date" class="gt_row gt_left">TBA</td>
-<td headers="Day" class="gt_row gt_left">TBA</td>
+<td headers="Date" class="gt_row gt_left">11 Apr</td>
+<td headers="Day" class="gt_row gt_left">Friday</td>
 <td headers="Time" class="gt_row gt_right">13:10-13:35</td>
 <td headers="Room" class="gt_row gt_left">A-21</td>
-<td headers="Theme" class="gt_row gt_left">TBA</td>
-<td headers="Teams Meeting Link" class="gt_row gt_center"><a href="">Link</a></td></tr>
+<td headers="Theme" class="gt_row gt_left">Exam Question Generation</td>
+<td headers="Teams Meeting Link" class="gt_row gt_center"><a href="https://teams.microsoft.com/l/meetup-join/19%3ameeting_MTMxODBlNmItMjVkOS00Yzg2LTg4MzMtNWFjMTE2Yzc3ZDAy%40thread.v2/0?context=%7b%22Tid%22%3a%2263817156-fe48-40a1-8277-19db53d4dc59%22%2c%22Oid%22%3a%22990a9d0c-2360-44a5-a12a-7400af696e17%22%7d">Link</a></td></tr>
     <tr><td headers="Week" class="gt_row gt_right">11</td>
 <td headers="Date" class="gt_row gt_left">TBA</td>
 <td headers="Day" class="gt_row gt_left">TBA</td>
