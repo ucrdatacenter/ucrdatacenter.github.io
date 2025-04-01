@@ -182,9 +182,9 @@ explicitly name them to save us some time.
 However, we still do not see a histogram, so now we need to add a layer
 that actually tells ggplot that we want the plot to be a histogram.
 
-The layers that define the type of plot are known as `geoms()`. There
-are many different geoms, but we want to create a histogram, so we will
-use the `geom_histogram()` function.
+The layers that define the type of plot are known as `geoms`. There are
+many different geoms, but we want to create a histogram, so we will use
+the `geom_histogram()` function.
 
 ``` r
 ggplot(data_plotting, aes(x = Weight)) +
