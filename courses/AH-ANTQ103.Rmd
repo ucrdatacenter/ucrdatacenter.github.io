@@ -35,4 +35,14 @@ Please bring your fully charged laptop to all Data Center workshops.
 
 # Workshop materials
 
-**To be added.**
+## Workshop 1
+
+[Link](workshop1) to the workshop page.
+
+## Workshop 2
+
+[Link](workshop2) to the workshop page.
+
+## Workshop 3
+
+[Link](workshop3) to the workshop page.

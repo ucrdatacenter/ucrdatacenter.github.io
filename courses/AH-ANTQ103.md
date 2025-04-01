@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103<br> Introduction to Archaeology"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-02-04"
+date: "Last updated: 2025-04-01"
 output:
   md_document:
     variant: gfm
@@ -15,6 +15,9 @@ output:
 - [Preparation for Data Center
   workshops](#preparation-for-data-center-workshops)
 - [Workshop materials](#workshop-materials)
+  - [Workshop 1](#workshop-1)
+  - [Workshop 2](#workshop-2)
+  - [Workshop 3](#workshop-3)
 
 # Introduction
 
@@ -43,4 +46,14 @@ Please bring your fully charged laptop to all Data Center workshops.
 
 # Workshop materials
 
-**To be added.**
+## Workshop 1
+
+[Link](workshop1) to the workshop page.
+
+## Workshop 2
+
+[Link](workshop2) to the workshop page.
+
+## Workshop 3
+
+[Link](workshop3) to the workshop page.
