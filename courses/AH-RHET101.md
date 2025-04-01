@@ -2,7 +2,7 @@
 layout: page
 title: "AH-RHET101<br> Introduction to Rhetoric and Argumentation"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-03-30"
+date: "Last updated: 2025-04-01"
 output:
   md_document:
     variant: gfm
@@ -18,10 +18,12 @@ output:
   - [Workshops 1 (Digital Humanities) and 2 (Sketch
     Engine)](#workshops-1-digital-humanities-and-2-sketch-engine)
   - [Workshop 3: Introduction to R](#workshop-3-introduction-to-r)
+  - [Homework assignment after workshop
+    3](#homework-assignment-after-workshop-3)
   - [Workshop 4: Sentiment analysis in
     R](#workshop-4-sentiment-analysis-in-r)
-- [Homework assignment after workshop
-  4](#homework-assignment-after-workshop-4)
+  - [Homework assignment after workshop
+    4](#homework-assignment-after-workshop-4)
 
 # Introduction
 
@@ -59,10 +61,19 @@ Please see the course Moodle page.
 
 Please find the workshop handout [here](workshop3).
 
+## Homework assignment after workshop 3
+
+TBA
+
 ## Workshop 4: Sentiment analysis in R
 
 Please find the workshop handout [here](workshop4).
 
-# Homework assignment after workshop 4
+## Homework assignment after workshop 4
 
-TBA
+Please open [this
+link](https://github.com/ucrdatacenter/projects/blob/main/AH-RHET101/2025h1/workshop4_homework.Rmd),
+and click on the “Download raw file” button (top right corner, with the
+downward pointing arrow). Save the file in your R project directory.
+Open the file in RStudio, and follow the instructions in the document to
+complete the assignment.

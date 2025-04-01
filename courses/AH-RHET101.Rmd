@@ -43,10 +43,16 @@ Please see the course Moodle page.
 
 Please find the workshop handout [here](workshop3).
 
+## Homework assignment after workshop 3
+
+TBA
+
 ## Workshop 4: Sentiment analysis in R
 
 Please find the workshop handout [here](workshop4).
 
-# Homework assignment after workshop 4
+## Homework assignment after workshop 4
 
-TBA
+Please open [this link](https://github.com/ucrdatacenter/projects/blob/main/AH-RHET101/2025h1/workshop4_homework.Rmd), and click on the "Download raw file" button (top right corner, with the downward pointing arrow).
+Save the file in your R project directory.
+Open the file in RStudio, and follow the instructions in the document to complete the assignment.
