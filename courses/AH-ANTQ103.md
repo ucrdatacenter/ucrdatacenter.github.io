@@ -18,6 +18,7 @@ output:
   - [Workshop 1](#workshop-1)
   - [Workshop 2](#workshop-2)
   - [Workshop 3](#workshop-3)
+- [Example of what you will learn](#example-of-what-you-will-learn)
 
 # Introduction
 
@@ -57,3 +58,7 @@ Please bring your fully charged laptop to all Data Center workshops.
 ## Workshop 3
 
 [Link](workshop3) to the workshop page.
+
+# Example of what you will learn
+
+![](workshop3_files/figure-gfm/plot_3-1.png)

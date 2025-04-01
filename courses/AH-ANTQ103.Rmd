@@ -46,3 +46,7 @@ Please bring your fully charged laptop to all Data Center workshops.
 ## Workshop 3
 
 [Link](workshop3) to the workshop page.
+
+# Example of what you will learn
+
+![](workshop3_files/figure-gfm/plot_3-1.png)
