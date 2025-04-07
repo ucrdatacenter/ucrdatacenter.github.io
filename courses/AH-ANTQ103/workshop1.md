@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 1"
 subtitle: "Spring 2024"
-date: "Last updated: 2025-04-01"
+date: "Last updated: 2025-04-07"
 output:
   md_document:
     variant: gfm
@@ -171,7 +171,7 @@ we can create a tibble, a specialized type of data frame that you can
 view as a table for simplicity.
 
 ``` r
-tibble <- tibble(
+data <- tibble(
   name = c("Paul", "John", "George", "Ringo"),
   age = c(21, 23, 20, 23)
 )
@@ -180,19 +180,19 @@ tibble <- tibble(
 We then have several ways to look at the data. Try them out!
 
 ``` r
-print(tibble)
-View(tibble)
-glimpse(tibble)
+print(data)
+View(data)
+glimpse(data)
 ```
 
 If we have a data set focussed on numeric variables, we can use the
 `summary` function to get a quick overview of the data.
 
 ``` r
-summary(tibble)
+summary(data)
 ```
 
-Alternatively, we can also try and click on our `tibble` in the
+Alternatively, we can also try and click on our `data` in the
 environment panel, which automatically opens the tibble up and spares
 you from writing some additional code.
 
@@ -204,7 +204,7 @@ be typed by pressing Ctrl + Shift + M, as well as by typing `|>`
 manually.
 
 ``` r
-tibble |> 
+data |> 
   View()
 ```
 
@@ -219,7 +219,7 @@ The `filter()` function allows us to filter rows in a tibble. This is
 useful for selecting a subset of the data.
 
 ``` r
-tibble |> 
+data |> 
   filter(age > 20)
 ```
 
@@ -252,7 +252,7 @@ The `select()` function allows us to select columns in a tibble. This is
 useful for selecting a subset of the data.
 
 ``` r
-tibble |> 
+data |> 
   select(name)
 ```
 
@@ -262,7 +262,7 @@ The `mutate()` function allows us to create new columns in a tibble.
 This is very useful for creating new variables.
 
 ``` r
-tibble |>
+data |>
   mutate(age_squared = age ^ 2)
 ```
 
@@ -278,7 +278,7 @@ When you want to enter a `NA` value into your data, simply type it like
 any other value.
 
 ``` r
-tibble <- tibble(
+data <- tibble(
   name = c("Paul", "John", "George", "Ringo"),
   age = c(21, NA, 20, 23)
 )
@@ -288,7 +288,7 @@ If we want to know what rows contain `NA` values, we can use the
 `is.na()` function inside the `filter()`.
 
 ``` r
-tibble |>
+data |>
   filter(is.na(age))
 ```
 
@@ -305,9 +305,8 @@ Using the “not” operator (`!`) we could also filter rows that do not
 contain `NA` values.
 
 ``` r
-tibble |> 
-  filter(!is.na(age)) |> 
-  print()
+data |> 
+  filter(!is.na(age))
 ```
 
 ## 13. Loading external data
@@ -342,7 +341,7 @@ information useful to you.
 2)  Filter the tibble to only contain rows where the age in 20 years is
     greater than 40.
 
-3)  Print the tibble.
+3)  Display the resulting tibble.
 
 ## Assignment 2
 

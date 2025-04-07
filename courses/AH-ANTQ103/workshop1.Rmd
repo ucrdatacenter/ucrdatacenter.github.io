@@ -134,7 +134,7 @@ We can now use data structures from the tidyverse package.
 For example, we can create a tibble, a specialized type of data frame that you can view as a table for simplicity.
 
 ```{r packages4, eval=FALSE}
-tibble <- tibble(
+data <- tibble(
   name = c("Paul", "John", "George", "Ringo"),
   age = c(21, 23, 20, 23)
 )
@@ -144,18 +144,18 @@ We then have several ways to look at the data.
 Try them out!
 
 ```{r packages6, eval=FALSE}
-print(tibble)
-View(tibble)
-glimpse(tibble)
+print(data)
+View(data)
+glimpse(data)
 ```
 
 If we have a data set focussed on numeric variables, we can use the `summary` function to get a quick overview of the data.
 
 ```{r packages7, eval=FALSE}
-summary(tibble)
+summary(data)
 ```
 
-Alternatively, we can also try and click on our `tibble` in the environment panel, which automatically opens the tibble up and spares you from writing some additional code.
+Alternatively, we can also try and click on our `data` in the environment panel, which automatically opens the tibble up and spares you from writing some additional code.
 
 ## 7. The pipe operator
 
@@ -165,7 +165,7 @@ This makes our code more readable.
 It can be typed by pressing Ctrl + Shift + M, as well as by typing `|>` manually.
 
 ```{r pipe, eval=FALSE}
-tibble |> 
+data |> 
   View()
 ```
 
@@ -178,7 +178,7 @@ The `filter()` function allows us to filter rows in a tibble.
 This is useful for selecting a subset of the data.
 
 ```{r filter, eval=FALSE}
-tibble |> 
+data |> 
   filter(age > 20)
 ```
 
@@ -208,7 +208,7 @@ The `select()` function allows us to select columns in a tibble.
 This is useful for selecting a subset of the data.
 
 ```{r select, eval=FALSE}
-tibble |> 
+data |> 
   select(name)
 ```
 
@@ -218,7 +218,7 @@ The `mutate()` function allows us to create new columns in a tibble.
 This is very useful for creating new variables.
 
 ```{r mutate, eval=FALSE}
-tibble |>
+data |>
   mutate(age_squared = age ^ 2)
 ```
 
@@ -232,7 +232,7 @@ These are values that are not defined.
 When you want to enter a `NA` value into your data, simply type it like any other value.
 
 ```{r na, eval=FALSE}
-tibble <- tibble(
+data <- tibble(
   name = c("Paul", "John", "George", "Ringo"),
   age = c(21, NA, 20, 23)
 )
@@ -241,7 +241,7 @@ tibble <- tibble(
 If we want to know what rows contain `NA` values, we can use the `is.na()` function inside the `filter()`.
 
 ```{r na2, eval=FALSE}
-tibble |>
+data |>
   filter(is.na(age))
 ```
 
@@ -254,9 +254,8 @@ We do not require an operational operator here, because the `is.na()` function a
 Using the "not" operator (`!`) we could also filter rows that do not contain `NA` values.
 
 ```{r na3, eval=FALSE}
-tibble |> 
-  filter(!is.na(age)) |> 
-  print()
+data |> 
+  filter(!is.na(age))
 ```
 
 ## 13. Loading external data
@@ -282,7 +281,7 @@ a)  Based on the tibble we created in step 6, create a new column called age_in_
 
 b)  Filter the tibble to only contain rows where the age in 20 years is greater than 40.
 
-c)  Print the tibble.
+c)  Display the resulting tibble.
 
 ## Assignment 2
 
