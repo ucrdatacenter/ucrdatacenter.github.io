@@ -1,8 +1,8 @@
 ---
 layout: page
 title: "AH-ANTQ103: Workshop 2"
-subtitle: "Spring 2024"
-date: "Last updated: 2025-04-01"
+subtitle: "Spring 2025"
+date: "Last updated: 2025-04-07"
 output:
   md_document:
     variant: gfm

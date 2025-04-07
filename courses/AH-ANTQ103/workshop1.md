@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "AH-ANTQ103: Workshop 1"
-subtitle: "Spring 2024"
+subtitle: "Spring 2025"
 date: "Last updated: 2025-04-07"
 output:
   md_document:
