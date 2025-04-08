@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 3"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-04-07"
+date: "Last updated: 2025-04-08"
 output:
   md_document:
     variant: gfm
@@ -12,6 +12,7 @@ output:
 
 - [Data](#data)
 - [Text analysis](#text-analysis)
+- [8. The `separate()` function](#the-separate-function)
 - [Fuzzy dates](#fuzzy-dates)
 - [Homework assignments](#homework-assignments)
   - [Assignment 1](#assignment-1)
@@ -101,7 +102,7 @@ data sets for such irregularities and to clean it to the best of your
 abilities using the functions you have learned so far before starting
 your analysis.
 
-## Text analysis
+# Text analysis
 
 Now that we know that there are no rows with missing data, and no rows
 with the same vase number, we can start looking at the data in more
@@ -233,8 +234,15 @@ ggplot(word_counts_top_20, aes(x = reorder(word, n), y = n)) +
 
 ![](workshop3_files/figure-gfm/plot-1.png)<!-- -->
 
-Briefly think about what conclusions you can draw from this graph as an
-archaeologist researching these vases the people who created them.
+The prominence of mythological and religious imagery (Dionysos, maenads,
+satyrs) aligns with the cultural and religious significance of religion,
+particularly the cult of Dionysus in ancient Greece Additionally, the
+frequent mention of youths and warriors suggests a focus on themes of
+heroism, mythology, and possibly Athenian social ideals. Overall, the
+dominance of body and draped figures highlights the stylistic focus on
+human representation in this vase art.
+
+# 8. The `separate()` function
 
 For the homework, the `separate()` function is essential. This function
 takes a tibble, a column name, a new column name and a separator. It
@@ -319,10 +327,14 @@ ggplot(data_plotting, aes(x = Date_mean, fill = Technique)) +
 ![](workshop3_files/figure-gfm/plot_1-1.png)<!-- -->
 
 Our plot shows us that black figures were very popular around in 500
-BCE, becoming more regular in the century preceding it, but then got
+BCE, becoming more regular in the century preceding it, but then getting
 almost completely replaced by red figures which were very popular around
 400 BCE. We can also see that the total number of vases declined after
-500 BCE.
+500 BCE. The shift from Black-Figure to Red-Figure aligns with artistic
+and technological advancements in Athens, particularly during the Late
+Archaic and Classical periods. Red-Figure allowed for greater detail and
+naturalistic depictions, leading to its dominance in the Classical
+period.
 
 This is one way to deal with the dates, which gives us some insights.
 However, we can also keep them fuzzy, which, in some scenarios, is the

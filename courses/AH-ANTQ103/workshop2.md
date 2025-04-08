@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 2"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-04-07"
+date: "Last updated: 2025-04-08"
 output:
   md_document:
     variant: gfm
@@ -182,9 +182,9 @@ explicitly name them to save us some time.
 However, we still do not see a histogram, so now we need to add a layer
 that actually tells ggplot that we want the plot to be a histogram.
 
-The layers that define the type of plot are known as `geoms`. There are
-many different geoms, but we want to create a histogram, so we will use
-the `geom_histogram()` function.
+The layers that define the type of plot are known as `geoms()`. There
+are many different geoms, but we want to create a histogram, so we will
+use the `geom_histogram()` function.
 
 ``` r
 ggplot(data_plotting, aes(x = Weight)) +
@@ -232,6 +232,12 @@ ggplot(data_plotting, aes(x = Weight)) +
 ```
 
 ![](workshop2_files/figure-gfm/ggplot_5-1.png)<!-- -->
+
+The graph shows us that the majority of findings are very light, yet a
+few are extremely heavy. This makes sense, considering that we expect
+the majority of pottery remnants we find to be only shards or smaller
+objects used in everyday life, with some rarer special items being very
+heavy.
 
 ## Plot 2:
 
@@ -442,6 +448,18 @@ ggplot(data_plotting_2, aes(x = Weight, y = Thick, colour = Material)) +
 
 ![](workshop2_files/figure-gfm/ggplot_12-1.png)<!-- -->
 
+Examining this graph, we observe a clear relationship between an
+object’s thickness and its weight. While this relationship is intuitive,
+it is important to note that both axes have been transformed using a
+logarithmic scale. A closer inspection reveals that as thickness
+increases, weight increases at a slightly greater rate. This aligns with
+expectations, as volume—which is related to weight—scales non-linearly
+with an object’s dimensions, including thickness in this case.
+
+Apart from that, the colors allow us to see that the most common
+material used is by far chert. This is in line with our expectations, as
+chert is and was widely available, easily worked with and very durable.
+
 ## Plot 3:
 
 Our goal now is to make a boxplot of a `plat_area` column, grouped by
@@ -469,6 +487,19 @@ Now create the plot using the `geom_boxplot()` function. We leave the
 code for a homework assignment.
 
 ![](workshop2_files/figure-gfm/boxplot_3-1.png)<!-- -->
+
+This graph shows us that some materials, such as chert and volcanic,
+show a wider range of platform areas, suggesting they were worked in
+diverse ways. Obsidian on the other hand has a relatively small range,
+likely due to its brittle nature and conchoidal fracture properties. At
+the same time, the clustering of platform sizes for materials like
+obsidian or quartz suggests these materials might have been processed in
+a relatively standardized way.
+
+Additionally, the presence of outliers hints at the fact that there
+might be some exceptionally large (small) pieces. This observation goes
+hand in hand with our earlier observation that there were some extremely
+heavy findings.
 
 ## Plot 4:
 
@@ -541,6 +572,15 @@ ggplot(data = data_plotting_4,
 
 ![](workshop2_files/figure-gfm/barplot_5-1.png)<!-- -->
 
+Similarly to our previous plot, we can see the popularity of chert as a
+material due to its availability, how easy it is to work with, its
+properties and the fact that it is quite durable, withstanding the test
+of time better than other materials. Volcanic objects are the second
+most popular, which could be due to their useful fracturing properties
+giving them very sharp edges that were commonly used. Quartz, quartzite
+and silcrete show a progressively lower count, which could be due to
+availability, manufacturing difficulties, or cultural preferences.
+
 ## Plot 5:
 
 Now lets say we want to make a plot of the distributions of length of
@@ -575,6 +615,15 @@ ggplot(data = data_plotting_3) +
 ```
 
 ![](workshop2_files/figure-gfm/facet_wrap_2-1.png)<!-- -->
+
+In this graph, chert dominates once again in terms of quantity. However,
+most chert artifacts are small (under 25 mm), suggesting intensive
+reduction sequences or the frequent production of small tools or flakes.
+This distribution between smaller and larger object appears to be common
+as we would expect at this point, with larger objects being rarer.
+
+Only volcanic and unknown materials appear to have a few more objects
+above 25mm in length, at least in comparison to the other materials.
 
 ## Homework assignments
 
