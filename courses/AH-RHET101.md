@@ -2,7 +2,7 @@
 layout: page
 title: "AH-RHET101<br> Introduction to Rhetoric and Argumentation"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-04-01"
+date: "Last updated: 2025-04-10"
 output:
   md_document:
     variant: gfm
@@ -63,7 +63,17 @@ Please find the workshop handout [here](workshop3).
 
 ## Homework assignment after workshop 3
 
-TBA
+Please open [this
+link](https://github.com/ucrdatacenter/projects/blob/main/AH-RHET101/2025h1/workshop3_homework.Rmd),
+and click on the “Download raw file” button (top right corner, with the
+downward pointing arrow). Save the file in your R project directory.
+Open the file in RStudio, and follow the instructions in the document to
+complete the assignment.
+
+If you would like to have some more practice with the functions you
+learned during the 3rd workshop, you can find an optional homework
+assignment
+[here](https://github.com/ucrdatacenter/projects/blob/main/AH-RHET101/2025h1/workshop3_homework_optional.Rmd).
 
 ## Workshop 4: Sentiment analysis in R
 
