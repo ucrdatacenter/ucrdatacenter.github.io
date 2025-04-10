@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 2"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-04-08"
+date: "Last updated: 2025-04-10"
 output:
   md_document:
     variant: gfm
@@ -647,4 +647,5 @@ perform some data manipulation first.
 ### Assignment 3
 
 What is the most common term in the dataset? Create a tibble that
-contains the term and the number of times it occurs.
+contains the term (use the variable `Term`) and the number of times it
+occurs.
