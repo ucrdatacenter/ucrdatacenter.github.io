@@ -337,7 +337,7 @@ Note that you can also import the data as a `.csv` file from GitHub using this l
 
 ## Assignment 2
 
-a)  Create a plot of the most common shapes of the pottery in a new dataset. Use the first Beazly archive data we loaded in the previous exercise. We are looking just for the main shapes, so for example: "CUP FRAGMENT" and "CUP" should be counted as the same shape, namely "CUP". Show the top 10 most frequent shapes.
+a)  Create a plot of the most common shapes of the pottery in a new dataset. Use the Beazley archive data you loaded in the previous exercise. We are looking just for the main shapes, so for example: "CUP FRAGMENT" and "CUP" should be counted as the same shape, namely "CUP". Show the top 10 most frequent shapes.
 
 Hint: You will need to split a column and the separator you want to use is either a comma or a space.
 You can use this expression to do that `[, ]`.
