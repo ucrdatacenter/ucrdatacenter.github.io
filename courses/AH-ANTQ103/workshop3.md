@@ -2,7 +2,7 @@
 layout: page
 title: "AH-ANTQ103: Workshop 3"
 subtitle: "Spring 2025"
-date: "Last updated: 2025-04-08"
+date: "Last updated: 2025-04-14"
 output:
   md_document:
     variant: gfm
@@ -12,7 +12,7 @@ output:
 
 - [Data](#data)
 - [Text analysis](#text-analysis)
-- [8. The `separate()` function](#the-separate-function)
+- [The `separate()` function](#the-separate-function)
 - [Fuzzy dates](#fuzzy-dates)
 - [Homework assignments](#homework-assignments)
   - [Assignment 1](#assignment-1)
@@ -163,8 +163,8 @@ data_words |>
 ```
 
 There are still some words that are not interesting for our analysis.
-These are called stop words. Base R has a data set installed that lists
-a lot of common stop words which we can use to get rid of the
+These are called stop words. `tidytext` has a data set installed that
+lists a lot of common stop words which we can use to get rid of the
 unimportant words.
 
 Lets have a look at the stop words.
@@ -177,7 +177,7 @@ stop_words |>
 Alternatively we could also define our own custom stop words.
 
 ``` r
-stop_words <- c("a", "and", "with", "an", "or", "the", "of", "to", "in", "for", "on", "at", "from", "by", "about", "as", "into", "like", "through", "after", "over", "between", "out", "against", "during", "without", "before", "under", "around", "among")
+custom_stop_words <- c("a", "and", "with", "an", "or", "the", "of", "to", "in", "for", "on", "at", "from", "by", "about", "as", "into", "like", "through", "after", "over", "between", "out", "against", "during", "without", "before", "under", "around", "among")
 ```
 
 In the following we will use our own tibble with stop words, because it
@@ -193,7 +193,7 @@ which are not present in the stop_words vector.
 ``` r
 word_counts <- data_words |>
   filter(!is.na(word)) |>
-  filter(!word %in% stop_words) |>
+  filter(!word %in% custom_stop_words) |>
   count(word) |>
   arrange(desc(n))
 ```
@@ -206,9 +206,12 @@ The `str_length()` function returns the number of characters in a
 string. We can use this to filter the data.
 
 ``` r
-word_counts <- word_counts |> 
-  filter(str_length(word) > 1) |> 
-  print()
+word_counts <- data_words |>
+  filter(!is.na(word)) |>
+  filter(!word %in% custom_stop_words) |>
+  count(word) |>
+  arrange(desc(n)) |> 
+  filter(str_length(word) > 1)
 ```
 
 There are still a lot of words in here. We decide to only look at the
@@ -216,8 +219,7 @@ top 20 words. We can do this using the `top_n()` function.
 
 ``` r
 word_counts_top_20 <- word_counts |> 
-  top_n(20, n) |> 
-  print()
+  top_n(20, n)
 ```
 
 We can then create a plot of these words.
@@ -242,13 +244,13 @@ heroism, mythology, and possibly Athenian social ideals. Overall, the
 dominance of body and draped figures highlights the stylistic focus on
 human representation in this vase art.
 
-# 8. The `separate()` function
+# The `separate()` function
 
 For the homework, the `separate()` function is essential. This function
 takes a tibble, a column name, a new column name and a separator. It
 then splits the column into two (or more) columns, and returns a tibble
-with the new columns. Here I give a silly example of how to use this
-function. In your homework, it will actually be useful.
+with the new columns. Here we give an example of how to use this
+function.
 
 If we take a look at the decoration column, we can see that some vases
 have an entry that is one word, then a colon and then more words.
@@ -288,19 +290,14 @@ data_short_dates <- data_short |>
 ```
 
 These columns are now character columns. We can convert them to numeric
-columns using the `parse_number()` function.
+columns using the `parse_number()` function. We can then calculate the
+mean for each row.
 
 ``` r
 data_short_dates <- data_short_dates |> 
   mutate(Date_start = parse_number(Date_start), 
-         Date_end = parse_number(Date_end))
-```
-
-We can then calculate the mean for each row.
-
-``` r
-data_short_dates <- data_short_dates |> 
-  mutate(Date_mean = (Date_start + Date_end) / 2)
+         Date_end = parse_number(Date_end),
+         Date_mean = (Date_start + Date_end) / 2)
 ```
 
 We only keep the rows with a black figure or red figure technique, as
@@ -316,8 +313,9 @@ aesthetic to fill the color of the bars according to the color of the
 figures.
 
 We will also use the argument `binwidth`, which defines how wide the
-columns appear. The argument `position` is set to `dodge` so that the
-two types of figures we have are not printed on top of each other.
+columns appear. In this case, each bar aggregates a period of 25 years.
+The argument `position` is set to `dodge` so that the two types of
+figures we have are not printed on top of each other.
 
 ``` r
 ggplot(data_plotting, aes(x = Date_mean, fill = Technique)) +
