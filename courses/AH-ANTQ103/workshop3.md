@@ -416,11 +416,10 @@ using this link:
 ## Assignment 2
 
 1)  Create a plot of the most common shapes of the pottery in a new
-    dataset. Use the first Beazly archive data we loaded in at the
-    beginning of this workshop . We are looking just for the main
-    shapes, so for example: “CUP FRAGMENT” and “CUP” should be counted
-    as the same shape, namely “CUP”. Show the top 10 most frequent
-    shapes.
+    dataset. Use the Beazley archive data you loaded in the previous
+    exercise. We are looking just for the main shapes, so for example:
+    “CUP FRAGMENT” and “CUP” should be counted as the same shape, namely
+    “CUP”. Show the top 10 most frequent shapes.
 
 Hint: You will need to split a column and the separator you want to use
 is either a comma or a space. You can use this expression to do that

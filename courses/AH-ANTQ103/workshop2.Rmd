@@ -440,5 +440,5 @@ ggplot(data = data_colour_count) +
 ### Assignment 3
 
 What is the most common term in the dataset?
-Create a tibble that contains the term and the number of times it occurs.
+Create a tibble that contains the term (use the variable `Term`) and the number of times it occurs.
 
