@@ -7,7 +7,7 @@ share-img: /assets/img/datafest_header_0.jpg
 tags: [news,events]
 ---
 
-![DataFest 2025 logo](/assets/img/datafest_hearer_0.jpg)
+![DataFest 2025 logo](/assets/img/datafest_header_0.jpg)
 
 # DataFest 2025 
 
