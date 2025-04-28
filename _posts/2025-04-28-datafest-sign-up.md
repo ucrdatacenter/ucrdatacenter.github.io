@@ -7,6 +7,8 @@ share-img: /assets/img/datafest_header_0.jpg
 tags: [news,events]
 ---
 
+![DataFest 2025 logo](/assets/img/datafest_hearer_0.jpg)
+
 # DataFest 2025 
 
 May 26, students from HZ University of Applied Sciences and University College Roosevelt face new challenges during Datafest 2025: Data for Freedom. 
@@ -28,6 +30,8 @@ Do you want to join Datafest for Freedom? Sign up [here](https://c.spotler.com/c
  
 Do you want to know more about what DataFest looks like?
 Have a look at the [DataFest](https://jrczdatafest.com/) website about the 2024 and 2023 editions!
+
+![DataFest 2024 group picture](/assets/img/datafest.jpg)
 
 
 
