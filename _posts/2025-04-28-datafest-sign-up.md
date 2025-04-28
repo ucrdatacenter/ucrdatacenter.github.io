@@ -20,7 +20,7 @@ The focus is on storytelling using these data sources. The students process thei
 
 # Practical details
 
-- Date: 25 May 2025
+- Date: 26 May 2025
 - Time: 8:00 AM - 22:00 PM
 - Location: JRCZ Data Science Lab
  
