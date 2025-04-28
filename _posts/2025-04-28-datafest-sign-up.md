@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Sign up for DataFest 2025
+title: Sign up for DataFest 2025!
 subtitle: Explore Innovative Solutions with Respect to Cultural Heritage in Zeeland
 thumbnail-img: /assets/img/datafest_header_0.jpg
 share-img: /assets/img/datafest_header_0.jpg
