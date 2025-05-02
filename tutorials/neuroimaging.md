@@ -179,7 +179,7 @@ For future reference, the different axes of the brain are also
 visualized in the figure below. It’s good to have this on hand when
 working with neuroimaging.
 
-![](../assets/img/neuroimaging/brain_axes.png)
+![](../../assets/img/neuroimaging/brain_axes.png)
 
 ## Description of the ARC dataset
 
@@ -587,9 +587,8 @@ and the type of aphasia.
 
 **Table 1. WAB-AQ scores**
 
-|              |              |
-|--------------|--------------|
 | **AQ Score** | **Severity** |
+|--------------|--------------|
 | 0-25         | Very severe  |
 | 26-50        | Severe       |
 | 51-75        | Moderate     |
@@ -741,11 +740,11 @@ correlation is also present in those.
 Hope you enjoyed this tutorial and you feel more inspired to explore its
 potential more in R.
 
-Some other useful resources if you are interested in
-[neuroimaging](https://neuroconductor.org/courses):
+Some other useful resources if you are interested in neuroimaging:
 
-- The Neuroconductor webpage has three online-courses: Courses \|
-  Neuroconductor I highly recommend the one called “Imaging in R”.
+- The Neuroconductor webpage has three online-courses: [Courses \|
+  Neuroconductor](https://neuroconductor.org/courses) I highly recommend
+  the one called “Imaging in R”.
 
 - There are two videos from Elizabeth Sweeney that give a very nice
   insight into what is possible with Neuroimaging in R. I recommend
