@@ -37,7 +37,7 @@ See Figure 1. for a visual representation on how T1, T2 and FLAIR images appear 
 
 There are of course also other types of sequences, like DWI or fMRI, but in this tutorial we will be mainly focusing on structural MRI and more specifically the T1 and T2 weighted images. 
 
-![**Figure 1. MRI of a patient with acute hypoglycemia that mimicked symptoms of acute ischemic stroke, but did not show the usual pathologies on the brain scan.** (A) T1 weighted image. Note that the CSF, appearing dark in the ventricles and between the meninges (B) T2 weighted image. Note the CSF appearing bright. (C) FLAIR image. Note that the CSF no longer appears bright, but dark and the signal is less exaggerated.](../assets/img/neuroimaging/MRI_T1_T2_FLAIR.png)
+![**Figure 1. MRI of a patient with acute hypoglycemia that mimicked symptoms of acute ischemic stroke, but did not show the usual pathologies on the brain scan.** (A) T1 weighted image. Note that the CSF, appearing dark in the ventricles and between the meninges (B) T2 weighted image. Note the CSF appearing bright. (C) FLAIR image. Note that the CSF no longer appears bright, but dark and the signal is less exaggerated.](../../assets/img/neuroimaging/MRI_T1_T2_FLAIR.png)
 
 *Note*: the picture was taken from: Rodriguez-Hernandez A, Babici D, Campbell M, Carranza-Reneteria O, Hammond T. Hypoglycemic hemineglect a stroke mimic. eNeurologicalSci. 2023 Jan 17;30:100444.
 
@@ -47,7 +47,7 @@ An MRI picture is like a 3D map of our brain, which is built from approx. 7 mill
 
 However, whether something appears bright or dark depends on the contrast type (so if it’s T1 or T2 for example). What changes between T1 and T2 is what kind of tissue gives off a strong or weak signal. *For example*: in T1 the CSF appears dark, meaning it has a lower signal, and a lower number assigned. On the other hand, in the T2 the CSF appears bright, meaning it has a higher signal, and a higher number assigned. See Figure 2. of a single, axial slice of the brain, showing how to imagine the portrayal of the “data” on these MRI pictures. Although, here a single slice is presented for better understanding, keep in mind that we usually look at the whole of the brain, which is made up of many-many different slices. 
 
-![**Figure 2. Voxels with assigned numbers corresponding to the highlighted area on an MRI axial scan of the brain.** Note, that the areas appearing darker on the image have lower numbers, while areas that appear lighter have higher numbers.](../assets/img/neuroimaging/Voxels_dark_light_nmbrs.png)
+![**Figure 2. Voxels with assigned numbers corresponding to the highlighted area on an MRI axial scan of the brain.** Note, that the areas appearing darker on the image have lower numbers, while areas that appear lighter have higher numbers.](../../assets/img/neuroimaging/Voxels_dark_light_nmbrs.png)
 
 *Note*: this picture was taken from the video: Elizabeth Sweeney -  Neuroimaging Analysis in R [Internet]. 2019 [cited 2025 Apr 18]. Available from: <https://www.youtube.com/watch?v=9HkEq01nrco>
 
@@ -61,11 +61,11 @@ In this tutorial we will be working with **NIfTI files** (in 'nii.' or 'nii.gz' 
 
 Let’s say that we want to take a slice of the brain at the 125th index “deep” in the brain, including its whole width and height (creating a coronal view). Figure 3. shows how we can do this, and how you should imagine this in the 3D plane. 
 
-![**Figure 3. Visual representation about the different axes of the 3D arrays of NIfTI files.** The axes are denoted in black. When we call these different slices we use a format like this: data [X, Y, Z]. If we want to include the whole width and height, we can just leave a comma at the place of X and Z. So, the red section represents the 125th slice along the Y axis (which is the axis of anterior-to-posterior), including its whole width and whole height (so represented as: [, 125 ,])](../assets/img/neuroimaging/3D_Brain_Axes.png)
+![**Figure 3. Visual representation about the different axes of the 3D arrays of NIfTI files.** The axes are denoted in black. When we call these different slices we use a format like this: data [X, Y, Z]. If we want to include the whole width and height, we can just leave a comma at the place of X and Z. So, the red section represents the 125th slice along the Y axis (which is the axis of anterior-to-posterior), including its whole width and whole height (so represented as: [, 125 ,])](../../assets/img/neuroimaging/3D_Brain_Axes.png)
 
 For future reference, the different axes of the brain are also visualized in the figure below. It’s good to have this on hand when working with neuroimaging.
 
-![](../assets/img/neuroimaging/brain_axes.png)
+![](../../assets/img/neuroimaging/brain_axes.png)
 
 ## Description of the ARC dataset
 

@@ -94,7 +94,7 @@ in this tutorial we will be mainly focusing on structural MRI and more
 specifically the T1 and T2 weighted images. 
 
 <figure>
-<img src="../assets/img/neuroimaging/MRI_T1_T2_FLAIR.png"
+<img src="../../assets/img/neuroimaging/MRI_T1_T2_FLAIR.png"
 alt="Figure 1. MRI of a patient with acute hypoglycemia that mimicked symptoms of acute ischemic stroke, but did not show the usual pathologies on the brain scan. (A) T1 weighted image. Note that the CSF, appearing dark in the ventricles and between the meninges (B) T2 weighted image. Note the CSF appearing bright. (C) FLAIR image. Note that the CSF no longer appears bright, but dark and the signal is less exaggerated." />
 <figcaption aria-hidden="true"><strong>Figure 1. MRI of a patient with
 acute hypoglycemia that mimicked symptoms of acute ischemic stroke, but
@@ -133,7 +133,7 @@ that we usually look at the whole of the brain, which is made up of
 many-many different slices. 
 
 <figure>
-<img src="../assets/img/neuroimaging/Voxels_dark_light_nmbrs.png"
+<img src="../../assets/img/neuroimaging/Voxels_dark_light_nmbrs.png"
 alt="Figure 2. Voxels with assigned numbers corresponding to the highlighted area on an MRI axial scan of the brain. Note, that the areas appearing darker on the image have lower numbers, while areas that appear lighter have higher numbers." />
 <figcaption aria-hidden="true"><strong>Figure 2. Voxels with assigned
 numbers corresponding to the highlighted area on an MRI axial scan of
@@ -163,7 +163,7 @@ coronal view). Figure 3. shows how we can do this, and how you should
 imagine this in the 3D plane. 
 
 <figure>
-<img src="../assets/img/neuroimaging/3D_Brain_Axes.png"
+<img src="../../assets/img/neuroimaging/3D_Brain_Axes.png"
 alt="Figure 3. Visual representation about the different axes of the 3D arrays of NIfTI files. The axes are denoted in black. When we call these different slices we use a format like this: data [X, Y, Z]. If we want to include the whole width and height, we can just leave a comma at the place of X and Z. So, the red section represents the 125th slice along the Y axis (which is the axis of anterior-to-posterior), including its whole width and whole height (so represented as: [, 125 ,])" />
 <figcaption aria-hidden="true"><strong>Figure 3. Visual representation
 about the different axes of the 3D arrays of NIfTI files.</strong> The

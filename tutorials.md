@@ -49,6 +49,7 @@ These tutorials are particularly useful for students in the Data Center Apprenti
 - [Interactive applications with Shiny](r_shiny)
 - [Writing your own functions](r_functions)
 - [Advanced data types and functionals](r_adv_objects)
+- [Neuroimaging in R](neuroimaging)
 
 # Reproducible research workflows
 If you want to learn more about how to make your workflows more reproducible and efficient.
