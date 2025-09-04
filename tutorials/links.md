@@ -151,3 +151,4 @@ on the Tutorials page and the individual course pages).
 - [discovr](https://www.discovr.rocks/discovr/): R tutorial from the
   author of Discovering Statistics Using IBM SPSS Statistics (SSCRMET201
   level)
+- [Dataverse](https://dataverse.nl/): online storage and publication platform for research data; log in with Solis-ID
