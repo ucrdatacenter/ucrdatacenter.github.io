@@ -29,6 +29,10 @@ output:
 
 # Field-specific data sources
 
+## Biomedical science
+
+- [Rijkers, Gerrit; Varga, Samuel, 2025, "Replication Data for: Clinical Effects of Probiotics", https://doi.org/10.34894/AWMZGY, DataverseNL, V1](https://doi.org/10.34894/AWMZGY)
+
 ## Ecology
 
 - [Global Biodiversity Information Facility
